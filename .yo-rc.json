@@ -1,0 +1,33 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.creatives.apsstr.cbcl"
+    },
+    "jhipsterVersion": "4.14.0",
+    "baseName": "cbcl",
+    "packageName": "com.creatives.apsstr.cbcl",
+    "packageFolder": "com/creatives/apsstr/cbcl",
+    "serverPort": "8080",
+    "authenticationType": "session",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSocialSignIn": true,
+    "enableSwaggerCodegen": false,
+    "rememberMeKey": "1a6c4ede898825ef62e8ec60002d609536383e73",
+    "clientFramework": "angularX",
+    "useSass": true,
+    "clientPackageManager": "yarn",
+    "applicationType": "monolith",
+    "testFrameworks": [],
+    "jhiPrefix": "apsstr",
+    "enableTranslation": false
+  }
+}
