@@ -1,17 +1,22 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FullLayoutComponent } from './container';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HeaderComponent } from './components';
-import { AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES } from './directives';
 import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
+
+import { HeaderComponent, SIDEBAR_NAV, SidebarComponent } from './components';
+import { FullLayoutComponent } from './container';
+import {
+    AsideToggleDirective, NAV_DROPDOWN_DIRECTIVES, ReplaceDirective, SIDEBAR_TOGGLE_DIRECTIVES
+} from './directives';
 
 const CORE_UI_CONTAINERS = [
   FullLayoutComponent
 ];
 
 const CORE_UI_LAYOUT_COMPONENTS = [
-  HeaderComponent
+  HeaderComponent,
+  SidebarComponent,
+  SIDEBAR_NAV
 ];
 
 const CORE_UI_DIRECTIVES = [
