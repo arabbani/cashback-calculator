@@ -26,19 +26,20 @@ import {
     PageRibbonComponent,
     ErrorComponent
 } from './layouts';
-import { CoreUiLayoutModule } from './apsstr-core-ui';
+import { CoreUiLayoutModule, ApsstrCoreModule } from './apsstr-core-ui';
 
 @NgModule({
     imports: [
         BrowserModule,
         CbclAppRoutingModule,
-        Ng2Webstorage.forRoot({ prefix: 'apsstr', separator: '-'}),
+        Ng2Webstorage.forRoot({ prefix: 'cbcl', separator: '-'}),
         CbclSharedModule,
         CbclHomeModule,
         CbclAdminModule,
         CbclAccountModule,
         CbclEntityModule,
-        CoreUiLayoutModule
+        CoreUiLayoutModule,
+        ApsstrCoreModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
