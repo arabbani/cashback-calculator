@@ -26,6 +26,7 @@ import {
     PageRibbonComponent,
     ErrorComponent
 } from './layouts';
+import { CoreUiLayoutModule } from './apsstr-core-ui';
 
 @NgModule({
     imports: [
@@ -37,6 +38,7 @@ import {
         CbclAdminModule,
         CbclAccountModule,
         CbclEntityModule,
+        CoreUiLayoutModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
