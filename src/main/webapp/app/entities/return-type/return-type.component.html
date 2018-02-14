@@ -1,0 +1,58 @@
+<div>
+    <h2>
+        <span>Return Types</span>
+        <button class="btn btn-primary float-right jh-create-entity create-return-type" [routerLink]="['/', { outlets: { popup: ['return-type-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Return Type
+            </span>
+        </button>
+    </h2>
+    <apsstr-alert></apsstr-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="returnTypes">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let returnType of returnTypes ;trackBy: trackId">
+                <td><a [routerLink]="['../return-type', returnType.id ]">{{returnType.id}}</a></td>
+                <td>{{returnType.name}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../return-type', returnType.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'return-type/'+ returnType.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'return-type/'+ returnType.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

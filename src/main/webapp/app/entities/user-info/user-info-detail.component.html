@@ -1,0 +1,50 @@
+
+<div *ngIf="userInfo">
+    <h2><span>User Info</span> {{userInfo.id}}</h2>
+    <hr>
+    <apsstr-alert-error></apsstr-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>City</span></dt>
+        <dd>
+            <div *ngIf="userInfo.city">
+                <a [routerLink]="['/city', userInfo.city?.id]">{{userInfo.city?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+            {{userInfo.user?.id}}
+        </dd>
+        <dt><span>Merchant</span></dt>
+        <dd>
+            <span *ngFor="let merchant of userInfo.merchants; let last = last">
+                <a [routerLink]="['/merchant', merchant?.id ]">{{merchant.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span>Card</span></dt>
+        <dd>
+            <span *ngFor="let card of userInfo.cards; let last = last">
+                <a [routerLink]="['/card', card?.id ]">{{card.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span>Operating System</span></dt>
+        <dd>
+            <span *ngFor="let operatingSystem of userInfo.operatingSystems; let last = last">
+                <a [routerLink]="['/operating-system', operatingSystem?.id ]">{{operatingSystem.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'user-info/'+ userInfo.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,58 @@
+<div>
+    <h2>
+        <span>Offer Types</span>
+        <button class="btn btn-primary float-right jh-create-entity create-offer-type" [routerLink]="['/', { outlets: { popup: ['offer-type-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Offer Type
+            </span>
+        </button>
+    </h2>
+    <apsstr-alert></apsstr-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="offerTypes">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let offerType of offerTypes ;trackBy: trackId">
+                <td><a [routerLink]="['../offer-type', offerType.id ]">{{offerType.id}}</a></td>
+                <td>{{offerType.name}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../offer-type', offerType.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'offer-type/'+ offerType.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'offer-type/'+ offerType.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

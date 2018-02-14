@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity MainReturn.
+    -->
+    <changeSet id="20180214101701-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="type_id"
+                                 baseTableName="main_return"
+                                 constraintName="fk_main_return_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="return_type"/>
+
+        <addForeignKeyConstraint baseColumnNames="mode_id"
+                                 baseTableName="main_return"
+                                 constraintName="fk_main_return_mode_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="return_mode"/>
+
+        <addForeignKeyConstraint baseColumnNames="channel_id"
+                                 baseTableName="main_return"
+                                 constraintName="fk_main_return_channel_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="card"/>
+
+    </changeSet>
+</databaseChangeLog>

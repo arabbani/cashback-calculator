@@ -1,0 +1,62 @@
+<div>
+    <h2>
+        <span>Reecharge Infos</span>
+        <button class="btn btn-primary float-right jh-create-entity create-reecharge-info" [routerLink]="['/', { outlets: { popup: ['reecharge-info-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Reecharge Info
+            </span>
+        </button>
+    </h2>
+    <apsstr-alert></apsstr-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="reechargeInfos">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Circle</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let reechargeInfo of reechargeInfos ;trackBy: trackId">
+                <td><a [routerLink]="['../reecharge-info', reechargeInfo.id ]">{{reechargeInfo.id}}</a></td>
+                <td>
+                    <span *ngFor="let circle of reechargeInfo.circles; let last = last">
+                            <a class="form-control-static" [routerLink]="['../circle', circle?.id ]">{{circle.name}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../reecharge-info', reechargeInfo.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'reecharge-info/'+ reechargeInfo.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'reecharge-info/'+ reechargeInfo.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

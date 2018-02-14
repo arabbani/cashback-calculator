@@ -1,0 +1,40 @@
+
+<div *ngIf="travelInfo">
+    <h2><span>Travel Info</span> {{travelInfo.id}}</h2>
+    <hr>
+    <apsstr-alert-error></apsstr-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Type</span></dt>
+        <dd>
+            <span *ngFor="let type of travelInfo.types; let last = last">
+                <a [routerLink]="['/travel-type', type?.id ]">{{type.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span>Region</span></dt>
+        <dd>
+            <span *ngFor="let region of travelInfo.regions; let last = last">
+                <a [routerLink]="['/region', region?.id ]">{{region.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span>Origin</span></dt>
+        <dd>
+            <span *ngFor="let origin of travelInfo.origins; let last = last">
+                <a [routerLink]="['/region', origin?.id ]">{{origin.name}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'travel-info/'+ travelInfo.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

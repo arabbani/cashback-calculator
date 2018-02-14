@@ -1,0 +1,40 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "minimumExpense",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "exact",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "maximumExpense",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "minimumReturn",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "maximumReturn",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "minimumTicketRequired",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "minimumRideRequired",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20180214101700",
+    "entityTableName": "return_extras",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}
