@@ -21,7 +21,6 @@ import { StateStorageService } from './shared/auth/state-storage.service';
 import {
     ApsstrMainComponent,
     NavbarComponent,
-    FooterComponent,
     ProfileService,
     PageRibbonComponent,
     ErrorComponent
@@ -46,8 +45,7 @@ import { CoreUiLayoutModule, ApsstrCoreModule } from './apsstr-core-ui';
         ApsstrMainComponent,
         NavbarComponent,
         ErrorComponent,
-        PageRibbonComponent,
-        FooterComponent
+        PageRibbonComponent
     ],
     providers: [
         ProfileService,
