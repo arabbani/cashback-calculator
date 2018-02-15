@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 
+import { CbclSharedModule } from '../../shared';
 import { FooterComponent, HeaderComponent, SIDEBAR_NAV, SidebarComponent } from './components';
 import { FullLayoutComponent } from './container';
 import {
@@ -32,7 +33,8 @@ const CORE_UI_DIRECTIVES = [
     CommonModule,
     RouterModule,
     BsDropdownModule.forRoot(),
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    CbclSharedModule
   ],
   declarations: [
     ...CORE_UI_CONTAINERS,
