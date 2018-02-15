@@ -11,7 +11,7 @@ export const dateRoute: Routes = [
         path: 'date',
         component: DateComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Dates'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const dateRoute: Routes = [
         path: 'date/:id',
         component: DateDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Dates'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const datePopupRoute: Routes = [
         path: 'date-new',
         component: DatePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Dates'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const datePopupRoute: Routes = [
         path: 'date/:id/edit',
         component: DatePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Dates'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const datePopupRoute: Routes = [
         path: 'date/:id/delete',
         component: DateDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Dates'
         },
         canActivate: [UserRouteAccessService],

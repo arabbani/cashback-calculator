@@ -11,7 +11,7 @@ export const operatingSystemTypeRoute: Routes = [
         path: 'operating-system-type',
         component: OperatingSystemTypeComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OperatingSystemTypes'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const operatingSystemTypeRoute: Routes = [
         path: 'operating-system-type/:id',
         component: OperatingSystemTypeDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OperatingSystemTypes'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const operatingSystemTypePopupRoute: Routes = [
         path: 'operating-system-type-new',
         component: OperatingSystemTypePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OperatingSystemTypes'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const operatingSystemTypePopupRoute: Routes = [
         path: 'operating-system-type/:id/edit',
         component: OperatingSystemTypePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OperatingSystemTypes'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const operatingSystemTypePopupRoute: Routes = [
         path: 'operating-system-type/:id/delete',
         component: OperatingSystemTypeDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OperatingSystemTypes'
         },
         canActivate: [UserRouteAccessService],

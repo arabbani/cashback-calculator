@@ -11,7 +11,7 @@ export const merchantRoute: Routes = [
         path: 'merchant',
         component: MerchantComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Merchants'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const merchantRoute: Routes = [
         path: 'merchant/:id',
         component: MerchantDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Merchants'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const merchantPopupRoute: Routes = [
         path: 'merchant-new',
         component: MerchantPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Merchants'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const merchantPopupRoute: Routes = [
         path: 'merchant/:id/edit',
         component: MerchantPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Merchants'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const merchantPopupRoute: Routes = [
         path: 'merchant/:id/delete',
         component: MerchantDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Merchants'
         },
         canActivate: [UserRouteAccessService],

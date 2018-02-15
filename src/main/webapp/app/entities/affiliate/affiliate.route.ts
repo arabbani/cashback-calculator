@@ -11,7 +11,7 @@ export const affiliateRoute: Routes = [
         path: 'affiliate',
         component: AffiliateComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Affiliates'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const affiliateRoute: Routes = [
         path: 'affiliate/:id',
         component: AffiliateDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Affiliates'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const affiliatePopupRoute: Routes = [
         path: 'affiliate-new',
         component: AffiliatePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Affiliates'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const affiliatePopupRoute: Routes = [
         path: 'affiliate/:id/edit',
         component: AffiliatePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Affiliates'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const affiliatePopupRoute: Routes = [
         path: 'affiliate/:id/delete',
         component: AffiliateDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Affiliates'
         },
         canActivate: [UserRouteAccessService],

@@ -11,7 +11,7 @@ export const newsletterRoute: Routes = [
         path: 'newsletter',
         component: NewsletterComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Newsletters'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const newsletterRoute: Routes = [
         path: 'newsletter/:id',
         component: NewsletterDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Newsletters'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const newsletterPopupRoute: Routes = [
         path: 'newsletter-new',
         component: NewsletterPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Newsletters'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const newsletterPopupRoute: Routes = [
         path: 'newsletter/:id/edit',
         component: NewsletterPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Newsletters'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const newsletterPopupRoute: Routes = [
         path: 'newsletter/:id/delete',
         component: NewsletterDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Newsletters'
         },
         canActivate: [UserRouteAccessService],

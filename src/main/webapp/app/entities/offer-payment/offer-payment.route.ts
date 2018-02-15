@@ -11,7 +11,7 @@ export const offerPaymentRoute: Routes = [
         path: 'offer-payment',
         component: OfferPaymentComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferPayments'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const offerPaymentRoute: Routes = [
         path: 'offer-payment/:id',
         component: OfferPaymentDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferPayments'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const offerPaymentPopupRoute: Routes = [
         path: 'offer-payment-new',
         component: OfferPaymentPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferPayments'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const offerPaymentPopupRoute: Routes = [
         path: 'offer-payment/:id/edit',
         component: OfferPaymentPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferPayments'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const offerPaymentPopupRoute: Routes = [
         path: 'offer-payment/:id/delete',
         component: OfferPaymentDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferPayments'
         },
         canActivate: [UserRouteAccessService],

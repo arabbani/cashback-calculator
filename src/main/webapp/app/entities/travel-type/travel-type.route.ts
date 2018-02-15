@@ -11,7 +11,7 @@ export const travelTypeRoute: Routes = [
         path: 'travel-type',
         component: TravelTypeComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TravelTypes'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const travelTypeRoute: Routes = [
         path: 'travel-type/:id',
         component: TravelTypeDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TravelTypes'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const travelTypePopupRoute: Routes = [
         path: 'travel-type-new',
         component: TravelTypePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TravelTypes'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const travelTypePopupRoute: Routes = [
         path: 'travel-type/:id/edit',
         component: TravelTypePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TravelTypes'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const travelTypePopupRoute: Routes = [
         path: 'travel-type/:id/delete',
         component: TravelTypeDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TravelTypes'
         },
         canActivate: [UserRouteAccessService],

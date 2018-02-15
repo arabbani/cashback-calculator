@@ -11,7 +11,7 @@ export const bankRoute: Routes = [
         path: 'bank',
         component: BankComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Banks'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const bankRoute: Routes = [
         path: 'bank/:id',
         component: BankDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Banks'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const bankPopupRoute: Routes = [
         path: 'bank-new',
         component: BankPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Banks'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const bankPopupRoute: Routes = [
         path: 'bank/:id/edit',
         component: BankPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Banks'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const bankPopupRoute: Routes = [
         path: 'bank/:id/delete',
         component: BankDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Banks'
         },
         canActivate: [UserRouteAccessService],

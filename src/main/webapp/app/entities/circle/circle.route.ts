@@ -11,7 +11,7 @@ export const circleRoute: Routes = [
         path: 'circle',
         component: CircleComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Circles'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const circleRoute: Routes = [
         path: 'circle/:id',
         component: CircleDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Circles'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const circlePopupRoute: Routes = [
         path: 'circle-new',
         component: CirclePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Circles'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const circlePopupRoute: Routes = [
         path: 'circle/:id/edit',
         component: CirclePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Circles'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const circlePopupRoute: Routes = [
         path: 'circle/:id/delete',
         component: CircleDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Circles'
         },
         canActivate: [UserRouteAccessService],

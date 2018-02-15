@@ -11,7 +11,7 @@ export const offerTypeRoute: Routes = [
         path: 'offer-type',
         component: OfferTypeComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferTypes'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const offerTypeRoute: Routes = [
         path: 'offer-type/:id',
         component: OfferTypeDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferTypes'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const offerTypePopupRoute: Routes = [
         path: 'offer-type-new',
         component: OfferTypePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferTypes'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const offerTypePopupRoute: Routes = [
         path: 'offer-type/:id/edit',
         component: OfferTypePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferTypes'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const offerTypePopupRoute: Routes = [
         path: 'offer-type/:id/delete',
         component: OfferTypeDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferTypes'
         },
         canActivate: [UserRouteAccessService],

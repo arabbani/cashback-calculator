@@ -11,7 +11,7 @@ export const reechargeInfoRoute: Routes = [
         path: 'reecharge-info',
         component: ReechargeInfoComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReechargeInfos'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const reechargeInfoRoute: Routes = [
         path: 'reecharge-info/:id',
         component: ReechargeInfoDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReechargeInfos'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const reechargeInfoPopupRoute: Routes = [
         path: 'reecharge-info-new',
         component: ReechargeInfoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReechargeInfos'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const reechargeInfoPopupRoute: Routes = [
         path: 'reecharge-info/:id/edit',
         component: ReechargeInfoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReechargeInfos'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const reechargeInfoPopupRoute: Routes = [
         path: 'reecharge-info/:id/delete',
         component: ReechargeInfoDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReechargeInfos'
         },
         canActivate: [UserRouteAccessService],

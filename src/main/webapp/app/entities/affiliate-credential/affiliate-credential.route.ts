@@ -11,7 +11,7 @@ export const affiliateCredentialRoute: Routes = [
         path: 'affiliate-credential',
         component: AffiliateCredentialComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'AffiliateCredentials'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const affiliateCredentialRoute: Routes = [
         path: 'affiliate-credential/:id',
         component: AffiliateCredentialDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'AffiliateCredentials'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const affiliateCredentialPopupRoute: Routes = [
         path: 'affiliate-credential-new',
         component: AffiliateCredentialPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'AffiliateCredentials'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const affiliateCredentialPopupRoute: Routes = [
         path: 'affiliate-credential/:id/edit',
         component: AffiliateCredentialPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'AffiliateCredentials'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const affiliateCredentialPopupRoute: Routes = [
         path: 'affiliate-credential/:id/delete',
         component: AffiliateCredentialDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'AffiliateCredentials'
         },
         canActivate: [UserRouteAccessService],

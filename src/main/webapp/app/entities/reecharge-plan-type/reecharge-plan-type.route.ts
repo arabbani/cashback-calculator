@@ -11,7 +11,7 @@ export const reechargePlanTypeRoute: Routes = [
         path: 'reecharge-plan-type',
         component: ReechargePlanTypeComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReechargePlanTypes'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const reechargePlanTypeRoute: Routes = [
         path: 'reecharge-plan-type/:id',
         component: ReechargePlanTypeDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReechargePlanTypes'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const reechargePlanTypePopupRoute: Routes = [
         path: 'reecharge-plan-type-new',
         component: ReechargePlanTypePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReechargePlanTypes'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const reechargePlanTypePopupRoute: Routes = [
         path: 'reecharge-plan-type/:id/edit',
         component: ReechargePlanTypePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReechargePlanTypes'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const reechargePlanTypePopupRoute: Routes = [
         path: 'reecharge-plan-type/:id/delete',
         component: ReechargePlanTypeDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReechargePlanTypes'
         },
         canActivate: [UserRouteAccessService],

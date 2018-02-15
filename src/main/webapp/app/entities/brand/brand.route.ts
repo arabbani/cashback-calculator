@@ -11,7 +11,7 @@ export const brandRoute: Routes = [
         path: 'brand',
         component: BrandComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Brands'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const brandRoute: Routes = [
         path: 'brand/:id',
         component: BrandDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Brands'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const brandPopupRoute: Routes = [
         path: 'brand-new',
         component: BrandPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Brands'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const brandPopupRoute: Routes = [
         path: 'brand/:id/edit',
         component: BrandPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Brands'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const brandPopupRoute: Routes = [
         path: 'brand/:id/delete',
         component: BrandDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Brands'
         },
         canActivate: [UserRouteAccessService],

@@ -11,7 +11,7 @@ export const offerPolicyRoute: Routes = [
         path: 'offer-policy',
         component: OfferPolicyComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferPolicies'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const offerPolicyRoute: Routes = [
         path: 'offer-policy/:id',
         component: OfferPolicyDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferPolicies'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const offerPolicyPopupRoute: Routes = [
         path: 'offer-policy-new',
         component: OfferPolicyPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferPolicies'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const offerPolicyPopupRoute: Routes = [
         path: 'offer-policy/:id/edit',
         component: OfferPolicyPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferPolicies'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const offerPolicyPopupRoute: Routes = [
         path: 'offer-policy/:id/delete',
         component: OfferPolicyDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferPolicies'
         },
         canActivate: [UserRouteAccessService],

@@ -11,7 +11,7 @@ export const returnTypeRoute: Routes = [
         path: 'return-type',
         component: ReturnTypeComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnTypes'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const returnTypeRoute: Routes = [
         path: 'return-type/:id',
         component: ReturnTypeDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnTypes'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const returnTypePopupRoute: Routes = [
         path: 'return-type-new',
         component: ReturnTypePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnTypes'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const returnTypePopupRoute: Routes = [
         path: 'return-type/:id/edit',
         component: ReturnTypePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnTypes'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const returnTypePopupRoute: Routes = [
         path: 'return-type/:id/delete',
         component: ReturnTypeDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnTypes'
         },
         canActivate: [UserRouteAccessService],

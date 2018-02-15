@@ -11,7 +11,7 @@ export const stateRoute: Routes = [
         path: 'state',
         component: StateComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'States'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const stateRoute: Routes = [
         path: 'state/:id',
         component: StateDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'States'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const statePopupRoute: Routes = [
         path: 'state-new',
         component: StatePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'States'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const statePopupRoute: Routes = [
         path: 'state/:id/edit',
         component: StatePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'States'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const statePopupRoute: Routes = [
         path: 'state/:id/delete',
         component: StateDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'States'
         },
         canActivate: [UserRouteAccessService],

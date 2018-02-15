@@ -11,7 +11,7 @@ export const mainReturnRoute: Routes = [
         path: 'main-return',
         component: MainReturnComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'MainReturns'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const mainReturnRoute: Routes = [
         path: 'main-return/:id',
         component: MainReturnDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'MainReturns'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const mainReturnPopupRoute: Routes = [
         path: 'main-return-new',
         component: MainReturnPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'MainReturns'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const mainReturnPopupRoute: Routes = [
         path: 'main-return/:id/edit',
         component: MainReturnPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'MainReturns'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const mainReturnPopupRoute: Routes = [
         path: 'main-return/:id/delete',
         component: MainReturnDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'MainReturns'
         },
         canActivate: [UserRouteAccessService],

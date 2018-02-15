@@ -11,7 +11,7 @@ export const travelInfoRoute: Routes = [
         path: 'travel-info',
         component: TravelInfoComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TravelInfos'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const travelInfoRoute: Routes = [
         path: 'travel-info/:id',
         component: TravelInfoDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TravelInfos'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const travelInfoPopupRoute: Routes = [
         path: 'travel-info-new',
         component: TravelInfoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TravelInfos'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const travelInfoPopupRoute: Routes = [
         path: 'travel-info/:id/edit',
         component: TravelInfoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TravelInfos'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const travelInfoPopupRoute: Routes = [
         path: 'travel-info/:id/delete',
         component: TravelInfoDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'TravelInfos'
         },
         canActivate: [UserRouteAccessService],

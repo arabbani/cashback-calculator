@@ -11,7 +11,7 @@ export const returnExtrasRoute: Routes = [
         path: 'return-extras',
         component: ReturnExtrasComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnExtras'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const returnExtrasRoute: Routes = [
         path: 'return-extras/:id',
         component: ReturnExtrasDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnExtras'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const returnExtrasPopupRoute: Routes = [
         path: 'return-extras-new',
         component: ReturnExtrasPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnExtras'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const returnExtrasPopupRoute: Routes = [
         path: 'return-extras/:id/edit',
         component: ReturnExtrasPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnExtras'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const returnExtrasPopupRoute: Routes = [
         path: 'return-extras/:id/delete',
         component: ReturnExtrasDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnExtras'
         },
         canActivate: [UserRouteAccessService],

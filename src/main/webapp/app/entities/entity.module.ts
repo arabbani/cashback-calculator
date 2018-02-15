@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { UserRouteAccessService } from '../shared';
 import { CbclAffiliateCredentialModule } from './affiliate-credential/affiliate-credential.module';
 import { CbclAffiliateModule } from './affiliate/affiliate.module';
 import { CbclBankTypeModule } from './bank-type/bank-type.module';
@@ -86,7 +87,12 @@ import { CbclUserInfoModule } from './user-info/user-info.module';
         RouterModule.forChild([
             {
                 path: 'entities',
-                component: EntityComponent
+                component: EntityComponent,
+                data: {
+                    authorities: ['ROLE_ADMIN'],
+                    pageTitle: 'Entities'
+                },
+                canActivate: [UserRouteAccessService]
             }
         ]),
         CommonModule

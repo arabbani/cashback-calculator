@@ -11,7 +11,7 @@ export const subCategoryRoute: Routes = [
         path: 'sub-category',
         component: SubCategoryComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'SubCategories'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const subCategoryRoute: Routes = [
         path: 'sub-category/:id',
         component: SubCategoryDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'SubCategories'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const subCategoryPopupRoute: Routes = [
         path: 'sub-category-new',
         component: SubCategoryPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'SubCategories'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const subCategoryPopupRoute: Routes = [
         path: 'sub-category/:id/edit',
         component: SubCategoryPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'SubCategories'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const subCategoryPopupRoute: Routes = [
         path: 'sub-category/:id/delete',
         component: SubCategoryDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'SubCategories'
         },
         canActivate: [UserRouteAccessService],

@@ -11,7 +11,7 @@ export const cardRoute: Routes = [
         path: 'card',
         component: CardComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Cards'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const cardRoute: Routes = [
         path: 'card/:id',
         component: CardDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Cards'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const cardPopupRoute: Routes = [
         path: 'card-new',
         component: CardPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Cards'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const cardPopupRoute: Routes = [
         path: 'card/:id/edit',
         component: CardPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Cards'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const cardPopupRoute: Routes = [
         path: 'card/:id/delete',
         component: CardDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Cards'
         },
         canActivate: [UserRouteAccessService],

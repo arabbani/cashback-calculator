@@ -11,7 +11,7 @@ export const dayRoute: Routes = [
         path: 'day',
         component: DayComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Days'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const dayRoute: Routes = [
         path: 'day/:id',
         component: DayDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Days'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const dayPopupRoute: Routes = [
         path: 'day-new',
         component: DayPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Days'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const dayPopupRoute: Routes = [
         path: 'day/:id/edit',
         component: DayPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Days'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const dayPopupRoute: Routes = [
         path: 'day/:id/delete',
         component: DayDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Days'
         },
         canActivate: [UserRouteAccessService],

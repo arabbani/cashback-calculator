@@ -11,7 +11,7 @@ export const electronicsInfoRoute: Routes = [
         path: 'electronics-info',
         component: ElectronicsInfoComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ElectronicsInfos'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const electronicsInfoRoute: Routes = [
         path: 'electronics-info/:id',
         component: ElectronicsInfoDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ElectronicsInfos'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const electronicsInfoPopupRoute: Routes = [
         path: 'electronics-info-new',
         component: ElectronicsInfoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ElectronicsInfos'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const electronicsInfoPopupRoute: Routes = [
         path: 'electronics-info/:id/edit',
         component: ElectronicsInfoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ElectronicsInfos'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const electronicsInfoPopupRoute: Routes = [
         path: 'electronics-info/:id/delete',
         component: ElectronicsInfoDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ElectronicsInfos'
         },
         canActivate: [UserRouteAccessService],

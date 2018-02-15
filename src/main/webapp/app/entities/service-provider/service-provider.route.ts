@@ -11,7 +11,7 @@ export const serviceProviderRoute: Routes = [
         path: 'service-provider',
         component: ServiceProviderComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ServiceProviders'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const serviceProviderRoute: Routes = [
         path: 'service-provider/:id',
         component: ServiceProviderDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ServiceProviders'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const serviceProviderPopupRoute: Routes = [
         path: 'service-provider-new',
         component: ServiceProviderPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ServiceProviders'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const serviceProviderPopupRoute: Routes = [
         path: 'service-provider/:id/edit',
         component: ServiceProviderPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ServiceProviders'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const serviceProviderPopupRoute: Routes = [
         path: 'service-provider/:id/delete',
         component: ServiceProviderDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ServiceProviders'
         },
         canActivate: [UserRouteAccessService],

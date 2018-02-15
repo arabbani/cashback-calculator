@@ -11,7 +11,7 @@ export const returnInfoRoute: Routes = [
         path: 'return-info',
         component: ReturnInfoComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnInfos'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const returnInfoRoute: Routes = [
         path: 'return-info/:id',
         component: ReturnInfoDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnInfos'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const returnInfoPopupRoute: Routes = [
         path: 'return-info-new',
         component: ReturnInfoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnInfos'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const returnInfoPopupRoute: Routes = [
         path: 'return-info/:id/edit',
         component: ReturnInfoPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnInfos'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const returnInfoPopupRoute: Routes = [
         path: 'return-info/:id/delete',
         component: ReturnInfoDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnInfos'
         },
         canActivate: [UserRouteAccessService],

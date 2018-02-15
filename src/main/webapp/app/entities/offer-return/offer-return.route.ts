@@ -11,7 +11,7 @@ export const offerReturnRoute: Routes = [
         path: 'offer-return',
         component: OfferReturnComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferReturns'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const offerReturnRoute: Routes = [
         path: 'offer-return/:id',
         component: OfferReturnDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferReturns'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const offerReturnPopupRoute: Routes = [
         path: 'offer-return-new',
         component: OfferReturnPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferReturns'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const offerReturnPopupRoute: Routes = [
         path: 'offer-return/:id/edit',
         component: OfferReturnPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferReturns'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const offerReturnPopupRoute: Routes = [
         path: 'offer-return/:id/delete',
         component: OfferReturnDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'OfferReturns'
         },
         canActivate: [UserRouteAccessService],

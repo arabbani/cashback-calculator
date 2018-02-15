@@ -11,7 +11,7 @@ export const returnModeRoute: Routes = [
         path: 'return-mode',
         component: ReturnModeComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnModes'
         },
         canActivate: [UserRouteAccessService]
@@ -19,7 +19,7 @@ export const returnModeRoute: Routes = [
         path: 'return-mode/:id',
         component: ReturnModeDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnModes'
         },
         canActivate: [UserRouteAccessService]
@@ -31,7 +31,7 @@ export const returnModePopupRoute: Routes = [
         path: 'return-mode-new',
         component: ReturnModePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnModes'
         },
         canActivate: [UserRouteAccessService],
@@ -41,7 +41,7 @@ export const returnModePopupRoute: Routes = [
         path: 'return-mode/:id/edit',
         component: ReturnModePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnModes'
         },
         canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const returnModePopupRoute: Routes = [
         path: 'return-mode/:id/delete',
         component: ReturnModeDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'ReturnModes'
         },
         canActivate: [UserRouteAccessService],
