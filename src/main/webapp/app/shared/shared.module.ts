@@ -1,21 +1,10 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DatePipe } from '@angular/common';
-
+import { ModuleWithProviders } from '@angular/compiler/src/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import {
-    CbclSharedLibsModule,
-    CbclSharedCommonModule,
-    CSRFService,
-    AuthServerProvider,
-    AccountService,
-    UserService,
-    StateStorageService,
-    LoginService,
-    LoginModalService,
-    ApsstrLoginModalComponent,
-    Principal,
-    HasAnyAuthorityDirective,
-    ApsstrSocialComponent,
-    SocialService,
+    AccountService, ApsstrLoginModalComponent, ApsstrSocialComponent, AuthServerProvider,
+    CbclSharedCommonModule, CbclSharedLibsModule, CSRFService, HasAnyAuthorityDirective,
+    LoginModalService, LoginService, Principal, SocialService, StateStorageService, UserService
 } from './';
 
 @NgModule({
@@ -28,18 +17,6 @@ import {
         ApsstrLoginModalComponent,
         HasAnyAuthorityDirective
     ],
-    providers: [
-        LoginService,
-        LoginModalService,
-        AccountService,
-        StateStorageService,
-        Principal,
-        CSRFService,
-        AuthServerProvider,
-        SocialService,
-        UserService,
-        DatePipe
-    ],
     entryComponents: [ApsstrLoginModalComponent],
     exports: [
         CbclSharedCommonModule,
@@ -51,4 +28,22 @@ import {
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
-export class CbclSharedModule {}
+export class CbclSharedModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: CbclSharedModule,
+            providers: [
+                LoginService,
+                LoginModalService,
+                AccountService,
+                StateStorageService,
+                Principal,
+                CSRFService,
+                AuthServerProvider,
+                SocialService,
+                UserService,
+                DatePipe
+            ]
+        };
+    }
+}
