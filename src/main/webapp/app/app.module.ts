@@ -32,7 +32,7 @@ import { CoreUiLayoutModule, ApsstrCoreModule } from './apsstr-core-ui';
         BrowserModule,
         CbclAppRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'cbcl', separator: '-'}),
-        CbclSharedModule,
+        CbclSharedModule.forRoot(),
         CbclHomeModule,
         CbclAdminModule,
         CbclAccountModule,
