@@ -16,9 +16,10 @@
         </li>
         <ng-container *ngSwitchCase="true">
             <ng-container *apsstrHasAnyAuthority="'ROLE_ADMIN'">
-                <li class="nav-item dropdown" dropdown placement="bottom right">
+                <li class="nav-item dropdown px-3" dropdown placement="bottom right">
                     <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
                         <i class="fa fa-fw fa-server"></i>
+                        <span>Administration</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
                         <a class="dropdown-item" routerLink="user-management" routerLinkActive="active">
@@ -35,6 +36,126 @@
                             <i class="fa fa-fw fa-tasks"></i> Logs</a>
                         <a *ngIf="swaggerEnabled" class="dropdown-item" routerLink="docs" routerLinkActive="active">
                             <i class="fa fa-fw fa-book"></i> API</a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown px-3" dropdown placement="bottom right">
+                    <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
+                        <i class="fa fa-fw fa-th-list"></i>
+                        <span>Entities</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+                        <a class="dropdown-item" routerLink="merchant" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Merchant
+                        </a>
+                        <a class="dropdown-item" routerLink="affiliate-credential" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Affiliate Credential
+                        </a>
+                        <a class="dropdown-item" routerLink="affiliate" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Affiliate
+                        </a>
+                        <a class="dropdown-item" routerLink="operating-system-type" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Operating System Type
+                        </a>
+                        <a class="dropdown-item" routerLink="operating-system" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Operating System
+                        </a>
+                        <a class="dropdown-item" routerLink="country" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Country
+                        </a>
+                        <a class="dropdown-item" routerLink="state" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> State
+                        </a>
+                        <a class="dropdown-item" routerLink="city" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> City
+                        </a>
+                        <a class="dropdown-item" routerLink="offer-policy" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Offer Policy
+                        </a>
+                        <a class="dropdown-item" routerLink="offer-type" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Offer Type
+                        </a>
+                        <a class="dropdown-item" routerLink="category" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Category
+                        </a>
+                        <a class="dropdown-item" routerLink="sub-category" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Sub Category
+                        </a>
+                        <a class="dropdown-item" routerLink="service-provider" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Service Provider
+                        </a>
+                        <a class="dropdown-item" routerLink="date" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Date
+                        </a>
+                        <a class="dropdown-item" routerLink="day" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Day
+                        </a>
+                        <a class="dropdown-item" routerLink="return-type" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Return Type
+                        </a>
+                        <a class="dropdown-item" routerLink="return-Mode" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"> Return Mode</i>
+                        </a>
+                        <a class="dropdown-item" routerLink="return-extras" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Return Extras
+                        </a>
+                        <a class="dropdown-item" routerLink="main-return" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Main Return
+                        </a>
+                        <a class="dropdown-item" routerLink="return-info" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Return Info
+                        </a>
+                        <a class="dropdown-item" routerLink="offer-return" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Offer Return
+                        </a>
+                        <a class="dropdown-item" routerLink="circle" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Circle
+                        </a>
+                        <a class="dropdown-item" routerLink="travel-type" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Travel Type
+                        </a>
+                        <a class="dropdown-item" routerLink="region" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Region
+                        </a>
+                        <a class="dropdown-item" routerLink="reecharge-info" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Reecharge Info
+                        </a>
+                        <a class="dropdown-item" routerLink="travel-info" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Travel Info
+                        </a>
+                        <a class="dropdown-item" routerLink="bank-type" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Bank Type
+                        </a>
+                        <a class="dropdown-item" routerLink="bank" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Bank
+                        </a>
+                        <a class="dropdown-item" routerLink="card-type" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Card Type
+                        </a>
+                        <a class="dropdown-item" routerLink="card" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Card
+                        </a>
+                        <a class="dropdown-item" routerLink="offer-payment" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Offer Payment
+                        </a>
+                        <a class="dropdown-item" routerLink="reecharge-plan-type" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Reecharge Plan Type
+                        </a>
+                        <a class="dropdown-item" routerLink="offer" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Offer
+                        </a>
+                        <a class="dropdown-item" routerLink="newsletter" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Newsletter
+                        </a>
+                        <a class="dropdown-item" routerLink="user-info" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> User Info
+                        </a>
+                        <a class="dropdown-item" routerLink="brand" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Brand
+                        </a>
+                        <a class="dropdown-item" routerLink="electronics-info" routerLinkActive="active">
+                            <i class="fa fa-fw fa-asterisk"></i> Electronics Info
+                        </a>
                     </div>
                 </li>
             </ng-container>
