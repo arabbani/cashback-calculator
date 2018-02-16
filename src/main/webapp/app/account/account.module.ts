@@ -1,31 +1,19 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
+import { ApsstrSharedModule } from '../apsstr-core-ui';
 import { CbclSharedModule } from '../shared';
-
 import {
-    Register,
-    ActivateService,
-    PasswordService,
-    PasswordResetInitService,
-    PasswordResetFinishService,
-    SessionsService,
-    SessionsComponent,
-    PasswordStrengthBarComponent,
-    RegisterComponent,
-    ActivateComponent,
-    PasswordComponent,
-    PasswordResetInitComponent,
-    PasswordResetFinishComponent,
-    SettingsComponent,
-    SocialRegisterComponent,
-    accountState
+    accountState, ActivateComponent, ActivateService, PasswordComponent,
+    PasswordResetFinishComponent, PasswordResetFinishService, PasswordResetInitComponent,
+    PasswordResetInitService, PasswordService, PasswordStrengthBarComponent, Register,
+    RegisterComponent, SessionsComponent, SessionsService, SettingsComponent, SocialRegisterComponent
 } from './';
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(accountState)
+        RouterModule.forChild(accountState),
+        ApsstrSharedModule
     ],
     declarations: [
         SocialRegisterComponent,
