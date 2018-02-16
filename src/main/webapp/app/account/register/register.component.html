@@ -8,7 +8,7 @@
                 <strong>Registration failed!</strong> Please try again later.
             </apsstr-alert-new>
             <apsstr-alert-new *ngIf="errorUserExists" type="danger">
-                <strong>Login name already registered!</strong> Please choose another one.
+                <strong>Username already taken!</strong> Please choose another one.
             </apsstr-alert-new>
             <apsstr-alert-new *ngIf="errorEmailExists" type="danger">
                 <strong>Email is already in use!</strong> Please choose another one.
@@ -24,7 +24,7 @@
                 <apsstr-card-body extraClass="p-4">
                     <h1>Register</h1>
                     <p class="text-muted">Create your account</p>
-                    <form name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm">
+                    <form name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm" novalidate>
                         <div class="mb-3">
                             <div class="input-group mb-1">
                                 <div class="input-group-prepend">
