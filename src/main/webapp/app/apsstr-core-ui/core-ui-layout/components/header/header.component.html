@@ -53,13 +53,15 @@
                     <span>Account</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+                    <a class="dropdown-item" routerLink="profile" routerLinkActive="active">
+                        <i class="fa fa-fw fa-user-circle"></i> Profile</a>
+                    <a class="dropdown-item" routerLink="password" routerLinkActive="active">
+                        <i class="fa fa-fw fa-key"></i> Password</a>
+
+                    <a *apsstrHasAnyAuthority="'ROLE_ADMIN'" class="dropdown-item" routerLink="sessions" routerLinkActive="active">
+                        <i class="fa fa-fw fa-cloud"></i> Sessions</a>
                     <a class="dropdown-item" routerLink="settings" routerLinkActive="active">
                         <i class="fa fa-fw fa-wrench"></i> Settings</a>
-                    <a class="dropdown-item" routerLink="password" routerLinkActive="active">
-                        <i class="fa fa-fw fa-clock-o"></i> Password</a>
-
-                    <a class="dropdown-item" routerLink="sessions" routerLinkActive="active">
-                        <i class="fa fa-fw fa-cloud"></i> Sessions</a>
                     <a class="dropdown-item" (click)="logout()">
                         <i class="icon-logout"></i> Logout</a>
                 </div>
