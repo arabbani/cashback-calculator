@@ -21,6 +21,8 @@
                         <span>Administration</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+                        <a class="dropdown-item" routerLink="entities" routerLinkActive="active">
+                            <i class="fa fa-fw fa-th-list"></i> Entities</a>
                         <a class="dropdown-item" routerLink="user-management" routerLinkActive="active">
                             <i class="fa fa-fw fa-user"></i> User Management</a>
                         <a class="dropdown-item" routerLink="apsstr-metrics" routerLinkActive="active">
@@ -36,13 +38,6 @@
                         <a *ngIf="swaggerEnabled" class="dropdown-item" routerLink="docs" routerLinkActive="active">
                             <i class="fa fa-fw fa-book"></i> API</a>
                     </div>
-                </li>
-
-                <li class="nav-item px-3">
-                    <a class="nav-link" routerLink="entities">
-                        <i class="fa fa-fw fa-th-list"></i>
-                        <span>Entities</span>
-                    </a>
                 </li>
             </ng-container>
 
