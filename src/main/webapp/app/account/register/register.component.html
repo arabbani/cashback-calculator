@@ -4,16 +4,16 @@
             <apsstr-alert-new *ngIf="success" type="success">
                 <strong>Registration saved!</strong> Please check Email for confirmation.
             </apsstr-alert-new>
-            <apsstr-alert-new *ngIf="error" type="error">
+            <apsstr-alert-new *ngIf="error" type="danger">
                 <strong>Registration failed!</strong> Please try again later.
             </apsstr-alert-new>
-            <apsstr-alert-new *ngIf="errorUserExists" type="error">
+            <apsstr-alert-new *ngIf="errorUserExists" type="danger">
                 <strong>Login name already registered!</strong> Please choose another one.
             </apsstr-alert-new>
-            <apsstr-alert-new *ngIf="errorEmailExists" type="error">
+            <apsstr-alert-new *ngIf="errorEmailExists" type="danger">
                 <strong>Email is already in use!</strong> Please choose another one.
             </apsstr-alert-new>
-            <apsstr-alert-new *ngIf="doNotMatch" type="error">
+            <apsstr-alert-new *ngIf="doNotMatch" type="danger">
                 The password and its confirmation do not match!
             </apsstr-alert-new>
         </div>
