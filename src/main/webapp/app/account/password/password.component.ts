@@ -37,6 +37,8 @@ export class PasswordComponent implements OnInit {
             this.passwordService.save(this.password).subscribe(() => {
                 this.error = null;
                 this.success = 'OK';
+                this.password = '';
+                this.confirmPassword = '';
             }, () => {
                 this.success = null;
                 this.error = 'ERROR';

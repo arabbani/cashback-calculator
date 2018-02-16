@@ -1,20 +1,8 @@
 <div>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row justify-content-center" *ngIf="success">
+        <div class="col-md-6 p-4">
             <apsstr-alert-new *ngIf="success" type="success">
                 <strong>Registration saved!</strong> Please check Email for confirmation.
-            </apsstr-alert-new>
-            <apsstr-alert-new *ngIf="error" type="danger">
-                <strong>Registration failed!</strong> Please try again later.
-            </apsstr-alert-new>
-            <apsstr-alert-new *ngIf="errorUserExists" type="danger">
-                <strong>Username already taken!</strong> Please choose another one.
-            </apsstr-alert-new>
-            <apsstr-alert-new *ngIf="errorEmailExists" type="danger">
-                <strong>Email is already in use!</strong> Please choose another one.
-            </apsstr-alert-new>
-            <apsstr-alert-new *ngIf="doNotMatch" type="danger">
-                The password and its confirmation do not match!
             </apsstr-alert-new>
         </div>
     </div>
@@ -32,9 +20,9 @@
                                         <i class="icon-user"></i>
                                     </span>
                                 </div>
-                                <input type="text" [ngClass]="{ 'form-control': true, 'is-invalid': login.dirty && login.invalid, 'is-valid': login.dirty && !login.invalid}"
-                                    [(ngModel)]="registerAccount.login" id="login" name="login" #login="ngModel" required minlength="1"
-                                    maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$" placeholder="Username">
+                                <input type="text" [ngClass]="{ 'form-control': true, 'is-invalid': login.dirty && login.invalid }" [(ngModel)]="registerAccount.login"
+                                    id="login" name="login" #login="ngModel" required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$"
+                                    placeholder="Username">
                             </div>
                             <div *ngIf="login.dirty && login.invalid">
                                 <span class="form-text text-danger" *ngIf="login.errors.required">
@@ -56,9 +44,9 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">@</span>
                                 </div>
-                                <input type="text" [ngClass]="{ 'form-control': true, 'is-invalid': email.dirty && email.invalid, 'is-valid': email.dirty && !email.invalid}"
-                                    id="email" name="email" #email="ngModel" [(ngModel)]="registerAccount.email" minlength=5
-                                    maxlength=100 email required placeholder="Email">
+                                <input type="text" [ngClass]="{ 'form-control': true, 'is-invalid': email.dirty && email.invalid }" id="email" name="email"
+                                    #email="ngModel" [(ngModel)]="registerAccount.email" minlength=5 maxlength=100 email required
+                                    placeholder="Email">
                             </div>
                             <div *ngIf="email.dirty && email.invalid">
                                 <span class="form-text text-danger" *ngIf="email.errors.required">
@@ -82,9 +70,9 @@
                                         <i class="icon-lock"></i>
                                     </span>
                                 </div>
-                                <input type="password" [ngClass]="{ 'form-control': true, 'is-invalid': password.dirty && password.invalid, 'is-valid': password.dirty && !password.invalid}"
-                                    id="password" name="password" #password="ngModel" [(ngModel)]="registerAccount.password"
-                                    minlength=4 maxlength=50 required placeholder="Password">
+                                <input type="password" [ngClass]="{ 'form-control': true, 'is-invalid': password.dirty && password.invalid }" id="password"
+                                    name="password" #password="ngModel" [(ngModel)]="registerAccount.password" minlength=4 maxlength=50
+                                    required placeholder="Password">
                             </div>
                             <div *ngIf="password.dirty && password.invalid">
                                 <span class="form-text text-danger" *ngIf="password.errors.required">
@@ -106,7 +94,7 @@
                                         <i class="icon-lock"></i>
                                     </span>
                                 </div>
-                                <input type="password" [ngClass]="{ 'form-control': true, 'is-invalid': confirmPasswordInput.dirty && confirmPasswordInput.invalid, 'is-valid': confirmPasswordInput.dirty && !confirmPasswordInput.invalid}"
+                                <input type="password" [ngClass]="{ 'form-control': true, 'is-invalid': confirmPasswordInput.dirty && confirmPasswordInput.invalid }"
                                     id="confirmPassword" name="confirmPassword" #confirmPasswordInput="ngModel" [(ngModel)]="confirmPassword"
                                     minlength=4 maxlength=50 required placeholder="Repeat password">
                             </div>
@@ -121,6 +109,21 @@
                                     Confirmation password cannot be longer than 50 characters.
                                 </span>
                             </div>
+                        </div>
+
+                        <div class="mb-2">
+                            <apsstr-alert-new *ngIf="error" type="danger" dismissOnTimeout="5000">
+                                <strong>Registration failed!</strong> Please try again later.
+                            </apsstr-alert-new>
+                            <apsstr-alert-new *ngIf="errorUserExists" type="danger" dismissOnTimeout="5000">
+                                <strong>Username already taken!</strong> Please choose another one.
+                            </apsstr-alert-new>
+                            <apsstr-alert-new *ngIf="errorEmailExists" type="danger" dismissOnTimeout="5000">
+                                <strong>Email is already in use!</strong> Please choose another one.
+                            </apsstr-alert-new>
+                            <apsstr-alert-new *ngIf="doNotMatch" type="danger" dismissOnTimeout="5000">
+                                The password and its confirmation do not match!
+                            </apsstr-alert-new>
                         </div>
                         <button type="submit" class="btn btn-block btn-success" [disabled]="registerForm.form.invalid">Join now</button>
                     </form>

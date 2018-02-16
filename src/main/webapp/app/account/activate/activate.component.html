@@ -8,7 +8,8 @@
                 <a class="alert-link" (click)="login()">sign in</a>.
             </apsstr-alert-new>
             <apsstr-alert-new *ngIf="error" type="danger">
-                <strong>Your user could not be activated.</strong> Please use the registration form to sign up.
+                <strong>Your user could not be activated.</strong> 
+                Please use the <a class="alert-link" routerLink="/register">registration form to sign up.</a>
             </apsstr-alert-new>
         </div>
     </div>

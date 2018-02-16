@@ -57,9 +57,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     private processError(response) {
         this.success = null;
-        if (response.status === 400 && response.json().type === LOGIN_ALREADY_USED_TYPE) {
+        if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
             this.errorUserExists = 'ERROR';
-        } else if (response.status === 400 && response.json().type === EMAIL_ALREADY_USED_TYPE) {
+        } else if (response.status === 400 && response.error.type === EMAIL_ALREADY_USED_TYPE) {
             this.errorEmailExists = 'ERROR';
         } else {
             this.error = 'ERROR';
