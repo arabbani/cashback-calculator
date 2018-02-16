@@ -10,7 +10,7 @@
     <ul class="nav navbar-nav ml-auto mr-3" [ngSwitch]="isAuthenticated()">
         <li class="nav-item" *ngSwitchCase="false">
             <button type="button" class="btn btn-primary" (click)="login()">
-                <i class="icon-login"></i>&nbsp;Sign in
+                <i class="icon-login mr-2"></i>Sign in
             </button>
         </li>
         <ng-container *ngSwitchCase="true">
