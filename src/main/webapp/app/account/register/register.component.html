@@ -2,19 +2,19 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <apsstr-alert-new *ngIf="success" type="success">
-                    <strong>Registration saved!</strong> Please check Email for confirmation.
+                <strong>Registration saved!</strong> Please check Email for confirmation.
             </apsstr-alert-new>
             <apsstr-alert-new *ngIf="error" type="error">
-                <strong>Registration failed!</strong> Please try again later.                
+                <strong>Registration failed!</strong> Please try again later.
             </apsstr-alert-new>
             <apsstr-alert-new *ngIf="errorUserExists" type="error">
-                    <strong>Login name already registered!</strong> Please choose another one.                
+                <strong>Login name already registered!</strong> Please choose another one.
             </apsstr-alert-new>
             <apsstr-alert-new *ngIf="errorEmailExists" type="error">
-                    <strong>Email is already in use!</strong> Please choose another one.                
+                <strong>Email is already in use!</strong> Please choose another one.
             </apsstr-alert-new>
             <apsstr-alert-new *ngIf="doNotMatch" type="error">
-                    The password and its confirmation do not match!                
+                The password and its confirmation do not match!
             </apsstr-alert-new>
         </div>
     </div>
@@ -126,14 +126,16 @@
                     </form>
                 </apsstr-card-body>
                 <apsstr-card-footer extraClass="p-4">
-                    <div class="col-6">
-                        <apsstr-social provider="google-plus"></apsstr-social>
-                    </div>
-                    <div class="col-6">
-                        <apsstr-social provider="facebook"></apsstr-social>
-                    </div>
-                    <div class="col-6">
-                        <apsstr-social provider="twitter"></apsstr-social>
+                    <div class="row justify-content-center">
+                        <div class="col-6">
+                            <apsstr-social provider="google-plus"></apsstr-social>
+                        </div>
+                        <div class="col-6">
+                            <apsstr-social provider="facebook"></apsstr-social>
+                        </div>
+                        <div class="col-6">
+                            <apsstr-social provider="twitter"></apsstr-social>
+                        </div>
                     </div>
                 </apsstr-card-footer>
             </apsstr-card>
