@@ -37,18 +37,18 @@
                                     maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$" placeholder="Username">
                             </div>
                             <div *ngIf="login.dirty && login.invalid">
-                                <small class="form-text text-danger" *ngIf="login.errors.required">
+                                <span class="form-text text-danger" *ngIf="login.errors.required">
                                     Username is required.
-                                </small>
-                                <small class="form-text text-danger" *ngIf="login.errors.minlength">
+                                </span>
+                                <span class="form-text text-danger" *ngIf="login.errors.minlength">
                                     Username is required to be at least 1 character.
-                                </small>
-                                <small class="form-text text-danger" *ngIf="login.errors.maxlength">
+                                </span>
+                                <span class="form-text text-danger" *ngIf="login.errors.maxlength">
                                     Username cannot be longer than 50 characters.
-                                </small>
-                                <small class="form-text text-danger" *ngIf="login.errors.pattern">
+                                </span>
+                                <span class="form-text text-danger" *ngIf="login.errors.pattern">
                                     Username can only contain letters and digits.
-                                </small>
+                                </span>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -61,18 +61,18 @@
                                     maxlength=100 email required placeholder="Email">
                             </div>
                             <div *ngIf="email.dirty && email.invalid">
-                                <small class="form-text text-danger" *ngIf="email.errors.required">
+                                <span class="form-text text-danger" *ngIf="email.errors.required">
                                     Email is required.
-                                </small>
-                                <small class="form-text text-danger" *ngIf="email.errors.invalid">
+                                </span>
+                                <span class="form-text text-danger" *ngIf="email.errors.invalid">
                                     Email is invalid.
-                                </small>
-                                <small class="form-text text-danger" *ngIf="email.errors.minlength">
+                                </span>
+                                <span class="form-text text-danger" *ngIf="email.errors.minlength">
                                     Email is required to be at least 5 characters.
-                                </small>
-                                <small class="form-text text-danger" *ngIf="email.errors.maxlength">
+                                </span>
+                                <span class="form-text text-danger" *ngIf="email.errors.maxlength">
                                     Email cannot be longer than 100 characters.
-                                </small>
+                                </span>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -87,15 +87,15 @@
                                     minlength=4 maxlength=50 required placeholder="Password">
                             </div>
                             <div *ngIf="password.dirty && password.invalid">
-                                <small class="form-text text-danger" *ngIf="password.errors.required">
+                                <span class="form-text text-danger" *ngIf="password.errors.required">
                                     Password is required.
-                                </small>
-                                <small class="form-text text-danger" *ngIf="password.errors.minlength">
+                                </span>
+                                <span class="form-text text-danger" *ngIf="password.errors.minlength">
                                     Password is required to be at least 4 characters.
-                                </small>
-                                <small class="form-text text-danger" *ngIf="password.errors.maxlength">
+                                </span>
+                                <span class="form-text text-danger" *ngIf="password.errors.maxlength">
                                     Password cannot be longer than 50 characters.
-                                </small>
+                                </span>
                             </div>
                             <apsstr-password-strength-bar [passwordToCheck]="registerAccount.password"></apsstr-password-strength-bar>
                         </div>
@@ -111,15 +111,15 @@
                                     minlength=4 maxlength=50 required placeholder="Repeat password">
                             </div>
                             <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
-                                <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.required">
+                                <span class="form-text text-danger" *ngIf="confirmPasswordInput.errors.required">
                                     Confirmation password is required.
-                                </small>
-                                <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.minlength">
+                                </span>
+                                <span class="form-text text-danger" *ngIf="confirmPasswordInput.errors.minlength">
                                     Confirmation password is required to be at least 4 characters.
-                                </small>
-                                <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.maxlength">
+                                </span>
+                                <span class="form-text text-danger" *ngIf="confirmPasswordInput.errors.maxlength">
                                     Confirmation password cannot be longer than 50 characters.
-                                </small>
+                                </span>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-block btn-success" [disabled]="registerForm.form.invalid">Join now</button>

@@ -17,14 +17,14 @@
             <input type="text" class="form-control" name="name" id="field_name"
                 [(ngModel)]="merchant.name" required maxlength="255"/>
             <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.name?.errors?.required">
                    This field is required.
-                </small>
-                <small class="form-text text-danger"
+                </span>
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.name?.errors?.maxlength">
                    This field cannot be longer than 255 characters.
-                </small>
+                </span>
             </div>
         </div>
         <div class="form-group">
@@ -32,10 +32,10 @@
             <input type="text" class="form-control" name="url" id="field_url"
                 [(ngModel)]="merchant.url" maxlength="2000"/>
             <div [hidden]="!(editForm.controls.url?.dirty && editForm.controls.url?.invalid)">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.url?.errors?.maxlength">
                    This field cannot be longer than 2000 characters.
-                </small>
+                </span>
             </div>
         </div>
         <div class="form-group">
@@ -43,10 +43,10 @@
             <input type="checkbox" class="form-control" name="active" id="field_active"
                 [(ngModel)]="merchant.active" />
             <div [hidden]="!(editForm.controls.active?.dirty && editForm.controls.active?.invalid)">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.active?.errors?.required">
                    This field is required.
-                </small>
+                </span>
             </div>
         </div>
 

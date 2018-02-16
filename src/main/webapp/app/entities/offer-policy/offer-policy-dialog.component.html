@@ -17,10 +17,10 @@
             <input type="text" class="form-control" name="name" id="field_name"
                 [(ngModel)]="offerPolicy.name" maxlength="255"/>
             <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.name?.errors?.maxlength">
                    This field cannot be longer than 255 characters.
-                </small>
+                </span>
             </div>
         </div>
         <div class="form-group">
@@ -28,14 +28,14 @@
             <input type="text" class="form-control" name="description" id="field_description"
                 [(ngModel)]="offerPolicy.description" required maxlength="2000"/>
             <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.description?.errors?.required">
                    This field is required.
-                </small>
-                <small class="form-text text-danger"
+                </span>
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.description?.errors?.maxlength">
                    This field cannot be longer than 2000 characters.
-                </small>
+                </span>
             </div>
         </div>
 

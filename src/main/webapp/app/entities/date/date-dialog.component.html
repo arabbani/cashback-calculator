@@ -17,14 +17,14 @@
             <input type="number" class="form-control" name="date" id="field_date"
                 [(ngModel)]="date.date" required/>
             <div [hidden]="!(editForm.controls.date?.dirty && editForm.controls.date?.invalid)">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.date?.errors?.required">
                    This field is required.
-                </small>
-                <small class="form-text text-danger"
+                </span>
+                <span class="form-text text-danger"
                     [hidden]="!editForm.controls.date?.errors?.number">
                     This field should be a number.
-                </small>
+                </span>
             </div>
         </div>
 

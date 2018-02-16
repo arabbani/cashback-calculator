@@ -17,14 +17,14 @@
             <input type="text" class="form-control" name="name" id="field_name"
                 [(ngModel)]="card.name" required maxlength="255"/>
             <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.name?.errors?.required">
                    This field is required.
-                </small>
-                <small class="form-text text-danger"
+                </span>
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.name?.errors?.maxlength">
                    This field cannot be longer than 255 characters.
-                </small>
+                </span>
             </div>
         </div>
 

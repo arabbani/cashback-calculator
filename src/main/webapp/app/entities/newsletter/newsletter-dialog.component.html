@@ -17,10 +17,10 @@
             <input type="text" class="form-control" name="emailId" id="field_emailId"
                 [(ngModel)]="newsletter.emailId" maxlength="254"/>
             <div [hidden]="!(editForm.controls.emailId?.dirty && editForm.controls.emailId?.invalid)">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.emailId?.errors?.maxlength">
                    This field cannot be longer than 254 characters.
-                </small>
+                </span>
             </div>
         </div>
         <div class="form-group">
@@ -43,10 +43,10 @@
             <input type="checkbox" class="form-control" name="active" id="field_active"
                 [(ngModel)]="newsletter.active" />
             <div [hidden]="!(editForm.controls.active?.dirty && editForm.controls.active?.invalid)">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.active?.errors?.required">
                    This field is required.
-                </small>
+                </span>
             </div>
         </div>
 

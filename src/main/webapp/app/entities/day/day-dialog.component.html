@@ -17,14 +17,14 @@
             <input type="text" class="form-control" name="day" id="field_day"
                 [(ngModel)]="day.day" required maxlength="15"/>
             <div [hidden]="!(editForm.controls.day?.dirty && editForm.controls.day?.invalid)">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.day?.errors?.required">
                    This field is required.
-                </small>
-                <small class="form-text text-danger"
+                </span>
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.day?.errors?.maxlength">
                    This field cannot be longer than 15 characters.
-                </small>
+                </span>
             </div>
         </div>
 

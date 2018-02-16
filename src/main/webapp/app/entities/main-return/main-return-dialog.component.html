@@ -22,10 +22,10 @@
             <input type="checkbox" class="form-control" name="exact" id="field_exact"
                 [(ngModel)]="mainReturn.exact" />
             <div [hidden]="!(editForm.controls.exact?.dirty && editForm.controls.exact?.invalid)">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    [hidden]="!editForm.controls.exact?.errors?.required">
                    This field is required.
-                </small>
+                </span>
             </div>
         </div>
         <div class="form-group">
