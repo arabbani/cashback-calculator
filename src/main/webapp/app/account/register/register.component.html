@@ -1,25 +1,21 @@
 <div>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="alert alert-success" *ngIf="success">
-                <strong>Registration saved!</strong> Please check Email for confirmation.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="error">
-                <strong>Registration failed!</strong> Please try again later.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorUserExists">
-                <strong>Login name already registered!</strong> Please choose another one.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorEmailExists">
-                <strong>Email is already in use!</strong> Please choose another one.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="doNotMatch">
-                The password and its confirmation do not match!
-            </div>
+            <apsstr-alert-new *ngIf="success" type="success">
+                    <strong>Registration saved!</strong> Please check Email for confirmation.
+            </apsstr-alert-new>
+            <apsstr-alert-new *ngIf="error" type="error">
+                <strong>Registration failed!</strong> Please try again later.                
+            </apsstr-alert-new>
+            <apsstr-alert-new *ngIf="errorUserExists" type="error">
+                    <strong>Login name already registered!</strong> Please choose another one.                
+            </apsstr-alert-new>
+            <apsstr-alert-new *ngIf="errorEmailExists" type="error">
+                    <strong>Email is already in use!</strong> Please choose another one.                
+            </apsstr-alert-new>
+            <apsstr-alert-new *ngIf="doNotMatch" type="error">
+                    The password and its confirmation do not match!                
+            </apsstr-alert-new>
         </div>
     </div>
     <div class="row justify-content-center" *ngIf="!success">
@@ -126,7 +122,7 @@
                                 </small>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-block btn-success" [disabled]="registerForm.form.invalid">Create Account</button>
+                        <button type="submit" class="btn btn-block btn-success" [disabled]="registerForm.form.invalid">Join now</button>
                     </form>
                 </apsstr-card-body>
                 <apsstr-card-footer extraClass="p-4">
