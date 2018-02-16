@@ -15,13 +15,13 @@ Generic styles
 ========================================================================== */
 
 /* Error highlight on input fields */
-.ng-valid[required], .ng-valid.required  {
-  border-left: 5px solid green;
-}
+// .ng-valid[required], .ng-valid.required  {
+//   border-left: 5px solid green;
+// }
 
-.ng-invalid:not(form)  {
-  border-left: 5px solid red;
-}
+// .ng-invalid:not(form)  {
+//   border-left: 5px solid red;
+// }
 
 /* other generic styles */
 
@@ -118,22 +118,22 @@ entity tables helpers
 
 /* Remove Bootstrap padding from the element
    http://stackoverflow.com/questions/19562903/remove-padding-from-columns-in-bootstrap-3 */
-@mixin no-padding($side) {
-    @if $side == 'all' {
-        .no-padding {
-            padding: 0 !important;
-        }
-    } @else {
-        .no-padding-#{$side} {
-            padding-#{$side}: 0 !important;
-        }
-    }
-}
-@include no-padding("left");
-@include no-padding("right");
-@include no-padding("top");
-@include no-padding("bottom");
-@include no-padding("all");
+// @mixin no-padding($side) {
+//     @if $side == 'all' {
+//         .no-padding {
+//             padding: 0 !important;
+//         }
+//     } @else {
+//         .no-padding-#{$side} {
+//             padding-#{$side}: 0 !important;
+//         }
+//     }
+// }
+// @include no-padding("left");
+// @include no-padding("right");
+// @include no-padding("top");
+// @include no-padding("bottom");
+// @include no-padding("all");
 
 /* bootstrap 3 input-group 100% width
    http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
@@ -153,89 +153,89 @@ entity tables helpers
 /* ==========================================================================
 entity detail page css
 ========================================================================== */
-.row.jh-entity-details > {
-    dd {
-        margin-bottom: 15px;
-    }
-}
+// .row.jh-entity-details > {
+//     dd {
+//         margin-bottom: 15px;
+//     }
+// }
 
-@media screen and (min-width: 768px) {
-    .row.jh-entity-details > {
-        dt {
-            margin-bottom: 15px;
-        }
-        dd {
-            border-bottom: 1px solid #eee;
-            padding-left: 180px;
-            margin-left: 0;
-        }
-    }
-}
+// @media screen and (min-width: 768px) {
+//     .row.jh-entity-details > {
+//         dt {
+//             margin-bottom: 15px;
+//         }
+//         dd {
+//             border-bottom: 1px solid #eee;
+//             padding-left: 180px;
+//             margin-left: 0;
+//         }
+//     }
+// }
 
 /* ==========================================================================
 ui bootstrap tweaks
 ========================================================================== */
-.nav, .pagination, .carousel, .panel-title a {
-    cursor: pointer;
-}
+// .nav, .pagination, .carousel, .panel-title a {
+//     cursor: pointer;
+// }
 
-.datetime-picker-dropdown > li.date-picker-menu div > table .btn-default,
-.uib-datepicker-popup  > li > div.uib-datepicker > table .btn-default {
-    border: 0;
-}
+// .datetime-picker-dropdown > li.date-picker-menu div > table .btn-default,
+// .uib-datepicker-popup  > li > div.uib-datepicker > table .btn-default {
+//     border: 0;
+// }
 
-.datetime-picker-dropdown > li.date-picker-menu div > table:focus,
-.uib-datepicker-popup  > li > div.uib-datepicker > table:focus {
-    outline: none;
-}
+// .datetime-picker-dropdown > li.date-picker-menu div > table:focus,
+// .uib-datepicker-popup  > li > div.uib-datepicker > table:focus {
+//     outline: none;
+// }
 
-.thread-dump-modal-lock {
-    max-width: 450px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
- }
+// .thread-dump-modal-lock {
+//     max-width: 450px;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     white-space: nowrap;
+//  }
 
 /* ==========================================================================
 Social button
 ========================================================================== */
-.jh-btn-social {
-    margin-bottom: 5px;
-}
+// .jh-btn-social {
+//     margin-bottom: 5px;
+// }
 
-.jh-btn-google {
-    background-color: #dd4b39;
-    border-color: rgba(0, 0, 0, 0.2);
-    color: #fff;
-}
+// .jh-btn-google {
+//     background-color: #dd4b39;
+//     border-color: rgba(0, 0, 0, 0.2);
+//     color: #fff;
+// }
 
-.jh-btn-google:hover, .jh-btn-google:focus, .jh-btn-google:active, .jh-btn-google.active, .open > .dropdown-toggle.jh-btn-google {
-    background-color: #c23321;
-    border-color: rgba(0, 0, 0, 0.2);
-    color: #fff;
-}
+// .jh-btn-google:hover, .jh-btn-google:focus, .jh-btn-google:active, .jh-btn-google.active, .open > .dropdown-toggle.jh-btn-google {
+//     background-color: #c23321;
+//     border-color: rgba(0, 0, 0, 0.2);
+//     color: #fff;
+// }
 
-.jh-btn-facebook {
-    background-color: #3b5998;
-    border-color: rgba(0, 0, 0, 0.2);
-    color: #fff;
-}
+// .jh-btn-facebook {
+//     background-color: #3b5998;
+//     border-color: rgba(0, 0, 0, 0.2);
+//     color: #fff;
+// }
 
-.jh-btn-facebook:hover, .jh-btn-facebook:focus, .jh-btn-facebook:active, .jh-btn-facebook.active, .open > .dropdown-toggle.jh-btn-facebook {
-    background-color: #2d4373;
-    border-color: rgba(0, 0, 0, 0.2);
-    color: #fff;
-}
+// .jh-btn-facebook:hover, .jh-btn-facebook:focus, .jh-btn-facebook:active, .jh-btn-facebook.active, .open > .dropdown-toggle.jh-btn-facebook {
+//     background-color: #2d4373;
+//     border-color: rgba(0, 0, 0, 0.2);
+//     color: #fff;
+// }
 
-.jh-btn-twitter {
-    background-color: #55acee;
-    border-color: rgba(0, 0, 0, 0.2);
-    color: #fff;
-}
+// .jh-btn-twitter {
+//     background-color: #55acee;
+//     border-color: rgba(0, 0, 0, 0.2);
+//     color: #fff;
+// }
 
-.jh-btn-twitter:hover, .jh-btn-twitter:focus, .jh-btn-twitter:active, .jh-btn-twitter.active, .open > .dropdown-toggle.jh-btn-twitter {
-    background-color: #2795e9;
-    border-color: rgba(0, 0, 0, 0.2);
-    color: #fff;
-}
+// .jh-btn-twitter:hover, .jh-btn-twitter:focus, .jh-btn-twitter:active, .jh-btn-twitter.active, .open > .dropdown-toggle.jh-btn-twitter {
+//     background-color: #2795e9;
+//     border-color: rgba(0, 0, 0, 0.2);
+//     color: #fff;
+// }
 /* jhipster-needle-scss-add-main JHipster will add new css style */

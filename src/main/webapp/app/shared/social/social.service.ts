@@ -7,7 +7,7 @@ export class SocialService {
 
     getProviderSetting(provider) {
         switch (provider) {
-            case 'google': return 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
+            case 'google-plus': return 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
             case 'facebook': return 'public_profile,email';
             case 'twitter': return '';
             // jhipster-needle-add-social-button
@@ -16,6 +16,9 @@ export class SocialService {
     }
 
     getProviderURL(provider) {
-        return 'signin/' + provider;
+        switch (provider) {
+            case 'google-plus': return 'signin/google';
+            default: return 'signin/' + provider;
+        }
     }
 }

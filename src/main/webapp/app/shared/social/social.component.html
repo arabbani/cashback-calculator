@@ -1,7 +1,10 @@
 <form ngNoForm action="{{ providerURL }}" method="POST">
-    <button type="submit" class="btn btn-block jh-btn-social jh-btn-{{ provider }}">
-        <span>Sign in with {{ label }}</span>
-    </button>
-    <input name="scope" type="hidden" value="{{ providerSetting }}"/>
-    <input name="_csrf" type="hidden" value="{{ csrf }}"/>
+    <div class="col-6 mb-3">
+        <button class="btn btn-block btn-{{ provider }}" type="submit">
+            <span>{{ label }}</span>
+        </button>
+    </div>
+
+    <input name="scope" type="hidden" value="{{ providerSetting }}" />
+    <input name="_csrf" type="hidden" value="{{ csrf }}" />
 </form>
