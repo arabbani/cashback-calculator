@@ -11,6 +11,7 @@ import {
     RegisterComponent, SessionsComponent, SessionsService, SettingsComponent, SocialRegisterComponent
 } from './';
 import { ProfileComponent } from './profile/profile.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { ProfileComponent } from './profile/profile.component';
         PasswordResetFinishComponent,
         SessionsComponent,
         SettingsComponent,
-        ProfileComponent
+        ProfileComponent,
+        UserSettingsComponent
     ],
     providers: [
         SessionsService,

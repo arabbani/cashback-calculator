@@ -4,7 +4,7 @@ import { UserRouteAccessService } from '../../shared';
 import { SettingsComponent } from './settings.component';
 
 export const settingsRoute: Route = {
-    path: 'profile',
+    path: 'settings',
     component: SettingsComponent,
     data: {
         authorities: ['ROLE_USER'],
