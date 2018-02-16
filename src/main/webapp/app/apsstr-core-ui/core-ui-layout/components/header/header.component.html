@@ -9,10 +9,9 @@
 
     <ul class="nav navbar-nav ml-auto mr-3" [ngSwitch]="isAuthenticated()">
         <li class="nav-item" *ngSwitchCase="false">
-            <a class="nav-link" (click)="login()">
-                <i class="icon-login"></i>
-                <span>Login</span>
-            </a>
+            <button type="button" class="btn btn-primary" (click)="login()">
+                <i class="icon-login"></i>&nbsp;Sign in
+            </button>
         </li>
         <ng-container *ngSwitchCase="true">
             <ng-container *apsstrHasAnyAuthority="'ROLE_ADMIN'">
@@ -47,7 +46,7 @@
                 </li>
             </ng-container>
 
-            <li class="nav-item dropdown" dropdown placement="bottom right">
+            <li class="nav-item dropdown px-3" dropdown placement="bottom right">
                 <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
                     <i class="icon-user"></i>
                     <span>Account</span>

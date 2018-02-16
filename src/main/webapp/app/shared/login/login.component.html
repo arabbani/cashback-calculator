@@ -11,7 +11,19 @@
                 <strong>Failed to sign in!</strong> Please check your credentials and try again.
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="row justify-content-center mb-5">
+            <div class="col-6">
+                <apsstr-social provider="facebook"></apsstr-social>
+            </div>
+            <div class="col-6">
+                <apsstr-social provider="google-plus"></apsstr-social>
+            </div>
+            <div class="col-6">
+                <apsstr-social provider="twitter"></apsstr-social>
+            </div>
+            <!-- jhipster-needle-add-social-button -->
+        </div>
+        <div class="col-md-8">
             <form class="form" role="form" (ngSubmit)="login()" #loginForm="ngForm" novalidate>
 
                 <div class="input-group mb-3">
@@ -38,22 +50,16 @@
                         Remember me
                     </label>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3" [disabled]="loginForm.form.invalid">Sign in</button>
+                <button type="submit" class="btn btn-block btn-primary mt-3" [disabled]="loginForm.form.invalid">Sign in</button>
             </form>
             <p></p>
-            <div class="alert alert-danger">
+            <div>
                 <a class="alert-link" (click)="requestResetPassword()">Forgot password?</a>
             </div>
-            <div class="alert alert-primary">
-                <a class="alert-link" (click)="register()">Register</a>
+            <div>
+                Not a member?
+                <a class="alert-link" (click)="register()">Join now</a>
             </div>
-        </div>
-        <div class="col-md-6">
-            <br/>
-            <apsstr-social provider="facebook"></apsstr-social>
-            <apsstr-social provider="google-plus"></apsstr-social>
-            <apsstr-social provider="twitter"></apsstr-social>
-            <!-- jhipster-needle-add-social-button -->
         </div>
     </div>
 </div>
