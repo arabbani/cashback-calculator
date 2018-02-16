@@ -1,0 +1,15 @@
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <tabset>
+            <tab heading="Profile">
+                <apsstr-settings></apsstr-settings>
+            </tab>
+            <tab heading="Password">
+               <apsstr-password></apsstr-password>
+            </tab>
+            <tab *apsstrHasAnyAuthority="'ROLE_ADMIN'" heading="Sessions">
+                <apsstr-sessions></apsstr-sessions>
+            </tab>
+        </tabset>
+    </div>
+</div>
