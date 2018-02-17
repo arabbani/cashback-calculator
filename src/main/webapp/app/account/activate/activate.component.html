@@ -4,12 +4,12 @@
             <h1>Activation</h1>
             <apsstr-alert-new *ngIf="success" type="success">
                 <span>
-                    <strong>Your user account has been activated.</strong> Please </span>
+                    <strong>Your account has been activated.</strong> Please </span>
                 <a class="alert-link" (click)="login()">sign in</a>.
             </apsstr-alert-new>
             <apsstr-alert-new *ngIf="error" type="danger">
-                <strong>Your user could not be activated.</strong> 
-                Please use the <a class="alert-link" routerLink="/register">registration form to sign up.</a>
+                <strong>Your account could not be activated.</strong> 
+                Please try again or use the <a class="alert-link" routerLink="/register">registration form to sign up.</a>
             </apsstr-alert-new>
         </div>
     </div>
