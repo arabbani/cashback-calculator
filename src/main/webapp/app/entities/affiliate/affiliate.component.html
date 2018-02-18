@@ -1,4 +1,18 @@
-<div>
+<kendo-grid
+          [data]="affiliates"
+          
+          [sortable]="true"
+          [pageable]="true"
+          [scrollable]="'none'"
+          (dataStateChange)="dataStateChange($event)"
+        >
+        <kendo-grid-column field="id" width="130"></kendo-grid-column>
+        <kendo-grid-column field="name" width="200"></kendo-grid-column>
+        <kendo-grid-column field="active"></kendo-grid-column>
+        <kendo-grid-column field="url"></kendo-grid-column>
+      </kendo-grid>
+
+<!-- <div>
     <h2>
         <span>Affiliates</span>
         <button class="btn btn-primary float-right jh-create-entity create-affiliate" [routerLink]="['/', { outlets: { popup: ['affiliate-new'] } }]">
@@ -59,4 +73,4 @@
             </tbody>
         </table>
     </div>
-</div>
+</div> -->
