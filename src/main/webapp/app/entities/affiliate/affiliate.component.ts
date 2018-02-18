@@ -12,6 +12,7 @@ import { AffiliateService } from './affiliate.service';
     templateUrl: './affiliate.component.html'
 })
 export class AffiliateComponent implements OnInit {
+
     affiliates: Affiliate[];
     public state: State = {
         skip: 0,

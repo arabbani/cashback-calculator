@@ -1,16 +1,9 @@
-<kendo-grid
-          [data]="affiliates"
-          
-          [sortable]="true"
-          [pageable]="true"
-          [scrollable]="'none'"
-          (dataStateChange)="dataStateChange($event)"
-        >
-        <kendo-grid-column field="id" width="130"></kendo-grid-column>
-        <kendo-grid-column field="name" width="200"></kendo-grid-column>
-        <kendo-grid-column field="active"></kendo-grid-column>
-        <kendo-grid-column field="url"></kendo-grid-column>
-      </kendo-grid>
+<kendo-grid [data]="affiliates">
+    <kendo-grid-column field="id" title="ID" width="130"></kendo-grid-column>
+    <kendo-grid-column field="name" title="Name" width="200"></kendo-grid-column>
+    <kendo-grid-column field="active" title="Status"></kendo-grid-column>
+    <kendo-grid-column field="url" title="Url"></kendo-grid-column>
+</kendo-grid>
 
 <!-- <div>
     <h2>

@@ -1,18 +1,19 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
 import {
-    AffiliateService,
-    AffiliatePopupService,
     AffiliateComponent,
+    AffiliateDeleteDialogComponent,
+    AffiliateDeletePopupComponent,
     AffiliateDetailComponent,
     AffiliateDialogComponent,
     AffiliatePopupComponent,
-    AffiliateDeletePopupComponent,
-    AffiliateDeleteDialogComponent,
-    affiliateRoute,
     affiliatePopupRoute,
+    AffiliatePopupService,
+    affiliateRoute,
+    AffiliateService,
 } from './';
 
 const ENTITY_STATES = [
@@ -23,7 +24,8 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        GridModule
     ],
     declarations: [
         AffiliateComponent,
