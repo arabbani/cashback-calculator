@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
@@ -30,7 +29,6 @@ const CORE_UI_DIRECTIVES = [
 
 @NgModule({
   imports: [
-    CommonModule,
     RouterModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
