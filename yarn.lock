@@ -27,6 +27,12 @@
     "@ngtools/json-schema" "^1.1.0"
     rxjs "^5.5.6"
 
+"@angular/animations@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-5.2.5.tgz#3e72184321c4979305619c74902b8be92d76db70"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/cli@1.6.6":
   version "1.6.6"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-1.6.6.tgz#002119ab2ed804bbdc86075e0095eadda2a0baa0"
@@ -183,11 +189,148 @@
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@ngx-translate/http-loader/-/http-loader-2.0.1.tgz#aa67788e64bfa8652691a77b022b3b4031209113"
 
+"@progress/kendo-angular-buttons@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-buttons/-/kendo-angular-buttons-3.0.3.tgz#05d8807ebc35419339e024d98554144656420f8c"
+  dependencies:
+    "@progress/kendo-angular-popup" "^2.0.0"
+    tslib "^1.7.0"
+
+"@progress/kendo-angular-dateinputs@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-dateinputs/-/kendo-angular-dateinputs-2.1.1.tgz#31ba0f14d9ff84dca8d0126d8db6f16770e9e59a"
+  dependencies:
+    "@progress/kendo-angular-popup" "^2.0.0"
+    "@progress/kendo-date-math" "^1.1.0"
+    tslib "^1.7.0"
+
+"@progress/kendo-angular-dropdowns@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-dropdowns/-/kendo-angular-dropdowns-2.0.2.tgz#2d1c760fadf6bac9f74affe47eee8bbd3a081ee5"
+  dependencies:
+    "@progress/kendo-angular-popup" "^2.0.0"
+    "@progress/kendo-angular-resize-sensor" "^3.0.0"
+    tslib "^1.7.0"
+
+"@progress/kendo-angular-excel-export@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-excel-export/-/kendo-angular-excel-export-1.0.6.tgz#9641363d58342644c4d66153748dfe366e921219"
+  dependencies:
+    "@progress/kendo-file-saver" "^1.0.0"
+    "@progress/kendo-ooxml" "^1.0.0"
+    tslib "^1.7.0"
+
+"@progress/kendo-angular-grid@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-grid/-/kendo-angular-grid-2.1.0.tgz#9a3b3075aa55765bf2c580e4136d0f99806ee811"
+  dependencies:
+    "@progress/kendo-angular-pdf-export" "^1.0.0"
+    "@progress/kendo-angular-resize-sensor" "^3.0.0"
+    "@progress/kendo-file-saver" "^1.0.0"
+    "@telerik/kendo-draggable" "^1.6.0"
+    tslib "^1.7.0"
+
+"@progress/kendo-angular-inputs@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-inputs/-/kendo-angular-inputs-2.1.1.tgz#b4c8e2d9945922a8362ce27b09f4899831dedbae"
+  dependencies:
+    "@progress/kendo-angular-resize-sensor" "^3.0.0"
+    "@telerik/kendo-draggable" "^1.5.1"
+    "@telerik/kendo-inputs-common" "^2.2.2"
+    tslib "^1.7.0"
+
+"@progress/kendo-angular-intl@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-intl/-/kendo-angular-intl-1.3.1.tgz#d37d72404e23ef83ce93381c58c6a1cb94a76a9d"
+  dependencies:
+    "@telerik/kendo-intl" "^1.3.0"
+    tslib "^1.7.0"
+
+"@progress/kendo-angular-l10n@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-l10n/-/kendo-angular-l10n-1.0.6.tgz#25f57bd825fe010f42d1d7eee3ba52e078dffd0e"
+  dependencies:
+    tslib "^1.7.0"
+
+"@progress/kendo-angular-pdf-export@^1.0.0":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-pdf-export/-/kendo-angular-pdf-export-1.0.2.tgz#2f7c2c798c3fd925706897485c4ecbd10c566fd3"
+  dependencies:
+    "@progress/kendo-file-saver" "^1.0.1"
+    tslib "^1.7.0"
+
+"@progress/kendo-angular-popup@^2.0.0":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-popup/-/kendo-angular-popup-2.0.1.tgz#e255d0b173e015ebf4b1f44aaeba34f09ffba838"
+  dependencies:
+    "@progress/kendo-popup-common" "^1.2.3"
+    tslib "^1.7.0"
+
+"@progress/kendo-angular-resize-sensor@^3.0.0":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-resize-sensor/-/kendo-angular-resize-sensor-3.0.1.tgz#be303153b5af2adb4cf285ca22e20eab3f6e7aa7"
+  dependencies:
+    tslib "^1.7.0"
+
+"@progress/kendo-data-query@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-data-query/-/kendo-data-query-1.2.0.tgz#7f878100919b067a9867c608556685dd21d3b3ae"
+  dependencies:
+    tslib "^1.7.0"
+
+"@progress/kendo-date-math@^1.1.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-date-math/-/kendo-date-math-1.2.0.tgz#62fc00b540786b8bb5c7001ecb06b2e3ff05b498"
+  dependencies:
+    tslib "^1.7.0"
+
+"@progress/kendo-drawing@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-drawing/-/kendo-drawing-1.5.1.tgz#c16befdb8564fdd069b127cfa829e65eba1b4cc8"
+  dependencies:
+    pako "^1.0.5"
+
+"@progress/kendo-file-saver@^1.0.0", "@progress/kendo-file-saver@^1.0.1":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-file-saver/-/kendo-file-saver-1.0.5.tgz#c618bde04a6beeeb9bd5ad0317e1012025c710d2"
+
+"@progress/kendo-ooxml@^1.0.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-ooxml/-/kendo-ooxml-1.1.0.tgz#86d9e409f59d43825578f2b5f078cc95b864052d"
+  dependencies:
+    jszip "^3.1.0"
+
+"@progress/kendo-popup-common@^1.2.3":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-popup-common/-/kendo-popup-common-1.3.0.tgz#0c06c914be73f8dfc25c8c6a171801eb92af5225"
+
+"@progress/kendo-theme-bootstrap@^2.11.7":
+  version "2.11.7"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-theme-bootstrap/-/kendo-theme-bootstrap-2.11.7.tgz#0069f72cab5613b457734c67c6bad4d696b7e229"
+  dependencies:
+    "@progress/kendo-theme-default" "^2.48.0"
+
+"@progress/kendo-theme-default@^2.48.0":
+  version "2.48.0"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-theme-default/-/kendo-theme-default-2.48.0.tgz#84c3e383e8007c692628dce8092f284c79fe2f56"
+
 "@schematics/angular@~0.1.17":
   version "0.1.17"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.1.17.tgz#084a7cbe2de6f94a856bd08d95c9d35ef8905e2b"
   dependencies:
     typescript "~2.6.2"
+
+"@telerik/kendo-draggable@^1.5.1", "@telerik/kendo-draggable@^1.6.0":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@telerik/kendo-draggable/-/kendo-draggable-1.7.1.tgz#b1fa1ebadd7ad5eb3d437d8353ee09caa04888e5"
+
+"@telerik/kendo-inputs-common@^2.2.2":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@telerik/kendo-inputs-common/-/kendo-inputs-common-2.3.0.tgz#e87104692440fb7382cd5cfb0b94b3ad8912074c"
+
+"@telerik/kendo-intl@^1.3.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@telerik/kendo-intl/-/kendo-intl-1.4.0.tgz#6ce01c3517a054bd9506fafc0ed7406141c255d2"
 
 "@types/jasmine@2.5.53":
   version "2.5.53"
@@ -1606,6 +1749,10 @@ core-js@^2.2.0, core-js@^2.4.0:
   version "2.5.3"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.3.tgz#8acc38345824f16d8365b7c9b4259168e8ed603e"
 
+core-js@~2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.3.0.tgz#fab83fbb0b2d8dc85fa636c4b9d34c75420c6d65"
+
 core-object@^3.1.0:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/core-object/-/core-object-3.1.5.tgz#fa627b87502adc98045e44678e9a8ec3b9c0d2a9"
@@ -2452,6 +2599,10 @@ es6-map@^0.1.3:
 es6-promise@^4.0.3:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.4.tgz#dc4221c2b16518760bd8c39a52d8f356fc00ed29"
+
+es6-promise@~3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-3.0.2.tgz#010d5858423a5f118979665f46486a95c6ee2bb6"
 
 es6-set@~0.1.5:
   version "0.1.5"
@@ -3779,6 +3930,10 @@ image-size@~0.5.0:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/image-size/-/image-size-0.5.5.tgz#09dfd4ab9d20e29eb1c3e80b8990378df9e3cb9c"
 
+immediate@~3.0.5:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
+
 immutable@3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
@@ -4452,6 +4607,16 @@ jstransform@^11.0.3:
     object-assign "^2.0.0"
     source-map "^0.4.2"
 
+jszip@^3.1.0:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/jszip/-/jszip-3.1.5.tgz#e3c2a6c6d706ac6e603314036d43cd40beefdf37"
+  dependencies:
+    core-js "~2.3.0"
+    es6-promise "~3.0.2"
+    lie "~3.1.0"
+    pako "~1.0.2"
+    readable-stream "~2.0.6"
+
 karma-chrome-launcher@2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/karma-chrome-launcher/-/karma-chrome-launcher-2.2.0.tgz#cf1b9d07136cc18fe239327d24654c3dbc368acf"
@@ -4653,6 +4818,12 @@ license-webpack-plugin@^1.0.0:
   resolved "https://registry.yarnpkg.com/license-webpack-plugin/-/license-webpack-plugin-1.1.1.tgz#76b2cedccc78f139fd7877e576f756cfc141b8c2"
   dependencies:
     ejs "^2.5.7"
+
+lie@~3.1.0:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/lie/-/lie-3.1.1.tgz#9a436b2cc7746ca59de7a41fa469b3efb76bd87e"
+  dependencies:
+    immediate "~3.0.5"
 
 limiter@^1.0.5:
   version "1.1.2"
@@ -5892,7 +6063,7 @@ p-try@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-1.0.0.tgz#cbc79cdbaf8fd4228e13f621f2b1a237c1b207b3"
 
-pako@~1.0.5:
+pako@^1.0.5, pako@~1.0.2, pako@~1.0.5:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.6.tgz#0101211baa70c4bca4a0f63f2206e97b7dfaf258"
 
@@ -6727,7 +6898,7 @@ readable-stream@~1.1.9:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@~2.0.0:
+readable-stream@~2.0.0, readable-stream@~2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.0.6.tgz#8f90341e68a53ccc928788dacfcd11b36eb9b78e"
   dependencies:
@@ -8105,7 +8276,7 @@ tsickle@^0.26.0:
     source-map "^0.5.6"
     source-map-support "^0.4.2"
 
-tslib@^1.7.1, tslib@^1.8.1:
+tslib@^1.7.0, tslib@^1.7.1, tslib@^1.8.1:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
 

@@ -1,6 +1,6 @@
 /* after changing this file run 'yarn run webpack:build' */
-$fa-font-path: '~font-awesome/fonts';
 
+$fa-font-path: '~font-awesome/fonts';
 /***************************
 put Sass variables here:
 eg $input-color: red;
@@ -9,5 +9,5 @@ eg $input-color: red;
 @import 'node_modules/font-awesome/scss/font-awesome';
 @import 'node_modules/simple-line-icons/scss/simple-line-icons';
 @import 'core-ui/style';
-
+@import "~@progress/kendo-theme-bootstrap/scss/all";
 /* jhipster-needle-scss-add-vendor JHipster will add new css style */
