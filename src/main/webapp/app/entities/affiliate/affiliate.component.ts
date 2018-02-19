@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { State } from '@progress/kendo-data-query';
 import { JhiAlertService } from 'ng-jhipster';
+import { Observable } from 'rxjs/Observable';
 
 import { ITEMS_PER_PAGE } from '../../shared';
 import { Affiliate } from './affiliate.model';
@@ -32,15 +33,11 @@ export class AffiliateComponent implements OnInit {
 
     private loadAll() {
         this.affiliateService.query().subscribe(
-            (res: HttpResponse < Affiliate[] > ) => {
+            (res: HttpResponse<Affiliate[]>) => {
                 this.affiliates = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
-    }
-
-    private onError(error) {
-        this.jhiAlertService.error(error.message, null, null);
     }
 
     public createFormGroup(args: any): FormGroup {
@@ -57,8 +54,44 @@ export class AffiliateComponent implements OnInit {
         return this.formGroup;
     }
 
-    deleteItem(dataItem: any): void {
-        this.affiliateService.delete(dataItem.id);
+    public saveItem({ formGroup, isNew }): void {
+        const product = formGroup.value;
+        if (isNew) {
+            this.subscribeToSaveResponse(this.affiliateService.create(product), isNew);
+        } else {
+            this.subscribeToSaveResponse(this.affiliateService.update(product));
+        }
+    }
+
+    public deleteItem(dataItem: any): void {
+        this.affiliateService.delete(dataItem.id).subscribe(
+            (response) => {
+                console.log('DELETE');
+            },
+            (error: HttpErrorResponse) => {
+                this.loadAll();
+                this.onError(error);
+            }
+        );
+    }
+
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Affiliate>>, isNew?: boolean) {
+        result.subscribe((res: HttpResponse<Affiliate>) =>
+            this.onSaveSuccess(res.body, isNew), (res: HttpErrorResponse) => this.onSaveError());
+    }
+
+    private onSaveSuccess(result: Affiliate, isNew?: boolean) {
+        if (isNew && isNew === true) {
+            this.loadAll();
+        }
+    }
+
+    private onSaveError() {
+        this.loadAll();
+    }
+
+    private onError(error) {
+        console.log('ERROR');
     }
 
     // affiliates: Affiliate[];

@@ -39,7 +39,6 @@ export class AffiliateService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        console.log('ID => ', id);
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 

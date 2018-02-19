@@ -1,5 +1,5 @@
 <kendo-grid [kendoGridReactiveEditing]="createFormGroup" [kendoGridBinding]="affiliates" [pageable]="true" [pageSize]="gridState.take"
-    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (remove)="deleteItem($event.dataItem)">
+    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (remove)="deleteItem($event.dataItem)" (save)="saveItem($event)">
     <ng-template kendoGridToolbarTemplate>
         <div class="float-right">
             <button kendoGridAddCommand>Add new</button>
