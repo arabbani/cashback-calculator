@@ -1,4 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { GridModule } from '@progress/kendo-angular-grid';
 
@@ -25,6 +26,7 @@ const ENTITY_STATES = [
     imports: [
         CbclSharedModule,
         RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
         GridModule
     ],
     declarations: [

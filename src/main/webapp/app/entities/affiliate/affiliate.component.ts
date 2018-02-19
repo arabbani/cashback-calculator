@@ -1,9 +1,10 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { DataStateChangeEvent } from '@progress/kendo-angular-grid';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { State } from '@progress/kendo-data-query';
 import { JhiAlertService } from 'ng-jhipster';
 
+import { ITEMS_PER_PAGE } from '../../shared';
 import { Affiliate } from './affiliate.model';
 import { AffiliateService } from './affiliate.service';
 
@@ -13,13 +14,17 @@ import { AffiliateService } from './affiliate.service';
 })
 export class AffiliateComponent implements OnInit {
 
-    affiliates: Affiliate[];
-    public state: State = {
+    public affiliates: Affiliate[];
+    public gridState: State = {
         skip: 0,
-        take: 5
+        take: ITEMS_PER_PAGE
     };
 
-    constructor(private affiliateService: AffiliateService, private jhiAlertService: JhiAlertService) {}
+    formGroup: FormGroup;
+
+    constructor(private affiliateService: AffiliateService, private jhiAlertService: JhiAlertService, private formBuilder: FormBuilder) {
+        this.createFormGroup = this.createFormGroup.bind(this);
+    }
 
     ngOnInit() {
         this.loadAll();
@@ -27,62 +32,75 @@ export class AffiliateComponent implements OnInit {
 
     private loadAll() {
         this.affiliateService.query().subscribe(
-            (res: HttpResponse<Affiliate[]>) => {
+            (res: HttpResponse < Affiliate[] > ) => {
                 this.affiliates = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
 
-    public dataStateChange(state: DataStateChangeEvent): void {
-        this.state = state;
-        this.loadAll();
-    }
-
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
     }
 
-// affiliates: Affiliate[];
-//     currentAccount: any;
-//     eventSubscriber: Subscription;
+    public createFormGroup(args: any): FormGroup {
+        const item = args.isNew ? new Affiliate() : args.dataItem;
 
-//     constructor(
-//         private affiliateService: AffiliateService,
-//         private jhiAlertService: JhiAlertService,
-//         private eventManager: JhiEventManager,
-//         private principal: Principal
-//     ) {
-//     }
+        this.formGroup = this.formBuilder.group({
+            'id': item.id,
+            'name': [item.name, Validators.required],
+            'active': item.active,
+            'url': item.url
+            // [item.url, Validators.compose([Validators.required, Validators.pattern('^[0-9]{1,3}')])]
+        });
 
-//     loadAll() {
-//         this.affiliateService.query().subscribe(
-//             (res: HttpResponse<Affiliate[]>) => {
-//                 this.affiliates = res.body;
-//             },
-//             (res: HttpErrorResponse) => this.onError(res.message)
-//         );
-//     }
-//     ngOnInit() {
-//         this.loadAll();
-//         this.principal.identity().then((account) => {
-//             this.currentAccount = account;
-//         });
-//         this.registerChangeInAffiliates();
-//     }
+        return this.formGroup;
+    }
 
-//     ngOnDestroy() {
-//         this.eventManager.destroy(this.eventSubscriber);
-//     }
+    deleteItem(dataItem: any): void {
+        this.affiliateService.delete(dataItem.id);
+    }
 
-//     trackId(index: number, item: Affiliate) {
-//         return item.id;
-//     }
-//     registerChangeInAffiliates() {
-//         this.eventSubscriber = this.eventManager.subscribe('affiliateListModification', (response) => this.loadAll());
-//     }
+    // affiliates: Affiliate[];
+    //     currentAccount: any;
+    //     eventSubscriber: Subscription;
 
-//     private onError(error) {
-//         this.jhiAlertService.error(error.message, null, null);
-//     }
+    //     constructor(
+    //         private affiliateService: AffiliateService,
+    //         private jhiAlertService: JhiAlertService,
+    //         private eventManager: JhiEventManager,
+    //         private principal: Principal
+    //     ) {
+    //     }
+
+    //     loadAll() {
+    //         this.affiliateService.query().subscribe(
+    //             (res: HttpResponse<Affiliate[]>) => {
+    //                 this.affiliates = res.body;
+    //             },
+    //             (res: HttpErrorResponse) => this.onError(res.message)
+    //         );
+    //     }
+    //     ngOnInit() {
+    //         this.loadAll();
+    //         this.principal.identity().then((account) => {
+    //             this.currentAccount = account;
+    //         });
+    //         this.registerChangeInAffiliates();
+    //     }
+
+    //     ngOnDestroy() {
+    //         this.eventManager.destroy(this.eventSubscriber);
+    //     }
+
+    //     trackId(index: number, item: Affiliate) {
+    //         return item.id;
+    //     }
+    //     registerChangeInAffiliates() {
+    //         this.eventSubscriber = this.eventManager.subscribe('affiliateListModification', (response) => this.loadAll());
+    //     }
+
+    //     private onError(error) {
+    //         this.jhiAlertService.error(error.message, null, null);
+    //     }
 }

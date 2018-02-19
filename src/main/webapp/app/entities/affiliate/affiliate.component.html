@@ -1,8 +1,24 @@
-<kendo-grid [data]="affiliates">
-    <kendo-grid-column field="id" title="ID" width="130"></kendo-grid-column>
-    <kendo-grid-column field="name" title="Name" width="200"></kendo-grid-column>
-    <kendo-grid-column field="active" title="Status"></kendo-grid-column>
-    <kendo-grid-column field="url" title="Url"></kendo-grid-column>
+<kendo-grid [kendoGridReactiveEditing]="createFormGroup" [kendoGridBinding]="affiliates" [pageable]="true" [pageSize]="gridState.take"
+    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (remove)="deleteItem($event.dataItem)">
+    <ng-template kendoGridToolbarTemplate>
+        <div class="float-right">
+            <button kendoGridAddCommand>Add new</button>
+        </div>
+    </ng-template>
+    <kendo-grid-column class="text-center" field="id" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="active" title="Active" filter="boolean" editor="boolean"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="url" title="Url" [filterable]="false" [sortable]="false"></kendo-grid-column>
+    <kendo-grid-command-column title="Action" width="220">
+        <ng-template kendoGridCellTemplate let-isNew="isNew">
+            <div class="text-center">
+                    <button kendoGridEditCommand class="k-primary">Edit</button>
+                    <button kendoGridRemoveCommand>Delete</button>
+                    <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+                    <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+            </div>
+        </ng-template>
+    </kendo-grid-command-column>
 </kendo-grid>
 
 <!-- <div>
