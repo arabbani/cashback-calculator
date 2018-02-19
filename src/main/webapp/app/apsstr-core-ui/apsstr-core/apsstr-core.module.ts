@@ -1,13 +1,17 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AssetPathService } from './services';
+import { NgModule } from '@angular/core';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+
+import { ApsstrKendoDialogService, AssetPathService } from './services';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    DialogModule
   ],
   providers: [
-    AssetPathService
+    AssetPathService,
+    ApsstrKendoDialogService
   ]
 })
 export class ApsstrCoreModule { }

@@ -2,9 +2,11 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { State } from '@progress/kendo-data-query';
+import * as _ from 'lodash';
 import { JhiAlertService } from 'ng-jhipster';
 import { Observable } from 'rxjs/Observable';
 
+import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { ITEMS_PER_PAGE } from '../../shared';
 import { Affiliate } from './affiliate.model';
 import { AffiliateService } from './affiliate.service';
@@ -20,10 +22,10 @@ export class AffiliateComponent implements OnInit {
         skip: 0,
         take: ITEMS_PER_PAGE
     };
-
     formGroup: FormGroup;
 
-    constructor(private affiliateService: AffiliateService, private jhiAlertService: JhiAlertService, private formBuilder: FormBuilder) {
+    constructor(private affiliateService: AffiliateService, private jhiAlertService: JhiAlertService, private formBuilder: FormBuilder,
+        private apsstrKendoDialogService: ApsstrKendoDialogService) {
         this.createFormGroup = this.createFormGroup.bind(this);
     }
 
@@ -42,15 +44,12 @@ export class AffiliateComponent implements OnInit {
 
     public createFormGroup(args: any): FormGroup {
         const item = args.isNew ? new Affiliate() : args.dataItem;
-
         this.formGroup = this.formBuilder.group({
             'id': item.id,
             'name': [item.name, Validators.required],
             'active': item.active,
             'url': item.url
-            // [item.url, Validators.compose([Validators.required, Validators.pattern('^[0-9]{1,3}')])]
         });
-
         return this.formGroup;
     }
 
@@ -64,15 +63,22 @@ export class AffiliateComponent implements OnInit {
     }
 
     public deleteItem(dataItem: any): void {
-        this.affiliateService.delete(dataItem.id).subscribe(
-            (response) => {
-                console.log('DELETE');
-            },
-            (error: HttpErrorResponse) => {
-                this.loadAll();
-                this.onError(error);
+        this.apsstrKendoDialogService.confirm().subscribe((result) => {
+            if (result['text'] === 'No') {
+                this.affiliates.push(dataItem);
+                this.affiliates = _.sortBy(this.affiliates, (item) => item.id);
+            } else if (result['text'] === 'Yes') {
+                this.affiliateService.delete(dataItem.id).subscribe(
+                    (response) => {
+                        console.log('DELETED');
+                    },
+                    (error: HttpErrorResponse) => {
+                        this.loadAll();
+                        this.onError(error);
+                    }
+                );
             }
-        );
+        });
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<Affiliate>>, isNew?: boolean) {

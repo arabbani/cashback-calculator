@@ -1,5 +1,6 @@
+<div kendoDialogContainer></div>
 <kendo-grid [kendoGridReactiveEditing]="createFormGroup" [kendoGridBinding]="affiliates" [pageable]="true" [pageSize]="gridState.take"
-    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (remove)="deleteItem($event.dataItem)" (save)="saveItem($event)">
+    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (save)="saveItem($event)" (remove)="deleteItem($event.dataItem)">
     <ng-template kendoGridToolbarTemplate>
         <div class="float-right">
             <button kendoGridAddCommand>Add new</button>
@@ -12,10 +13,10 @@
     <kendo-grid-command-column title="Action" width="220">
         <ng-template kendoGridCellTemplate let-isNew="isNew">
             <div class="text-center">
-                    <button kendoGridEditCommand class="k-primary">Edit</button>
-                    <button kendoGridRemoveCommand>Delete</button>
-                    <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
-                    <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                <button kendoGridEditCommand class="k-primary">Edit</button>
+                <button kendoGridRemoveCommand>Delete</button>
+                <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+                <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
             </div>
         </ng-template>
     </kendo-grid-command-column>

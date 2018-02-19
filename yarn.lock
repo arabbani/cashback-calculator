@@ -204,6 +204,14 @@
     "@progress/kendo-date-math" "^1.1.0"
     tslib "^1.7.0"
 
+"@progress/kendo-angular-dialog@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-dialog/-/kendo-angular-dialog-3.1.2.tgz#c122360973922fb3bade34c2001b8e9fa554df10"
+  dependencies:
+    "@progress/kendo-popup-common" "^1.2.3"
+    "@telerik/kendo-draggable" "^1.5.1"
+    tslib "^1.7.0"
+
 "@progress/kendo-angular-dropdowns@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@progress/kendo-angular-dropdowns/-/kendo-angular-dropdowns-2.0.2.tgz#2d1c760fadf6bac9f74affe47eee8bbd3a081ee5"
@@ -5136,7 +5144,7 @@ lodash@4.17.4:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
-lodash@^4, lodash@^4.0.0, lodash@^4.0.1, lodash@^4.11.1, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.3.0, lodash@^4.5.0, lodash@^4.5.1, lodash@~4.17.4:
+lodash@^4, lodash@^4.0.0, lodash@^4.0.1, lodash@^4.11.1, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.5.0, lodash@^4.5.1, lodash@~4.17.4:
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
