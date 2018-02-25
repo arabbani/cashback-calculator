@@ -1,12 +1,12 @@
 <div kendoDialogContainer></div>
-<kendo-grid [kendoGridReactiveEditing]="createFormGroup" [kendoGridBinding]="affiliates" [pageable]="true" [pageSize]="gridState.take"
+<kendo-grid [kendoGridReactiveEditing]="createAffiliateFormGroup" [kendoGridBinding]="affiliates" [pageable]="true" [pageSize]="gridState.take"
     [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (save)="saveItem($event)" (remove)="deleteItem($event.dataItem)">
     <ng-template kendoGridToolbarTemplate>
         <div class="float-right">
             <button kendoGridAddCommand>Add new</button>
         </div>
     </ng-template>
-    <kendo-grid-column class="text-center" field="id" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
     <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
     <kendo-grid-column class="text-center" field="active" title="Active" filter="boolean" editor="boolean"></kendo-grid-column>
     <kendo-grid-column class="text-center" field="url" title="Url" [filterable]="false" [sortable]="false"></kendo-grid-column>
@@ -15,72 +15,9 @@
             <div class="text-center">
                 <button kendoGridEditCommand class="k-primary">Edit</button>
                 <button kendoGridRemoveCommand>Delete</button>
-                <button kendoGridSaveCommand [disabled]="formGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+                <button kendoGridSaveCommand [disabled]="affiliateFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
                 <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
             </div>
         </ng-template>
     </kendo-grid-command-column>
 </kendo-grid>
-
-<!-- <div>
-    <h2>
-        <span>Affiliates</span>
-        <button class="btn btn-primary float-right jh-create-entity create-affiliate" [routerLink]="['/', { outlets: { popup: ['affiliate-new'] } }]">
-            <span class="fa fa-plus"></span>
-            <span >
-            Create new Affiliate
-            </span>
-        </button>
-    </h2>
-    <apsstr-alert></apsstr-alert>
-    <div class="row">
-    </div>
-    <br/>
-    <div class="table-responsive" *ngIf="affiliates">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Name</span></th>
-            <th><span>Url</span></th>
-            <th><span>Active</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let affiliate of affiliates ;trackBy: trackId">
-                <td><a [routerLink]="['../affiliate', affiliate.id ]">{{affiliate.id}}</a></td>
-                <td>{{affiliate.name}}</td>
-                <td>{{affiliate.url}}</td>
-                <td>{{affiliate.active}}</td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../affiliate', affiliate.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'affiliate/'+ affiliate.id + '/edit'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'affiliate/'+ affiliate.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div> -->

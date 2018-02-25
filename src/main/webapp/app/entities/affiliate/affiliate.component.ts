@@ -3,11 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
-import { JhiAlertService } from 'ng-jhipster';
 import { Observable } from 'rxjs/Observable';
 
 import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
-import { ITEMS_PER_PAGE } from '../../shared';
+import { GRID_STATE } from '../../shared';
 import { Affiliate } from './affiliate.model';
 import { AffiliateService } from './affiliate.service';
 
@@ -18,22 +17,20 @@ import { AffiliateService } from './affiliate.service';
 export class AffiliateComponent implements OnInit {
 
     public affiliates: Affiliate[];
-    public gridState: State = {
-        skip: 0,
-        take: ITEMS_PER_PAGE
-    };
-    formGroup: FormGroup;
+    public gridState: State;
+    affiliateFormGroup: FormGroup;
 
-    constructor(private affiliateService: AffiliateService, private jhiAlertService: JhiAlertService, private formBuilder: FormBuilder,
+    constructor(private affiliateService: AffiliateService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrKendoDialogService) {
-        this.createFormGroup = this.createFormGroup.bind(this);
+        this.createAffiliateFormGroup = this.createAffiliateFormGroup.bind(this);
     }
 
     ngOnInit() {
-        this.loadAll();
+        this.gridState = GRID_STATE;
+        this.loadAllAffiliate();
     }
 
-    private loadAll() {
+    private loadAllAffiliate() {
         this.affiliateService.query().subscribe(
             (res: HttpResponse<Affiliate[]>) => {
                 this.affiliates = res.body;
@@ -42,15 +39,15 @@ export class AffiliateComponent implements OnInit {
         );
     }
 
-    public createFormGroup(args: any): FormGroup {
+    public createAffiliateFormGroup(args: any): FormGroup {
         const item = args.isNew ? new Affiliate() : args.dataItem;
-        this.formGroup = this.formBuilder.group({
+        this.affiliateFormGroup = this.formBuilder.group({
             'id': item.id,
             'name': [item.name, Validators.required],
             'active': item.active,
             'url': item.url
         });
-        return this.formGroup;
+        return this.affiliateFormGroup;
     }
 
     public saveItem({ formGroup, isNew }): void {
@@ -73,7 +70,7 @@ export class AffiliateComponent implements OnInit {
                         console.log('DELETED');
                     },
                     (error: HttpErrorResponse) => {
-                        this.loadAll();
+                        this.loadAllAffiliate();
                         this.onError(error);
                     }
                 );
@@ -88,58 +85,16 @@ export class AffiliateComponent implements OnInit {
 
     private onSaveSuccess(result: Affiliate, isNew?: boolean) {
         if (isNew && isNew === true) {
-            this.loadAll();
+            this.loadAllAffiliate();
         }
     }
 
     private onSaveError() {
-        this.loadAll();
+        this.loadAllAffiliate();
     }
 
     private onError(error) {
         console.log('ERROR');
     }
 
-    // affiliates: Affiliate[];
-    //     currentAccount: any;
-    //     eventSubscriber: Subscription;
-
-    //     constructor(
-    //         private affiliateService: AffiliateService,
-    //         private jhiAlertService: JhiAlertService,
-    //         private eventManager: JhiEventManager,
-    //         private principal: Principal
-    //     ) {
-    //     }
-
-    //     loadAll() {
-    //         this.affiliateService.query().subscribe(
-    //             (res: HttpResponse<Affiliate[]>) => {
-    //                 this.affiliates = res.body;
-    //             },
-    //             (res: HttpErrorResponse) => this.onError(res.message)
-    //         );
-    //     }
-    //     ngOnInit() {
-    //         this.loadAll();
-    //         this.principal.identity().then((account) => {
-    //             this.currentAccount = account;
-    //         });
-    //         this.registerChangeInAffiliates();
-    //     }
-
-    //     ngOnDestroy() {
-    //         this.eventManager.destroy(this.eventSubscriber);
-    //     }
-
-    //     trackId(index: number, item: Affiliate) {
-    //         return item.id;
-    //     }
-    //     registerChangeInAffiliates() {
-    //         this.eventSubscriber = this.eventManager.subscribe('affiliateListModification', (response) => this.loadAll());
-    //     }
-
-    //     private onError(error) {
-    //         this.jhiAlertService.error(error.message, null, null);
-    //     }
 }
