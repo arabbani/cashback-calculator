@@ -1,48 +1,32 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    OfferTypeService,
-    OfferTypePopupService,
-    OfferTypeComponent,
-    OfferTypeDetailComponent,
-    OfferTypeDialogComponent,
-    OfferTypePopupComponent,
-    OfferTypeDeletePopupComponent,
-    OfferTypeDeleteDialogComponent,
-    offerTypeRoute,
-    offerTypePopupRoute,
-} from './';
+import { OfferTypeComponent, offerTypeRoute, OfferTypeService } from './';
 
 const ENTITY_STATES = [
-    ...offerTypeRoute,
-    ...offerTypePopupRoute,
+    offerTypeRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule
     ],
     declarations: [
-        OfferTypeComponent,
-        OfferTypeDetailComponent,
-        OfferTypeDialogComponent,
-        OfferTypeDeleteDialogComponent,
-        OfferTypePopupComponent,
-        OfferTypeDeletePopupComponent,
+        OfferTypeComponent
     ],
     entryComponents: [
-        OfferTypeComponent,
-        OfferTypeDialogComponent,
-        OfferTypePopupComponent,
-        OfferTypeDeleteDialogComponent,
-        OfferTypeDeletePopupComponent,
+        OfferTypeComponent
     ],
     providers: [
-        OfferTypeService,
-        OfferTypePopupService,
+        OfferTypeService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

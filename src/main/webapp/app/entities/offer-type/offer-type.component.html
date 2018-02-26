@@ -1,58 +1,27 @@
 <div>
     <h2>
-        <span>Offer Types</span>
-        <button class="btn btn-primary float-right jh-create-entity create-offer-type" [routerLink]="['/', { outlets: { popup: ['offer-type-new'] } }]">
-            <span class="fa fa-plus"></span>
-            <span >
-            Create new Offer Type
-            </span>
-        </button>
+        <span>Offer Policy</span>
     </h2>
-    <apsstr-alert></apsstr-alert>
-    <div class="row">
-    </div>
-    <br/>
-    <div class="table-responsive" *ngIf="offerTypes">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Name</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let offerType of offerTypes ;trackBy: trackId">
-                <td><a [routerLink]="['../offer-type', offerType.id ]">{{offerType.id}}</a></td>
-                <td>{{offerType.name}}</td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../offer-type', offerType.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'offer-type/'+ offerType.id + '/edit'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'offer-type/'+ offerType.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
 </div>
+<div kendoDialogContainer></div>
+<kendo-grid [kendoGridReactiveEditing]="createOfferTypeFormGroup" [kendoGridBinding]="offerTypes" [pageable]="true" [pageSize]="gridState.take"
+    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (save)="saveItem($event)"
+    (remove)="deleteItem($event.dataItem)">
+    <ng-template kendoGridToolbarTemplate>
+        <div class="float-right">
+            <button kendoGridAddCommand>Add new</button>
+        </div>
+    </ng-template>
+    <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" width="280" field="name" title="Name"></kendo-grid-column>
+    <kendo-grid-command-column title="Action" width="220">
+        <ng-template kendoGridCellTemplate let-isNew="isNew">
+            <div class="text-center">
+                <button kendoGridEditCommand class="k-primary">Edit</button>
+                <button kendoGridRemoveCommand>Delete</button>
+                <button kendoGridSaveCommand [disabled]="offerTypeFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+                <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+            </div>
+        </ng-template>
+    </kendo-grid-command-column>
+</kendo-grid>

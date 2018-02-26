@@ -14,20 +14,14 @@
     </ng-template>
     <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
     <kendo-grid-column class="text-center" width="280" field="name" title="Name"></kendo-grid-column>
-    <!-- <kendo-grid-column class="text-center" field="description" title="Description" [filterable]="false" [sortable]="false"></kendo-grid-column> -->
-
     <kendo-grid-column class="text-center" field="description" title="Description" [filterable]="false" [sortable]="false">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{ dataItem.description }}
         </ng-template>
         <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
             <textarea class="w-100" [formControl]="formGroup.get('description')"></textarea>
-            <!-- <kendo-dropdownlist [data]="banks" [defaultItem]="defaultBank" textField="name" valueField="id" [formControl]="formGroup.get('bank')"></kendo-dropdownlist> -->
         </ng-template>
     </kendo-grid-column>
-
-
-
     <kendo-grid-command-column title="Action" width="220">
         <ng-template kendoGridCellTemplate let-isNew="isNew">
             <div class="text-center">
