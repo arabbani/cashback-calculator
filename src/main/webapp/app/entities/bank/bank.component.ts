@@ -1,12 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
-
-import { Bank } from './bank.model';
-import { BankService } from './bank.service';
-import { Principal } from '../../shared';
-
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
@@ -14,7 +7,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
-import { BankTypeService, BankType } from '../bank-type';
+import { BankType, BankTypeService } from '../bank-type';
+import { Bank } from './bank.model';
+import { BankService } from './bank.service';
 
 @Component({
     selector: 'apsstr-bank',

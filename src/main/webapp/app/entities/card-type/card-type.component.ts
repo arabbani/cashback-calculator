@@ -6,25 +6,35 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { CardType } from './card-type.model';
 import { CardTypeService } from './card-type.service';
 import { Principal } from '../../shared';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { State } from '@progress/kendo-data-query';
+import * as _ from 'lodash';
+import { Observable } from 'rxjs/Observable';
+
+import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { GRID_STATE } from '../../shared';
 
 @Component({
     selector: 'apsstr-card-type',
     templateUrl: './card-type.component.html'
 })
-export class CardTypeComponent implements OnInit, OnDestroy {
-cardTypes: CardType[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
+export class CardTypeComponent implements OnInit {
 
-    constructor(
-        private cardTypeService: CardTypeService,
-        private jhiAlertService: JhiAlertService,
-        private eventManager: JhiEventManager,
-        private principal: Principal
-    ) {
+    public cardTypes: CardType[];
+    public gridState: State;
+    cardTypeFormGroup: FormGroup;
+
+    constructor(private cardTypeService: CardTypeService, private formBuilder: FormBuilder,
+        private apsstrKendoDialogService: ApsstrKendoDialogService) {
+        this.createCardTypeFormGroup = this.createCardTypeFormGroup.bind(this);
     }
 
-    loadAll() {
+    ngOnInit() {
+        this.gridState = GRID_STATE;
+        this.loadAllCardType();
+    }
+
+    private loadAllCardType() {
         this.cardTypeService.query().subscribe(
             (res: HttpResponse<CardType[]>) => {
                 this.cardTypes = res.body;
@@ -32,26 +42,61 @@ cardTypes: CardType[];
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
-    ngOnInit() {
-        this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
+
+    public createCardTypeFormGroup(args: any): FormGroup {
+        const item = args.isNew ? new CardType() : args.dataItem;
+        this.cardTypeFormGroup = this.formBuilder.group({
+            'id': item.id,
+            'name': [item.name, Validators.required]
         });
-        this.registerChangeInCardTypes();
+        return this.cardTypeFormGroup;
     }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
+    public saveItem({ formGroup, isNew }): void {
+        const product = formGroup.value;
+        if (isNew) {
+            this.subscribeToSaveResponse(this.cardTypeService.create(product), isNew);
+        } else {
+            this.subscribeToSaveResponse(this.cardTypeService.update(product));
+        }
     }
 
-    trackId(index: number, item: CardType) {
-        return item.id;
+    public deleteItem(dataItem: any): void {
+        this.apsstrKendoDialogService.confirm().subscribe((result) => {
+            if (result['text'] === 'No') {
+                this.cardTypes.push(dataItem);
+                this.cardTypes = _.sortBy(this.cardTypes, (item) => item.id);
+            } else if (result['text'] === 'Yes') {
+                this.cardTypeService.delete(dataItem.id).subscribe(
+                    (response) => {
+                        console.log('DELETED');
+                    },
+                    (error: HttpErrorResponse) => {
+                        this.loadAllCardType();
+                        this.onError(error);
+                    }
+                );
+            }
+        });
     }
-    registerChangeInCardTypes() {
-        this.eventSubscriber = this.eventManager.subscribe('cardTypeListModification', (response) => this.loadAll());
+
+    private subscribeToSaveResponse(result: Observable<HttpResponse<CardType>>, isNew?: boolean) {
+        result.subscribe((res: HttpResponse<CardType>) =>
+            this.onSaveSuccess(res.body, isNew), (res: HttpErrorResponse) => this.onSaveError());
+    }
+
+    private onSaveSuccess(result: CardType, isNew?: boolean) {
+        if (isNew && isNew === true) {
+            this.loadAllCardType();
+        }
+    }
+
+    private onSaveError() {
+        this.loadAllCardType();
     }
 
     private onError(error) {
-        this.jhiAlertService.error(error.message, null, null);
+        console.log('ERROR');
     }
+
 }
