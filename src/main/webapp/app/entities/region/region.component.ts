@@ -1,6 +1,5 @@
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
@@ -8,7 +7,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
-
 import { Region } from './region.model';
 import { RegionService } from './region.service';
 
