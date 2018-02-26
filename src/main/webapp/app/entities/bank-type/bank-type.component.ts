@@ -20,7 +20,7 @@ export class BankTypeComponent implements OnInit {
     public gridState: State;
     bankTypeFormGroup: FormGroup;
 
-    constructor(private affiliateService: BankTypeService, private formBuilder: FormBuilder,
+    constructor(private bankTypeService: BankTypeService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrKendoDialogService) {
         this.createBankTypeFormGroup = this.createBankTypeFormGroup.bind(this);
     }
@@ -31,7 +31,7 @@ export class BankTypeComponent implements OnInit {
     }
 
     private loadAllBankType() {
-        this.affiliateService.query().subscribe(
+        this.bankTypeService.query().subscribe(
             (res: HttpResponse<BankType[]>) => {
                 this.bankTypes = res.body;
             },
@@ -51,9 +51,9 @@ export class BankTypeComponent implements OnInit {
     public saveItem({ formGroup, isNew }): void {
         const product = formGroup.value;
         if (isNew) {
-            this.subscribeToSaveResponse(this.affiliateService.create(product), isNew);
+            this.subscribeToSaveResponse(this.bankTypeService.create(product), isNew);
         } else {
-            this.subscribeToSaveResponse(this.affiliateService.update(product));
+            this.subscribeToSaveResponse(this.bankTypeService.update(product));
         }
     }
 
@@ -63,7 +63,7 @@ export class BankTypeComponent implements OnInit {
                 this.bankTypes.push(dataItem);
                 this.bankTypes = _.sortBy(this.bankTypes, (item) => item.id);
             } else if (result['text'] === 'Yes') {
-                this.affiliateService.delete(dataItem.id).subscribe(
+                this.bankTypeService.delete(dataItem.id).subscribe(
                     (response) => {
                         console.log('DELETED');
                     },

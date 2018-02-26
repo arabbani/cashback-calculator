@@ -20,7 +20,7 @@ export class CircleComponent implements OnInit {
     public gridState: State;
     circleFormGroup: FormGroup;
 
-    constructor(private categoryService: CircleService, private formBuilder: FormBuilder,
+    constructor(private circleService: CircleService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrKendoDialogService) {
         this.createCircleFormGroup = this.createCircleFormGroup.bind(this);
     }
@@ -31,7 +31,7 @@ export class CircleComponent implements OnInit {
     }
 
     private loadAllCircle() {
-        this.categoryService.query().subscribe(
+        this.circleService.query().subscribe(
             (res: HttpResponse<Circle[]>) => {
                 this.circles = res.body;
             },
@@ -52,9 +52,9 @@ export class CircleComponent implements OnInit {
     public saveItem({ formGroup, isNew }): void {
         const product = formGroup.value;
         if (isNew) {
-            this.subscribeToSaveResponse(this.categoryService.create(product), isNew);
+            this.subscribeToSaveResponse(this.circleService.create(product), isNew);
         } else {
-            this.subscribeToSaveResponse(this.categoryService.update(product));
+            this.subscribeToSaveResponse(this.circleService.update(product));
         }
     }
 
@@ -64,7 +64,7 @@ export class CircleComponent implements OnInit {
                 this.circles.push(dataItem);
                 this.circles = _.sortBy(this.circles, (item) => item.id);
             } else if (result['text'] === 'Yes') {
-                this.categoryService.delete(dataItem.id).subscribe(
+                this.circleService.delete(dataItem.id).subscribe(
                     (response) => {
                         console.log('DELETED');
                     },

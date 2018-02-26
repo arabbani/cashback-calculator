@@ -20,7 +20,7 @@ export class DateComponent implements OnInit {
     public gridState: State;
     dateFormGroup: FormGroup;
 
-    constructor(private affiliateService: DateService, private formBuilder: FormBuilder,
+    constructor(private dateService: DateService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrKendoDialogService) {
         this.createDateFormGroup = this.createDateFormGroup.bind(this);
     }
@@ -31,7 +31,7 @@ export class DateComponent implements OnInit {
     }
 
     private loadAllDate() {
-        this.affiliateService.query().subscribe(
+        this.dateService.query().subscribe(
             (res: HttpResponse<Date[]>) => {
                 this.dates = res.body;
             },
@@ -51,9 +51,9 @@ export class DateComponent implements OnInit {
     public saveItem({ formGroup, isNew }): void {
         const product = formGroup.value;
         if (isNew) {
-            this.subscribeToSaveResponse(this.affiliateService.create(product), isNew);
+            this.subscribeToSaveResponse(this.dateService.create(product), isNew);
         } else {
-            this.subscribeToSaveResponse(this.affiliateService.update(product));
+            this.subscribeToSaveResponse(this.dateService.update(product));
         }
     }
 
@@ -63,7 +63,7 @@ export class DateComponent implements OnInit {
                 this.dates.push(dataItem);
                 this.dates = _.sortBy(this.dates, (item) => item.id);
             } else if (result['text'] === 'Yes') {
-                this.affiliateService.delete(dataItem.id).subscribe(
+                this.dateService.delete(dataItem.id).subscribe(
                     (response) => {
                         console.log('DELETED');
                     },

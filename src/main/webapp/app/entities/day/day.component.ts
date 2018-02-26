@@ -24,7 +24,7 @@ export class DayComponent implements OnInit {
     public gridState: State;
     dayFormGroup: FormGroup;
 
-    constructor(private affiliateService: DayService, private formBuilder: FormBuilder,
+    constructor(private dayService: DayService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrKendoDialogService) {
         this.createDayFormGroup = this.createDayFormGroup.bind(this);
     }
@@ -35,7 +35,7 @@ export class DayComponent implements OnInit {
     }
 
     private loadAllDay() {
-        this.affiliateService.query().subscribe(
+        this.dayService.query().subscribe(
             (res: HttpResponse<Day[]>) => {
                 this.days = res.body;
             },
@@ -55,9 +55,9 @@ export class DayComponent implements OnInit {
     public saveItem({ formGroup, isNew }): void {
         const product = formGroup.value;
         if (isNew) {
-            this.subscribeToSaveResponse(this.affiliateService.create(product), isNew);
+            this.subscribeToSaveResponse(this.dayService.create(product), isNew);
         } else {
-            this.subscribeToSaveResponse(this.affiliateService.update(product));
+            this.subscribeToSaveResponse(this.dayService.update(product));
         }
     }
 
@@ -67,7 +67,7 @@ export class DayComponent implements OnInit {
                 this.days.push(dataItem);
                 this.days = _.sortBy(this.days, (item) => item.id);
             } else if (result['text'] === 'Yes') {
-                this.affiliateService.delete(dataItem.id).subscribe(
+                this.dayService.delete(dataItem.id).subscribe(
                     (response) => {
                         console.log('DELETED');
                     },

@@ -1,48 +1,32 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    OfferPolicyService,
-    OfferPolicyPopupService,
-    OfferPolicyComponent,
-    OfferPolicyDetailComponent,
-    OfferPolicyDialogComponent,
-    OfferPolicyPopupComponent,
-    OfferPolicyDeletePopupComponent,
-    OfferPolicyDeleteDialogComponent,
-    offerPolicyRoute,
-    offerPolicyPopupRoute,
-} from './';
+import { OfferPolicyComponent, offerPolicyRoute, OfferPolicyService } from './';
 
 const ENTITY_STATES = [
-    ...offerPolicyRoute,
-    ...offerPolicyPopupRoute,
+    offerPolicyRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule
     ],
     declarations: [
-        OfferPolicyComponent,
-        OfferPolicyDetailComponent,
-        OfferPolicyDialogComponent,
-        OfferPolicyDeleteDialogComponent,
-        OfferPolicyPopupComponent,
-        OfferPolicyDeletePopupComponent,
+        OfferPolicyComponent
     ],
     entryComponents: [
-        OfferPolicyComponent,
-        OfferPolicyDialogComponent,
-        OfferPolicyPopupComponent,
-        OfferPolicyDeleteDialogComponent,
-        OfferPolicyDeletePopupComponent,
+        OfferPolicyComponent
     ],
     providers: [
-        OfferPolicyService,
-        OfferPolicyPopupService,
+        OfferPolicyService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
