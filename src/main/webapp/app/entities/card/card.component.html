@@ -1,4 +1,9 @@
-<div kendoDialogContainer></div>
+
+<div>
+    <h2>
+        <span>Card</span>
+    </h2>
+</div><div kendoDialogContainer></div>
 <kendo-grid [kendoGridReactiveEditing]="createCardFormGroup" [kendoGridBinding]="cards" [pageable]="true"
     [pageSize]="gridState.take" [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true"
     (save)="saveItem($event)" (remove)="deleteItem($event.dataItem)">

@@ -1,6 +1,12 @@
+<div>
+    <h2>
+        <span>Affiliate</span>
+    </h2>
+</div>
 <div kendoDialogContainer></div>
 <kendo-grid [kendoGridReactiveEditing]="createAffiliateFormGroup" [kendoGridBinding]="affiliates" [pageable]="true" [pageSize]="gridState.take"
-    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (save)="saveItem($event)" (remove)="deleteItem($event.dataItem)">
+    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (save)="saveItem($event)"
+    (remove)="deleteItem($event.dataItem)">
     <ng-template kendoGridToolbarTemplate>
         <div class="float-right">
             <button kendoGridAddCommand>Add new</button>

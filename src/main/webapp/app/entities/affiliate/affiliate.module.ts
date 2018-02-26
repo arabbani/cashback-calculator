@@ -5,22 +5,10 @@ import { DialogModule } from '@progress/kendo-angular-dialog';
 import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    AffiliateComponent,
-    AffiliateDeleteDialogComponent,
-    AffiliateDeletePopupComponent,
-    AffiliateDetailComponent,
-    AffiliateDialogComponent,
-    AffiliatePopupComponent,
-    affiliatePopupRoute,
-    AffiliatePopupService,
-    affiliateRoute,
-    AffiliateService,
-} from './';
+import { AffiliateComponent, affiliateRoute, AffiliateService } from './';
 
 const ENTITY_STATES = [
-    ...affiliateRoute,
-    ...affiliatePopupRoute,
+    affiliateRoute
 ];
 
 @NgModule({
@@ -32,23 +20,13 @@ const ENTITY_STATES = [
         DialogModule
     ],
     declarations: [
-        AffiliateComponent,
-        AffiliateDetailComponent,
-        AffiliateDialogComponent,
-        AffiliateDeleteDialogComponent,
-        AffiliatePopupComponent,
-        AffiliateDeletePopupComponent,
+        AffiliateComponent
     ],
     entryComponents: [
-        AffiliateComponent,
-        AffiliateDialogComponent,
-        AffiliatePopupComponent,
-        AffiliateDeleteDialogComponent,
-        AffiliateDeletePopupComponent,
+        AffiliateComponent
     ],
     providers: [
-        AffiliateService,
-        AffiliatePopupService,
+        AffiliateService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
