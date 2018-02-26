@@ -1,30 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { State } from '@progress/kendo-data-query';
 
+import { GRID_STATE } from '../../shared';
 import { Newsletter } from './newsletter.model';
 import { NewsletterService } from './newsletter.service';
-import { Principal } from '../../shared';
 
 @Component({
     selector: 'apsstr-newsletter',
     templateUrl: './newsletter.component.html'
 })
-export class NewsletterComponent implements OnInit, OnDestroy {
-newsletters: Newsletter[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
+export class NewsletterComponent implements OnInit {
 
-    constructor(
-        private newsletterService: NewsletterService,
-        private jhiAlertService: JhiAlertService,
-        private eventManager: JhiEventManager,
-        private principal: Principal
-    ) {
+    public newsletters: Newsletter[];
+    public gridState: State;
+
+    constructor(private newsletterService: NewsletterService) {}
+
+    ngOnInit() {
+        this.gridState = GRID_STATE;
+        this.loadAllNewsletter();
     }
 
-    loadAll() {
+    private loadAllNewsletter() {
         this.newsletterService.query().subscribe(
             (res: HttpResponse<Newsletter[]>) => {
                 this.newsletters = res.body;
@@ -32,26 +30,8 @@ newsletters: Newsletter[];
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
-    ngOnInit() {
-        this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
-        });
-        this.registerChangeInNewsletters();
-    }
-
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
-    }
-
-    trackId(index: number, item: Newsletter) {
-        return item.id;
-    }
-    registerChangeInNewsletters() {
-        this.eventSubscriber = this.eventManager.subscribe('newsletterListModification', (response) => this.loadAll());
-    }
 
     private onError(error) {
-        this.jhiAlertService.error(error.message, null, null);
+        console.log('ERROR');
     }
 }

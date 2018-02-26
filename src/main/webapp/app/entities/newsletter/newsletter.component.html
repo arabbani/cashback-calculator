@@ -1,66 +1,14 @@
 <div>
     <h2>
-        <span>Newsletters</span>
-        <button class="btn btn-primary float-right jh-create-entity create-newsletter" [routerLink]="['/', { outlets: { popup: ['newsletter-new'] } }]">
-            <span class="fa fa-plus"></span>
-            <span >
-            Create new Newsletter
-            </span>
-        </button>
+        <span>Newsletter</span>
     </h2>
-    <apsstr-alert></apsstr-alert>
-    <div class="row">
-    </div>
-    <br/>
-    <div class="table-responsive" *ngIf="newsletters">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Email Id</span></th>
-            <th><span>Phone Number</span></th>
-            <th><span>Mail Per Week</span></th>
-            <th><span>Number Of Mails Sent</span></th>
-            <th><span>Active</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let newsletter of newsletters ;trackBy: trackId">
-                <td><a [routerLink]="['../newsletter', newsletter.id ]">{{newsletter.id}}</a></td>
-                <td>{{newsletter.emailId}}</td>
-                <td>{{newsletter.phoneNumber}}</td>
-                <td>{{newsletter.mailPerWeek}}</td>
-                <td>{{newsletter.numberOfMailsSent}}</td>
-                <td>{{newsletter.active}}</td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../newsletter', newsletter.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'newsletter/'+ newsletter.id + '/edit'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'newsletter/'+ newsletter.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
 </div>
+<kendo-grid [kendoGridBinding]="newsletters" [pageable]="true" [pageSize]="gridState.take" [skip]="gridState.skip" [filterable]="true"
+    [resizable]="true" [navigable]="true">
+    <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="emailId" title="Email ID" [filterable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="phoneNumber" title="Phone Number" [filterable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="mailPerWeek" title="Mail Per Week" [filterable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="numberOfMailsSent" title="Mails Sent" [filterable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="active" title="Active" filter="boolean"></kendo-grid-column>
+</kendo-grid>

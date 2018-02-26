@@ -1,48 +1,28 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    NewsletterService,
-    NewsletterPopupService,
-    NewsletterComponent,
-    NewsletterDetailComponent,
-    NewsletterDialogComponent,
-    NewsletterPopupComponent,
-    NewsletterDeletePopupComponent,
-    NewsletterDeleteDialogComponent,
-    newsletterRoute,
-    newsletterPopupRoute,
-} from './';
+import { NewsletterComponent, newsletterRoute, NewsletterService } from './';
 
 const ENTITY_STATES = [
-    ...newsletterRoute,
-    ...newsletterPopupRoute,
+    newsletterRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        GridModule,
     ],
     declarations: [
-        NewsletterComponent,
-        NewsletterDetailComponent,
-        NewsletterDialogComponent,
-        NewsletterDeleteDialogComponent,
-        NewsletterPopupComponent,
-        NewsletterDeletePopupComponent,
+        NewsletterComponent
     ],
     entryComponents: [
-        NewsletterComponent,
-        NewsletterDialogComponent,
-        NewsletterPopupComponent,
-        NewsletterDeleteDialogComponent,
-        NewsletterDeletePopupComponent,
+        NewsletterComponent
     ],
     providers: [
-        NewsletterService,
-        NewsletterPopupService,
+        NewsletterService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
