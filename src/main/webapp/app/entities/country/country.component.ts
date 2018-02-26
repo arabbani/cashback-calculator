@@ -1,30 +1,36 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { State } from '@progress/kendo-data-query';
+import * as _ from 'lodash';
+import { Observable } from 'rxjs/Observable';
 
+import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { GRID_STATE } from '../../shared';
 import { Country } from './country.model';
 import { CountryService } from './country.service';
-import { Principal } from '../../shared';
 
 @Component({
     selector: 'apsstr-country',
     templateUrl: './country.component.html'
 })
-export class CountryComponent implements OnInit, OnDestroy {
-countries: Country[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
+export class CountryComponent implements OnInit {
 
-    constructor(
-        private countryService: CountryService,
-        private jhiAlertService: JhiAlertService,
-        private eventManager: JhiEventManager,
-        private principal: Principal
-    ) {
+    public countries: Country[];
+    public gridState: State;
+    countryFormGroup: FormGroup;
+
+    constructor(private countryService: CountryService, private formBuilder: FormBuilder,
+        private apsstrKendoDialogService: ApsstrKendoDialogService) {
+        this.createCountryFormGroup = this.createCountryFormGroup.bind(this);
     }
 
-    loadAll() {
+    ngOnInit() {
+        this.gridState = GRID_STATE;
+        this.loadAllCountry();
+    }
+
+    private loadAllCountry() {
         this.countryService.query().subscribe(
             (res: HttpResponse<Country[]>) => {
                 this.countries = res.body;
@@ -32,26 +38,60 @@ countries: Country[];
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
-    ngOnInit() {
-        this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
+
+    public createCountryFormGroup(args: any): FormGroup {
+        const item = args.isNew ? new Country() : args.dataItem;
+        this.countryFormGroup = this.formBuilder.group({
+            'id': item.id,
+            'name': [item.name, Validators.required]
         });
-        this.registerChangeInCountries();
+        return this.countryFormGroup;
     }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
+    public saveItem({ formGroup, isNew }): void {
+        const product = formGroup.value;
+        if (isNew) {
+            this.subscribeToSaveResponse(this.countryService.create(product), isNew);
+        } else {
+            this.subscribeToSaveResponse(this.countryService.update(product));
+        }
     }
 
-    trackId(index: number, item: Country) {
-        return item.id;
+    public deleteItem(dataItem: any): void {
+        this.apsstrKendoDialogService.confirm().subscribe((result) => {
+            if (result['text'] === 'No') {
+                this.countries.push(dataItem);
+                this.countries = _.sortBy(this.countries, (item) => item.id);
+            } else if (result['text'] === 'Yes') {
+                this.countryService.delete(dataItem.id).subscribe(
+                    (response) => {
+                        console.log('DELETED');
+                    },
+                    (error: HttpErrorResponse) => {
+                        this.loadAllCountry();
+                        this.onError(error);
+                    }
+                );
+            }
+        });
     }
-    registerChangeInCountries() {
-        this.eventSubscriber = this.eventManager.subscribe('countryListModification', (response) => this.loadAll());
+
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Country>>, isNew?: boolean) {
+        result.subscribe((res: HttpResponse<Country>) =>
+            this.onSaveSuccess(res.body, isNew), (res: HttpErrorResponse) => this.onSaveError());
+    }
+
+    private onSaveSuccess(result: Country, isNew?: boolean) {
+        if (isNew && isNew === true) {
+            this.loadAllCountry();
+        }
+    }
+
+    private onSaveError() {
+        this.loadAllCountry();
     }
 
     private onError(error) {
-        this.jhiAlertService.error(error.message, null, null);
+        console.log('ERROR');
     }
 }

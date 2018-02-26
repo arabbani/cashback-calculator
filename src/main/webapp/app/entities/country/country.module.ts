@@ -1,48 +1,32 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    CountryService,
-    CountryPopupService,
-    CountryComponent,
-    CountryDetailComponent,
-    CountryDialogComponent,
-    CountryPopupComponent,
-    CountryDeletePopupComponent,
-    CountryDeleteDialogComponent,
-    countryRoute,
-    countryPopupRoute,
-} from './';
+import { CountryComponent, countryRoute, CountryService } from './';
 
 const ENTITY_STATES = [
-    ...countryRoute,
-    ...countryPopupRoute,
+    countryRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule
     ],
     declarations: [
-        CountryComponent,
-        CountryDetailComponent,
-        CountryDialogComponent,
-        CountryDeleteDialogComponent,
-        CountryPopupComponent,
-        CountryDeletePopupComponent,
+        CountryComponent
     ],
     entryComponents: [
-        CountryComponent,
-        CountryDialogComponent,
-        CountryPopupComponent,
-        CountryDeleteDialogComponent,
-        CountryDeletePopupComponent,
+        CountryComponent
     ],
     providers: [
-        CountryService,
-        CountryPopupService,
+        CountryService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
