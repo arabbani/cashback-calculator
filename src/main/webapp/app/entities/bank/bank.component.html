@@ -8,7 +8,7 @@
         </div>
     </ng-template>
     <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
-    <kendo-grid-column class="text-center" field="name" title="name"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
     <kendo-grid-column class="text-center" width="190" field="type" title="Type" [filterable]="false" [sortable]="false">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{ dataItem.type?.name }}

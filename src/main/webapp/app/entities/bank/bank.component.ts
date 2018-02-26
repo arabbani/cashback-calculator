@@ -22,7 +22,7 @@ export class BankComponent implements OnInit {
     bankFormGroup: FormGroup;
 
     bankTypes: BankType[];
-    defaultBankType = {id: null, name: 'Select Bank Type'};
+    defaultBankType = {id: null, name: 'Select Type'};
 
     constructor(private bankService: BankService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrKendoDialogService, private bankTypeService: BankTypeService) {
