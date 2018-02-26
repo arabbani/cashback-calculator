@@ -65,7 +65,7 @@ export const ENTITIES = [
     },
     {
         name: 'Return Mode',
-        route: '/return-Mode'
+        route: '/return-mode'
     },
     {
         name: 'Return Extras',
