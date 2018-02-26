@@ -8,7 +8,7 @@
         </div>
     </ng-template>
     <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
-    <kendo-grid-column class="text-center" field="date" title="Date"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="date" title="Date" [editor]="'numeric'"></kendo-grid-column>
     <kendo-grid-command-column title="Action" width="220">
         <ng-template kendoGridCellTemplate let-isNew="isNew">
             <div class="text-center">
