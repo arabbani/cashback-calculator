@@ -1,8 +1,8 @@
 export const ENTITIES = [
-    {
-        name: 'Merchant',
-        route: '/merchant'
-    },
+    // {
+    //     name: 'Merchant',
+    //     route: '/merchant'
+    // },
     {
         name: 'Affiliate Credential',
         route: '/affiliate-credential'
@@ -47,10 +47,10 @@ export const ENTITIES = [
         name: 'Sub Category',
         route: '/sub-category'
     },
-    {
-        name: 'Service Provider',
-        route: '/service-provider'
-    },
+    // {
+    //     name: 'Service Provider',
+    //     route: '/service-provider'
+    // },
     {
         name: 'Date',
         route: '/date'
@@ -67,22 +67,22 @@ export const ENTITIES = [
         name: 'Return Mode',
         route: '/return-mode'
     },
-    {
-        name: 'Return Extras',
-        route: '/return-extras'
-    },
-    {
-        name: 'Main Return',
-        route: '/main-return'
-    },
-    {
-        name: 'Return Info',
-        route: '/return-info'
-    },
-    {
-        name: 'Offer Return',
-        route: '/offer-return'
-    },
+    // {
+    //     name: 'Return Extras',
+    //     route: '/return-extras'
+    // },
+    // {
+    //     name: 'Main Return',
+    //     route: '/main-return'
+    // },
+    // {
+    //     name: 'Return Info',
+    //     route: '/return-info'
+    // },
+    // {
+    //     name: 'Offer Return',
+    //     route: '/offer-return'
+    // },
     {
         name: 'Circle',
         route: '/circle'
@@ -95,14 +95,14 @@ export const ENTITIES = [
         name: 'Region',
         route: '/region'
     },
-    {
-        name: 'Reecharge Info',
-        route: '/reecharge-info'
-    },
-    {
-        name: 'Travel Info',
-        route: '/travel-info'
-    },
+    // {
+    //     name: 'Reecharge Info',
+    //     route: '/reecharge-info'
+    // },
+    // {
+    //     name: 'Travel Info',
+    //     route: '/travel-info'
+    // },
     {
         name: 'Bank Type',
         route: '/bank-type'
@@ -119,32 +119,32 @@ export const ENTITIES = [
         name: 'Card',
         route: '/card'
     },
-    {
-        name: 'Offer Payment',
-        route: '/offer-payment'
-    },
-    {
-        name: 'Reecharge Plan Type',
-        route: '/reecharge-plan-type'
-    },
-    {
-        name: 'Offer',
-        route: '/offer'
-    },
+    // {
+    //     name: 'Offer Payment',
+    //     route: '/offer-payment'
+    // },
+    // {
+    //     name: 'Reecharge Plan Type',
+    //     route: '/reecharge-plan-type'
+    // },
+    // {
+    //     name: 'Offer',
+    //     route: '/offer'
+    // },
     {
         name: 'Newsletter',
         route: '/newsletter'
     },
-    {
-        name: 'User Info',
-        route: '/user-info'
-    },
-    {
-        name: 'Brand',
-        route: '/brand'
-    },
-    {
-        name: 'Electronics Info',
-        route: '/electronics-info'
-    }
+    // {
+    //     name: 'User Info',
+    //     route: '/user-info'
+    // },
+    // {
+    //     name: 'Brand',
+    //     route: '/brand'
+    // },
+    // {
+    //     name: 'Electronics Info',
+    //     route: '/electronics-info'
+    // }
 ];
