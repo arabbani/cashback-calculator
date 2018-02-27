@@ -4,6 +4,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { JsogService } from 'jsog-typescript/dist';
 import { JhiEventManager } from 'ng-jhipster';
 import { Ng2Webstorage } from 'ngx-webstorage';
 
@@ -71,7 +72,8 @@ import { StateStorageService } from './shared/auth/state-storage.service';
             deps: [
                 Injector
             ]
-        }
+        },
+        JsogService
     ],
     bootstrap: [ ApsstrMainComponent ]
 })

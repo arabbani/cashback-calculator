@@ -33,6 +33,7 @@
     "core-js": "2.4.1",
     "font-awesome": "4.7.0",
     "jquery": "3.2.1",
+    "jsog-typescript": "^1.0.0-1",
     "lodash": "^4.17.5",
     "moment": "^2.20.1",
     "ng-jhipster": "0.4.0",

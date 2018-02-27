@@ -7,9 +7,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
+import { Affiliate, AffiliateService } from '../affiliate';
 import { AffiliateCredential } from './affiliate-credential.model';
 import { AffiliateCredentialService } from './affiliate-credential.service';
-import { AffiliateService, Affiliate } from '../affiliate';
 
 @Component({
     selector: 'apsstr-affiliate-credential',
