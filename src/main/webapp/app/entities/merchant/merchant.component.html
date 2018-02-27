@@ -17,7 +17,7 @@
     <kendo-grid-column class="text-center" field="active" title="Active" filter="boolean" editor="boolean"></kendo-grid-column>
     <kendo-grid-column class="text-center" width="190" field="subCategories" title="Sub Categories" [filterable]="false" [sortable]="false">
         <ng-template kendoGridCellTemplate let-dataItem>
-            {{ dataItem.subCategories | json }}
+            {{ constructSubCategoryNames(dataItem.subCategories) }}
         </ng-template>
         <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
             <kendo-multiselect [data]="subCategories" textField="name" valueField="id" [formControl]="formGroup.get('subCategories')"

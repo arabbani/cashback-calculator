@@ -111,4 +111,16 @@ export class MerchantComponent implements OnInit {
     private onError(error) {
         console.log('ERROR');
     }
+
+    public constructSubCategoryNames(subCategories: SubCategory[]): string {
+        let subCategoriesName = '';
+        const length = subCategories.length;
+        _.forEach(subCategories, function(value, index) {
+            subCategoriesName += value.name;
+            if (index < length - 1) {
+                subCategoriesName += ', ';
+            }
+        });
+        return subCategoriesName;
+    }
 }
