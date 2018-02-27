@@ -1,48 +1,32 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    ReechargePlanTypeService,
-    ReechargePlanTypePopupService,
-    ReechargePlanTypeComponent,
-    ReechargePlanTypeDetailComponent,
-    ReechargePlanTypeDialogComponent,
-    ReechargePlanTypePopupComponent,
-    ReechargePlanTypeDeletePopupComponent,
-    ReechargePlanTypeDeleteDialogComponent,
-    reechargePlanTypeRoute,
-    reechargePlanTypePopupRoute,
-} from './';
+import { ReechargePlanTypeComponent, reechargePlanTypeRoute, ReechargePlanTypeService } from './';
 
 const ENTITY_STATES = [
-    ...reechargePlanTypeRoute,
-    ...reechargePlanTypePopupRoute,
+    reechargePlanTypeRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule
     ],
     declarations: [
-        ReechargePlanTypeComponent,
-        ReechargePlanTypeDetailComponent,
-        ReechargePlanTypeDialogComponent,
-        ReechargePlanTypeDeleteDialogComponent,
-        ReechargePlanTypePopupComponent,
-        ReechargePlanTypeDeletePopupComponent,
+        ReechargePlanTypeComponent
     ],
     entryComponents: [
-        ReechargePlanTypeComponent,
-        ReechargePlanTypeDialogComponent,
-        ReechargePlanTypePopupComponent,
-        ReechargePlanTypeDeleteDialogComponent,
-        ReechargePlanTypeDeletePopupComponent,
+        ReechargePlanTypeComponent
     ],
     providers: [
-        ReechargePlanTypeService,
-        ReechargePlanTypePopupService,
+        ReechargePlanTypeService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

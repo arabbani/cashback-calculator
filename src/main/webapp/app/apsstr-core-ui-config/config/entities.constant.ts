@@ -123,10 +123,10 @@ export const ENTITIES = [
     //     name: 'Offer Payment',
     //     route: '/offer-payment'
     // },
-    // {
-    //     name: 'Reecharge Plan Type',
-    //     route: '/reecharge-plan-type'
-    // },
+    {
+        name: 'Reecharge Plan Type',
+        route: '/reecharge-plan-type'
+    },
     // {
     //     name: 'Offer',
     //     route: '/offer'
@@ -139,10 +139,10 @@ export const ENTITIES = [
     //     name: 'User Info',
     //     route: '/user-info'
     // },
-    // {
-    //     name: 'Brand',
-    //     route: '/brand'
-    // },
+    {
+        name: 'Brand',
+        route: '/brand'
+    },
     // {
     //     name: 'Electronics Info',
     //     route: '/electronics-info'
