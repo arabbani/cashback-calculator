@@ -47,10 +47,10 @@ export const ENTITIES = [
         name: 'Sub Category',
         route: '/sub-category'
     },
-    // {
-    //     name: 'Service Provider',
-    //     route: '/service-provider'
-    // },
+    {
+        name: 'Service Provider',
+        route: '/service-provider'
+    },
     {
         name: 'Date',
         route: '/date'
