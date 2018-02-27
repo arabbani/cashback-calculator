@@ -22,7 +22,7 @@ export class SubCategoryComponent implements OnInit {
     subCategoryFormGroup: FormGroup;
 
     categories: Category[];
-    defaultCategory = {id: null, name: 'Select Type'};
+    defaultCategory = {id: null, name: 'Select Category'};
 
     constructor(private subCategoryService: SubCategoryService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrKendoDialogService, private categoryService: CategoryService) {
