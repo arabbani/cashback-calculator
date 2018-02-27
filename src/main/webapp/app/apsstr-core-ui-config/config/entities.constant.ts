@@ -1,8 +1,8 @@
 export const ENTITIES = [
-    // {
-    //     name: 'Merchant',
-    //     route: '/merchant'
-    // },
+    {
+        name: 'Merchant',
+        route: '/merchant'
+    },
     {
         name: 'Affiliate Credential',
         route: '/affiliate-credential'

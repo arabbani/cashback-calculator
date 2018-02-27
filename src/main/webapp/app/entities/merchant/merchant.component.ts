@@ -1,30 +1,36 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { State } from '@progress/kendo-data-query';
+import * as _ from 'lodash';
+import { Observable } from 'rxjs/Observable';
 
+import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { GRID_STATE } from '../../shared';
 import { Merchant } from './merchant.model';
 import { MerchantService } from './merchant.service';
-import { Principal } from '../../shared';
 
 @Component({
     selector: 'apsstr-merchant',
     templateUrl: './merchant.component.html'
 })
-export class MerchantComponent implements OnInit, OnDestroy {
-merchants: Merchant[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
+export class MerchantComponent implements OnInit {
 
-    constructor(
-        private merchantService: MerchantService,
-        private jhiAlertService: JhiAlertService,
-        private eventManager: JhiEventManager,
-        private principal: Principal
-    ) {
+    public merchants: Merchant[];
+    public gridState: State;
+    merchantFromGroup: FormGroup;
+
+    constructor(private merchantService: MerchantService, private formBuilder: FormBuilder,
+        private apsstrKendoDialogService: ApsstrKendoDialogService) {
+        this.createMerchantFormGroup = this.createMerchantFormGroup.bind(this);
     }
 
-    loadAll() {
+    ngOnInit() {
+        this.gridState = GRID_STATE;
+        this.loadAllMerchant();
+    }
+
+    private loadAllMerchant() {
         this.merchantService.query().subscribe(
             (res: HttpResponse<Merchant[]>) => {
                 this.merchants = res.body;
@@ -32,26 +38,62 @@ merchants: Merchant[];
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
-    ngOnInit() {
-        this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
+
+    public createMerchantFormGroup(args: any): FormGroup {
+        const item = args.isNew ? new Merchant() : args.dataItem;
+        this.merchantFromGroup = this.formBuilder.group({
+            'id': item.id,
+            'name': [item.name, Validators.required],
+            'active': item.active,
+            'url': item.url
         });
-        this.registerChangeInMerchants();
+        return this.merchantFromGroup;
     }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
+    public saveItem({ formGroup, isNew }): void {
+        const product = formGroup.value;
+        if (isNew) {
+            this.subscribeToSaveResponse(this.merchantService.create(product), isNew);
+        } else {
+            this.subscribeToSaveResponse(this.merchantService.update(product));
+        }
     }
 
-    trackId(index: number, item: Merchant) {
-        return item.id;
+    public deleteItem(dataItem: any): void {
+        this.apsstrKendoDialogService.confirm().subscribe((result) => {
+            if (result['text'] === 'No') {
+                this.merchants.push(dataItem);
+                this.merchants = _.sortBy(this.merchants, (item) => item.id);
+            } else if (result['text'] === 'Yes') {
+                this.merchantService.delete(dataItem.id).subscribe(
+                    (response) => {
+                        console.log('DELETED');
+                    },
+                    (error: HttpErrorResponse) => {
+                        this.loadAllMerchant();
+                        this.onError(error);
+                    }
+                );
+            }
+        });
     }
-    registerChangeInMerchants() {
-        this.eventSubscriber = this.eventManager.subscribe('merchantListModification', (response) => this.loadAll());
+
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Merchant>>, isNew?: boolean) {
+        result.subscribe((res: HttpResponse<Merchant>) =>
+            this.onSaveSuccess(res.body, isNew), (res: HttpErrorResponse) => this.onSaveError());
+    }
+
+    private onSaveSuccess(result: Merchant, isNew?: boolean) {
+        if (isNew && isNew === true) {
+            this.loadAllMerchant();
+        }
+    }
+
+    private onSaveError() {
+        this.loadAllMerchant();
     }
 
     private onError(error) {
-        this.jhiAlertService.error(error.message, null, null);
+        console.log('ERROR');
     }
 }
