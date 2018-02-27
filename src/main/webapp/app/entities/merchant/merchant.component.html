@@ -15,6 +15,15 @@
     <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
     <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
     <kendo-grid-column class="text-center" field="active" title="Active" filter="boolean" editor="boolean"></kendo-grid-column>
+    <kendo-grid-column class="text-center" width="190" field="subCategories" title="Sub Categories" [filterable]="false" [sortable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.subCategories | json }}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+            <kendo-multiselect [data]="subCategories" textField="name" valueField="id" [formControl]="formGroup.get('subCategories')"
+                [placeholder]="defaultSubCategory" [filterable]="true" [autoClose]="false"></kendo-multiselect>
+        </ng-template>
+    </kendo-grid-column>
     <kendo-grid-column class="text-center" field="url" title="Url" [filterable]="false" [sortable]="false"></kendo-grid-column>
     <kendo-grid-command-column title="Action" width="220">
         <ng-template kendoGridCellTemplate let-isNew="isNew">

@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
+import { SubCategory, SubCategoryService } from '../sub-category';
 import { Merchant } from './merchant.model';
 import { MerchantService } from './merchant.service';
 
@@ -18,16 +19,29 @@ export class MerchantComponent implements OnInit {
 
     public merchants: Merchant[];
     public gridState: State;
-    merchantFromGroup: FormGroup;
+    merchantFormGroup: FormGroup;
+
+    subCategories: SubCategory[];
+    defaultSubCategory = 'Select Sub Categories';
 
     constructor(private merchantService: MerchantService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService) {
+        private apsstrKendoDialogService: ApsstrKendoDialogService, private subCategoryService: SubCategoryService) {
         this.createMerchantFormGroup = this.createMerchantFormGroup.bind(this);
     }
 
     ngOnInit() {
         this.gridState = GRID_STATE;
+        this.loadAllSubCategories();
         this.loadAllMerchant();
+    }
+
+    private loadAllSubCategories() {
+        this.subCategoryService.query().subscribe(
+            (res: HttpResponse<SubCategory[]>) => {
+                this.subCategories = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
     }
 
     private loadAllMerchant() {
@@ -41,13 +55,14 @@ export class MerchantComponent implements OnInit {
 
     public createMerchantFormGroup(args: any): FormGroup {
         const item = args.isNew ? new Merchant() : args.dataItem;
-        this.merchantFromGroup = this.formBuilder.group({
+        this.merchantFormGroup = this.formBuilder.group({
             'id': item.id,
             'name': [item.name, Validators.required],
             'active': item.active,
+            'subCategories': [item.subCategories],
             'url': item.url
         });
-        return this.merchantFromGroup;
+        return this.merchantFormGroup;
     }
 
     public saveItem({ formGroup, isNew }): void {
