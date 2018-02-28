@@ -18,8 +18,7 @@ export class OfferComponent implements OnInit {
     public offers: Offer[];
     public gridState: State;
 
-    constructor(private offerService: OfferService, private router: Router,
-        private route: ActivatedRoute, private apsstrKendoDialogService: ApsstrKendoDialogService) { }
+    constructor(private offerService: OfferService, private router: Router, private apsstrKendoDialogService: ApsstrKendoDialogService) { }
 
     ngOnInit() {
         this.gridState = GRID_STATE;
@@ -36,10 +35,12 @@ export class OfferComponent implements OnInit {
     }
 
     editOffer(offerId: number): void {
-        this.router.navigate(
-            ['/', { outlets: { popup: 'offer/' + offerId + '/edit' } }],
-            { relativeTo: this.route }
-        );
+        // this.router.navigate(
+        //     ['/', { outlets: { popup: 'offer/' + offerId + '/edit' } }],
+        //     { relativeTo: this.route }
+        // );
+        // this.router.navigate([`${offerId}/edit`], { relativeTo: this.route });
+        this.router.navigate(['offer-new']);
     }
 
     removeOffer({ rowIndex, dataItem }): void {

@@ -17,6 +17,7 @@ import {
     offerRoute,
     OfferService,
 } from './';
+import { CreateOfferComponent } from './create-offer/create-offer.component';
 
 const ENTITY_STATES = [
     ...offerRoute,
@@ -38,6 +39,7 @@ const ENTITY_STATES = [
         OfferDeleteDialogComponent,
         OfferPopupComponent,
         OfferDeletePopupComponent,
+        CreateOfferComponent,
     ],
     entryComponents: [
         OfferComponent,
