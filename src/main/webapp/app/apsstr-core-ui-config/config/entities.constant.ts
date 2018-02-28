@@ -127,10 +127,10 @@ export const ENTITIES = [
         name: 'Reecharge Plan Type',
         route: '/reecharge-plan-type'
     },
-    // {
-    //     name: 'Offer',
-    //     route: '/offer'
-    // },
+    {
+        name: 'Offer',
+        route: '/offer'
+    },
     {
         name: 'Newsletter',
         route: '/newsletter'
