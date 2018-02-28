@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { JsogService } from 'jsog-typescript';
 import { Observable } from 'rxjs/Observable';
-import { SERVER_API_URL } from '../../app.constants';
 
-import { Merchant } from './merchant.model';
+import { SERVER_API_URL } from '../../app.constants';
 import { createRequestOption } from '../../shared';
+import { Merchant } from './merchant.model';
 
 export type EntityResponseType = HttpResponse<Merchant>;
 
 @Injectable()
 export class MerchantService {
 
-    private resourceUrl =  SERVER_API_URL + 'api/merchants';
+    private resourceUrl = SERVER_API_URL + 'api/merchants';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(merchant: Merchant): Observable<EntityResponseType> {
         const copy = this.convert(merchant);
@@ -28,7 +29,7 @@ export class MerchantService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<Merchant>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+        return this.http.get<Merchant>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -39,21 +40,21 @@ export class MerchantService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Merchant = this.convertItemFromServer(res.body);
-        return res.clone({body});
+        const body: Merchant = this.convertItemFromServer(this.deserializeObject(res.body));
+        return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<Merchant[]>): HttpResponse<Merchant[]> {
-        const jsonResponse: Merchant[] = res.body;
+        const jsonResponse: Merchant[] = this.deserializeArray(res.body);
         const body: Merchant[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({body});
+        return res.clone({ body });
     }
 
     /**
@@ -70,5 +71,13 @@ export class MerchantService {
     private convert(merchant: Merchant): Merchant {
         const copy: Merchant = Object.assign({}, merchant);
         return copy;
+    }
+
+    private deserializeArray(json: any): Merchant[] {
+        return this.jsogService.deserializeArray(json, Merchant);
+    }
+
+    private deserializeObject(json: any): Merchant {
+        return this.jsogService.deserializeObject(json, Merchant);
     }
 }

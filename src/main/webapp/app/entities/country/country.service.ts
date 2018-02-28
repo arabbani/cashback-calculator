@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { JsogService } from 'jsog-typescript';
 import { Observable } from 'rxjs/Observable';
-import { SERVER_API_URL } from '../../app.constants';
 
-import { Country } from './country.model';
+import { SERVER_API_URL } from '../../app.constants';
 import { createRequestOption } from '../../shared';
+import { Country } from './country.model';
 
 export type EntityResponseType = HttpResponse<Country>;
 
 @Injectable()
 export class CountryService {
 
-    private resourceUrl =  SERVER_API_URL + 'api/countries';
+    private resourceUrl = SERVER_API_URL + 'api/countries';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(country: Country): Observable<EntityResponseType> {
         const copy = this.convert(country);
@@ -28,7 +29,7 @@ export class CountryService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<Country>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+        return this.http.get<Country>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -39,21 +40,21 @@ export class CountryService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Country = this.convertItemFromServer(res.body);
-        return res.clone({body});
+        const body: Country = this.convertItemFromServer(this.deserializeObject(res.body));
+        return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<Country[]>): HttpResponse<Country[]> {
-        const jsonResponse: Country[] = res.body;
+        const jsonResponse: Country[] = this.deserializeArray(res.body);
         const body: Country[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({body});
+        return res.clone({ body });
     }
 
     /**
@@ -70,5 +71,13 @@ export class CountryService {
     private convert(country: Country): Country {
         const copy: Country = Object.assign({}, country);
         return copy;
+    }
+
+    private deserializeArray(json: any): Country[] {
+        return this.jsogService.deserializeArray(json, Country);
+    }
+
+    private deserializeObject(json: any): Country {
+        return this.jsogService.deserializeObject(json, Country);
     }
 }

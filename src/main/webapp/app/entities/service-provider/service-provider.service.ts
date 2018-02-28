@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { JsogService } from 'jsog-typescript';
 import { Observable } from 'rxjs/Observable';
-import { SERVER_API_URL } from '../../app.constants';
 
-import { ServiceProvider } from './service-provider.model';
+import { SERVER_API_URL } from '../../app.constants';
 import { createRequestOption } from '../../shared';
+import { ServiceProvider } from './service-provider.model';
 
 export type EntityResponseType = HttpResponse<ServiceProvider>;
 
 @Injectable()
 export class ServiceProviderService {
 
-    private resourceUrl =  SERVER_API_URL + 'api/service-providers';
+    private resourceUrl = SERVER_API_URL + 'api/service-providers';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(serviceProvider: ServiceProvider): Observable<EntityResponseType> {
         const copy = this.convert(serviceProvider);
@@ -28,7 +29,7 @@ export class ServiceProviderService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<ServiceProvider>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+        return this.http.get<ServiceProvider>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -39,21 +40,21 @@ export class ServiceProviderService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: ServiceProvider = this.convertItemFromServer(res.body);
-        return res.clone({body});
+        const body: ServiceProvider = this.convertItemFromServer(this.deserializeObject(res.body));
+        return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<ServiceProvider[]>): HttpResponse<ServiceProvider[]> {
-        const jsonResponse: ServiceProvider[] = res.body;
+        const jsonResponse: ServiceProvider[] = this.deserializeArray(res.body);
         const body: ServiceProvider[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({body});
+        return res.clone({ body });
     }
 
     /**
@@ -70,5 +71,13 @@ export class ServiceProviderService {
     private convert(serviceProvider: ServiceProvider): ServiceProvider {
         const copy: ServiceProvider = Object.assign({}, serviceProvider);
         return copy;
+    }
+
+    private deserializeArray(json: any): ServiceProvider[] {
+        return this.jsogService.deserializeArray(json, ServiceProvider);
+    }
+
+    private deserializeObject(json: any): ServiceProvider {
+        return this.jsogService.deserializeObject(json, ServiceProvider);
     }
 }

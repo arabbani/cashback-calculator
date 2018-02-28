@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { JsogService } from 'jsog-typescript';
 import { Observable } from 'rxjs/Observable';
-import { SERVER_API_URL } from '../../app.constants';
 
-import { OfferReturn } from './offer-return.model';
+import { SERVER_API_URL } from '../../app.constants';
 import { createRequestOption } from '../../shared';
+import { OfferReturn } from './offer-return.model';
 
 export type EntityResponseType = HttpResponse<OfferReturn>;
 
 @Injectable()
 export class OfferReturnService {
 
-    private resourceUrl =  SERVER_API_URL + 'api/offer-returns';
+    private resourceUrl = SERVER_API_URL + 'api/offer-returns';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(offerReturn: OfferReturn): Observable<EntityResponseType> {
         const copy = this.convert(offerReturn);
@@ -28,7 +29,7 @@ export class OfferReturnService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<OfferReturn>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+        return this.http.get<OfferReturn>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -39,21 +40,21 @@ export class OfferReturnService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: OfferReturn = this.convertItemFromServer(res.body);
-        return res.clone({body});
+        const body: OfferReturn = this.convertItemFromServer(this.deserializeObject(res.body));
+        return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<OfferReturn[]>): HttpResponse<OfferReturn[]> {
-        const jsonResponse: OfferReturn[] = res.body;
+        const jsonResponse: OfferReturn[] = this.deserializeArray(res.body);
         const body: OfferReturn[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({body});
+        return res.clone({ body });
     }
 
     /**
@@ -70,5 +71,13 @@ export class OfferReturnService {
     private convert(offerReturn: OfferReturn): OfferReturn {
         const copy: OfferReturn = Object.assign({}, offerReturn);
         return copy;
+    }
+
+    private deserializeArray(json: any): OfferReturn[] {
+        return this.jsogService.deserializeArray(json, OfferReturn);
+    }
+
+    private deserializeObject(json: any): OfferReturn {
+        return this.jsogService.deserializeObject(json, OfferReturn);
     }
 }

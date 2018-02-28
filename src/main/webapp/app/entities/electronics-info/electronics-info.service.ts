@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { JsogService } from 'jsog-typescript';
 import { Observable } from 'rxjs/Observable';
-import { SERVER_API_URL } from '../../app.constants';
 
-import { ElectronicsInfo } from './electronics-info.model';
+import { SERVER_API_URL } from '../../app.constants';
 import { createRequestOption } from '../../shared';
+import { ElectronicsInfo } from './electronics-info.model';
 
 export type EntityResponseType = HttpResponse<ElectronicsInfo>;
 
 @Injectable()
 export class ElectronicsInfoService {
 
-    private resourceUrl =  SERVER_API_URL + 'api/electronics-infos';
+    private resourceUrl = SERVER_API_URL + 'api/electronics-infos';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(electronicsInfo: ElectronicsInfo): Observable<EntityResponseType> {
         const copy = this.convert(electronicsInfo);
@@ -28,7 +29,7 @@ export class ElectronicsInfoService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<ElectronicsInfo>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+        return this.http.get<ElectronicsInfo>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -39,21 +40,21 @@ export class ElectronicsInfoService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: ElectronicsInfo = this.convertItemFromServer(res.body);
-        return res.clone({body});
+        const body: ElectronicsInfo = this.convertItemFromServer(this.deserializeObject(res.body));
+        return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<ElectronicsInfo[]>): HttpResponse<ElectronicsInfo[]> {
-        const jsonResponse: ElectronicsInfo[] = res.body;
+        const jsonResponse: ElectronicsInfo[] = this.deserializeArray(res.body);
         const body: ElectronicsInfo[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({body});
+        return res.clone({ body });
     }
 
     /**
@@ -70,5 +71,13 @@ export class ElectronicsInfoService {
     private convert(electronicsInfo: ElectronicsInfo): ElectronicsInfo {
         const copy: ElectronicsInfo = Object.assign({}, electronicsInfo);
         return copy;
+    }
+
+    private deserializeArray(json: any): ElectronicsInfo[] {
+        return this.jsogService.deserializeArray(json, ElectronicsInfo);
+    }
+
+    private deserializeObject(json: any): ElectronicsInfo {
+        return this.jsogService.deserializeObject(json, ElectronicsInfo);
     }
 }
