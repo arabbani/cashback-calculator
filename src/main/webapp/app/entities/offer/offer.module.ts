@@ -1,18 +1,20 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
 import {
-    OfferService,
-    OfferPopupService,
     OfferComponent,
+    OfferDeleteDialogComponent,
+    OfferDeletePopupComponent,
     OfferDetailComponent,
     OfferDialogComponent,
     OfferPopupComponent,
-    OfferDeletePopupComponent,
-    OfferDeleteDialogComponent,
-    offerRoute,
     offerPopupRoute,
+    OfferPopupService,
+    offerRoute,
+    OfferService,
 } from './';
 
 const ENTITY_STATES = [
@@ -23,7 +25,9 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        GridModule,
+        DialogModule
     ],
     declarations: [
         OfferComponent,
