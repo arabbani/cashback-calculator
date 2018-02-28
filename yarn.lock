@@ -238,9 +238,9 @@
     "@telerik/kendo-draggable" "^1.6.0"
     tslib "^1.7.0"
 
-"@progress/kendo-angular-inputs@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-inputs/-/kendo-angular-inputs-2.1.1.tgz#b4c8e2d9945922a8362ce27b09f4899831dedbae"
+"@progress/kendo-angular-inputs@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-angular-inputs/-/kendo-angular-inputs-2.2.0.tgz#debda4f602dc17c7afb30efb27bf386ce61ff004"
   dependencies:
     "@progress/kendo-angular-resize-sensor" "^3.0.0"
     "@telerik/kendo-draggable" "^1.5.1"

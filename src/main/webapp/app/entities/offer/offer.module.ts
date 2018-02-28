@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 import { GridModule } from '@progress/kendo-angular-grid';
+import { SwitchModule } from '@progress/kendo-angular-inputs';
 import { MomentModule } from 'angular2-moment';
 import { TabsModule } from 'ngx-bootstrap';
 
@@ -34,7 +35,8 @@ const ENTITY_STATES = [
         DialogModule,
         MomentModule,
         TabsModule.forRoot(),
-        DropDownListModule
+        DropDownListModule,
+        SwitchModule
     ],
     declarations: [
         OfferComponent,
@@ -58,4 +60,4 @@ const ENTITY_STATES = [
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class CbclOfferModule {}
+export class CbclOfferModule { }

@@ -68,38 +68,108 @@
                             <p class="form-control-static">{{ offer.numberOfUses }}</p>
                         </div>
                     </div>
-                    <fieldset class="fieldset-fix">
+                    <fieldset class="fieldset-fix mb-3">
                         <legend class="legend-fix">
                             <strong>Maximum Uses</strong>
                         </legend>
-                        <div class="row mb-3">
-                            <div class="form-group col-sm-3 col-lg-2">
+                        <div class="row">
+                            <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerUser">Per User</label>
                                 <input type="number" class="form-control" id="maximumUsesPerUser" name="maximumUsesPerUser" [(ngModel)]="offer.maximumUsesPerUser"
                                 />
                             </div>
-                            <div class="form-group col-sm-3 col-lg-2">
+                            <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerDay">Per Day</label>
                                 <input type="number" class="form-control" id="maximumUsesPerDay" name="maximumUsesPerDay" [(ngModel)]="offer.maximumUsesPerDay"
                                 />
                             </div>
-                            <div class="form-group col-sm-3 col-lg-2">
+                            <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerWeek">Per Week</label>
                                 <input type="number" class="form-control" id="maximumUsesPerWeek" name="maximumUsesPerWeek" [(ngModel)]="offer.maximumUsesPerWeek"
                                 />
                             </div>
-                            <div class="form-group col-sm-3 col-lg-2">
+                            <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerMonth">Per Month</label>
                                 <input type="number" class="form-control" id="maximumUsesPerMonth" name="maximumUsesPerMonth" [(ngModel)]="offer.maximumUsesPerMonth"
                                 />
                             </div>
-                            <div class="form-group col-sm-3 col-lg-2">
+                            <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerNumber">Per User</label>
                                 <input type="number" class="form-control" id="maximumUsesPerNumber" name="maximumUsesPerNumber" [(ngModel)]="offer.maximumUsesPerNumber"
                                 />
                             </div>
                         </div>
                     </fieldset>
+                    <fieldset class="fieldset-fix mb-3">
+                        <legend class="legend-fix">
+                            <strong>Options</strong>
+                        </legend>
+                        <div class="row">
+                            <div class="form-group col-sm-4 mb-3">
+                                <span class="col-sm-6">
+                                    <label for="active">Active</label>
+                                </span>
+                                <span class="col-sm-6">
+                                    <kendo-switch id="active" name="active" [(ngModel)]="offer.active" onLabel="Y" offLabel="N"></kendo-switch>
+                                </span>
+                            </div>
+                            <div class="form-group col-sm-4 mb-3">
+                                <span class="col-sm-6">
+                                    <label for="newUserOnly">New User Only</label>
+                                </span>
+                                <span class="col-sm-6">
+                                    <kendo-switch id="newUserOnly" name="newUserOnly" [(ngModel)]="offer.newUserOnly" onLabel="Y" offLabel="N"></kendo-switch>
+                                </span>
+                            </div>
+                            <div class="form-group col-sm-4 mb-3">
+                                <span class="col-sm-6">
+                                    <label for="appOnly">App Only</label>
+                                </span>
+                                <span class="col-sm-6">
+                                    <kendo-switch id="appOnly" name="appOnly" [(ngModel)]="offer.appOnly" onLabel="Y" offLabel="N"></kendo-switch>
+                                </span>
+                            </div>
+                            <div class="form-group col-sm-4 mb-3">
+                                <span class="col-sm-6">
+                                    <label for="websiteOnly">Website Only</label>
+                                </span>
+                                <span class="col-sm-6">
+                                    <kendo-switch id="websiteOnly" name="websiteOnly" [(ngModel)]="offer.websiteOnly" onLabel="Y" offLabel="N"></kendo-switch>
+                                </span>
+                            </div>
+                            <div class="form-group col-sm-4 mb-3">
+                                <span class="col-sm-6">
+                                    <label for="dummy">Dummy</label>
+                                </span>
+                                <span class="col-sm-6">
+                                    <kendo-switch id="dummy" name="dummy" [(ngModel)]="offer.dummy" onLabel="Y" offLabel="N"></kendo-switch>
+                                </span>
+                            </div>
+                            <div class="form-group col-sm-4 mb-3">
+                                <span class="col-sm-6">
+                                    <label for="apsstrExclusive">Apsstr Exclusive</label>
+                                </span>
+                                <span class="col-sm-6">
+                                    <kendo-switch id="apsstrExclusive" name="apsstrExclusive" [(ngModel)]="offer.apsstrExclusive" onLabel="Y" offLabel="N"></kendo-switch>
+                                </span>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="form-group mb-3">
+                        <label class="mr-5" for="policy">Policy</label>
+                        <kendo-dropdownlist id="policy" name="policy" [data]="offerPolicies" [defaultItem]="defaultOfferPolicy" textField="name"
+                            valueField="id" [(ngModel)]="offer.policy"></kendo-dropdownlist>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="url">Url</label>
+                        <textarea class="form-control" id="url" name="url" [(ngModel)]="offer.url" #url="ngModel" maxlength="2000">
+                        </textarea>
+                        <ng-container *ngIf="url.dirty && url.invalid">
+                            <span class="form-text text-danger" *ngIf="url.errors.maxlength">
+                                This field cannot be longer than 2000 characters.
+                            </span>
+                        </ng-container>
+                    </div>
                 </form>
             </tab>
             <tab heading="Password">
