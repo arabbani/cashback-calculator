@@ -6,6 +6,9 @@
 <div kendoDialogContainer></div>
 <kendo-grid [kendoGridBinding]="offers" [pageable]="true" [pageSize]="gridState.take" [skip]="gridState.skip" [filterable]="true"
     [sortable]="true" [resizable]="true" [navigable]="true" (edit)="editOffer($event.dataItem.id)" (remove)="removeOffer($event)">
+    <ng-template kendoGridToolbarTemplate>
+        <button class="btn btn-primary float-right" (click)="createOffer()">Add new</button>
+    </ng-template>
     <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false"></kendo-grid-column>
     <kendo-grid-column class="text-center" field="name" title="Name" [filterable]="false" [sortable]="false"></kendo-grid-column>
     <kendo-grid-column class="text-center" field="startDate" title="Start Date" [filterable]="false" [sortable]="false">

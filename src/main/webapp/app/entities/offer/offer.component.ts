@@ -34,6 +34,10 @@ export class OfferComponent implements OnInit {
         );
     }
 
+    createOffer(): void {
+        this.router.navigate(['offer-new']);
+    }
+
     editOffer(offerId: number): void {
         // this.router.navigate(
         //     ['/', { outlets: { popup: 'offer/' + offerId + '/edit' } }],

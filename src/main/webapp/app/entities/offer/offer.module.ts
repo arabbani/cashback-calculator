@@ -1,8 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DialogModule } from '@progress/kendo-angular-dialog';
+import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { MomentModule } from 'angular2-moment';
+import { TabsModule } from 'ngx-bootstrap';
 
 import { CbclSharedModule } from '../../shared';
 import {
@@ -30,7 +32,9 @@ const ENTITY_STATES = [
         RouterModule.forChild(ENTITY_STATES),
         GridModule,
         DialogModule,
-        MomentModule
+        MomentModule,
+        TabsModule.forRoot(),
+        DropDownListModule
     ],
     declarations: [
         OfferComponent,

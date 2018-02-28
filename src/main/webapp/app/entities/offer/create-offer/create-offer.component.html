@@ -1,3 +1,58 @@
-<p>
-  create-offer works!
-</p>
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <tabset>
+            <tab heading="Basic Info">
+                <form name="form" role="form" #basicInfoForm="ngForm" novalidate>
+                    <div class="form-group mb-3">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="offer.name" #name="ngModel" maxlength="500" required
+                            placeholder="Offer Title" />
+                        <ng-container *ngIf="name.dirty && name.invalid">
+                            <span class="form-text text-danger" *ngIf="name.errors.required">
+                                Name is required.
+                            </span>
+                            <span class="form-text text-danger" *ngIf="name.errors.maxlength">
+                                This field cannot be longer than 500 characters.
+                            </span>
+                        </ng-container>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="adminDescription">Admin Description</label>
+                        <textarea class="form-control" id="adminDescription" name="adminDescription" [(ngModel)]="offer.adminDescription" #adminDescription="ngModel"
+                            maxlength="2000" required>
+                        </textarea>
+                        <ng-container *ngIf="adminDescription.dirty && adminDescription.invalid">
+                            <span class="form-text text-danger" *ngIf="adminDescription.errors.required">
+                                Admin Description is required.
+                            </span>
+                            <span class="form-text text-danger" *ngIf="adminDescription.errors.maxlength">
+                                This field cannot be longer than 2000 characters.
+                            </span>
+                        </ng-container>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" name="description" [(ngModel)]="offer.description" #description="ngModel"
+                            maxlength="2000" required>
+                        </textarea>
+                        <ng-container *ngIf="description.dirty && description.invalid">
+                            <span class="form-text text-danger" *ngIf="description.errors.required">
+                                Description is required.
+                            </span>
+                            <span class="form-text text-danger" *ngIf="description.errors.maxlength">
+                                This field cannot be longer than 2000 characters.
+                            </span>
+                        </ng-container>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="mr-5" for="type">Type</label>
+                        <kendo-dropdownlist id="type" [data]="offerTypes" [defaultItem]="defaultOfferType" textField="name" valueField="id" [(ngModel)]="offer.type"
+                            name="type"></kendo-dropdownlist>
+                    </div>
+                </form>
+            </tab>
+            <tab heading="Password">
+            </tab>
+        </tabset>
+    </div>
+</div>
