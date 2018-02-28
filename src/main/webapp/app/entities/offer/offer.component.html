@@ -8,7 +8,11 @@
     [sortable]="true" [resizable]="true" [navigable]="true" (edit)="editOffer($event.dataItem.id)" (remove)="removeOffer($event)">
     <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false"></kendo-grid-column>
     <kendo-grid-column class="text-center" field="name" title="Name" [filterable]="false" [sortable]="false"></kendo-grid-column>
-    <kendo-grid-column class="text-center" field="startDate" title="startDate" [filterable]="false" [sortable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="startDate" title="Start Date" [filterable]="false" [sortable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <span>{{ dataItem.startDate | amDateFormat: 'YYYY-MM-DD HH:mm' }}</span>
+        </ng-template>
+    </kendo-grid-column>
     <kendo-grid-column class="text-center" width="160" field="active" title="Status" filter="boolean">
         <ng-template kendoGridCellTemplate let-dataItem>
             <span [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': dataItem.active, 'badge-danger': !dataItem.active }">{{ dataItem.active ? 'Active' : 'InActive' }}</span>
