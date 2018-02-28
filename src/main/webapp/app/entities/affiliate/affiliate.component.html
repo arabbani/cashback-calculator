@@ -14,7 +14,11 @@
     </ng-template>
     <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
     <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
-    <kendo-grid-column class="text-center" field="active" title="Active" filter="boolean" editor="boolean"></kendo-grid-column>
+    <kendo-grid-column class="text-center" width="190" field="active" title="Status" filter="boolean" editor="boolean">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <span [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': dataItem.active, 'badge-danger': !dataItem.active }">{{ dataItem.active ? 'Active' : 'InActive' }}</span>
+        </ng-template>
+    </kendo-grid-column>
     <kendo-grid-column class="text-center" field="url" title="Url" [filterable]="false" [sortable]="false"></kendo-grid-column>
     <kendo-grid-command-column title="Action" width="220">
         <ng-template kendoGridCellTemplate let-isNew="isNew">

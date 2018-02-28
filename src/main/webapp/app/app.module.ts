@@ -18,7 +18,7 @@ import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.inter
 import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
 import { CbclEntityModule } from './entities/entity.module';
 import { CbclHomeModule } from './home/home.module';
-import { ApsstrMainComponent, ErrorComponent, NavbarComponent, PageRibbonComponent, ProfileService } from './layouts';
+import { ApsstrMainComponent, ErrorComponent, PageRibbonComponent, ProfileService } from './layouts';
 import { CbclSharedModule, UserRouteAccessService } from './shared';
 import { StateStorageService } from './shared/auth/state-storage.service';
 
@@ -40,7 +40,6 @@ import { StateStorageService } from './shared/auth/state-storage.service';
     ],
     declarations: [
         ApsstrMainComponent,
-        NavbarComponent,
         ErrorComponent,
         PageRibbonComponent
     ],
