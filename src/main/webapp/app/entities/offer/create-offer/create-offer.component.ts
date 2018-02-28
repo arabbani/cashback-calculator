@@ -1,5 +1,6 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import * as _ from 'lodash';
 
 import { Offer, OfferService } from '..';
 import { OfferTypes } from '../../../apsstr-core-ui-config';
@@ -21,6 +22,8 @@ export class CreateOfferComponent implements OnInit {
   defaultOfferType;
   defaultOfferPolicy;
 
+  enabledTabs: Array<boolean>;
+
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService) { }
 
   ngOnInit() {
@@ -30,6 +33,8 @@ export class CreateOfferComponent implements OnInit {
   }
 
   initialize(): void {
+    this.enabledTabs = _.times(2, _.stubFalse);
+    this.enabledTabs[0] = true;
     this.isCoupon = false;
     this.defaultOfferType = { id: null, name: 'Select Type' };
     this.defaultOfferPolicy = { id: null, name: 'Select Policy' };
@@ -51,6 +56,10 @@ export class CreateOfferComponent implements OnInit {
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
+  }
+
+  goToNextTab(currentTab: number): void {
+
   }
 
   onOfferTypeChange(offerType: OfferType): void {

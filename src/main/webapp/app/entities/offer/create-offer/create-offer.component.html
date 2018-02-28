@@ -170,9 +170,12 @@
                             </span>
                         </ng-container>
                     </div>
+
+                    <button type="button" class="btn btn-success mt-2 pull-right" [disabled]="basicInfoForm.form.invalid" (click)="goToNextTab(0)">Next</button>
+
                 </form>
             </tab>
-            <tab heading="Password">
+            <tab heading="Options" [disabled]="enabledTabs[1]">
             </tab>
         </tabset>
     </div>
