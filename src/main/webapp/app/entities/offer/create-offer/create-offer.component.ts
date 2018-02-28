@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Offer, OfferService } from '..';
 import { OfferType, OfferTypeService } from '../../offer-type';
+import { OfferTypes } from '../../../apsstr-core-ui-config';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -14,6 +15,7 @@ export class CreateOfferComponent implements OnInit {
   offer: Offer;
   offerTypes: OfferType[];
 
+  isCoupon: boolean;
   defaultOfferType;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService) { }
@@ -25,7 +27,8 @@ export class CreateOfferComponent implements OnInit {
   }
 
   initialize(): void {
-    this.defaultOfferType = {id: null, name: 'Select Type'};
+    this.isCoupon = false;
+    this.defaultOfferType = { id: null, name: 'Select Type' };
   }
 
   loadOfferTypes(): void {
@@ -35,6 +38,22 @@ export class CreateOfferComponent implements OnInit {
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
+  }
+
+  onOfferTypeChange(offerType: OfferType): void {
+    switch (offerType.name) {
+      case OfferTypes.coupon:
+      case OfferTypes.luckyDrawCoupon:
+        this.isCoupon = true;
+        break;
+      case OfferTypes.deal:
+      case OfferTypes.luckyDrawDeal:
+        this.isCoupon = false;
+        break;
+      default:
+        this.isCoupon = false;
+        break;
+    }
   }
 
   private onError(error) {

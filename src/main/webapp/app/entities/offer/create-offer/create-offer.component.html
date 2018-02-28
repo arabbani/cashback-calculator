@@ -6,7 +6,7 @@
                     <div class="form-group mb-3">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" id="name" name="name" [(ngModel)]="offer.name" #name="ngModel" maxlength="500" required
-                            placeholder="Offer Title" />
+                            placeholder="Title" />
                         <ng-container *ngIf="name.dirty && name.invalid">
                             <span class="form-text text-danger" *ngIf="name.errors.required">
                                 Name is required.
@@ -46,9 +46,60 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="type">Type</label>
-                        <kendo-dropdownlist id="type" [data]="offerTypes" [defaultItem]="defaultOfferType" textField="name" valueField="id" [(ngModel)]="offer.type"
-                            name="type"></kendo-dropdownlist>
+                        <kendo-dropdownlist id="type" name="type" [data]="offerTypes" [defaultItem]="defaultOfferType" textField="name" valueField="id"
+                            [(ngModel)]="offer.type" (selectionChange)="onOfferTypeChange($event)"></kendo-dropdownlist>
                     </div>
+                    <div *ngIf="isCoupon" class="form-group mb-3">
+                        <label for="code">Code</label>
+                        <input type="text" class="form-control" id="code" name="code" [(ngModel)]="offer.code" #code="ngModel" maxlength="255" required
+                            placeholder="Code" />
+                        <ng-container *ngIf="code.dirty && code.invalid">
+                            <span class="form-text text-danger" *ngIf="code.errors.required">
+                                Code is required.
+                            </span>
+                            <span class="form-text text-danger" *ngIf="code.errors.maxlength">
+                                This field cannot be longer than 255 characters.
+                            </span>
+                        </ng-container>
+                    </div>
+                    <div class="form-group row mb-3">
+                        <label class="col-md-3 col-form-label">Number Of Uses</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static">{{ offer.numberOfUses }}</p>
+                        </div>
+                    </div>
+                    <fieldset class="fieldset-fix">
+                        <legend class="legend-fix">
+                            <strong>Maximum Uses</strong>
+                        </legend>
+                        <div class="row mb-3">
+                            <div class="form-group col-sm-3 col-lg-2">
+                                <label for="maximumUsesPerUser">Per User</label>
+                                <input type="number" class="form-control" id="maximumUsesPerUser" name="maximumUsesPerUser" [(ngModel)]="offer.maximumUsesPerUser"
+                                />
+                            </div>
+                            <div class="form-group col-sm-3 col-lg-2">
+                                <label for="maximumUsesPerDay">Per Day</label>
+                                <input type="number" class="form-control" id="maximumUsesPerDay" name="maximumUsesPerDay" [(ngModel)]="offer.maximumUsesPerDay"
+                                />
+                            </div>
+                            <div class="form-group col-sm-3 col-lg-2">
+                                <label for="maximumUsesPerWeek">Per Week</label>
+                                <input type="number" class="form-control" id="maximumUsesPerWeek" name="maximumUsesPerWeek" [(ngModel)]="offer.maximumUsesPerWeek"
+                                />
+                            </div>
+                            <div class="form-group col-sm-3 col-lg-2">
+                                <label for="maximumUsesPerMonth">Per Month</label>
+                                <input type="number" class="form-control" id="maximumUsesPerMonth" name="maximumUsesPerMonth" [(ngModel)]="offer.maximumUsesPerMonth"
+                                />
+                            </div>
+                            <div class="form-group col-sm-3 col-lg-2">
+                                <label for="maximumUsesPerNumber">Per User</label>
+                                <input type="number" class="form-control" id="maximumUsesPerNumber" name="maximumUsesPerNumber" [(ngModel)]="offer.maximumUsesPerNumber"
+                                />
+                            </div>
+                        </div>
+                    </fieldset>
                 </form>
             </tab>
             <tab heading="Password">
