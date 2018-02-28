@@ -1,34 +1,34 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { CbclSharedModule } from '../shared';
-/* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
-
 import {
     adminState,
+    ApsstrConfigurationComponent,
+    ApsstrConfigurationService,
+    ApsstrDocsComponent,
+    ApsstrHealthCheckComponent,
+    ApsstrHealthModalComponent,
+    ApsstrHealthService,
+    ApsstrMetricsMonitoringComponent,
+    ApsstrMetricsMonitoringModalComponent,
+    ApsstrMetricsService,
     AuditsComponent,
-    UserMgmtComponent,
-    UserDialogComponent,
+    AuditsService,
+    LogsComponent,
+    LogsService,
     UserDeleteDialogComponent,
+    UserDialogComponent,
+    UserMgmtComponent,
+    UserMgmtDeleteDialogComponent,
     UserMgmtDetailComponent,
     UserMgmtDialogComponent,
-    UserMgmtDeleteDialogComponent,
-    LogsComponent,
-    ApsstrMetricsMonitoringModalComponent,
-    ApsstrMetricsMonitoringComponent,
-    ApsstrHealthModalComponent,
-    ApsstrHealthCheckComponent,
-    ApsstrConfigurationComponent,
-    ApsstrDocsComponent,
-    AuditsService,
-    ApsstrConfigurationService,
-    ApsstrHealthService,
-    ApsstrMetricsService,
-    LogsService,
-    UserResolvePagingParams,
+    UserModalService,
     UserResolve,
-    UserModalService
+    UserResolvePagingParams,
 } from './';
+
+/* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 @NgModule({
     imports: [
