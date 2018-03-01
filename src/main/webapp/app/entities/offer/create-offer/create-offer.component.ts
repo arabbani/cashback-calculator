@@ -37,7 +37,6 @@ export class CreateOfferComponent implements OnInit {
   initialize(): void {
     this.enabledTabs = _.times(2, _.stubFalse);
     this.enabledTabs[0] = true;
-    console.log(this.enabledTabs);
     this.isCoupon = false;
     this.defaultOfferType = { id: null, name: 'Select Type' };
     this.defaultOfferPolicy = { id: null, name: 'Select Policy' };
@@ -61,9 +60,9 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  goToNextTab(currentTab: number): void {
-    this.enabledTabs[currentTab + 1] = true;
-    this.createOfferTabs.tabs[currentTab + 1].active = true;
+  goToNextTab(tabNumber: number): void {
+    this.enabledTabs[tabNumber] = true;
+    this.createOfferTabs.tabs[tabNumber].active = true;
   }
 
   onOfferTypeChange(offerType: OfferType): void {

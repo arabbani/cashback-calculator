@@ -68,6 +68,43 @@
                             <p class="form-control-static">{{ offer.numberOfUses }}</p>
                         </div>
                     </div>
+                    <div class="form-group mb-3">
+                        <label class="mr-5" for="policy">Policy</label>
+                        <kendo-dropdownlist id="policy" name="policy" [data]="offerPolicies" [defaultItem]="defaultOfferPolicy" textField="name"
+                            valueField="id" [(ngModel)]="offer.policy"></kendo-dropdownlist>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="url">Url</label>
+                        <textarea class="form-control" id="url" name="url" [(ngModel)]="offer.url" #url="ngModel" maxlength="2000">
+                        </textarea>
+                        <ng-container *ngIf="url.dirty && url.invalid">
+                            <span class="form-text text-danger" *ngIf="url.errors.maxlength">
+                                This field cannot be longer than 2000 characters.
+                            </span>
+                        </ng-container>
+                    </div>
+
+                    <button type="button" class="btn btn-success mt-2" [disabled]="basicInfoForm.form.invalid" (click)="goToNextTab(1)">Next</button>
+
+                </form>
+            </tab>
+            <tab heading="Options" [disabled]="!enabledTabs[1]">
+                <form name="form" role="form" #optionsForm="ngForm" novalidate>
+
+                    <div class="form-group mb-3">
+                        <label for="adminDescription">Admin Description</label>
+                        <textarea class="form-control" id="adminDescription" name="adminDescription" [(ngModel)]="offer.adminDescription" #adminDescription="ngModel"
+                            maxlength="2000" required>
+                        </textarea>
+                        <ng-container *ngIf="adminDescription.dirty && adminDescription.invalid">
+                            <span class="form-text text-danger" *ngIf="adminDescription.errors.required">
+                                Admin Description is required.
+                            </span>
+                            <span class="form-text text-danger" *ngIf="adminDescription.errors.maxlength">
+                                This field cannot be longer than 2000 characters.
+                            </span>
+                        </ng-container>
+                    </div>
                     <fieldset class="fieldset-fix mb-3">
                         <legend class="legend-fix">
                             <strong>Maximum Uses</strong>
@@ -155,29 +192,10 @@
                             </div>
                         </div>
                     </fieldset>
-                    <div class="form-group mb-3">
-                        <label class="mr-5" for="policy">Policy</label>
-                        <kendo-dropdownlist id="policy" name="policy" [data]="offerPolicies" [defaultItem]="defaultOfferPolicy" textField="name"
-                            valueField="id" [(ngModel)]="offer.policy"></kendo-dropdownlist>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="url">Url</label>
-                        <textarea class="form-control" id="url" name="url" [(ngModel)]="offer.url" #url="ngModel" maxlength="2000">
-                        </textarea>
-                        <ng-container *ngIf="url.dirty && url.invalid">
-                            <span class="form-text text-danger" *ngIf="url.errors.maxlength">
-                                This field cannot be longer than 2000 characters.
-                            </span>
-                        </ng-container>
-                    </div>
-
-                    <button type="button" class="btn btn-success mt-2" [disabled]="basicInfoForm.form.invalid" (click)="goToNextTab(0)">Next</button>
+                    <button type="button" class="btn btn-success mt-2" [disabled]="optionsForm.form.invalid" (click)="goToNextTab(1)">Next</button>
 
                 </form>
-            </tab>
-            <tab heading="Options" [disabled]="!enabledTabs[1]">
             </tab>
         </tabset>
     </div>
 </div>
-
