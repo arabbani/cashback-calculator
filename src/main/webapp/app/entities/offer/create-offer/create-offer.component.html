@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div class="col-md-10">
-        <tabset>
+        <tabset #createOfferTabs>
             <tab heading="Basic Info">
                 <form name="form" role="form" #basicInfoForm="ngForm" novalidate>
                     <div class="form-group mb-3">
@@ -171,12 +171,13 @@
                         </ng-container>
                     </div>
 
-                    <button type="button" class="btn btn-success mt-2 pull-right" [disabled]="basicInfoForm.form.invalid" (click)="goToNextTab(0)">Next</button>
+                    <button type="button" class="btn btn-success mt-2" [disabled]="basicInfoForm.form.invalid" (click)="goToNextTab(0)">Next</button>
 
                 </form>
             </tab>
-            <tab heading="Options" [disabled]="enabledTabs[1]">
+            <tab heading="Options" [disabled]="!enabledTabs[1]">
             </tab>
         </tabset>
     </div>
 </div>
+

@@ -1,11 +1,12 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as _ from 'lodash';
 
 import { Offer, OfferService } from '..';
 import { OfferTypes } from '../../../apsstr-core-ui-config';
 import { OfferPolicy, OfferPolicyService } from '../../offer-policy';
 import { OfferType, OfferTypeService } from '../../offer-type';
+import { TabsetComponent } from 'ngx-bootstrap';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -14,6 +15,7 @@ import { OfferType, OfferTypeService } from '../../offer-type';
 })
 export class CreateOfferComponent implements OnInit {
 
+  @ViewChild('createOfferTabs') createOfferTabs: TabsetComponent;
   offer: Offer;
   offerTypes: OfferType[];
   offerPolicies: OfferPolicy[];
@@ -35,6 +37,7 @@ export class CreateOfferComponent implements OnInit {
   initialize(): void {
     this.enabledTabs = _.times(2, _.stubFalse);
     this.enabledTabs[0] = true;
+    console.log(this.enabledTabs);
     this.isCoupon = false;
     this.defaultOfferType = { id: null, name: 'Select Type' };
     this.defaultOfferPolicy = { id: null, name: 'Select Policy' };
@@ -59,7 +62,8 @@ export class CreateOfferComponent implements OnInit {
   }
 
   goToNextTab(currentTab: number): void {
-
+    this.enabledTabs[currentTab + 1] = true;
+    this.createOfferTabs.tabs[currentTab + 1].active = true;
   }
 
   onOfferTypeChange(offerType: OfferType): void {
