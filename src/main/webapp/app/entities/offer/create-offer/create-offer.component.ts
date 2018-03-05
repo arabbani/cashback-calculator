@@ -13,6 +13,8 @@ import { OfferPolicy, OfferPolicyService } from '../../offer-policy';
 import { OfferType, OfferTypeService } from '../../offer-type';
 import { State, StateService } from '../../state';
 import { OperatingSystem, OperatingSystemService } from '../../operating-system';
+import { Affiliate, AffiliateService } from '../../affiliate';
+import { Merchant, MerchantService } from '../../merchant';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -33,6 +35,8 @@ export class CreateOfferComponent implements OnInit {
   cities: City[];
   filteredCities: City[];
   operatingSystems: OperatingSystem[];
+  affiliates: Affiliate[];
+  merchants: Merchant[]; l
 
   isCoupon: boolean;
   defaultOfferType;
@@ -43,12 +47,14 @@ export class CreateOfferComponent implements OnInit {
   defaultState;
   defaultCity;
   defaultOperatingSystem;
+  defaultAffiliate;
+  defaultMerchant;
 
   enabledTabs: Array<boolean>;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
     private dayService: DayService, private countryService: CountryService, private stateService: StateService, private cityService: CityService,
-    private operatingSystemService: OperatingSystemService) { }
+    private operatingSystemService: OperatingSystemService, private affiliateService: AffiliateService, private merchantService: MerchantService) { }
 
   ngOnInit() {
     this.initialize();
@@ -60,6 +66,8 @@ export class CreateOfferComponent implements OnInit {
     this.loadStates();
     this.loadCities();
     this.loadOperatingSystems();
+    this.loadAffiliates();
+    this.loadMerchants();
     this.offer = new Offer();
   }
 
@@ -75,6 +83,8 @@ export class CreateOfferComponent implements OnInit {
     this.defaultState = { id: null, name: 'Select State' };
     this.defaultCity = { id: null, name: 'Select City' };
     this.defaultOperatingSystem = { id: null, name: 'Select OS' };
+    this.defaultAffiliate = { id: null, name: 'Select Affiliate' };
+    this.defaultMerchant = { id: null, name: 'Select Merchant' };
   }
 
   loadOfferTypes(): void {
@@ -146,6 +156,24 @@ export class CreateOfferComponent implements OnInit {
     this.operatingSystemService.query().subscribe(
       (res: HttpResponse<OperatingSystem[]>) => {
         this.operatingSystems = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  loadAffiliates(): void {
+    this.affiliateService.query().subscribe(
+      (res: HttpResponse<Affiliate[]>) => {
+        this.affiliates = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  loadMerchants(): void {
+    this.merchantService.query().subscribe(
+      (res: HttpResponse<Merchant[]>) => {
+        this.merchants = res.body;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );

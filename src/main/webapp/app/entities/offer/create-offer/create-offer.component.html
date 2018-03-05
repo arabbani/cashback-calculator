@@ -212,6 +212,16 @@
                         <kendo-dropdownlist id="operatingSystems" name="operatingSystems" [data]="operatingSystems" [defaultItem]="defaultOperatingSystem"
                             textField="name" valueField="id" [(ngModel)]="offer.operatingSystems"></kendo-dropdownlist>
                     </div>
+                    <div class="form-group mb-3">
+                        <label class="mr-5" for="affiliates">Operating Systems</label>
+                        <kendo-dropdownlist id="affiliates" name="affiliates" [data]="affiliates" [defaultItem]="defaultAffiliate" textField="name"
+                            valueField="id" [(ngModel)]="offer.affiliate"></kendo-dropdownlist>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="mr-5" for="merchants">Operating Systems</label>
+                        <kendo-dropdownlist id="merchants" name="merchants" [data]="merchants" [defaultItem]="defaultMerchant" textField="name" valueField="id"
+                            [(ngModel)]="offer.merchant"></kendo-dropdownlist>
+                    </div>
                     <button type="button" class="btn btn-success mt-2" [disabled]="detailInfoForm.form.invalid" (click)="goToNextTab(4)">Next</button>
                 </form>
             </tab>
