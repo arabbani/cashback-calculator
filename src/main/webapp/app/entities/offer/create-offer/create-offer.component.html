@@ -184,6 +184,34 @@
                         <textarea class="form-control" id="adminDescription" name="adminDescription" [(ngModel)]="offer.adminDescription" #adminDescription="ngModel"
                             readonly></textarea>
                     </div>
+                    <div class="form-group mb-3">
+                        <label class="mr-5" for="dates">Active Dates</label>
+                        <kendo-dropdownlist id="dates" name="dates" [data]="dates" [defaultItem]="defaultDate" textField="date" valueField="id" [(ngModel)]="offer.activeDates"></kendo-dropdownlist>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="mr-5" for="days">Active Days</label>
+                        <kendo-dropdownlist id="days" name="days" [data]="days" [defaultItem]="defaultDay" textField="day" valueField="id" [(ngModel)]="offer.activeDays"></kendo-dropdownlist>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="mr-5" for="countries">Countries</label>
+                        <kendo-dropdownlist id="countries" name="countries" [data]="countries" [defaultItem]="defaultCountry" textField="name" valueField="id"
+                            [(ngModel)]="offer.countries" (selectionChange)="onCountryChange($event)"></kendo-dropdownlist>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="mr-5" for="states">States</label>
+                        <kendo-dropdownlist id="states" name="states" [data]="filteredStates" [defaultItem]="defaultState" textField="name" valueField="id"
+                            [(ngModel)]="offer.states" (selectionChange)="onStateChange($event)"></kendo-dropdownlist>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="mr-5" for="cities">Cities</label>
+                        <kendo-dropdownlist id="cities" name="cities" [data]="filteredCities" [defaultItem]="defaultCity" textField="name" valueField="id"
+                            [(ngModel)]="offer.cities"></kendo-dropdownlist>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="mr-5" for="operatingSystems">Operating Systems</label>
+                        <kendo-dropdownlist id="operatingSystems" name="operatingSystems" [data]="operatingSystems" [defaultItem]="defaultOperatingSystem"
+                            textField="name" valueField="id" [(ngModel)]="offer.operatingSystems"></kendo-dropdownlist>
+                    </div>
                     <button type="button" class="btn btn-success mt-2" [disabled]="detailInfoForm.form.invalid" (click)="goToNextTab(4)">Next</button>
                 </form>
             </tab>
