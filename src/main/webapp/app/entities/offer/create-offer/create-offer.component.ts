@@ -113,6 +113,7 @@ export class CreateOfferComponent implements OnInit {
     this.loadTravelTypes();
     this.loadRegions();
     this.offer = new Offer();
+    this.offer.offerReturns = [];
   }
 
   initialize(): void {
@@ -399,6 +400,15 @@ export class CreateOfferComponent implements OnInit {
     }
     this.offerReturnFormGroup = this.formBuilder.group({
       'id': item.id,
+      'extras': this.formBuilder.group({
+        'exact': item.extras.exact,
+        'minimumExpense': item.extras.minimumExpense,
+        'maximumExpense': item.extras.maximumExpense,
+        'minimumReturn': item.extras.minimumReturn,
+        'maximumReturn': item.extras.maximumReturn,
+        'minimumTicketRequired': item.extras.minimumTicketRequired,
+        'minimumRideRequired': item.extras.minimumRideRequired
+      })
     });
     return this.offerReturnFormGroup;
   }

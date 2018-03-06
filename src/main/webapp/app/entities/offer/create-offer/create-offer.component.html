@@ -290,12 +290,13 @@
                         <button class="float-right" kendoGridAddCommand>Add new</button>
                     </ng-template>
                     <kendo-grid-column class="text-center" field="id" title="ID" [editable]="false"></kendo-grid-column>
-                    <!-- <kendo-grid-column class="text-center" field="minimumExpense" title="Min Expense" editor="numeric"></kendo-grid-column>
-                    <kendo-grid-column class="text-center" field="maximumExpense" title="Max Expense" editor="numeric"></kendo-grid-column>
-                    <kendo-grid-column class="text-center" field="minimumReturn" title="Min Return" editor="numeric"></kendo-grid-column>
-                    <kendo-grid-column class="text-center" field="maximumReturn" title="Max Return" editor="numeric"></kendo-grid-column>
-                    <kendo-grid-column class="text-center" field="minimumTicketRequired" title="Min Ticket Required" editor="numeric"></kendo-grid-column>
-                    <kendo-grid-column class="text-center" field="minimumRideRequired" title="Min Ride Required" editor="numeric"></kendo-grid-column> -->
+                    <kendo-grid-column class="text-center" field="extras.exact" title="Exact" editor="boolean"></kendo-grid-column>
+                    <kendo-grid-column class="text-center" field="extras.minimumExpense" title="Min Expense"></kendo-grid-column>
+                    <kendo-grid-column class="text-center" field="extras.maximumExpense" title="Max Expense"></kendo-grid-column>
+                    <kendo-grid-column class="text-center" field="extras.minimumReturn" title="Min Return"></kendo-grid-column>
+                    <kendo-grid-column class="text-center" field="extras.maximumReturn" title="Max Return"></kendo-grid-column>
+                    <kendo-grid-column class="text-center" field="extras.minimumTicketRequired" title="Min Ticket Required"></kendo-grid-column>
+                    <kendo-grid-column class="text-center" field="extras.minimumRideRequired" title="Min Ride Required"></kendo-grid-column>
                     <kendo-grid-command-column title="Action" width="220">
                         <ng-template kendoGridCellTemplate let-isNew="isNew">
                             <div class="text-center">
