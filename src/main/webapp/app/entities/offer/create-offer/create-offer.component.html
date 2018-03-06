@@ -112,7 +112,7 @@
                                 />
                             </div>
                             <div class="form-group col-sm-3 col-lg-2 mb-3">
-                                <label for="maximumUsesPerNumber">Per User</label>
+                                <label for="maximumUsesPerNumber">Per Number</label>
                                 <input type="number" class="form-control" id="maximumUsesPerNumber" name="maximumUsesPerNumber" [(ngModel)]="offer.maximumUsesPerNumber"
                                 />
                             </div>
@@ -194,8 +194,8 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="countries">Countries</label>
-                        <kendo-dropdownlist id="countries" name="countries" [data]="countries" [defaultItem]="defaultCountry" textField="name" valueField="id"
-                            [(ngModel)]="offer.countries" (selectionChange)="onCountryChange($event)"></kendo-dropdownlist>
+                        <kendo-multiselect id="countries" name="countries" [data]="countries" textField="name" valueField="id" [(ngModel)]="offer.countries"
+                            [placeholder]="defaultCountry" (valueChange)="onCountryChange($event)" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="states">States</label>
@@ -282,7 +282,9 @@
                     <button type="button" class="btn btn-success mt-2" [disabled]="offerInfoForm.form.invalid" (click)="goToNextTab(4)">Next</button>
                 </form>
             </tab>
-            <tab heading="Return Info" [disabled]="!enabledTabs[4]"></tab>
+            <tab heading="Offer Return" [disabled]="!enabledTabs[4]">
+                <button type="button" class="btn btn-success mt-2" (click)="saveOffer()">Save</button>
+            </tab>
         </tabset>
     </div>
 </div>

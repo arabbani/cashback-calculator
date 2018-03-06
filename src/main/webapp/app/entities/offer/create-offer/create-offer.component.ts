@@ -113,7 +113,7 @@ export class CreateOfferComponent implements OnInit {
     this.defaultOfferPolicy = { id: null, name: 'Select Policy' };
     this.defaultDate = 'Select Dates';
     this.defaultDay = 'Select Days';
-    this.defaultCountry = { id: null, name: 'Select Country' };
+    this.defaultCountry = 'Select Countries';
     this.defaultState = 'Select States';
     this.defaultCity = 'Select Cities';
     this.defaultOperatingSystem = 'Select OS';
@@ -297,10 +297,18 @@ export class CreateOfferComponent implements OnInit {
     }
   }
 
-  onCountryChange(country: Country): void {
-    this.filteredStates = _.filter(this.states, (state) => state.country.id === country.id);
-    this.offer.states = undefined;
-    this.offer.cities = undefined;
+  onCountryChange(countries: Country[]): void {
+    const selectedStates = this.offer.states;
+    this.offer.states = [];
+    this.filteredStates = [];
+    let arr = null;
+    _.forEach(countries, (country) => {
+      arr = _.filter(this.states, (state) => state.country.id === country.id);
+      this.filteredStates.push(...arr);
+      arr = _.filter(selectedStates, (selectedState) => selectedState.country.id === country.id);
+      this.offer.states.push(...arr);
+    });
+    this.onStateChange(this.offer.states);
   }
 
   onStateChange(states: State[]): void {
@@ -366,6 +374,10 @@ export class CreateOfferComponent implements OnInit {
       });
       this.offer.serviceProviders.push(...arr);
     });
+  }
+
+  saveOffer(): void {
+    console.log(this.offer);
   }
 
   private onError(error) {
