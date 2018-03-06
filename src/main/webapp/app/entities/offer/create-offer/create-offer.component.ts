@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { TabsetComponent } from 'ngx-bootstrap';
 
 import { Offer, OfferService } from '..';
-import { OfferTypes } from '../../../apsstr-core-ui-config';
+import { OfferTypes, Categories } from '../../../apsstr-core-ui-config';
 import { City, CityService } from '../../city';
 import { Country, CountryService } from '../../country';
 import { Date, DateService } from '../../date';
@@ -18,6 +18,9 @@ import { Merchant, MerchantService } from '../../merchant';
 import { Category, CategoryService } from '../../category';
 import { SubCategory, SubCategoryService } from '../../sub-category';
 import { ServiceProvider, ServiceProviderService } from '../../service-provider';
+import { Circle, CircleService } from '../../circle';
+import { ReechargeInfo } from '../../reecharge-info';
+import { TravelInfo } from '../../travel-info';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -45,6 +48,7 @@ export class CreateOfferComponent implements OnInit {
   filteredSubCategories: SubCategory[];
   serviceProviders: ServiceProvider[];
   filteredServiceProviders: ServiceProvider[];
+  circles: Circle[];
 
   isCoupon: boolean;
   defaultOfferType;
@@ -60,14 +64,17 @@ export class CreateOfferComponent implements OnInit {
   defaultCategory;
   defaultSubCategory;
   defaultServiceProvider;
+  defaultCircle;
 
   enabledTabs: Array<boolean>;
   offerCategory: Category;
+  categoryEnum;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
     private dayService: DayService, private countryService: CountryService, private stateService: StateService, private cityService: CityService,
     private operatingSystemService: OperatingSystemService, private affiliateService: AffiliateService, private merchantService: MerchantService,
-    private categoryService: CategoryService, private subCategoryService: SubCategoryService, private serviceProviderService: ServiceProviderService) { }
+    private categoryService: CategoryService, private subCategoryService: SubCategoryService, private serviceProviderService: ServiceProviderService,
+    private circleService: CircleService) { }
 
   ngOnInit() {
     this.initialize();
@@ -84,6 +91,7 @@ export class CreateOfferComponent implements OnInit {
     this.loadCategories();
     this.loadSubCategories();
     this.loadServiceProviders();
+    this.loadCircles();
     this.offer = new Offer();
   }
 
@@ -91,6 +99,7 @@ export class CreateOfferComponent implements OnInit {
     this.enabledTabs = _.times(5, _.stubFalse);
     this.enabledTabs[0] = true;
     this.isCoupon = false;
+    this.categoryEnum = Categories;
     this.defaultOfferType = { id: null, name: 'Select Type' };
     this.defaultOfferPolicy = { id: null, name: 'Select Policy' };
     this.defaultDate = { id: null, name: 'Select Date' };
@@ -104,6 +113,7 @@ export class CreateOfferComponent implements OnInit {
     this.defaultCategory = { id: null, name: 'Select Category' };
     this.defaultSubCategory = { id: null, name: 'Select Sub-Category' };
     this.defaultServiceProvider = { id: null, name: 'Select Service Provider' };
+    this.defaultCircle = { id: null, name: 'Select Circle' };
   }
 
   loadOfferTypes(): void {
@@ -227,6 +237,15 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
+  loadCircles(): void {
+    this.circleService.query().subscribe(
+      (res: HttpResponse<Circle[]>) => {
+        this.circles = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
   goToNextTab(tabNumber: number): void {
     this.enabledTabs[tabNumber] = true;
     this.createOfferTabs.tabs[tabNumber].active = true;
@@ -234,12 +253,12 @@ export class CreateOfferComponent implements OnInit {
 
   onOfferTypeChange(offerType: OfferType): void {
     switch (offerType.name) {
-      case OfferTypes.coupon:
-      case OfferTypes.luckyDrawCoupon:
+      case OfferTypes.CPN:
+      case OfferTypes.LDC:
         this.isCoupon = true;
         break;
-      case OfferTypes.deal:
-      case OfferTypes.luckyDrawDeal:
+      case OfferTypes.DEAL:
+      case OfferTypes.LDD:
         this.isCoupon = false;
         break;
       default:
@@ -262,6 +281,20 @@ export class CreateOfferComponent implements OnInit {
   onCategoryChange(category: Category): void {
     this.offerCategory = category;
     this.filteredSubCategories = _.filter(this.subCategories, (subCategory) => subCategory.category.id === this.offerCategory.id);
+    switch (this.offerCategory.name) {
+      case this.categoryEnum.RCHRG:
+        this.offer.travelInfo = undefined;
+        this.offer.reechargeInfo = new ReechargeInfo();
+        break;
+      case this.categoryEnum.TVL:
+        this.offer.reechargeInfo = undefined;
+        this.offer.travelInfo = new TravelInfo();
+        break;
+      default:
+        this.offer.travelInfo = undefined;
+        this.offer.reechargeInfo = undefined;
+        break;
+    }
   }
 
   onSubCategoryChange(subCategory: SubCategory): void {

@@ -244,6 +244,18 @@
                         <kendo-dropdownlist id="serviceProviders" name="serviceProviders" [data]="filteredServiceProviders" [defaultItem]="defaultServiceProvider"
                             textField="name" valueField="id" [(ngModel)]="offer.serviceProviders"></kendo-dropdownlist>
                     </div>
+                    <fieldset class="fieldset-fix mb-3" *ngIf="offerCategory" [ngSwitch]="offerCategory.name">
+                        <legend class="legend-fix">
+                            <strong>{{ offerCategory.name + ' Info' }}</strong>
+                        </legend>
+                        <ng-container *ngSwitchCase="categoryEnum.RCHRG">
+                            <div class="form-group mb-3">
+                                <label class="mr-5" for="reechargeInfo_circles">Circles</label>
+                                <kendo-dropdownlist id="reechargeInfo_circles" name="reechargeInfo_circles" [data]="circles" [defaultItem]="defaultCircle"
+                                    textField="name" valueField="id" [(ngModel)]="offer.reechargeInfo.circles"></kendo-dropdownlist>
+                            </div>
+                        </ng-container>
+                    </fieldset>
                     <button type="button" class="btn btn-success mt-2" [disabled]="offerInfoForm.form.invalid" (click)="goToNextTab(4)">Next</button>
                 </form>
             </tab>
