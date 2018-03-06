@@ -114,9 +114,9 @@ export class CreateOfferComponent implements OnInit {
     this.defaultDate = 'Select Dates';
     this.defaultDay = 'Select Days';
     this.defaultCountry = { id: null, name: 'Select Country' };
-    this.defaultState = { id: null, name: 'Select State' };
-    this.defaultCity = { id: null, name: 'Select City' };
-    this.defaultOperatingSystem = { id: null, name: 'Select OS' };
+    this.defaultState = 'Select States';
+    this.defaultCity = 'Select Cities';
+    this.defaultOperatingSystem = 'Select OS';
     this.defaultAffiliate = { id: null, name: 'Select Affiliate' };
     this.defaultMerchant = { id: null, name: 'Select Merchant' };
     this.defaultCategory = { id: null, name: 'Select Category' };
@@ -177,7 +177,7 @@ export class CreateOfferComponent implements OnInit {
     this.stateService.query().subscribe(
       (res: HttpResponse<State[]>) => {
         this.states = res.body;
-        this.filteredStates = this.states;
+        this.filteredStates = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -187,7 +187,7 @@ export class CreateOfferComponent implements OnInit {
     this.cityService.query().subscribe(
       (res: HttpResponse<City[]>) => {
         this.cities = res.body;
-        this.filteredCities = this.cities;
+        this.filteredCities = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -233,7 +233,7 @@ export class CreateOfferComponent implements OnInit {
     this.subCategoryService.query().subscribe(
       (res: HttpResponse<SubCategory[]>) => {
         this.subCategories = res.body;
-        this.filteredSubCategories = this.subCategories;
+        this.filteredSubCategories = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -243,7 +243,7 @@ export class CreateOfferComponent implements OnInit {
     this.serviceProviderService.query().subscribe(
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
-        this.filteredServiceProviders = this.serviceProviders;
+        this.filteredServiceProviders = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -303,9 +303,17 @@ export class CreateOfferComponent implements OnInit {
     this.offer.cities = undefined;
   }
 
-  onStateChange(state: State): void {
-    this.filteredCities = _.filter(this.cities, (city) => city.state.id === state.id);
-    this.offer.cities = undefined;
+  onStateChange(states: State[]): void {
+    this.filteredCities = [];
+    let arr = null;
+    const selectedCities = this.offer.cities;
+    this.offer.cities = [];
+    _.forEach(states, (state) => {
+      arr = _.filter(this.cities, (city) => city.state.id === state.id);
+      this.filteredCities.push(...arr);
+      arr = _.filter(selectedCities, (selectedCity) => selectedCity.state.id === state.id);
+      this.offer.cities.push(...arr);
+    });
   }
 
   onCategoryChange(category: Category): void {

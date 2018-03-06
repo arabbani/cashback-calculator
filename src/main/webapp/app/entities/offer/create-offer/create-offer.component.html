@@ -199,18 +199,18 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="states">States</label>
-                        <kendo-dropdownlist id="states" name="states" [data]="filteredStates" [defaultItem]="defaultState" textField="name" valueField="id"
-                            [(ngModel)]="offer.states" (selectionChange)="onStateChange($event)"></kendo-dropdownlist>
+                        <kendo-multiselect id="states" name="states" [data]="filteredStates" textField="name" valueField="id" [(ngModel)]="offer.states"
+                            [placeholder]="defaultState" (valueChange)="onStateChange($event)" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="cities">Cities</label>
-                        <kendo-dropdownlist id="cities" name="cities" [data]="filteredCities" [defaultItem]="defaultCity" textField="name" valueField="id"
-                            [(ngModel)]="offer.cities"></kendo-dropdownlist>
+                        <kendo-multiselect id="cities" name="cities" [data]="filteredCities" textField="name" valueField="id" [(ngModel)]="offer.cities"
+                            [placeholder]="defaultCity" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="operatingSystems">Operating Systems</label>
-                        <kendo-dropdownlist id="operatingSystems" name="operatingSystems" [data]="operatingSystems" [defaultItem]="defaultOperatingSystem"
-                            textField="name" valueField="id" [(ngModel)]="offer.operatingSystems"></kendo-dropdownlist>
+                        <kendo-multiselect id="operatingSystems" name="operatingSystems" [data]="operatingSystems" textField="name" valueField="id"
+                            [(ngModel)]="offer.operatingSystems" [placeholder]="defaultOperatingSystem" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="affiliates">Affiliate</label>
