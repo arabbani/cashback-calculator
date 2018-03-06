@@ -184,11 +184,13 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="dates">Active Dates</label>
-                        <kendo-dropdownlist id="dates" name="dates" [data]="dates" [defaultItem]="defaultDate" textField="date" valueField="id" [(ngModel)]="offer.activeDates"></kendo-dropdownlist>
+                        <kendo-multiselect id="dates" name="dates" [data]="dates" textField="date" valueField="id" [(ngModel)]="offer.activeDates"
+                            [placeholder]="defaultDate" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="days">Active Days</label>
-                        <kendo-dropdownlist id="days" name="days" [data]="days" [defaultItem]="defaultDay" textField="day" valueField="id" [(ngModel)]="offer.activeDays"></kendo-dropdownlist>
+                        <kendo-multiselect id="days" name="days" [data]="days" textField="day" valueField="id" [(ngModel)]="offer.activeDays" [placeholder]="defaultDay"
+                            [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="countries">Countries</label>
@@ -254,6 +256,13 @@
                                 <kendo-dropdownlist id="reechargeInfo_circles" name="reechargeInfo_circles" [data]="circles" [defaultItem]="defaultCircle"
                                     textField="name" valueField="id" [(ngModel)]="offer.reechargeInfo.circles"></kendo-dropdownlist>
                             </div>
+                        </ng-container>
+                        <ng-container *ngSwitchCase="categoryEnum.TVL">
+                            <!-- <div class="form-group mb-3">
+                                    <label class="mr-5" for="reechargeInfo_circles">Types</label>
+                                    <kendo-dropdownlist id="reechargeInfo_circles" name="reechargeInfo_circles" [data]="circles" [defaultItem]="defaultCircle"
+                                        textField="name" valueField="id" [(ngModel)]="offer.reechargeInfo.circles"></kendo-dropdownlist>
+                                </div> -->
                         </ng-container>
                     </fieldset>
                     <button type="button" class="btn btn-success mt-2" [disabled]="offerInfoForm.form.invalid" (click)="goToNextTab(4)">Next</button>

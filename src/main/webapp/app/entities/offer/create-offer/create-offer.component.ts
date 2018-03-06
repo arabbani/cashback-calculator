@@ -21,6 +21,8 @@ import { ServiceProvider, ServiceProviderService } from '../../service-provider'
 import { Circle, CircleService } from '../../circle';
 import { ReechargeInfo } from '../../reecharge-info';
 import { TravelInfo } from '../../travel-info';
+import { TravelType, TravelTypeService } from '../../travel-type';
+import { Region, RegionService } from '../../region';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -49,6 +51,8 @@ export class CreateOfferComponent implements OnInit {
   serviceProviders: ServiceProvider[];
   filteredServiceProviders: ServiceProvider[];
   circles: Circle[];
+  travelTypes: TravelType[];
+  regions: Region[];
 
   isCoupon: boolean;
   defaultOfferType;
@@ -65,6 +69,9 @@ export class CreateOfferComponent implements OnInit {
   defaultSubCategory;
   defaultServiceProvider;
   defaultCircle;
+  defaultTravelType;
+  defaultRegion;
+  defaultOrigin;
 
   enabledTabs: Array<boolean>;
   offerCategory: Category;
@@ -74,7 +81,7 @@ export class CreateOfferComponent implements OnInit {
     private dayService: DayService, private countryService: CountryService, private stateService: StateService, private cityService: CityService,
     private operatingSystemService: OperatingSystemService, private affiliateService: AffiliateService, private merchantService: MerchantService,
     private categoryService: CategoryService, private subCategoryService: SubCategoryService, private serviceProviderService: ServiceProviderService,
-    private circleService: CircleService) { }
+    private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService) { }
 
   ngOnInit() {
     this.initialize();
@@ -92,6 +99,8 @@ export class CreateOfferComponent implements OnInit {
     this.loadSubCategories();
     this.loadServiceProviders();
     this.loadCircles();
+    this.loadTravelTypes();
+    this.loadRegions();
     this.offer = new Offer();
   }
 
@@ -102,8 +111,8 @@ export class CreateOfferComponent implements OnInit {
     this.categoryEnum = Categories;
     this.defaultOfferType = { id: null, name: 'Select Type' };
     this.defaultOfferPolicy = { id: null, name: 'Select Policy' };
-    this.defaultDate = { id: null, name: 'Select Date' };
-    this.defaultDay = { id: null, name: 'Select Day' };
+    this.defaultDate = 'Select Dates';
+    this.defaultDay = 'Select Days';
     this.defaultCountry = { id: null, name: 'Select Country' };
     this.defaultState = { id: null, name: 'Select State' };
     this.defaultCity = { id: null, name: 'Select City' };
@@ -114,6 +123,9 @@ export class CreateOfferComponent implements OnInit {
     this.defaultSubCategory = { id: null, name: 'Select Sub-Category' };
     this.defaultServiceProvider = { id: null, name: 'Select Service Provider' };
     this.defaultCircle = { id: null, name: 'Select Circle' };
+    this.defaultTravelType = { id: null, name: 'Select Travel Type' };
+    this.defaultRegion = { id: null, name: 'Select Region' };
+    this.defaultOrigin = { id: null, name: 'Select Origin' };
   }
 
   loadOfferTypes(): void {
@@ -241,6 +253,24 @@ export class CreateOfferComponent implements OnInit {
     this.circleService.query().subscribe(
       (res: HttpResponse<Circle[]>) => {
         this.circles = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  loadTravelTypes(): void {
+    this.travelTypeService.query().subscribe(
+      (res: HttpResponse<TravelType[]>) => {
+        this.travelTypes = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  loadRegions(): void {
+    this.regionService.query().subscribe(
+      (res: HttpResponse<Region[]>) => {
+        this.regions = res.body;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );

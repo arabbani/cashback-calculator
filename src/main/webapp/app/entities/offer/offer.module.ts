@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DialogModule } from '@progress/kendo-angular-dialog';
-import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
+import { DropDownListModule, MultiSelectModule } from '@progress/kendo-angular-dropdowns';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { SwitchModule } from '@progress/kendo-angular-inputs';
 import { MomentModule } from 'angular2-moment';
@@ -36,7 +36,8 @@ const ENTITY_STATES = [
         MomentModule,
         TabsModule.forRoot(),
         DropDownListModule,
-        SwitchModule
+        SwitchModule,
+        MultiSelectModule
     ],
     declarations: [
         OfferComponent,
