@@ -122,10 +122,10 @@ export class CreateOfferComponent implements OnInit {
     this.defaultCategory = 'Select Categories';
     this.defaultSubCategory = 'Select Sub-Category';
     this.defaultServiceProvider = 'Select Service Provider';
-    this.defaultCircle = { id: null, name: 'Select Circle' };
-    this.defaultTravelType = { id: null, name: 'Select Travel Type' };
-    this.defaultRegion = { id: null, name: 'Select Region' };
-    this.defaultOrigin = { id: null, name: 'Select Origin' };
+    this.defaultCircle = 'Select Circles';
+    this.defaultTravelType = 'Select Travel Types';
+    this.defaultRegion = 'Select Regions';
+    this.defaultOrigin = 'Select Origins';
   }
 
   loadOfferTypes(): void {
@@ -332,7 +332,7 @@ export class CreateOfferComponent implements OnInit {
         case this.categoryEnum.RCHRG:
           this.offer.reechargeInfo = reechargeInfo ? reechargeInfo : new ReechargeInfo();
           break;
-        case this.categoryEnum.TVL:
+        case this.categoryEnum.TRVL:
           this.offer.travelInfo = travelInfo ? travelInfo : new TravelInfo();
           break;
       }
