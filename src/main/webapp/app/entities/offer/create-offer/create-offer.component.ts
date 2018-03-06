@@ -1,28 +1,34 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import * as _ from 'lodash';
 import { TabsetComponent } from 'ngx-bootstrap';
 
 import { Offer, OfferService } from '..';
-import { OfferTypes, Categories } from '../../../apsstr-core-ui-config';
+import { Categories, OfferTypes } from '../../../apsstr-core-ui-config';
+import { Affiliate, AffiliateService } from '../../affiliate';
+import { Category, CategoryService } from '../../category';
+import { Circle, CircleService } from '../../circle';
 import { City, CityService } from '../../city';
 import { Country, CountryService } from '../../country';
 import { Date, DateService } from '../../date';
 import { Day, DayService } from '../../day';
+import { Merchant, MerchantService } from '../../merchant';
 import { OfferPolicy, OfferPolicyService } from '../../offer-policy';
 import { OfferType, OfferTypeService } from '../../offer-type';
-import { State, StateService } from '../../state';
 import { OperatingSystem, OperatingSystemService } from '../../operating-system';
-import { Affiliate, AffiliateService } from '../../affiliate';
-import { Merchant, MerchantService } from '../../merchant';
-import { Category, CategoryService } from '../../category';
-import { SubCategory, SubCategoryService } from '../../sub-category';
-import { ServiceProvider, ServiceProviderService } from '../../service-provider';
-import { Circle, CircleService } from '../../circle';
 import { ReechargeInfo } from '../../reecharge-info';
+import { Region, RegionService } from '../../region';
+import { ServiceProvider, ServiceProviderService } from '../../service-provider';
+import { State, StateService } from '../../state';
+import { SubCategory, SubCategoryService } from '../../sub-category';
 import { TravelInfo } from '../../travel-info';
 import { TravelType, TravelTypeService } from '../../travel-type';
-import { Region, RegionService } from '../../region';
+import { ApsstrKendoDialogService } from '../../../apsstr-core-ui/apsstr-core/services';
+import { OfferReturn } from '../../offer-return';
+import { ReturnExtras } from '../../return-extras';
+import { State as GridState } from '@progress/kendo-data-query';
+import { GRID_STATE } from '../../../shared';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -76,12 +82,17 @@ export class CreateOfferComponent implements OnInit {
   enabledTabs: Array<boolean>;
   offerCategories: Category[];
   categoryEnum;
+  offerReturnFormGroup: FormGroup;
+  gridState: GridState;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
     private dayService: DayService, private countryService: CountryService, private stateService: StateService, private cityService: CityService,
     private operatingSystemService: OperatingSystemService, private affiliateService: AffiliateService, private merchantService: MerchantService,
     private categoryService: CategoryService, private subCategoryService: SubCategoryService, private serviceProviderService: ServiceProviderService,
-    private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService) { }
+    private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
+    private apsstrKendoDialogService: ApsstrKendoDialogService) {
+    this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
+  }
 
   ngOnInit() {
     this.initialize();
@@ -126,6 +137,7 @@ export class CreateOfferComponent implements OnInit {
     this.defaultTravelType = 'Select Travel Types';
     this.defaultRegion = 'Select Regions';
     this.defaultOrigin = 'Select Origins';
+    this.gridState = GRID_STATE;
   }
 
   loadOfferTypes(): void {
@@ -373,6 +385,30 @@ export class CreateOfferComponent implements OnInit {
         return false;
       });
       this.offer.serviceProviders.push(...arr);
+    });
+  }
+
+  public createOfferReturnFormGroup(args: any): FormGroup {
+    let item;
+    if (args.isNew) {
+      const offerReturn = new OfferReturn();
+      offerReturn.extras = new ReturnExtras();
+      item = offerReturn;
+    } else {
+      item = args.dataItem;
+    }
+    this.offerReturnFormGroup = this.formBuilder.group({
+      'id': item.id,
+    });
+    return this.offerReturnFormGroup;
+  }
+
+  public deleteOfferReturn(dataItem: any): void {
+    this.apsstrKendoDialogService.confirm().subscribe((result) => {
+      if (result['text'] === 'No') {
+        this.offer.offerReturns.push(dataItem);
+        this.offer.offerReturns = _.sortBy(this.offer.offerReturns, (item) => item.id);
+      }
     });
   }
 
