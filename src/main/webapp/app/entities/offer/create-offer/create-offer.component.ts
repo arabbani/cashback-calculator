@@ -74,7 +74,7 @@ export class CreateOfferComponent implements OnInit {
   defaultOrigin;
 
   enabledTabs: Array<boolean>;
-  offerCategory: Category;
+  offerCategories: Category[];
   categoryEnum;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
@@ -119,9 +119,9 @@ export class CreateOfferComponent implements OnInit {
     this.defaultOperatingSystem = 'Select OS';
     this.defaultAffiliate = { id: null, name: 'Select Affiliate' };
     this.defaultMerchant = { id: null, name: 'Select Merchant' };
-    this.defaultCategory = { id: null, name: 'Select Category' };
-    this.defaultSubCategory = { id: null, name: 'Select Sub-Category' };
-    this.defaultServiceProvider = { id: null, name: 'Select Service Provider' };
+    this.defaultCategory = 'Select Categories';
+    this.defaultSubCategory = 'Select Sub-Category';
+    this.defaultServiceProvider = 'Select Service Provider';
     this.defaultCircle = { id: null, name: 'Select Circle' };
     this.defaultTravelType = { id: null, name: 'Select Travel Type' };
     this.defaultRegion = { id: null, name: 'Select Region' };
@@ -316,34 +316,55 @@ export class CreateOfferComponent implements OnInit {
     });
   }
 
-  onCategoryChange(category: Category): void {
-    this.offerCategory = category;
-    this.filteredSubCategories = _.filter(this.subCategories, (subCategory) => subCategory.category.id === this.offerCategory.id);
-    switch (this.offerCategory.name) {
-      case this.categoryEnum.RCHRG:
-        this.offer.travelInfo = undefined;
-        this.offer.reechargeInfo = new ReechargeInfo();
-        break;
-      case this.categoryEnum.TVL:
-        this.offer.reechargeInfo = undefined;
-        this.offer.travelInfo = new TravelInfo();
-        break;
-      default:
-        this.offer.travelInfo = undefined;
-        this.offer.reechargeInfo = undefined;
-        break;
-    }
+  onCategoryChange(categories: Category[]): void {
+    this.filteredSubCategories = [];
+    let arr = null;
+    const reechargeInfo = this.offer.reechargeInfo;
+    const travelInfo = this.offer.travelInfo;
+    this.offer.reechargeInfo = undefined;
+    this.offer.travelInfo = undefined;
+    const selectedSubCategories = this.offer.subCategories;
+    this.offer.subCategories = [];
+    _.forEach(categories, (category) => {
+      arr = _.filter(this.subCategories, (subCategory) => subCategory.category.id === category.id);
+      this.filteredSubCategories.push(...arr);
+      switch (category.name) {
+        case this.categoryEnum.RCHRG:
+          this.offer.reechargeInfo = reechargeInfo ? reechargeInfo : new ReechargeInfo();
+          break;
+        case this.categoryEnum.TVL:
+          this.offer.travelInfo = travelInfo ? travelInfo : new TravelInfo();
+          break;
+      }
+      arr = _.filter(selectedSubCategories, (selectedSubCategory) => selectedSubCategory.category.id === category.id);
+      this.offer.subCategories.push(...arr);
+    });
+    this.onSubCategoryChange(this.offer.subCategories);
   }
 
-  onSubCategoryChange(subCategory: SubCategory): void {
-    let found;
-    this.filteredServiceProviders = _.filter(this.serviceProviders, (serviceProvider) => {
-      found = _.find(serviceProvider.subCategories, (sCategory) => subCategory.id === sCategory.id);
-      if (found) {
-        return true;
-      } else {
+  onSubCategoryChange(subCategories: SubCategory[]): void {
+    this.filteredServiceProviders = [];
+    let arr = null;
+    let found = null;
+    const selectedServiceProviders = this.offer.serviceProviders;
+    this.offer.serviceProviders = [];
+    _.forEach(subCategories, (subCategory) => {
+      arr = _.filter(this.serviceProviders, (serviceProvider) => {
+        found = _.find(serviceProvider.subCategories, (sCategory) => sCategory.id === subCategory.id);
+        if (found) {
+          return true;
+        }
         return false;
-      }
+      });
+      this.filteredServiceProviders.push(...arr);
+      arr = _.filter(selectedServiceProviders, (selectedServiceProvider) => {
+        found = _.find(selectedServiceProvider.subCategories, (sCategory) => sCategory.id === subCategory.id);
+        if (found) {
+          return true;
+        }
+        return false;
+      });
+      this.offer.serviceProviders.push(...arr);
     });
   }
 

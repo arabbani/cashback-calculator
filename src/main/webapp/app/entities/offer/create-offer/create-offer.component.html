@@ -213,13 +213,13 @@
                             [(ngModel)]="offer.operatingSystems" [placeholder]="defaultOperatingSystem" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
-                        <label class="mr-5" for="affiliates">Affiliate</label>
-                        <kendo-dropdownlist id="affiliates" name="affiliates" [data]="affiliates" [defaultItem]="defaultAffiliate" textField="name"
+                        <label class="mr-5" for="affiliate">Affiliate</label>
+                        <kendo-dropdownlist id="affiliate" name="affiliate" [data]="affiliates" [defaultItem]="defaultAffiliate" textField="name"
                             valueField="id" [(ngModel)]="offer.affiliate"></kendo-dropdownlist>
                     </div>
                     <div class="form-group mb-3">
-                        <label class="mr-5" for="merchants">Merchant</label>
-                        <kendo-dropdownlist id="merchants" name="merchants" [data]="merchants" [defaultItem]="defaultMerchant" textField="name" valueField="id"
+                        <label class="mr-5" for="merchant">Merchant</label>
+                        <kendo-dropdownlist id="merchant" name="merchant" [data]="merchants" [defaultItem]="defaultMerchant" textField="name" valueField="id"
                             [(ngModel)]="offer.merchant"></kendo-dropdownlist>
                     </div>
                     <button type="button" class="btn btn-success mt-2" [disabled]="detailInfoForm.form.invalid" (click)="goToNextTab(3)">Next</button>
@@ -232,37 +232,40 @@
                         <textarea class="form-control" id="adminDescription" name="adminDescription" [(ngModel)]="offer.adminDescription" readonly></textarea>
                     </div>
                     <div class="form-group mb-3">
-                        <label class="mr-5" for="categories">Category</label>
-                        <kendo-dropdownlist id="categories" name="categories" [data]="categories" [defaultItem]="defaultCategory" textField="name"
-                            valueField="id" [(ngModel)]="offerCategory" (selectionChange)="onCategoryChange($event)"></kendo-dropdownlist>
+                        <label class="mr-5" for="categories">Categories</label>
+                        <kendo-multiselect id="categories" name="categories" [data]="categories" textField="name" valueField="id" [(ngModel)]="offerCategories"
+                            [placeholder]="defaultCategory" (valueChange)="onCategoryChange($event)" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
-                        <label class="mr-5" for="subCategories">Sub Category</label>
-                        <kendo-dropdownlist id="subCategories" name="subCategories" [data]="filteredSubCategories" [defaultItem]="defaultSubCategory"
-                            textField="name" valueField="id" [(ngModel)]="offer.subCategories" (selectionChange)="onSubCategoryChange($event)"></kendo-dropdownlist>
+                        <label class="mr-5" for="subCategories">Sub Categories</label>
+                        <kendo-multiselect id="subCategories" name="subCategories" [data]="filteredSubCategories" textField="name" valueField="id"
+                            [(ngModel)]="offer.subCategories" [placeholder]="defaultSubCategory" (valueChange)="onSubCategoryChange($event)"
+                            [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="serviceProviders">Service Providers</label>
-                        <kendo-dropdownlist id="serviceProviders" name="serviceProviders" [data]="filteredServiceProviders" [defaultItem]="defaultServiceProvider"
-                            textField="name" valueField="id" [(ngModel)]="offer.serviceProviders"></kendo-dropdownlist>
+                        <kendo-multiselect id="serviceProviders" name="serviceProviders" [data]="filteredServiceProviders" textField="name" valueField="id"
+                            [(ngModel)]="offer.serviceProviders" [placeholder]="defaultServiceProvider" [autoClose]="false"></kendo-multiselect>
                     </div>
-                    <fieldset class="fieldset-fix mb-3" *ngIf="offerCategory" [ngSwitch]="offerCategory.name">
+                    <fieldset class="fieldset-fix mb-3" *ngFor="let offerCategory of offerCategories">
                         <legend class="legend-fix">
                             <strong>{{ offerCategory.name + ' Info' }}</strong>
                         </legend>
-                        <ng-container *ngSwitchCase="categoryEnum.RCHRG">
-                            <div class="form-group mb-3">
-                                <label class="mr-5" for="reechargeInfo_circles">Circles</label>
-                                <kendo-dropdownlist id="reechargeInfo_circles" name="reechargeInfo_circles" [data]="circles" [defaultItem]="defaultCircle"
-                                    textField="name" valueField="id" [(ngModel)]="offer.reechargeInfo.circles"></kendo-dropdownlist>
-                            </div>
-                        </ng-container>
-                        <ng-container *ngSwitchCase="categoryEnum.TVL">
-                            <!-- <div class="form-group mb-3">
-                                    <label class="mr-5" for="reechargeInfo_circles">Types</label>
+                        <ng-container [ngSwitch]="offerCategory.name">
+                            <ng-container *ngSwitchCase="categoryEnum.RCHRG">
+                                <div class="form-group mb-3">
+                                    <label class="mr-5" for="reechargeInfo_circles">Circles</label>
                                     <kendo-dropdownlist id="reechargeInfo_circles" name="reechargeInfo_circles" [data]="circles" [defaultItem]="defaultCircle"
                                         textField="name" valueField="id" [(ngModel)]="offer.reechargeInfo.circles"></kendo-dropdownlist>
-                                </div> -->
+                                </div>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="categoryEnum.TVL">
+                                <!-- <div class="form-group mb-3">
+                                                <label class="mr-5" for="reechargeInfo_circles">Types</label>
+                                                <kendo-dropdownlist id="reechargeInfo_circles" name="reechargeInfo_circles" [data]="circles" [defaultItem]="defaultCircle"
+                                                    textField="name" valueField="id" [(ngModel)]="offer.reechargeInfo.circles"></kendo-dropdownlist>
+                                            </div> -->
+                            </ng-container>
                         </ng-container>
                     </fieldset>
                     <button type="button" class="btn btn-success mt-2" [disabled]="offerInfoForm.form.invalid" (click)="goToNextTab(4)">Next</button>
