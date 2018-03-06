@@ -29,6 +29,7 @@ import { OfferReturn } from '../../offer-return';
 import { ReturnExtras } from '../../return-extras';
 import { State as GridState } from '@progress/kendo-data-query';
 import { GRID_STATE } from '../../../shared';
+import { ReturnInfo } from '../../return-info';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -84,6 +85,7 @@ export class CreateOfferComponent implements OnInit {
   categoryEnum;
   offerReturnFormGroup: FormGroup;
   gridState: GridState;
+  returnInfoFormGroup: FormGroup;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
     private dayService: DayService, private countryService: CountryService, private stateService: StateService, private cityService: CityService,
@@ -92,6 +94,7 @@ export class CreateOfferComponent implements OnInit {
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
     private apsstrKendoDialogService: ApsstrKendoDialogService) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
+    this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
   }
 
   ngOnInit() {
@@ -413,11 +416,51 @@ export class CreateOfferComponent implements OnInit {
     return this.offerReturnFormGroup;
   }
 
+  public createReturnInfoFormGroup(args: any): FormGroup {
+    let item;
+    if (args.isNew) {
+      const returnInfo = new ReturnInfo();
+      returnInfo.extras = new ReturnExtras();
+      item = returnInfo;
+    } else {
+      item = args.dataItem;
+    }
+    this.returnInfoFormGroup = this.formBuilder.group({
+      'id': item.id,
+      'extras': this.formBuilder.group({
+        'exact': item.extras.exact,
+        'minimumExpense': item.extras.minimumExpense,
+        'maximumExpense': item.extras.maximumExpense,
+        'minimumReturn': item.extras.minimumReturn,
+        'maximumReturn': item.extras.maximumReturn,
+        'minimumTicketRequired': item.extras.minimumTicketRequired,
+        'minimumRideRequired': item.extras.minimumRideRequired
+      })
+    });
+    return this.returnInfoFormGroup;
+  }
+
+  public saveOfferReturn(offerReturn): void {
+    if (!offerReturn.returnInfos) {
+      offerReturn.returnInfos = [];
+    }
+  }
+
   public deleteOfferReturn(dataItem: any): void {
     this.apsstrKendoDialogService.confirm().subscribe((result) => {
       if (result['text'] === 'No') {
         this.offer.offerReturns.push(dataItem);
         this.offer.offerReturns = _.sortBy(this.offer.offerReturns, (item) => item.id);
+      }
+    });
+  }
+
+  public deleteReturnInfo(event: any): void {
+    this.apsstrKendoDialogService.confirm().subscribe((result) => {
+      if (result['text'] === 'No') {
+        console.log(event);
+        // event.sender.data['data'].push(event.dataItem);
+        // event.sender.data.data = _.sortBy(event.data, (item) => item.id);
       }
     });
   }

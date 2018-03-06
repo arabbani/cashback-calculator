@@ -29,7 +29,7 @@
             <kendo-dropdownlist [data]="banks" [defaultItem]="defaultBank" textField="name" valueField="id" [formControl]="formGroup.get('bank')"></kendo-dropdownlist>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-command-column title="Action" width="220">
+    <kendo-grid-command-column title="Action" width="200">
         <ng-template kendoGridCellTemplate let-isNew="isNew">
             <div class="text-center">
                 <button kendoGridEditCommand class="k-primary">Edit</button>

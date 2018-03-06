@@ -12,13 +12,13 @@
     </ng-template>
     <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
     <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
-    <kendo-grid-command-column title="Action" width="220">
+    <kendo-grid-command-column title="Action" width="200">
         <ng-template kendoGridCellTemplate let-isNew="isNew">
             <div class="text-center">
                 <button kendoGridEditCommand class="k-primary">Edit</button>
                 <button kendoGridRemoveCommand>Delete</button>
                 <button kendoGridSaveCommand [disabled]="bankTypeFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
-                <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                <button kendoGridCancelCommand>{{ isNew ? 'Discard' : 'Cancel' }}</button>
             </div>
         </ng-template>
     </kendo-grid-command-column>

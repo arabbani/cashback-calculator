@@ -4,15 +4,15 @@
     </h2>
 </div>
 <div kendoDialogContainer></div>
-<kendo-grid [kendoGridReactiveEditing]="createBankFormGroup" [kendoGridBinding]="banks" [pageable]="true"
-    [pageSize]="gridState.take" [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true"
-    (save)="saveItem($event)" (remove)="deleteItem($event.dataItem)">
+<kendo-grid [kendoGridReactiveEditing]="createBankFormGroup" [kendoGridBinding]="banks" [pageable]="true" [pageSize]="gridState.take"
+    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (save)="saveItem($event)"
+    (remove)="deleteItem($event.dataItem)">
     <ng-template kendoGridToolbarTemplate>
         <button class="float-right" kendoGridAddCommand>Add new</button>
     </ng-template>
     <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
     <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
-    <kendo-grid-column class="text-center" width="190" field="type" title="Type" [filterable]="false" [sortable]="false">
+    <kendo-grid-column class="text-center" width="200" field="type" title="Type" [filterable]="false" [sortable]="false">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{ dataItem.type?.name }}
         </ng-template>
@@ -20,13 +20,13 @@
             <kendo-dropdownlist [data]="bankTypes" [defaultItem]="defaultBankType" textField="name" valueField="id" [formControl]="formGroup.get('type')"></kendo-dropdownlist>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-command-column title="Action" width="220">
+    <kendo-grid-command-column title="Action" width="200">
         <ng-template kendoGridCellTemplate let-isNew="isNew">
             <div class="text-center">
                 <button kendoGridEditCommand class="k-primary">Edit</button>
                 <button kendoGridRemoveCommand>Delete</button>
                 <button kendoGridSaveCommand [disabled]="bankFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
-                <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                <button kendoGridCancelCommand>{{ isNew ? 'Discard' : 'Cancel' }}</button>
             </div>
         </ng-template>
     </kendo-grid-command-column>
