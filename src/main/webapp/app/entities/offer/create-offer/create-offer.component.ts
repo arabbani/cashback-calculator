@@ -33,6 +33,9 @@ import { ReturnInfo } from '../../return-info';
 import { MainReturn } from '../../main-return';
 import { OfferPayment } from '../../offer-payment';
 import { ReechargePlanTypeService, ReechargePlanType } from '../../reecharge-plan-type';
+import { ReturnType, ReturnTypeService } from '../../return-type';
+import { ReturnMode, ReturnModeService } from '../../return-mode';
+import { Card, CardService } from '../../card';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -64,6 +67,10 @@ export class CreateOfferComponent implements OnInit {
   reechargePlanTypes: ReechargePlanType[];
   travelTypes: TravelType[];
   regions: Region[];
+  returnTypes: ReturnType[];
+  returnModes: ReturnMode[];
+  cards: Card[];
+  offers: Offer[];
 
   isCoupon: boolean;
   defaultOfferType;
@@ -84,6 +91,10 @@ export class CreateOfferComponent implements OnInit {
   defaultTravelType;
   defaultRegion;
   defaultOrigin;
+  defaultReturnType;
+  defaultReturnMode;
+  defaultCard;
+  defaultOffer;
 
   enabledTabs: Array<boolean>;
   offerCategories: Category[];
@@ -97,7 +108,8 @@ export class CreateOfferComponent implements OnInit {
     private operatingSystemService: OperatingSystemService, private affiliateService: AffiliateService, private merchantService: MerchantService,
     private categoryService: CategoryService, private subCategoryService: SubCategoryService, private serviceProviderService: ServiceProviderService,
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
-    private apsstrKendoDialogService: ApsstrKendoDialogService, private reechargePlanTypeService: ReechargePlanTypeService) {
+    private apsstrKendoDialogService: ApsstrKendoDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
+    private returnModeService: ReturnModeService, private cardService: CardService) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
     this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
   }
@@ -121,6 +133,10 @@ export class CreateOfferComponent implements OnInit {
     this.loadReechargePlanTypes();
     this.loadTravelTypes();
     this.loadRegions();
+    this.loadReturnTypes();
+    this.loadReturnModes();
+    this.loadCards();
+    this.loadOffersForReference();
     this.offer = new Offer();
     this.offer.offerReturns = [];
   }
@@ -148,6 +164,10 @@ export class CreateOfferComponent implements OnInit {
     this.defaultTravelType = 'Select Travel Types';
     this.defaultRegion = 'Select Regions';
     this.defaultOrigin = 'Select Origins';
+    this.defaultReturnType = { id: null, name: 'Select Return Type' };
+    this.defaultReturnMode = { id: null, name: 'Select Return Mode' };
+    this.defaultCard = { id: null, name: 'Select Card' };
+    this.defaultOffer = { id: null, name: 'Select Offer' };
     this.gridState = GRID_STATE;
   }
 
@@ -308,6 +328,42 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
+  loadReturnTypes(): void {
+    this.returnTypeService.query().subscribe(
+      (res: HttpResponse<ReturnType[]>) => {
+        this.returnTypes = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  loadReturnModes(): void {
+    this.returnModeService.query().subscribe(
+      (res: HttpResponse<ReturnMode[]>) => {
+        this.returnModes = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  loadCards(): void {
+    this.cardService.query().subscribe(
+      (res: HttpResponse<Card[]>) => {
+        this.cards = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  loadOffersForReference(): void {
+    this.offerService.query().subscribe(
+      (res: HttpResponse<Offer[]>) => {
+        this.offers = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
   goToNextTab(tabNumber: number): void {
     this.enabledTabs[tabNumber] = true;
     this.createOfferTabs.tabs[tabNumber].active = true;
@@ -437,8 +493,6 @@ export class CreateOfferComponent implements OnInit {
     if (args.isNew) {
       const returnInfo = new ReturnInfo();
       returnInfo.extras = new ReturnExtras();
-      returnInfo.mainReturn = new MainReturn();
-      returnInfo.payment = new OfferPayment();
       item = returnInfo;
     } else {
       item = args.dataItem;
@@ -461,6 +515,15 @@ export class CreateOfferComponent implements OnInit {
   public saveOfferReturn(offerReturn): void {
     if (!offerReturn.returnInfos) {
       offerReturn.returnInfos = [];
+    }
+  }
+
+  public saveReturnInfo(returnInfo): void {
+    if (!returnInfo.mainReturn) {
+      returnInfo.mainReturn = new MainReturn();
+    }
+    if (!returnInfo.payment) {
+      returnInfo.payment = new OfferPayment();
     }
   }
 
