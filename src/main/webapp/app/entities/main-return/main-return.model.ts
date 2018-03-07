@@ -6,7 +6,6 @@ export class MainReturn implements BaseEntity {
         public amount?: number,
         public exact?: boolean,
         public defaultAmount?: number,
-        public type?: BaseEntity,
         public mode?: BaseEntity,
         public channel?: BaseEntity,
     ) {

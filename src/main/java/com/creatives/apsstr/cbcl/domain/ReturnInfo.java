@@ -26,6 +26,9 @@ public class ReturnInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    private ReturnType type;
+
     @OneToOne
     @JoinColumn(unique = true)
     private MainReturn mainReturn;
@@ -51,6 +54,19 @@ public class ReturnInfo implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public ReturnType getType() {
+        return type;
+    }
+
+    public ReturnInfo type(ReturnType returnType) {
+        this.type = returnType;
+        return this;
+    }
+
+    public void setType(ReturnType returnType) {
+        this.type = returnType;
     }
 
     public MainReturn getMainReturn() {
@@ -141,8 +157,6 @@ public class ReturnInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "ReturnInfo{" +
-            "id=" + getId() +
-            "}";
+        return "ReturnInfo{" + "id=" + getId() + "}";
     }
 }

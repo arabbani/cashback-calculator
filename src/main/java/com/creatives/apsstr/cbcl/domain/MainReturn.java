@@ -38,9 +38,6 @@ public class MainReturn implements Serializable {
     private Integer defaultAmount;
 
     @ManyToOne
-    private ReturnType type;
-
-    @ManyToOne
     private ReturnMode mode;
 
     @ManyToOne
@@ -92,19 +89,6 @@ public class MainReturn implements Serializable {
 
     public void setDefaultAmount(Integer defaultAmount) {
         this.defaultAmount = defaultAmount;
-    }
-
-    public ReturnType getType() {
-        return type;
-    }
-
-    public MainReturn type(ReturnType returnType) {
-        this.type = returnType;
-        return this;
-    }
-
-    public void setType(ReturnType returnType) {
-        this.type = returnType;
     }
 
     public ReturnMode getMode() {
