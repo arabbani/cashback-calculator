@@ -258,6 +258,12 @@
                                     <kendo-multiselect id="reecharge_info_circles" name="reecharge_info_circles" [data]="circles" textField="name" valueField="id"
                                         [(ngModel)]="offer.reechargeInfo.circles" [placeholder]="defaultCircle" [autoClose]="false"></kendo-multiselect>
                                 </div>
+                                <div class="form-group mb-3">
+                                    <label class="mr-5" for="reecharge_info_reecharge_types">Circles</label>
+                                    <kendo-multiselect id="reecharge_info_reecharge_types" name="reecharge_info_reecharge_types" [data]="reechargePlanTypes"
+                                        textField="name" valueField="id" [(ngModel)]="offer.reechargeInfo.reechargeTypes" [placeholder]="defaultReechargePlanType"
+                                        [autoClose]="false"></kendo-multiselect>
+                                </div>
                             </ng-container>
                             <ng-container *ngSwitchCase="categoryEnum.TRVL">
                                 <div class="form-group mb-3">

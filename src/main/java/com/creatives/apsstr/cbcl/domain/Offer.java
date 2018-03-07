@@ -120,66 +120,43 @@ public class Offer implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_operating_system",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="operating_systems_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_operating_system", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "operating_systems_id", referencedColumnName = "id"))
     private Set<OperatingSystem> operatingSystems = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_country",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="countries_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_country", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "countries_id", referencedColumnName = "id"))
     private Set<Country> countries = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_state",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="states_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_state", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "states_id", referencedColumnName = "id"))
     private Set<State> states = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_city",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="cities_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_city", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "cities_id", referencedColumnName = "id"))
     private Set<City> cities = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_sub_category",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="sub_categories_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_sub_category", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "sub_categories_id", referencedColumnName = "id"))
     private Set<SubCategory> subCategories = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_service_provider",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="service_providers_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_service_provider", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "service_providers_id", referencedColumnName = "id"))
     private Set<ServiceProvider> serviceProviders = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_active_date",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="active_dates_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_active_date", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "active_dates_id", referencedColumnName = "id"))
     private Set<Date> activeDates = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_active_day",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="active_days_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_active_day", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "active_days_id", referencedColumnName = "id"))
     private Set<Day> activeDays = new HashSet<>();
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_reecharge_type",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="reecharge_types_id", referencedColumnName="id"))
-    private Set<ReechargePlanType> reechargeTypes = new HashSet<>();
 
     @ManyToOne
     private Affiliate affiliate;
@@ -704,29 +681,6 @@ public class Offer implements Serializable {
         this.activeDays = days;
     }
 
-    public Set<ReechargePlanType> getReechargeTypes() {
-        return reechargeTypes;
-    }
-
-    public Offer reechargeTypes(Set<ReechargePlanType> reechargePlanTypes) {
-        this.reechargeTypes = reechargePlanTypes;
-        return this;
-    }
-
-    public Offer addReechargeType(ReechargePlanType reechargePlanType) {
-        this.reechargeTypes.add(reechargePlanType);
-        return this;
-    }
-
-    public Offer removeReechargeType(ReechargePlanType reechargePlanType) {
-        this.reechargeTypes.remove(reechargePlanType);
-        return this;
-    }
-
-    public void setReechargeTypes(Set<ReechargePlanType> reechargePlanTypes) {
-        this.reechargeTypes = reechargePlanTypes;
-    }
-
     public Affiliate getAffiliate() {
         return affiliate;
     }
@@ -789,27 +743,14 @@ public class Offer implements Serializable {
 
     @Override
     public String toString() {
-        return "Offer{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", adminDescription='" + getAdminDescription() + "'" +
-            ", code='" + getCode() + "'" +
-            ", startDate='" + getStartDate() + "'" +
-            ", endDate='" + getEndDate() + "'" +
-            ", maximumUsesPerUser=" + getMaximumUsesPerUser() +
-            ", maximumUsesPerDay=" + getMaximumUsesPerDay() +
-            ", maximumUsesPerWeek=" + getMaximumUsesPerWeek() +
-            ", maximumUsesPerMonth=" + getMaximumUsesPerMonth() +
-            ", maximumUsesPerNumber=" + getMaximumUsesPerNumber() +
-            ", newUserOnly='" + isNewUserOnly() + "'" +
-            ", appOnly='" + isAppOnly() + "'" +
-            ", websiteOnly='" + isWebsiteOnly() + "'" +
-            ", numberOfUses=" + getNumberOfUses() +
-            ", active='" + isActive() + "'" +
-            ", dummy='" + isDummy() + "'" +
-            ", apsstrExclusive='" + isApsstrExclusive() + "'" +
-            ", url='" + getUrl() + "'" +
-            "}";
+        return "Offer{" + "id=" + getId() + ", name='" + getName() + "'" + ", description='" + getDescription() + "'"
+                + ", adminDescription='" + getAdminDescription() + "'" + ", code='" + getCode() + "'" + ", startDate='"
+                + getStartDate() + "'" + ", endDate='" + getEndDate() + "'" + ", maximumUsesPerUser="
+                + getMaximumUsesPerUser() + ", maximumUsesPerDay=" + getMaximumUsesPerDay() + ", maximumUsesPerWeek="
+                + getMaximumUsesPerWeek() + ", maximumUsesPerMonth=" + getMaximumUsesPerMonth()
+                + ", maximumUsesPerNumber=" + getMaximumUsesPerNumber() + ", newUserOnly='" + isNewUserOnly() + "'"
+                + ", appOnly='" + isAppOnly() + "'" + ", websiteOnly='" + isWebsiteOnly() + "'" + ", numberOfUses="
+                + getNumberOfUses() + ", active='" + isActive() + "'" + ", dummy='" + isDummy() + "'"
+                + ", apsstrExclusive='" + isApsstrExclusive() + "'" + ", url='" + getUrl() + "'" + "}";
     }
 }

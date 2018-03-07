@@ -89,6 +89,7 @@ public class CacheConfiguration {
             cm.createCache(com.creatives.apsstr.cbcl.domain.Region.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.ReechargeInfo.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.ReechargeInfo.class.getName() + ".circles", jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.ReechargeInfo.class.getName() + ".reechargeTypes", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.TravelInfo.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.TravelInfo.class.getName() + ".types", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.TravelInfo.class.getName() + ".regions", jcacheConfiguration);
@@ -112,7 +113,6 @@ public class CacheConfiguration {
             cm.createCache(com.creatives.apsstr.cbcl.domain.Offer.class.getName() + ".serviceProviders", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.Offer.class.getName() + ".activeDates", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.Offer.class.getName() + ".activeDays", jcacheConfiguration);
-            cm.createCache(com.creatives.apsstr.cbcl.domain.Offer.class.getName() + ".reechargeTypes", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.Newsletter.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.UserInfo.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.UserInfo.class.getName() + ".merchants", jcacheConfiguration);

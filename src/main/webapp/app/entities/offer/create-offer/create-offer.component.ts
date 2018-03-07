@@ -32,6 +32,7 @@ import { GRID_STATE } from '../../../shared';
 import { ReturnInfo } from '../../return-info';
 import { MainReturn } from '../../main-return';
 import { OfferPayment } from '../../offer-payment';
+import { ReechargePlanTypeService, ReechargePlanType } from '../../reecharge-plan-type';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -60,6 +61,7 @@ export class CreateOfferComponent implements OnInit {
   serviceProviders: ServiceProvider[];
   filteredServiceProviders: ServiceProvider[];
   circles: Circle[];
+  reechargePlanTypes: ReechargePlanType[];
   travelTypes: TravelType[];
   regions: Region[];
 
@@ -78,6 +80,7 @@ export class CreateOfferComponent implements OnInit {
   defaultSubCategory;
   defaultServiceProvider;
   defaultCircle;
+  defaultReechargePlanType;
   defaultTravelType;
   defaultRegion;
   defaultOrigin;
@@ -94,7 +97,7 @@ export class CreateOfferComponent implements OnInit {
     private operatingSystemService: OperatingSystemService, private affiliateService: AffiliateService, private merchantService: MerchantService,
     private categoryService: CategoryService, private subCategoryService: SubCategoryService, private serviceProviderService: ServiceProviderService,
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
-    private apsstrKendoDialogService: ApsstrKendoDialogService) {
+    private apsstrKendoDialogService: ApsstrKendoDialogService, private reechargePlanTypeService: ReechargePlanTypeService) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
     this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
   }
@@ -115,6 +118,7 @@ export class CreateOfferComponent implements OnInit {
     this.loadSubCategories();
     this.loadServiceProviders();
     this.loadCircles();
+    this.loadReechargePlanTypes();
     this.loadTravelTypes();
     this.loadRegions();
     this.offer = new Offer();
@@ -140,6 +144,7 @@ export class CreateOfferComponent implements OnInit {
     this.defaultSubCategory = 'Select Sub-Category';
     this.defaultServiceProvider = 'Select Service Provider';
     this.defaultCircle = 'Select Circles';
+    this.defaultReechargePlanType = 'Select Reecharge Plan Type';
     this.defaultTravelType = 'Select Travel Types';
     this.defaultRegion = 'Select Regions';
     this.defaultOrigin = 'Select Origins';
@@ -271,6 +276,15 @@ export class CreateOfferComponent implements OnInit {
     this.circleService.query().subscribe(
       (res: HttpResponse<Circle[]>) => {
         this.circles = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  loadReechargePlanTypes(): void {
+    this.reechargePlanTypeService.query().subscribe(
+      (res: HttpResponse<ReechargePlanType[]>) => {
+        this.reechargePlanTypes = res.body;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );

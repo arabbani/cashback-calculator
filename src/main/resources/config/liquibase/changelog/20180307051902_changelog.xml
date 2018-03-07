@@ -1,0 +1,79 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-1">
+        <createTable tableName="reecharge_info_reecharge_type">
+            <column name="reecharge_infos_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reecharge_types_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-2">
+        <addPrimaryKey columnNames="reecharge_infos_id, reecharge_types_id" tableName="reecharge_info_reecharge_type"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-3">
+        <addForeignKeyConstraint baseColumnNames="reecharge_infos_id" baseTableName="reecharge_info_reecharge_type" constraintName="FK2krgojnkvy6fl38hey2a80bh5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="reecharge_info"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-4">
+        <addForeignKeyConstraint baseColumnNames="cards_id" baseTableName="user_info_card" constraintName="FK38i3clncaf28q3ak2galegcut" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="card"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-5">
+        <addForeignKeyConstraint baseColumnNames="type_id" baseTableName="offer" constraintName="FK4sk3yfluntnkjny5qyfopoyp8" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="offer_type"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-6">
+        <addForeignKeyConstraint baseColumnNames="reecharge_types_id" baseTableName="reecharge_info_reecharge_type" constraintName="FK6gl3ag80xid99r3u1u6nso10v" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="reecharge_plan_type"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-7">
+        <addForeignKeyConstraint baseColumnNames="merchant_id" baseTableName="offer" constraintName="FK6wcch5ecockq7b9ko86osxq3y" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="merchant"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-8">
+        <addForeignKeyConstraint baseColumnNames="electronics_infos_id" baseTableName="electronics_info_brand" constraintName="FK71ryuqm6mg4naws72fgy8wd3e" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="electronics_info"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-9">
+        <addForeignKeyConstraint baseColumnNames="brands_id" baseTableName="brand_sub_category" constraintName="FK7sxlt7ggqwoaosm56aw2ypkav" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="brand"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-10">
+        <addForeignKeyConstraint baseColumnNames="user_infos_id" baseTableName="user_info_operating_system" constraintName="FK8sfqpewms48g70jy27l2xnwcw" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user_info"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-11">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_info" constraintName="FK9utirboi9dwk7ym06gsib9h1h" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="apsstr_user"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-12">
+        <addForeignKeyConstraint baseColumnNames="brands_id" baseTableName="electronics_info_brand" constraintName="FKa2s0yvcwc1vh0llsrr4pp850w" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="brand"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-13">
+        <addForeignKeyConstraint baseColumnNames="user_infos_id" baseTableName="user_info_merchant" constraintName="FKae239pffdveb8fe5g2q5162r8" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user_info"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-14">
+        <addForeignKeyConstraint baseColumnNames="sub_categories_id" baseTableName="brand_sub_category" constraintName="FKcsaj9rrnvgxpnpwxeg516w41q" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="sub_category"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-15">
+        <addForeignKeyConstraint baseColumnNames="city_id" baseTableName="user_info" constraintName="FKgy1deell3i2fdcv5ysx1fkknw" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="city"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-16">
+        <addForeignKeyConstraint baseColumnNames="operating_systems_id" baseTableName="user_info_operating_system" constraintName="FKj0ah09iluetl8k1bwmoa4udu5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="operating_system"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-17">
+        <addForeignKeyConstraint baseColumnNames="merchants_id" baseTableName="user_info_merchant" constraintName="FKq8b96w1srqw9018rrpax0uoko" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="merchant"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-18">
+        <addForeignKeyConstraint baseColumnNames="user_infos_id" baseTableName="user_info_card" constraintName="FKt0lxtk1idrb4ptv86nqh8bkdw" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user_info"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-19">
+        <dropForeignKeyConstraint baseTableName="offer_reecharge_type" constraintName="fk_offer_reecharge_type_offers_id"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-20">
+        <dropForeignKeyConstraint baseTableName="offer_reecharge_type" constraintName="fk_offer_reecharge_type_reecharge_types_id"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-21">
+        <dropUniqueConstraint constraintName="user_id" tableName="apsstr_social_user_connection"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-22">
+        <dropUniqueConstraint constraintName="user_id_2" tableName="apsstr_social_user_connection"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1520399984843-23">
+        <dropTable tableName="offer_reecharge_type"/>
+    </changeSet>
+</databaseChangeLog>

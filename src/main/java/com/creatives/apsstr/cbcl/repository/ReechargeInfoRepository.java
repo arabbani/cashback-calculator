@@ -13,10 +13,10 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface ReechargeInfoRepository extends JpaRepository<ReechargeInfo, Long> {
-    @Query("select distinct reecharge_info from ReechargeInfo reecharge_info left join fetch reecharge_info.circles")
+    @Query("select distinct reecharge_info from ReechargeInfo reecharge_info left join fetch reecharge_info.circles left join fetch reecharge_info.reechargeTypes")
     List<ReechargeInfo> findAllWithEagerRelationships();
 
-    @Query("select reecharge_info from ReechargeInfo reecharge_info left join fetch reecharge_info.circles where reecharge_info.id =:id")
+    @Query("select reecharge_info from ReechargeInfo reecharge_info left join fetch reecharge_info.circles left join fetch reecharge_info.reechargeTypes where reecharge_info.id =:id")
     ReechargeInfo findOneWithEagerRelationships(@Param("id") Long id);
 
 }

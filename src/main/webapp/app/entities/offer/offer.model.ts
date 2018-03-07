@@ -34,7 +34,6 @@ export class Offer implements BaseEntity {
         public serviceProviders?: BaseEntity[],
         public activeDates?: BaseEntity[],
         public activeDays?: BaseEntity[],
-        public reechargeTypes?: BaseEntity[],
         public affiliate?: BaseEntity,
         public merchant?: BaseEntity,
         public type?: BaseEntity,

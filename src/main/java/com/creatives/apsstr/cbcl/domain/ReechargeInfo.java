@@ -30,10 +30,13 @@ public class ReechargeInfo implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "reecharge_info_circle",
-               joinColumns = @JoinColumn(name="reecharge_infos_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="circles_id", referencedColumnName="id"))
+    @JoinTable(name = "reecharge_info_circle", joinColumns = @JoinColumn(name = "reecharge_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "circles_id", referencedColumnName = "id"))
     private Set<Circle> circles = new HashSet<>();
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "reecharge_info_reecharge_type", joinColumns = @JoinColumn(name = "reecharge_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "reecharge_types_id", referencedColumnName = "id"))
+    private Set<ReechargePlanType> reechargeTypes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -66,6 +69,29 @@ public class ReechargeInfo implements Serializable {
     public void setCircles(Set<Circle> circles) {
         this.circles = circles;
     }
+
+    public Set<ReechargePlanType> getReechargeTypes() {
+        return reechargeTypes;
+    }
+
+    public ReechargeInfo reechargeTypes(Set<ReechargePlanType> reechargePlanTypes) {
+        this.reechargeTypes = reechargePlanTypes;
+        return this;
+    }
+
+    public ReechargeInfo addReechargeType(ReechargePlanType reechargePlanType) {
+        this.reechargeTypes.add(reechargePlanType);
+        return this;
+    }
+
+    public ReechargeInfo removeReechargeType(ReechargePlanType reechargePlanType) {
+        this.reechargeTypes.remove(reechargePlanType);
+        return this;
+    }
+
+    public void setReechargeTypes(Set<ReechargePlanType> reechargePlanTypes) {
+        this.reechargeTypes = reechargePlanTypes;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -90,8 +116,6 @@ public class ReechargeInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "ReechargeInfo{" +
-            "id=" + getId() +
-            "}";
+        return "ReechargeInfo{" + "id=" + getId() + "}";
     }
 }
