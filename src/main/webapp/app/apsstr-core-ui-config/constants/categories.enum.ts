@@ -1,4 +1,4 @@
 export enum Categories {
-    TRVL = 'Travel',
-    RCHRG = 'Reecharge'
+    TRAVEL = 'Travel',
+    REECHARGE = 'Reecharge'
 }

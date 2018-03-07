@@ -8,7 +8,7 @@ import { TabsetComponent } from 'ngx-bootstrap';
 import { Observable } from 'rxjs/Observable';
 
 import { Offer, OfferService } from '..';
-import { Categories, OfferTypes } from '../../../apsstr-core-ui-config';
+import { Categories, OfferTypes, ReturnTypes } from '../../../apsstr-core-ui-config';
 import { ApsstrKendoDialogService } from '../../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../../shared';
 import { Affiliate, AffiliateService } from '../../affiliate';
@@ -104,6 +104,7 @@ export class CreateOfferComponent implements OnInit {
 
   offerCategories: Category[];
   categoryEnum;
+  returnTypesEnum;
   offerReturnFormGroup: FormGroup;
   gridState: GridState;
   returnInfoFormGroup: FormGroup;
@@ -149,6 +150,7 @@ export class CreateOfferComponent implements OnInit {
 
   initialize(): void {
     this.categoryEnum = Categories;
+    this.returnTypesEnum = ReturnTypes;
     this.gridState = GRID_STATE;
     this.isSaving = false;
     this.defaultOfferType = { id: null, name: 'Select Type' };
@@ -398,7 +400,7 @@ export class CreateOfferComponent implements OnInit {
 
   isCoupon(offerType: OfferType): boolean {
     switch (offerType.name) {
-      case OfferTypes.CPN:
+      case OfferTypes.COUPON:
       case OfferTypes.LDC:
         return true;
       case OfferTypes.DEAL:
@@ -449,10 +451,10 @@ export class CreateOfferComponent implements OnInit {
       arr = _.filter(this.subCategories, (subCategory) => subCategory.category.id === category.id);
       this.filteredSubCategories.push(...arr);
       switch (category.name) {
-        case this.categoryEnum.RCHRG:
+        case this.categoryEnum.REECHARGE:
           this.offer.reechargeInfo = reechargeInfo ? reechargeInfo : new ReechargeInfo();
           break;
-        case this.categoryEnum.TRVL:
+        case this.categoryEnum.TRAVEL:
           this.offer.travelInfo = travelInfo ? travelInfo : new TravelInfo();
           break;
       }
@@ -501,7 +503,6 @@ export class CreateOfferComponent implements OnInit {
       arr = _.filter(selectedCards, (selectedCard) => selectedCard.type.id === mode.id);
       dataItem.payment.cards.push(...arr);
     });
-    console.log(dataItem.payment.cards);
   }
 
   public createOfferReturnFormGroup(args: any): FormGroup {

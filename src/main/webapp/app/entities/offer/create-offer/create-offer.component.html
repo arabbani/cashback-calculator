@@ -261,20 +261,20 @@
                             <strong>{{ offerCategory.name + ' Info' }}</strong>
                         </legend>
                         <ng-container [ngSwitch]="offerCategory.name">
-                            <ng-container *ngSwitchCase="categoryEnum.RCHRG">
+                            <ng-container *ngSwitchCase="categoryEnum.REECHARGE">
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="reecharge_info_circles">Circles</label>
                                     <kendo-multiselect id="reecharge_info_circles" name="reecharge_info_circles" [data]="circles" textField="name" valueField="id"
                                         [(ngModel)]="offer.reechargeInfo.circles" [placeholder]="defaultCircle" [autoClose]="false"></kendo-multiselect>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label class="mr-5" for="reecharge_info_reecharge_types">Circles</label>
+                                    <label class="mr-5" for="reecharge_info_reecharge_types">Reecharge Types</label>
                                     <kendo-multiselect id="reecharge_info_reecharge_types" name="reecharge_info_reecharge_types" [data]="reechargePlanTypes"
                                         textField="name" valueField="id" [(ngModel)]="offer.reechargeInfo.reechargeTypes" [placeholder]="defaultReechargePlanType"
                                         [autoClose]="false"></kendo-multiselect>
                                 </div>
                             </ng-container>
-                            <ng-container *ngSwitchCase="categoryEnum.TRVL">
+                            <ng-container *ngSwitchCase="categoryEnum.TRAVEL">
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="travel_info_types">Travel Types</label>
                                     <kendo-multiselect id="travel_info_types" name="travel_info_types" [data]="travelTypes" textField="name" valueField="id"
@@ -353,55 +353,57 @@
                                 </ng-template>
                             </kendo-grid-command-column>
                             <ng-template kendoGridDetailTemplate let-dataItem>
-                                <fieldset class="fieldset-fix mb-3">
-                                    <legend class="legend-fix">
-                                        <strong>Main Return</strong>
-                                    </legend>
-                                    <div class="row">
-                                        <div class="form-group col-sm-6 col-lg-4 mb-3">
-                                            <label for="amount">Amount</label>
-                                            <input type="number" class="form-control" id="amount" name="amount" [(ngModel)]="dataItem.mainReturn.amount" />
+                                <div class="form-group mb-3">
+                                    <label for="type">Type</label>
+                                    <kendo-dropdownlist id="type" name="type" [data]="returnTypes" [defaultItem]="defaultReturnType" textField="name" valueField="id"
+                                        [(ngModel)]="dataItem.mainReturn.type"></kendo-dropdownlist>
+                                </div>
+                                <ng-container>
+                                    <fieldset class="fieldset-fix mb-3">
+                                        <legend class="legend-fix">
+                                            <strong>Main Return</strong>
+                                        </legend>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6 col-lg-4 mb-3">
+                                                <label for="amount">Amount</label>
+                                                <input type="number" class="form-control" id="amount" name="amount" [(ngModel)]="dataItem.mainReturn.amount" />
+                                            </div>
+                                            <div class="form-group col-sm-6 col-lg-4 mb-3">
+                                                <label for="defaultAmount">Default Amount</label>
+                                                <input type="number" class="form-control" id="defaultAmount" name="defaultAmount" [(ngModel)]="dataItem.mainReturn.defaultAmount"
+                                                />
+                                            </div>
+                                            <div class="form-group col-sm-4 mb-3">
+                                                <span class="col-sm-6">
+                                                    <label for="exact">Exact</label>
+                                                </span>
+                                                <span class="col-sm-6">
+                                                    <kendo-switch id="exact" name="exact" [(ngModel)]="dataItem.mainReturn.exact" onLabel="Y" offLabel="N"></kendo-switch>
+                                                </span>
+                                            </div>
+                                            <div class="form-group col-sm-6 col-lg-4 mb-3">
+                                                <label for="mode">Mode</label>
+                                                <kendo-dropdownlist id="mode" name="mode" [data]="returnModes" [defaultItem]="defaultReturnMode" textField="name" valueField="id"
+                                                    [(ngModel)]="dataItem.mainReturn.mode"></kendo-dropdownlist>
+                                            </div>
+                                            <div class="form-group col-sm-6 col-lg-4 mb-3">
+                                                <label for="channel">Channel</label>
+                                                <kendo-dropdownlist id="channel" name="channel" [data]="cards" [defaultItem]="defaultCard" textField="name" valueField="id"
+                                                    [(ngModel)]="dataItem.mainReturn.channel"></kendo-dropdownlist>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-sm-6 col-lg-4 mb-3">
-                                            <label for="defaultAmount">Default Amount</label>
-                                            <input type="number" class="form-control" id="defaultAmount" name="defaultAmount" [(ngModel)]="dataItem.mainReturn.defaultAmount"
-                                            />
+                                    </fieldset>
+                                    <fieldset class="fieldset-fix mb-3">
+                                        <legend class="legend-fix">
+                                            <strong>Return Offer</strong>
+                                        </legend>
+                                        <div class="form-group">
+                                            <label for="returnOffer">Return Offer</label>
+                                            <kendo-dropdownlist id="returnOffer" name="returnOffer" [data]="offers" [defaultItem]="defaultOffer" textField="name" valueField="id"
+                                                [(ngModel)]="dataItem.returnOffer"></kendo-dropdownlist>
                                         </div>
-                                        <div class="form-group col-sm-4 mb-3">
-                                            <span class="col-sm-6">
-                                                <label for="exact">Exact</label>
-                                            </span>
-                                            <span class="col-sm-6">
-                                                <kendo-switch id="exact" name="exact" [(ngModel)]="dataItem.mainReturn.exact" onLabel="Y" offLabel="N"></kendo-switch>
-                                            </span>
-                                        </div>
-                                        <div class="form-group col-sm-6 col-lg-4 mb-3">
-                                            <label for="type">Type</label>
-                                            <kendo-dropdownlist id="type" name="type" [data]="returnTypes" [defaultItem]="defaultReturnType" textField="name" valueField="id"
-                                                [(ngModel)]="dataItem.mainReturn.type"></kendo-dropdownlist>
-                                        </div>
-                                        <div class="form-group col-sm-6 col-lg-4 mb-3">
-                                            <label for="mode">Mode</label>
-                                            <kendo-dropdownlist id="mode" name="mode" [data]="returnModes" [defaultItem]="defaultReturnMode" textField="name" valueField="id"
-                                                [(ngModel)]="dataItem.mainReturn.mode"></kendo-dropdownlist>
-                                        </div>
-                                        <div class="form-group col-sm-6 col-lg-4 mb-3">
-                                            <label for="channel">Channel</label>
-                                            <kendo-dropdownlist id="channel" name="channel" [data]="cards" [defaultItem]="defaultCard" textField="name" valueField="id"
-                                                [(ngModel)]="dataItem.mainReturn.channel"></kendo-dropdownlist>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset class="fieldset-fix mb-3">
-                                    <legend class="legend-fix">
-                                        <strong>Return Offer</strong>
-                                    </legend>
-                                    <div class="form-group">
-                                        <label for="returnOffer">Return Offer</label>
-                                        <kendo-dropdownlist id="returnOffer" name="returnOffer" [data]="offers" [defaultItem]="defaultOffer" textField="name" valueField="id"
-                                            [(ngModel)]="dataItem.returnOffer"></kendo-dropdownlist>
-                                    </div>
-                                </fieldset>
+                                    </fieldset>
+                                </ng-container>
                                 <fieldset class="fieldset-fix mb-3">
                                     <legend class="legend-fix">
                                         <strong>Payment Options</strong>
@@ -424,7 +426,7 @@
                 </kendo-grid>
                 <div class="text-center mt-2">
                     <button type="button" class="btn btn-primary mr-3" (click)="goToPreviousTab(3)">Previous</button>
-                    <button type="button" class="btn btn-success" [disabled]="isSaving" (click)="saveOffer()">Next</button>
+                    <button type="button" class="btn btn-success" [disabled]="isSaving" (click)="saveOffer()">Save</button>
                 </div>
             </tab>
         </tabset>
