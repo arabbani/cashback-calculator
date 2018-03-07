@@ -75,7 +75,6 @@ export class CreateOfferComponent implements OnInit {
   offers: Offer[];
   cardTypes: CardType[];
 
-  isCoupon: boolean;
   defaultOfferType;
   defaultOfferPolicy;
   defaultDate;
@@ -101,7 +100,6 @@ export class CreateOfferComponent implements OnInit {
   defaultPaymentMode;
   defaultCards;
 
-  enabledTabs: Array<boolean>;
   offerCategories: Category[];
   categoryEnum;
   offerReturnFormGroup: FormGroup;
@@ -120,7 +118,6 @@ export class CreateOfferComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initialize();
     this.loadOfferTypes();
     this.loadOfferPolicies();
     this.loadDates();
@@ -143,15 +140,13 @@ export class CreateOfferComponent implements OnInit {
     this.loadCards();
     this.loadOffersForReference();
     this.loadCardTypes();
-    this.offer = new Offer();
-    this.offer.offerReturns = [];
+    this.initialize();
+    this.createOffer();
   }
 
   initialize(): void {
-    this.enabledTabs = _.times(5, _.stubFalse);
-    this.enabledTabs[0] = true;
-    this.isCoupon = false;
     this.categoryEnum = Categories;
+    this.gridState = GRID_STATE;
     this.defaultOfferType = { id: null, name: 'Select Type' };
     this.defaultOfferPolicy = { id: null, name: 'Select Policy' };
     this.defaultDate = 'Select Dates';
@@ -177,10 +172,24 @@ export class CreateOfferComponent implements OnInit {
     this.defaultReturnMode = { id: null, name: 'Select Return Mode' };
     this.defaultPaymentMode = 'Select Payment Modes';
     this.defaultCards = 'Select Cards';
-    this.gridState = GRID_STATE;
   }
 
-  loadOfferTypes(): void {
+  private enableTab(tabNumber: number): void {
+    this.createOfferTabs.tabs[tabNumber].disabled = false;
+  }
+
+  private createOffer(): void {
+    _.forEach(this.createOfferTabs.tabs, (tab, index) => {
+      if (index !== 0) {
+        tab.disabled = true;
+      }
+    });
+    this.enableTab(0);
+    this.offer = new Offer();
+    this.offer.offerReturns = [];
+  }
+
+  private loadOfferTypes(): void {
     this.offerTypeService.query().subscribe(
       (res: HttpResponse<OfferType[]>) => {
         this.offerTypes = res.body;
@@ -189,7 +198,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadOfferPolicies(): void {
+  private loadOfferPolicies(): void {
     this.offerPolicyService.query().subscribe(
       (res: HttpResponse<OfferPolicy[]>) => {
         this.offerPolicies = res.body;
@@ -198,7 +207,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadDates(): void {
+  private loadDates(): void {
     this.dateService.query().subscribe(
       (res: HttpResponse<Date[]>) => {
         this.dates = res.body;
@@ -207,7 +216,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadDays(): void {
+  private loadDays(): void {
     this.dayService.query().subscribe(
       (res: HttpResponse<Day[]>) => {
         this.days = res.body;
@@ -216,7 +225,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadCountries(): void {
+  private loadCountries(): void {
     this.countryService.query().subscribe(
       (res: HttpResponse<Country[]>) => {
         this.countries = res.body;
@@ -225,7 +234,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadStates(): void {
+  private loadStates(): void {
     this.stateService.query().subscribe(
       (res: HttpResponse<State[]>) => {
         this.states = res.body;
@@ -235,7 +244,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadCities(): void {
+  private loadCities(): void {
     this.cityService.query().subscribe(
       (res: HttpResponse<City[]>) => {
         this.cities = res.body;
@@ -245,7 +254,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadOperatingSystems(): void {
+  private loadOperatingSystems(): void {
     this.operatingSystemService.query().subscribe(
       (res: HttpResponse<OperatingSystem[]>) => {
         this.operatingSystems = res.body;
@@ -254,7 +263,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadAffiliates(): void {
+  private loadAffiliates(): void {
     this.affiliateService.query().subscribe(
       (res: HttpResponse<Affiliate[]>) => {
         this.affiliates = res.body;
@@ -263,7 +272,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadMerchants(): void {
+  private loadMerchants(): void {
     this.merchantService.query().subscribe(
       (res: HttpResponse<Merchant[]>) => {
         this.merchants = res.body;
@@ -272,7 +281,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadCategories(): void {
+  private loadCategories(): void {
     this.categoryService.query().subscribe(
       (res: HttpResponse<Category[]>) => {
         this.categories = res.body;
@@ -281,7 +290,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadSubCategories(): void {
+  private loadSubCategories(): void {
     this.subCategoryService.query().subscribe(
       (res: HttpResponse<SubCategory[]>) => {
         this.subCategories = res.body;
@@ -291,7 +300,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadServiceProviders(): void {
+  private loadServiceProviders(): void {
     this.serviceProviderService.query().subscribe(
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
@@ -301,7 +310,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadCircles(): void {
+  private loadCircles(): void {
     this.circleService.query().subscribe(
       (res: HttpResponse<Circle[]>) => {
         this.circles = res.body;
@@ -310,7 +319,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadReechargePlanTypes(): void {
+  private loadReechargePlanTypes(): void {
     this.reechargePlanTypeService.query().subscribe(
       (res: HttpResponse<ReechargePlanType[]>) => {
         this.reechargePlanTypes = res.body;
@@ -319,7 +328,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadTravelTypes(): void {
+  private loadTravelTypes(): void {
     this.travelTypeService.query().subscribe(
       (res: HttpResponse<TravelType[]>) => {
         this.travelTypes = res.body;
@@ -328,7 +337,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadRegions(): void {
+  private loadRegions(): void {
     this.regionService.query().subscribe(
       (res: HttpResponse<Region[]>) => {
         this.regions = res.body;
@@ -337,7 +346,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadReturnTypes(): void {
+  private loadReturnTypes(): void {
     this.returnTypeService.query().subscribe(
       (res: HttpResponse<ReturnType[]>) => {
         this.returnTypes = res.body;
@@ -346,7 +355,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadReturnModes(): void {
+  private loadReturnModes(): void {
     this.returnModeService.query().subscribe(
       (res: HttpResponse<ReturnMode[]>) => {
         this.returnModes = res.body;
@@ -355,7 +364,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadCards(): void {
+  private loadCards(): void {
     this.cardService.query().subscribe(
       (res: HttpResponse<Card[]>) => {
         this.cards = res.body;
@@ -365,7 +374,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadOffersForReference(): void {
+  private loadOffersForReference(): void {
     this.offerService.query().subscribe(
       (res: HttpResponse<Offer[]>) => {
         this.offers = res.body;
@@ -374,7 +383,7 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  loadCardTypes(): void {
+  private loadCardTypes(): void {
     this.cardTypeService.query().subscribe(
       (res: HttpResponse<CardType[]>) => {
         this.cardTypes = res.body;
@@ -383,24 +392,16 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  goToNextTab(tabNumber: number): void {
-    this.enabledTabs[tabNumber] = true;
-    this.createOfferTabs.tabs[tabNumber].active = true;
-  }
-
-  onOfferTypeChange(offerType: OfferType): void {
+  isCoupon(offerType: OfferType): boolean {
     switch (offerType.name) {
       case OfferTypes.CPN:
       case OfferTypes.LDC:
-        this.isCoupon = true;
-        break;
+        return true;
       case OfferTypes.DEAL:
       case OfferTypes.LDD:
-        this.isCoupon = false;
-        break;
+        return false;
       default:
-        this.isCoupon = false;
-        break;
+        return false;
     }
   }
 
@@ -577,6 +578,11 @@ export class CreateOfferComponent implements OnInit {
         // event.sender.data.data = _.sortBy(event.data, (item) => item.id);
       }
     });
+  }
+
+  goToNextTab(tabNumber: number): void {
+    this.enableTab(tabNumber);
+    this.createOfferTabs.tabs[tabNumber].active = true;
   }
 
   saveOffer(): void {

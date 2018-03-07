@@ -47,9 +47,9 @@
                     <div class="form-group mb-3">
                         <label class="mr-5" for="type">Type</label>
                         <kendo-dropdownlist id="type" name="type" [data]="offerTypes" [defaultItem]="defaultOfferType" textField="name" valueField="id"
-                            [(ngModel)]="offer.type" (selectionChange)="onOfferTypeChange($event)"></kendo-dropdownlist>
+                            [(ngModel)]="offer.type"></kendo-dropdownlist>
                     </div>
-                    <div *ngIf="isCoupon" class="form-group mb-3">
+                    <div *ngIf="offer.type && isCoupon(offer.type)" class="form-group mb-3">
                         <label for="code">Code</label>
                         <input type="text" class="form-control" id="code" name="code" [(ngModel)]="offer.code" #code="ngModel" maxlength="255" required
                             placeholder="Code" />
@@ -80,7 +80,7 @@
                     <button type="button" class="btn btn-success mt-2" [disabled]="basicInfoForm.form.invalid" (click)="goToNextTab(1)">Next</button>
                 </form>
             </tab>
-            <tab heading="Options" [disabled]="!enabledTabs[1]">
+            <tab heading="Options">
                 <form name="form" role="form" #optionsForm="ngForm" novalidate>
                     <div class="form-group mb-3">
                         <label for="adminDescription">Admin Description</label>
@@ -176,7 +176,7 @@
                     <button type="button" class="btn btn-success mt-2" [disabled]="optionsForm.form.invalid" (click)="goToNextTab(2)">Next</button>
                 </form>
             </tab>
-            <tab heading="Detail Info" [disabled]="!enabledTabs[2]">
+            <tab heading="Detail Info">
                 <form name="form" role="form" #detailInfoForm="ngForm" novalidate>
                     <div class="form-group mb-3">
                         <label for="adminDescription">Admin Description</label>
@@ -225,7 +225,7 @@
                     <button type="button" class="btn btn-success mt-2" [disabled]="detailInfoForm.form.invalid" (click)="goToNextTab(3)">Next</button>
                 </form>
             </tab>
-            <tab heading="Offer Info" [disabled]="!enabledTabs[3]">
+            <tab heading="Offer Info">
                 <form name="form" role="form" #offerInfoForm="ngForm" novalidate>
                     <div class="form-group mb-3">
                         <label for="adminDescription">Admin Description</label>
@@ -288,7 +288,7 @@
                     <button type="button" class="btn btn-success mt-2" [disabled]="offerInfoForm.form.invalid" (click)="goToNextTab(4)">Next</button>
                 </form>
             </tab>
-            <tab heading="Offer Return" [disabled]="!enabledTabs[4]">
+            <tab heading="Offer Return">
                 <div kendoDialogContainer></div>
                 <kendo-grid [kendoGridReactiveEditing]="createOfferReturnFormGroup" [kendoGridBinding]="offer.offerReturns" [pageable]="true"
                     [pageSize]="gridState.take" [skip]="gridState.skip" [resizable]="true" [navigable]="true" (save)="saveOfferReturn($event.dataItem)"
