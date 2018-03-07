@@ -36,6 +36,7 @@ import { ReechargePlanTypeService, ReechargePlanType } from '../../reecharge-pla
 import { ReturnType, ReturnTypeService } from '../../return-type';
 import { ReturnMode, ReturnModeService } from '../../return-mode';
 import { Card, CardService } from '../../card';
+import { CardType, CardTypeService } from '../../card-type';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -70,7 +71,9 @@ export class CreateOfferComponent implements OnInit {
   returnTypes: ReturnType[];
   returnModes: ReturnMode[];
   cards: Card[];
+  filteredCards: Card[];
   offers: Offer[];
+  cardTypes: CardType[];
 
   isCoupon: boolean;
   defaultOfferType;
@@ -95,6 +98,8 @@ export class CreateOfferComponent implements OnInit {
   defaultReturnMode;
   defaultCard;
   defaultOffer;
+  defaultPaymentMode;
+  defaultCards;
 
   enabledTabs: Array<boolean>;
   offerCategories: Category[];
@@ -109,7 +114,7 @@ export class CreateOfferComponent implements OnInit {
     private categoryService: CategoryService, private subCategoryService: SubCategoryService, private serviceProviderService: ServiceProviderService,
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
     private apsstrKendoDialogService: ApsstrKendoDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
-    private returnModeService: ReturnModeService, private cardService: CardService) {
+    private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
     this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
   }
@@ -137,6 +142,7 @@ export class CreateOfferComponent implements OnInit {
     this.loadReturnModes();
     this.loadCards();
     this.loadOffersForReference();
+    this.loadCardTypes();
     this.offer = new Offer();
     this.offer.offerReturns = [];
   }
@@ -168,6 +174,9 @@ export class CreateOfferComponent implements OnInit {
     this.defaultReturnMode = { id: null, name: 'Select Return Mode' };
     this.defaultCard = { id: null, name: 'Select Card' };
     this.defaultOffer = { id: null, name: 'Select Offer' };
+    this.defaultReturnMode = { id: null, name: 'Select Return Mode' };
+    this.defaultPaymentMode = 'Select Payment Modes';
+    this.defaultCards = 'Select Cards';
     this.gridState = GRID_STATE;
   }
 
@@ -350,6 +359,7 @@ export class CreateOfferComponent implements OnInit {
     this.cardService.query().subscribe(
       (res: HttpResponse<Card[]>) => {
         this.cards = res.body;
+        this.filteredCards = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -359,6 +369,15 @@ export class CreateOfferComponent implements OnInit {
     this.offerService.query().subscribe(
       (res: HttpResponse<Offer[]>) => {
         this.offers = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  loadCardTypes(): void {
+    this.cardTypeService.query().subscribe(
+      (res: HttpResponse<CardType[]>) => {
+        this.cardTypes = res.body;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -462,6 +481,20 @@ export class CreateOfferComponent implements OnInit {
       });
       this.offer.serviceProviders.push(...arr);
     });
+  }
+
+  onPaymentModeChange(modes: CardType[], dataItem): void {
+    this.filteredCards = [];
+    let arr = null;
+    const selectedCards = dataItem.payment.cards;
+    dataItem.payment.cards = [];
+    _.forEach(modes, (mode) => {
+      arr = _.filter(this.cards, (card) => card.type.id === mode.id);
+      this.filteredCards.push(...arr);
+      arr = _.filter(selectedCards, (selectedCard) => selectedCard.type.id === mode.id);
+      dataItem.payment.cards.push(...arr);
+    });
+    console.log(dataItem.payment.cards);
   }
 
   public createOfferReturnFormGroup(args: any): FormGroup {

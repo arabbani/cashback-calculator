@@ -391,6 +391,22 @@
                                             [(ngModel)]="dataItem.returnOffer"></kendo-dropdownlist>
                                     </div>
                                 </fieldset>
+                                <fieldset class="fieldset-fix mb-3">
+                                    <legend class="legend-fix">
+                                        <strong>Payment Options</strong>
+                                    </legend>
+                                    <div class="form-group mb-3">
+                                        <label for="paymentModes">Modes</label>
+                                        <kendo-multiselect id="paymentModes" name="paymentModes" [data]="cardTypes" textField="name" valueField="id" [(ngModel)]="dataItem.payment.modes"
+                                            [placeholder]="defaultPaymentMode" (valueChange)="onPaymentModeChange($event, dataItem)"
+                                            [autoClose]="false"></kendo-multiselect>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="paymentCards">Cards</label>
+                                        <kendo-multiselect id="paymentCards" name="paymentCards" [data]="filteredCards" textField="name" valueField="id" [(ngModel)]="dataItem.payment.cards"
+                                            [placeholder]="defaultCards" [autoClose]="false"></kendo-multiselect>
+                                    </div>
+                                </fieldset>
                             </ng-template>
                         </kendo-grid>
                     </ng-template>
