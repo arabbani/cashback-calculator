@@ -30,6 +30,8 @@ import { ReturnExtras } from '../../return-extras';
 import { State as GridState } from '@progress/kendo-data-query';
 import { GRID_STATE } from '../../../shared';
 import { ReturnInfo } from '../../return-info';
+import { MainReturn } from '../../main-return';
+import { OfferPayment } from '../../offer-payment';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -421,6 +423,8 @@ export class CreateOfferComponent implements OnInit {
     if (args.isNew) {
       const returnInfo = new ReturnInfo();
       returnInfo.extras = new ReturnExtras();
+      returnInfo.mainReturn = new MainReturn();
+      returnInfo.payment = new OfferPayment();
       item = returnInfo;
     } else {
       item = args.dataItem;
