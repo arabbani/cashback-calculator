@@ -1,42 +1,44 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { State as GridState } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { TabsetComponent } from 'ngx-bootstrap';
+import { Observable } from 'rxjs/Observable';
 
 import { Offer, OfferService } from '..';
 import { Categories, OfferTypes } from '../../../apsstr-core-ui-config';
+import { ApsstrKendoDialogService } from '../../../apsstr-core-ui/apsstr-core/services';
+import { GRID_STATE } from '../../../shared';
 import { Affiliate, AffiliateService } from '../../affiliate';
+import { Card, CardService } from '../../card';
+import { CardType, CardTypeService } from '../../card-type';
 import { Category, CategoryService } from '../../category';
 import { Circle, CircleService } from '../../circle';
 import { City, CityService } from '../../city';
 import { Country, CountryService } from '../../country';
 import { Date, DateService } from '../../date';
 import { Day, DayService } from '../../day';
+import { MainReturn } from '../../main-return';
 import { Merchant, MerchantService } from '../../merchant';
+import { OfferPayment } from '../../offer-payment';
 import { OfferPolicy, OfferPolicyService } from '../../offer-policy';
+import { OfferReturn } from '../../offer-return';
 import { OfferType, OfferTypeService } from '../../offer-type';
 import { OperatingSystem, OperatingSystemService } from '../../operating-system';
 import { ReechargeInfo } from '../../reecharge-info';
+import { ReechargePlanType, ReechargePlanTypeService } from '../../reecharge-plan-type';
 import { Region, RegionService } from '../../region';
+import { ReturnExtras } from '../../return-extras';
+import { ReturnInfo } from '../../return-info';
+import { ReturnMode, ReturnModeService } from '../../return-mode';
+import { ReturnType, ReturnTypeService } from '../../return-type';
 import { ServiceProvider, ServiceProviderService } from '../../service-provider';
 import { State, StateService } from '../../state';
 import { SubCategory, SubCategoryService } from '../../sub-category';
 import { TravelInfo } from '../../travel-info';
 import { TravelType, TravelTypeService } from '../../travel-type';
-import { ApsstrKendoDialogService } from '../../../apsstr-core-ui/apsstr-core/services';
-import { OfferReturn } from '../../offer-return';
-import { ReturnExtras } from '../../return-extras';
-import { State as GridState } from '@progress/kendo-data-query';
-import { GRID_STATE } from '../../../shared';
-import { ReturnInfo } from '../../return-info';
-import { MainReturn } from '../../main-return';
-import { OfferPayment } from '../../offer-payment';
-import { ReechargePlanTypeService, ReechargePlanType } from '../../reecharge-plan-type';
-import { ReturnType, ReturnTypeService } from '../../return-type';
-import { ReturnMode, ReturnModeService } from '../../return-mode';
-import { Card, CardService } from '../../card';
-import { CardType, CardTypeService } from '../../card-type';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -105,6 +107,7 @@ export class CreateOfferComponent implements OnInit {
   offerReturnFormGroup: FormGroup;
   gridState: GridState;
   returnInfoFormGroup: FormGroup;
+  isSaving: boolean;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
     private dayService: DayService, private countryService: CountryService, private stateService: StateService, private cityService: CityService,
@@ -112,7 +115,7 @@ export class CreateOfferComponent implements OnInit {
     private categoryService: CategoryService, private subCategoryService: SubCategoryService, private serviceProviderService: ServiceProviderService,
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
     private apsstrKendoDialogService: ApsstrKendoDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
-    private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService) {
+    private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService, private router: Router) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
     this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
   }
@@ -147,6 +150,7 @@ export class CreateOfferComponent implements OnInit {
   initialize(): void {
     this.categoryEnum = Categories;
     this.gridState = GRID_STATE;
+    this.isSaving = false;
     this.defaultOfferType = { id: null, name: 'Select Type' };
     this.defaultOfferPolicy = { id: null, name: 'Select Policy' };
     this.defaultDate = 'Select Dates';
@@ -472,7 +476,8 @@ export class CreateOfferComponent implements OnInit {
         }
         return false;
       });
-      this.filteredServiceProviders.push(...arr);
+      this.filteredServiceProviders = _.union(this.filteredServiceProviders, arr);
+      // this.filteredServiceProviders.push(...arr);
       arr = _.filter(selectedServiceProviders, (selectedServiceProvider) => {
         found = _.find(selectedServiceProvider.subCategories, (sCategory) => sCategory.id === subCategory.id);
         if (found) {
@@ -480,7 +485,8 @@ export class CreateOfferComponent implements OnInit {
         }
         return false;
       });
-      this.offer.serviceProviders.push(...arr);
+      this.offer.serviceProviders = _.union(this.offer.serviceProviders, arr);
+      // this.offer.serviceProviders.push(...arr);
     });
   }
 
@@ -585,8 +591,35 @@ export class CreateOfferComponent implements OnInit {
     this.createOfferTabs.tabs[tabNumber].active = true;
   }
 
+  goToPreviousTab(tabNumber: number): void {
+    this.createOfferTabs.tabs[tabNumber].active = true;
+  }
+
   saveOffer(): void {
     console.log(this.offer);
+    this.isSaving = true;
+    if (this.offer.id !== undefined) {
+      this.subscribeToSaveResponse(
+        this.offerService.update(this.offer));
+    } else {
+      this.subscribeToSaveResponse(
+        this.offerService.create(this.offer));
+    }
+  }
+
+  private subscribeToSaveResponse(result: Observable<HttpResponse<Offer>>) {
+    result.subscribe((res: HttpResponse<Offer>) =>
+      this.onSaveSuccess(res.body), (res: HttpErrorResponse) => this.onSaveError());
+  }
+
+  private onSaveSuccess(result: Offer) {
+    this.isSaving = false;
+    this.router.navigate(['/offer']);
+  }
+
+  private onSaveError() {
+    this.isSaving = false;
+    this.apsstrKendoDialogService.error();
   }
 
   private onError(error) {
