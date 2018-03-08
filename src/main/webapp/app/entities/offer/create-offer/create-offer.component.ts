@@ -56,17 +56,23 @@ export class CreateOfferComponent implements OnInit {
   countries: Country[];
   states: State[];
   filteredStates: State[];
+  refinedStates: State[];
   cities: City[];
   filteredCities: City[];
+  refinedCities: City[];
   operatingSystems: OperatingSystem[];
   affiliates: Affiliate[];
   merchants: Merchant[];
+  filteredMerchants: Merchant[];
   categories: Category[];
   subCategories: SubCategory[];
   filteredSubCategories: SubCategory[];
+  refinedSubCategories: SubCategory[];
   serviceProviders: ServiceProvider[];
   filteredServiceProviders: ServiceProvider[];
+  refinedServiceProviders: ServiceProvider[];
   circles: Circle[];
+  filteredCircles: Circle[];
   reechargePlanTypes: ReechargePlanType[];
   travelTypes: TravelType[];
   regions: Region[];
@@ -74,6 +80,7 @@ export class CreateOfferComponent implements OnInit {
   returnModes: ReturnMode[];
   cards: Card[];
   filteredCards: Card[];
+  refinedCards: Card[];
   offers: Offer[];
   cardTypes: CardType[];
 
@@ -244,7 +251,7 @@ export class CreateOfferComponent implements OnInit {
     this.stateService.query().subscribe(
       (res: HttpResponse<State[]>) => {
         this.states = res.body;
-        this.filteredStates = [];
+        this.refinedStates = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -254,7 +261,7 @@ export class CreateOfferComponent implements OnInit {
     this.cityService.query().subscribe(
       (res: HttpResponse<City[]>) => {
         this.cities = res.body;
-        this.filteredCities = [];
+        this.refinedCities = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -282,6 +289,7 @@ export class CreateOfferComponent implements OnInit {
     this.merchantService.query().subscribe(
       (res: HttpResponse<Merchant[]>) => {
         this.merchants = res.body;
+        this.filteredMerchants = this.merchants;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -300,7 +308,7 @@ export class CreateOfferComponent implements OnInit {
     this.subCategoryService.query().subscribe(
       (res: HttpResponse<SubCategory[]>) => {
         this.subCategories = res.body;
-        this.filteredSubCategories = [];
+        this.refinedSubCategories = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -310,7 +318,7 @@ export class CreateOfferComponent implements OnInit {
     this.serviceProviderService.query().subscribe(
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
-        this.filteredServiceProviders = [];
+        this.refinedServiceProviders = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -320,6 +328,7 @@ export class CreateOfferComponent implements OnInit {
     this.circleService.query().subscribe(
       (res: HttpResponse<Circle[]>) => {
         this.circles = res.body;
+        this.filteredCircles = this.circles;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -374,7 +383,7 @@ export class CreateOfferComponent implements OnInit {
     this.cardService.query().subscribe(
       (res: HttpResponse<Card[]>) => {
         this.cards = res.body;
-        this.filteredCards = [];
+        this.refinedCards = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -422,6 +431,7 @@ export class CreateOfferComponent implements OnInit {
       arr = _.filter(selectedStates, (selectedState) => selectedState.country.id === country.id);
       this.offer.states.push(...arr);
     });
+    this.refinedStates = this.filteredStates;
     this.onStateChange(this.offer.states);
   }
 
@@ -436,6 +446,7 @@ export class CreateOfferComponent implements OnInit {
       arr = _.filter(selectedCities, (selectedCity) => selectedCity.state.id === state.id);
       this.offer.cities.push(...arr);
     });
+    this.refinedCities = this.filteredCities;
   }
 
   onCategoryChange(categories: Category[]): void {
@@ -461,6 +472,7 @@ export class CreateOfferComponent implements OnInit {
       arr = _.filter(selectedSubCategories, (selectedSubCategory) => selectedSubCategory.category.id === category.id);
       this.offer.subCategories.push(...arr);
     });
+    this.refinedSubCategories = this.filteredSubCategories;
     this.onSubCategoryChange(this.offer.subCategories);
   }
 
@@ -479,7 +491,6 @@ export class CreateOfferComponent implements OnInit {
         return false;
       });
       this.filteredServiceProviders = _.union(this.filteredServiceProviders, arr);
-      // this.filteredServiceProviders.push(...arr);
       arr = _.filter(selectedServiceProviders, (selectedServiceProvider) => {
         found = _.find(selectedServiceProvider.subCategories, (sCategory) => sCategory.id === subCategory.id);
         if (found) {
@@ -488,8 +499,8 @@ export class CreateOfferComponent implements OnInit {
         return false;
       });
       this.offer.serviceProviders = _.union(this.offer.serviceProviders, arr);
-      // this.offer.serviceProviders.push(...arr);
     });
+    this.refinedServiceProviders = this.filteredServiceProviders;
   }
 
   onPaymentModeChange(modes: CardType[], dataItem): void {
@@ -503,6 +514,7 @@ export class CreateOfferComponent implements OnInit {
       arr = _.filter(selectedCards, (selectedCard) => selectedCard.type.id === mode.id);
       dataItem.payment.cards.push(...arr);
     });
+    this.refinedCards = this.filteredCards;
   }
 
   public createOfferReturnFormGroup(args: any): FormGroup {
@@ -594,6 +606,34 @@ export class CreateOfferComponent implements OnInit {
 
   goToPreviousTab(tabNumber: number): void {
     this.createOfferTabs.tabs[tabNumber].active = true;
+  }
+
+  filterStates(value) {
+    this.refinedStates = this.filteredStates.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
+
+  filterCities(value) {
+    this.refinedCities = this.filteredCities.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
+
+  filterMerchants(value) {
+    this.filteredMerchants = this.merchants.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
+
+  filterSubCategories(value) {
+    this.refinedSubCategories = this.filteredSubCategories.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
+
+  filterServiceProviders(value) {
+    this.refinedServiceProviders = this.filteredServiceProviders.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
+
+  filterCircles(value) {
+    this.filteredCircles = this.circles.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
+
+  filterCards(value) {
+    this.refinedCards = this.filteredCards.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
   }
 
   saveOffer(): void {

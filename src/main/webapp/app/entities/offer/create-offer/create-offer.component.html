@@ -223,13 +223,14 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="states">States</label>
-                        <kendo-multiselect id="states" name="states" [data]="filteredStates" textField="name" valueField="id" [(ngModel)]="offer.states"
-                            [placeholder]="defaultState" (valueChange)="onStateChange($event)" [autoClose]="false"></kendo-multiselect>
+                        <kendo-multiselect id="states" name="states" [data]="refinedStates" textField="name" valueField="id" [(ngModel)]="offer.states"
+                            [placeholder]="defaultState" [filterable]="true" (filterChange)="filterStates($event)" (valueChange)="onStateChange($event)"
+                            [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="cities">Cities</label>
-                        <kendo-multiselect id="cities" name="cities" [data]="filteredCities" textField="name" valueField="id" [(ngModel)]="offer.cities"
-                            [placeholder]="defaultCity" [autoClose]="false"></kendo-multiselect>
+                        <kendo-multiselect id="cities" name="cities" [data]="refinedCities" textField="name" valueField="id" [(ngModel)]="offer.cities"
+                            [placeholder]="defaultCity" [filterable]="true" (filterChange)="filterCities($event)" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="operatingSystems">Operating Systems</label>
@@ -244,8 +245,8 @@
                         </div>
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="merchant">Merchant</label>
-                            <kendo-dropdownlist id="merchant" name="merchant" [data]="merchants" [defaultItem]="defaultMerchant" textField="name" valueField="id"
-                                [(ngModel)]="offer.merchant"></kendo-dropdownlist>
+                            <kendo-dropdownlist id="merchant" name="merchant" [data]="filteredMerchants" [defaultItem]="defaultMerchant" textField="name"
+                                valueField="id" [(ngModel)]="offer.merchant" [filterable]="true" (filterChange)="filterMerchants($event)"></kendo-dropdownlist>
                         </div>
                     </div>
                     <div class="text-center mt-2">
@@ -267,14 +268,15 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="subCategories">Sub Categories</label>
-                        <kendo-multiselect id="subCategories" name="subCategories" [data]="filteredSubCategories" textField="name" valueField="id"
-                            [(ngModel)]="offer.subCategories" [placeholder]="defaultSubCategory" (valueChange)="onSubCategoryChange($event)"
-                            [autoClose]="false"></kendo-multiselect>
+                        <kendo-multiselect id="subCategories" name="subCategories" [data]="refinedSubCategories" textField="name" valueField="id"
+                            [(ngModel)]="offer.subCategories" [placeholder]="defaultSubCategory" [filterable]="true" (filterChange)="filterSubCategories($event)"
+                            (valueChange)="onSubCategoryChange($event)" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="serviceProviders">Service Providers</label>
-                        <kendo-multiselect id="serviceProviders" name="serviceProviders" [data]="filteredServiceProviders" textField="name" valueField="id"
-                            [(ngModel)]="offer.serviceProviders" [placeholder]="defaultServiceProvider" [autoClose]="false"></kendo-multiselect>
+                        <kendo-multiselect id="serviceProviders" name="serviceProviders" [data]="refinedServiceProviders" textField="name" valueField="id"
+                            [(ngModel)]="offer.serviceProviders" [placeholder]="defaultServiceProvider" [autoClose]="false" [filterable]="true"
+                            (filterChange)="filterServiceProviders($event)"></kendo-multiselect>
                     </div>
                     <fieldset class="fieldset-fix mb-3" *ngFor="let offerCategory of offerCategories">
                         <legend class="legend-fix">
@@ -285,7 +287,8 @@
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="reecharge_info_circles">Circles</label>
                                     <kendo-multiselect id="reecharge_info_circles" name="reecharge_info_circles" [data]="circles" textField="name" valueField="id"
-                                        [(ngModel)]="offer.reechargeInfo.circles" [placeholder]="defaultCircle" [autoClose]="false"></kendo-multiselect>
+                                        [(ngModel)]="offer.reechargeInfo.circles" [placeholder]="defaultCircle" [autoClose]="false"
+                                        [filterable]="true" (filterChange)="filterCircles($event)"></kendo-multiselect>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="reecharge_info_reecharge_types">Reecharge Types</label>
@@ -441,8 +444,8 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="paymentCards">Cards</label>
-                                        <kendo-multiselect id="paymentCards" name="paymentCards" [data]="filteredCards" textField="name" valueField="id" [(ngModel)]="dataItem.payment.cards"
-                                            [placeholder]="defaultCards" [autoClose]="false"></kendo-multiselect>
+                                        <kendo-multiselect id="paymentCards" name="paymentCards" [data]="refinedCards" textField="name" valueField="id" [(ngModel)]="dataItem.payment.cards"
+                                            [placeholder]="defaultCards" [autoClose]="false" [filterable]="true" (filterChange)="filterCards($event)"></kendo-multiselect>
                                     </div>
                                 </fieldset>
                             </ng-template>
