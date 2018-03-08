@@ -5,6 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.voodoodyne.jackson.jsog.JSOGGenerator;
 
@@ -45,6 +46,7 @@ public class ReturnInfo implements Serializable {
     private Offer returnOffer;
 
     @ManyToOne
+    @JsonBackReference
     private OfferReturn offerReturn;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
