@@ -46,10 +46,36 @@
                         </ng-container>
                     </div>
                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3 row">
+                                <div class="col-md-6">
+                                    <label class="mr-5" for="startDate">Start Date</label>
+                                    <input type="text" class="form-control" id="startDate" name="startDate" [(ngModel)]="offer.startDate" required placeholder="Start Date"
+                                        bsDatepicker (bsValueChange)="onChangeStartDate($event)" />
+                                </div>
+                                <div class="col-md-6">
+                                    <timepicker name="startTime" [(ngModel)]="offer.startDate" [showMeridian]="false"></timepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3 row">
+                                <div class="col-md-6">
+                                    <label class="mr-5" for="endDate">End Date</label>
+                                    <input type="text" class="form-control" id="endDate" name="endDate" [(ngModel)]="offer.endDate" required placeholder="End Date"
+                                        bsDatepicker />
+                                </div>
+                                <div class="col-md-6">
+                                    <timepicker name="endTime" [(ngModel)]="offer.endDate" [showMeridian]="false"></timepicker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="type">Type</label>
                             <kendo-dropdownlist id="type" name="type" [data]="offerTypes" [defaultItem]="defaultOfferType" textField="name" valueField="id"
-                                [(ngModel)]="offer.type"></kendo-dropdownlist>
+                                [(ngModel)]="offer.type" required></kendo-dropdownlist>
                         </div>
                         <div class="col-md-6">
                             <div *ngIf="offer.type && isCoupon(offer.type)" class="form-group mb-3 row">

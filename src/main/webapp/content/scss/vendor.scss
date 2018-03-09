@@ -9,5 +9,6 @@ eg $input-color: red;
 @import 'node_modules/font-awesome/scss/font-awesome';
 @import 'node_modules/simple-line-icons/scss/simple-line-icons';
 @import 'core-ui/style';
-@import "~@progress/kendo-theme-bootstrap/scss/all";
+@import '~@progress/kendo-theme-bootstrap/scss/all';
+@import 'node_modules/ngx-bootstrap/datepicker/bs-datepicker.scss';
 /* jhipster-needle-scss-add-vendor JHipster will add new css style */

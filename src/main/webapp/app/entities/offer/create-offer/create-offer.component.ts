@@ -18,7 +18,7 @@ import { Category, CategoryService } from '../../category';
 import { Circle, CircleService } from '../../circle';
 import { City, CityService } from '../../city';
 import { Country, CountryService } from '../../country';
-import { Date, DateService } from '../../date';
+import { Date as DateEntity, DateService, Date } from '../../date';
 import { Day, DayService } from '../../day';
 import { MainReturn } from '../../main-return';
 import { Merchant, MerchantService } from '../../merchant';
@@ -51,7 +51,7 @@ export class CreateOfferComponent implements OnInit {
   offer: Offer;
   offerTypes: OfferType[];
   offerPolicies: OfferPolicy[];
-  dates: Date[];
+  dates: DateEntity[];
   days: Day[];
   countries: Country[];
   states: State[];
@@ -117,6 +117,8 @@ export class CreateOfferComponent implements OnInit {
   gridState: GridState;
   returnInfoFormGroup: FormGroup;
   isSaving: boolean;
+  minStartDate: Date;
+  minEndDate: Date;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
     private dayService: DayService, private countryService: CountryService, private stateService: StateService, private cityService: CityService,
@@ -161,6 +163,8 @@ export class CreateOfferComponent implements OnInit {
     this.returnTypesEnum = ReturnTypes;
     this.gridState = GRID_STATE;
     this.isSaving = false;
+    this.minStartDate = new Date();
+    this.minEndDate = this.minStartDate;
     this.defaultOfferType = { id: null, name: 'Select Type' };
     this.defaultOfferPolicy = { id: null, name: 'Select Policy' };
     this.defaultDate = 'Select Dates';
@@ -223,7 +227,7 @@ export class CreateOfferComponent implements OnInit {
 
   private loadDates(): void {
     this.dateService.query().subscribe(
-      (res: HttpResponse<Date[]>) => {
+      (res: HttpResponse<DateEntity[]>) => {
         this.dates = res.body;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
@@ -615,7 +619,7 @@ export class CreateOfferComponent implements OnInit {
     this.offer.cities = _.pull(this.offer.cities, city);
   }
 
-  removeActiveDate(activeDate: Date): void {
+  removeActiveDate(activeDate: DateEntity): void {
     this.offer.activeDates = _.pull(this.offer.activeDates, activeDate);
   }
 
@@ -690,9 +694,19 @@ export class CreateOfferComponent implements OnInit {
     this.filteredOffers = this.commonFilter(this.offers, value);
   }
 
+  onChangeStartDate(startDate: Date): void {
+    if (startDate) {
+      this.offer.startDate = startDate;
+      this.minEndDate = startDate;
+      this.offer.endDate = startDate;
+    }
+  }
+
   saveOffer(): void {
-    console.log(this.offer);
     this.isSaving = true;
+    this.offer.startDate.setSeconds(0);
+    this.offer.endDate.setSeconds(59);
+    console.log(this.offer);
     // if (this.offer.id !== undefined) {
     //   this.subscribeToSaveResponse(
     //     this.offerService.update(this.offer));

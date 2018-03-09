@@ -5,7 +5,7 @@ import { DropDownListModule, MultiSelectModule } from '@progress/kendo-angular-d
 import { GridModule } from '@progress/kendo-angular-grid';
 import { SwitchModule } from '@progress/kendo-angular-inputs';
 import { MomentModule } from 'angular2-moment';
-import { TabsModule } from 'ngx-bootstrap';
+import { BsDatepickerModule, TabsModule, TimepickerModule } from 'ngx-bootstrap';
 
 import { CbclSharedModule } from '../../shared';
 import {
@@ -37,7 +37,9 @@ const ENTITY_STATES = [
         TabsModule.forRoot(),
         DropDownListModule,
         SwitchModule,
-        MultiSelectModule
+        MultiSelectModule,
+        BsDatepickerModule.forRoot(),
+        TimepickerModule.forRoot()
     ],
     declarations: [
         OfferComponent,
