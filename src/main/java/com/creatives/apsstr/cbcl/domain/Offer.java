@@ -734,7 +734,7 @@ public class Offer implements Serializable {
                 + getMaximumUsesPerWeek() + ", maximumUsesPerMonth=" + getMaximumUsesPerMonth()
                 + ", maximumUsesPerNumber=" + getMaximumUsesPerNumber() + ", newUserOnly='" + isNewUserOnly() + "'"
                 + ", appOnly='" + isAppOnly() + "'" + ", websiteOnly='" + isWebsiteOnly() + "'" + ", numberOfUses="
-                + getNumberOfUses() + ", active='" + isActive() + "'" + ", dummy='" + isDummy() + "'"
+                + getNumberOfUses() + ", dummy='" + isDummy() + "'"
                 + ", apsstrExclusive='" + isApsstrExclusive() + "'" + ", url='" + getUrl() + "'" + "}";
     }
 }
