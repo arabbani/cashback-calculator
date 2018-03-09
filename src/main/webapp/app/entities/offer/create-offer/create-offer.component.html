@@ -3,7 +3,7 @@
         <div kendoDialogContainer></div>
         <tabset #createOfferTabs>
             <tab heading="Basic Info">
-                <form name="form" role="form" #basicInfoForm="ngForm" novalidate>
+                <form name="basicInfoForm" role="form" #basicInfoForm="ngForm" novalidate>
                     <div class="form-group mb-3">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" id="name" name="name" [(ngModel)]="offer.name" #name="ngModel" maxlength="500" required
@@ -116,7 +116,7 @@
                 </form>
             </tab>
             <tab heading="Options">
-                <form name="form" role="form" #optionsForm="ngForm" novalidate>
+                <form name="optionsForm" role="form" #optionsForm="ngForm" novalidate>
                     <div class="form-group mb-3">
                         <label for="adminDescription">Admin Description</label>
                         <textarea class="form-control" id="adminDescription" name="adminDescription" [(ngModel)]="offer.adminDescription" readonly></textarea>
@@ -227,7 +227,7 @@
                 </form>
             </tab>
             <tab heading="Detail Info">
-                <form name="form" role="form" #detailInfoForm="ngForm" novalidate>
+                <form name="detailInfoForm" role="form" #detailInfoForm="ngForm" novalidate>
                     <div class="form-group mb-3">
                         <label for="adminDescription">Admin Description</label>
                         <textarea class="form-control" id="adminDescription" name="adminDescription" [(ngModel)]="offer.adminDescription" readonly></textarea>
@@ -303,12 +303,13 @@
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="affiliate">Affiliate</label>
                             <kendo-dropdownlist id="affiliate" name="affiliate" [data]="affiliates" [defaultItem]="defaultAffiliate" textField="name"
-                                valueField="id" [(ngModel)]="offer.affiliate"></kendo-dropdownlist>
+                                valueField="id" [(ngModel)]="offer.affiliate" required></kendo-dropdownlist>
                         </div>
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="merchant">Merchant</label>
                             <kendo-dropdownlist id="merchant" name="merchant" [data]="filteredMerchants" [defaultItem]="defaultMerchant" textField="name"
-                                valueField="id" [(ngModel)]="offer.merchant" [filterable]="true" (filterChange)="filterMerchants($event)"></kendo-dropdownlist>
+                                valueField="id" [(ngModel)]="offer.merchant" [filterable]="true" (filterChange)="filterMerchants($event)"
+                                required></kendo-dropdownlist>
                         </div>
                     </div>
                     <div class="text-center mt-2">
@@ -318,7 +319,7 @@
                 </form>
             </tab>
             <tab heading="Offer Info">
-                <form name="form" role="form" #offerInfoForm="ngForm" novalidate>
+                <form name="offerInfoForm" role="form" #offerInfoForm="ngForm" novalidate>
                     <div class="form-group mb-3">
                         <label for="adminDescription">Admin Description</label>
                         <textarea class="form-control" id="adminDescription" name="adminDescription" [(ngModel)]="offer.adminDescription" readonly></textarea>
@@ -404,151 +405,148 @@
                 </form>
             </tab>
             <tab heading="Offer Return">
-                <kendo-grid [kendoGridReactiveEditing]="createOfferReturnFormGroup" [kendoGridBinding]="offer.offerReturns" [pageable]="true"
-                    [pageSize]="gridState.take" [skip]="gridState.skip" [resizable]="true" [navigable]="true" (save)="saveOfferReturn($event.dataItem)"
-                    (remove)="deleteOfferReturn($event.dataItem)">
-                    <ng-template kendoGridToolbarTemplate>
-                        <button class="float-right" kendoGridAddCommand>Add new</button>
-                    </ng-template>
-                    <kendo-grid-column class="text-center" field="id" title="ID" width="50" [editable]="false"></kendo-grid-column>
-                    <kendo-grid-column class="text-center" field="extras.exact" title="Exact" editor="boolean"></kendo-grid-column>
-                    <kendo-grid-column class="text-center" field="extras.minimumExpense" title="Min Expense"></kendo-grid-column>
-                    <kendo-grid-column class="text-center" field="extras.maximumExpense" title="Max Expense"></kendo-grid-column>
-                    <kendo-grid-column class="text-center" field="extras.minimumReturn" title="Min Return"></kendo-grid-column>
-                    <kendo-grid-column class="text-center" field="extras.maximumReturn" title="Max Return"></kendo-grid-column>
-                    <kendo-grid-column class="text-center" field="extras.minimumTicketRequired" title="Min Ticket Required"></kendo-grid-column>
-                    <kendo-grid-column class="text-center" field="extras.minimumRideRequired" title="Min Ride Required"></kendo-grid-column>
-                    <kendo-grid-command-column title="Action" width="180">
-                        <ng-template kendoGridCellTemplate let-isNew="isNew">
-                            <div class="text-center">
-                                <button kendoGridEditCommand class="k-primary">Edit</button>
-                                <button kendoGridRemoveCommand>Delete</button>
-                                <button kendoGridSaveCommand [disabled]="offerReturnFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
-                                <button kendoGridCancelCommand>{{ isNew ? 'Discard' : 'Cancel' }}</button>
-                            </div>
+                <form name="offerReturnForm" role="form" #offerReturnForm="ngForm" novalidate>
+                    <kendo-grid [kendoGridReactiveEditing]="createOfferReturnFormGroup" [kendoGridBinding]="offer.offerReturns" [pageable]="true"
+                        [pageSize]="gridState.take" [skip]="gridState.skip" [resizable]="true" [navigable]="true" (save)="saveOfferReturn($event.dataItem)"
+                        (remove)="deleteOfferReturn($event.dataItem)">
+                        <ng-template kendoGridToolbarTemplate>
+                            <button class="float-right" kendoGridAddCommand>Add new</button>
                         </ng-template>
-                    </kendo-grid-command-column>
-                    <ng-template kendoGridDetailTemplate let-dataItem>
-                        <kendo-grid [kendoGridReactiveEditing]="createReturnInfoFormGroup" [kendoGridBinding]="dataItem.returnInfos" [pageable]="true"
-                            [pageSize]="gridState.take" [skip]="gridState.skip" [resizable]="true" [navigable]="true" (save)="saveReturnInfo($event.dataItem)"
-                            (remove)="deleteReturnInfo($event)">
-                            <ng-template kendoGridToolbarTemplate>
-                                <div class="float-right">
-                                    <button kendoGridAddCommand>Add new</button>
+                        <kendo-grid-column class="text-center" field="id" title="ID" width="50" [editable]="false"></kendo-grid-column>
+                        <kendo-grid-column class="text-center" field="extras.exact" title="Exact" editor="boolean"></kendo-grid-column>
+                        <kendo-grid-column class="text-center" field="extras.minimumExpense" title="Min Expense"></kendo-grid-column>
+                        <kendo-grid-column class="text-center" field="extras.maximumExpense" title="Max Expense"></kendo-grid-column>
+                        <kendo-grid-column class="text-center" field="extras.minimumReturn" title="Min Return"></kendo-grid-column>
+                        <kendo-grid-column class="text-center" field="extras.maximumReturn" title="Max Return"></kendo-grid-column>
+                        <kendo-grid-column class="text-center" field="extras.minimumTicketRequired" title="Min Ticket Required"></kendo-grid-column>
+                        <kendo-grid-column class="text-center" field="extras.minimumRideRequired" title="Min Ride Required"></kendo-grid-column>
+                        <kendo-grid-command-column title="Action" width="180">
+                            <ng-template kendoGridCellTemplate let-isNew="isNew">
+                                <div class="text-center">
+                                    <button kendoGridEditCommand class="k-primary">Edit</button>
+                                    <button kendoGridRemoveCommand>Delete</button>
+                                    <button kendoGridSaveCommand [disabled]="offerReturnFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+                                    <button kendoGridCancelCommand>{{ isNew ? 'Discard' : 'Cancel' }}</button>
                                 </div>
                             </ng-template>
-                            <kendo-grid-column class="text-center" field="id" title="ID" width="50" [editable]="false"></kendo-grid-column>
-                            <kendo-grid-column class="text-center" field="extras.exact" title="Exact" editor="boolean"></kendo-grid-column>
-                            <kendo-grid-column class="text-center" field="extras.minimumExpense" title="Min Expense"></kendo-grid-column>
-                            <kendo-grid-column class="text-center" field="extras.maximumExpense" title="Max Expense"></kendo-grid-column>
-                            <kendo-grid-column class="text-center" field="extras.minimumReturn" title="Min Return"></kendo-grid-column>
-                            <kendo-grid-column class="text-center" field="extras.maximumReturn" title="Max Return"></kendo-grid-column>
-                            <kendo-grid-column class="text-center" field="extras.minimumTicketRequired" title="Min Ticket Required"></kendo-grid-column>
-                            <kendo-grid-column class="text-center" field="extras.minimumRideRequired" title="Min Ride Required"></kendo-grid-column>
-                            <kendo-grid-command-column title="Action" width="180">
-                                <ng-template kendoGridCellTemplate let-isNew="isNew">
-                                    <div class="text-center">
-                                        <button kendoGridEditCommand class="k-primary">Edit</button>
-                                        <button kendoGridRemoveCommand>Delete</button>
-                                        <button kendoGridSaveCommand [disabled]="returnInfoFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
-                                        <button kendoGridCancelCommand>{{ isNew ? 'Discard' : 'Cancel' }}</button>
+                        </kendo-grid-command-column>
+                        <ng-template kendoGridDetailTemplate let-dataItem>
+                            <kendo-grid [kendoGridReactiveEditing]="createReturnInfoFormGroup" [kendoGridBinding]="dataItem.returnInfos" [pageable]="true"
+                                [pageSize]="gridState.take" [skip]="gridState.skip" [resizable]="true" [navigable]="true" (save)="saveReturnInfo($event.dataItem)"
+                                (remove)="deleteReturnInfo($event)">
+                                <ng-template kendoGridToolbarTemplate>
+                                    <div class="float-right">
+                                        <button kendoGridAddCommand>Add new</button>
                                     </div>
                                 </ng-template>
-                            </kendo-grid-command-column>
-                            <ng-template kendoGridDetailTemplate let-dataItem>
-                                <div class="form-group mb-3">
-                                    <label class="mr-5" for="type">Type</label>
-                                    <kendo-dropdownlist id="type" name="type" [data]="returnTypes" [defaultItem]="defaultReturnType" textField="name" valueField="id"
-                                        [(ngModel)]="dataItem.type"></kendo-dropdownlist>
-                                </div>
-                                <ng-container *ngIf="dataItem.type">
-                                    <div *ngIf="dataItem.type.name === returnTypesEnum.OFFER; then offerType; else defaultType"></div>
-                                    <ng-template #offerType>
-                                        <fieldset class="fieldset-fix mb-3">
-                                            <legend class="legend-fix">
-                                                <strong>Return Offer</strong>
-                                            </legend>
-                                            <div class="form-group">
-                                                <label class="mr-5" for="returnOffer">Return Offer</label>
-                                                <kendo-dropdownlist id="returnOffer" name="returnOffer" [data]="filteredOffers" [defaultItem]="defaultOffer" textField="name"
-                                                    valueField="id" [(ngModel)]="dataItem.returnOffer" [filterable]="true" (filterChange)="filterOffers($event)"></kendo-dropdownlist>
-                                            </div>
-                                        </fieldset>
+                                <kendo-grid-column class="text-center" field="id" title="ID" width="50" [editable]="false"></kendo-grid-column>
+                                <kendo-grid-column class="text-center" field="extras.exact" title="Exact" editor="boolean"></kendo-grid-column>
+                                <kendo-grid-column class="text-center" field="extras.minimumExpense" title="Min Expense"></kendo-grid-column>
+                                <kendo-grid-column class="text-center" field="extras.maximumExpense" title="Max Expense"></kendo-grid-column>
+                                <kendo-grid-column class="text-center" field="extras.minimumReturn" title="Min Return"></kendo-grid-column>
+                                <kendo-grid-column class="text-center" field="extras.maximumReturn" title="Max Return"></kendo-grid-column>
+                                <kendo-grid-column class="text-center" field="extras.minimumTicketRequired" title="Min Ticket Required"></kendo-grid-column>
+                                <kendo-grid-column class="text-center" field="extras.minimumRideRequired" title="Min Ride Required"></kendo-grid-column>
+                                <kendo-grid-command-column title="Action" width="180">
+                                    <ng-template kendoGridCellTemplate let-isNew="isNew">
+                                        <div class="text-center">
+                                            <button kendoGridEditCommand class="k-primary">Edit</button>
+                                            <button kendoGridRemoveCommand>Delete</button>
+                                            <button kendoGridSaveCommand [disabled]="returnInfoFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+                                            <button kendoGridCancelCommand>{{ isNew ? 'Discard' : 'Cancel' }}</button>
+                                        </div>
                                     </ng-template>
-                                    <ng-template #defaultType>
-                                        <fieldset class=" fieldset-fix mb-3 ">
-                                            <legend class="legend-fix ">
-                                                <strong>Main Return</strong>
-                                            </legend>
-                                            <div class="row ">
-                                                <div class="form-group col-sm-6 col-lg-4 mb-3 ">
-                                                    <label for="amount ">Amount</label>
-                                                    <input type="number " class="form-control " id="amount " name="amount
-                                                    " [(ngModel)]="dataItem.mainReturn.amount " />
-                                                </div>
-                                                <div class="form-group col-sm-6 col-lg-4 mb-3 ">
-                                                    <label for="defaultAmount ">Default Amount</label>
-                                                    <input type="number " class="form-control " id="defaultAmount
-                                                    " name="defaultAmount " [(ngModel)]="dataItem.mainReturn.defaultAmount "
-                                                    />
-                                                </div>
-                                                <div class="form-group col-sm-4 mb-3 ">
-                                                    <span class="col-sm-6 ">
-                                                        <label for="exact ">Exact</label>
-                                                    </span>
-                                                    <span class="col-sm-6 ">
-                                                        <kendo-switch id="exact " name="exact " [(ngModel)]="dataItem.mainReturn.exact
-                                                    " onLabel="Y " offLabel="N "></kendo-switch>
-                                                    </span>
-                                                </div>
-                                                <div class="form-group col-sm-6 col-lg-4 mb-3 ">
-                                                    <label for="mode ">Mode</label>
-                                                    <kendo-dropdownlist id="mode " name="mode " [data]="returnModes
-                                                    " [defaultItem]="defaultReturnMode " textField="name " valueField="id "
-                                                        [(ngModel)]="dataItem.mainReturn.mode "></kendo-dropdownlist>
-                                                </div>
-                                                <div class="form-group col-sm-6 col-lg-4 mb-3 ">
-                                                    <label for="channel ">Channel</label>
-                                                    <kendo-dropdownlist id="channel " name="channel " [data]="cards
-                                                    " [defaultItem]="defaultCard " textField="name " valueField="id " [(ngModel)]="dataItem.mainReturn.channel "></kendo-dropdownlist>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                    </ng-template>
-                                </ng-container>
-                                <fieldset class="fieldset-fix mb-3 ">
-                                    <legend class="legend-fix ">
-                                        <strong>Payment Options</strong>
-                                    </legend>
-                                    <div class="form-group mb-3 ">
-                                        <label for="paymentModes ">Modes</label>
-                                        <kendo-multiselect id="paymentModes " name="paymentModes " [data]="cardTypes
-                                                    " textField="name " valueField="id " [(ngModel)]="dataItem.payment.modes "
-                                            [placeholder]="defaultPaymentMode " (valueChange)="onPaymentModeChange($event,
-                                                    dataItem) " [autoClose]="false "></kendo-multiselect>
+                                </kendo-grid-command-column>
+                                <ng-template kendoGridDetailTemplate let-dataItem>
+                                    <div class="form-group mb-3">
+                                        <label class="mr-5" for="type">Type</label>
+                                        <kendo-dropdownlist id="type" name="type" [data]="returnTypes" [defaultItem]="defaultReturnType" textField="name" valueField="id"
+                                            [(ngModel)]="dataItem.type" required></kendo-dropdownlist>
                                     </div>
-                                    <div class="form-group mb-3 ">
-                                        <label for="paymentCards ">Cards</label>
-                                        <span class="badge badge-info mr-2 p-1 mb-3 " *ngFor="let paymentCard of dataItem.payment.cards ">
-                                            {{ paymentCard.name }}
-                                            <button type="button " class="close " aria-label="Close " (click)="removePaymentCard(dataItem,
-                                                    paymentCard) ">
-                                                <span aria-hidden="true ">&times;</span>
-                                            </button>
-                                        </span>
-                                        <kendo-multiselect id="paymentCards " name="paymentCards " [data]="refinedCards
-                                                    " textField="name " valueField="id " [(ngModel)]="dataItem.payment.cards "
-                                            [placeholder]="defaultCards " [autoClose]="false " [filterable]="true
-                                                    " (filterChange)="filterCards($event) "></kendo-multiselect>
-                                    </div>
-                                </fieldset>
-                            </ng-template>
-                        </kendo-grid>
-                    </ng-template>
-                </kendo-grid>
-                <div class="text-center mt-2 ">
-                    <button type="button " class="btn btn-primary mr-3 " (click)="goToPreviousTab(3) ">Previous</button>
-                    <button type="button " class="btn btn-success " [disabled]="isSaving " (click)="saveOffer() ">Save</button>
+                                    <ng-container *ngIf="dataItem.type">
+                                        <div *ngIf="dataItem.type.name === returnTypesEnum.OFFER; then offerType; else defaultType"></div>
+                                        <ng-template #offerType>
+                                            <fieldset class="fieldset-fix mb-3">
+                                                <legend class="legend-fix">
+                                                    <strong>Return Offer</strong>
+                                                </legend>
+                                                <div class="form-group">
+                                                    <label class="mr-5" for="returnOffer">Return Offer</label>
+                                                    <kendo-dropdownlist id="returnOffer" name="returnOffer" [data]="filteredOffers" [defaultItem]="defaultOffer" textField="name"
+                                                        valueField="id" [(ngModel)]="dataItem.returnOffer" [filterable]="true"
+                                                        (filterChange)="filterOffers($event)" required></kendo-dropdownlist>
+                                                </div>
+                                            </fieldset>
+                                        </ng-template>
+                                        <ng-template #defaultType>
+                                            <fieldset class="fieldset-fix mb-3">
+                                                <legend class="legend-fix">
+                                                    <strong>Main Return</strong>
+                                                </legend>
+                                                <div class="row">
+                                                    <div class="form-group col-sm-6 col-lg-4 mb-3">
+                                                        <label for="amount">Amount</label>
+                                                        <input type="number" class="form-control" id="amount" name="amount
+                                                      " [(ngModel)]="dataItem.mainReturn.amount" />
+                                                    </div>
+                                                    <div class="form-group col-sm-6 col-lg-4 mb-3">
+                                                        <label for="defaultAmount">Default Amount</label>
+                                                        <input type="number" class="form-control" id="defaultAmount" name="defaultAmount" [(ngModel)]="dataItem.mainReturn.defaultAmount"
+                                                        />
+                                                    </div>
+                                                    <div class="form-group col-sm-4 mb-3">
+                                                        <span class="col-sm-6">
+                                                            <label for="exact">Exact</label>
+                                                        </span>
+                                                        <span class="col-sm-6">
+                                                            <kendo-switch id="exact" name="exact" [(ngModel)]="dataItem.mainReturn.exact" onLabel="Y" offLabel="N"></kendo-switch>
+                                                        </span>
+                                                    </div>
+                                                    <div class="form-group col-sm-6 col-lg-4 mb-3">
+                                                        <label for="mode">Mode</label>
+                                                        <kendo-dropdownlist id="mode" name="mode" [data]="returnModes" [defaultItem]="defaultReturnMode" textField="name" valueField="id"
+                                                            [(ngModel)]="dataItem.mainReturn.mode" required></kendo-dropdownlist>
+                                                    </div>
+                                                    <div class="form-group col-sm-6 col-lg-4 mb-3">
+                                                        <label for="channel">Channel</label>
+                                                        <kendo-dropdownlist id="channel" name="channel" [data]="cards" [defaultItem]="defaultCard" textField="name" valueField="id"
+                                                            [(ngModel)]="dataItem.mainReturn.channel"></kendo-dropdownlist>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </ng-template>
+                                    </ng-container>
+                                    <fieldset class="fieldset-fix mb-3">
+                                        <legend class="legend-fix">
+                                            <strong>Payment Options</strong>
+                                        </legend>
+                                        <div class="form-group mb-3">
+                                            <label for="paymentModes">Modes</label>
+                                            <kendo-multiselect id="paymentModes" name="paymentModes" [data]="cardTypes" textField="name" valueField="id" [(ngModel)]="dataItem.payment.modes"
+                                                [placeholder]="defaultPaymentMode" (valueChange)="onPaymentModeChange($event,
+                                                        dataItem)" [autoClose]="false"></kendo-multiselect>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="paymentCards">Cards</label>
+                                            <span class="badge badge-info mr-2 p-1 mb-3" *ngFor="let paymentCard of dataItem.payment.cards">
+                                                {{ paymentCard.name }}
+                                                <button type="button" class="close" aria-label="Close" (click)="removePaymentCard(dataItem,
+                                                        paymentCard)">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </span>
+                                            <kendo-multiselect id="paymentCards" name="paymentCards" [data]="refinedCards" textField="name" valueField="id" [(ngModel)]="dataItem.payment.cards"
+                                                [placeholder]="defaultCards" [autoClose]="false" [filterable]="true" (filterChange)="filterCards($event)"></kendo-multiselect>
+                                        </div>
+                                    </fieldset>
+                                </ng-template>
+                            </kendo-grid>
+                        </ng-template>
+                    </kendo-grid>
+                </form>
+                <div class="text-center mt-2">
+                    <button type="button" class="btn btn-primary mr-3" (click)="goToPreviousTab(3)">Previous</button>
+                    <button type="button" class="btn btn-success" [disabled]="isSaving || offerReturnForm.form.invalid" (click)="saveOffer()">Save</button>
                 </div>
             </tab>
         </tabset>
