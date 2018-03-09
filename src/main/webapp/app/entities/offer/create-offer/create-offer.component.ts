@@ -82,6 +82,7 @@ export class CreateOfferComponent implements OnInit {
   filteredCards: Card[];
   refinedCards: Card[];
   offers: Offer[];
+  filteredOffers: Offer[];
   cardTypes: CardType[];
 
   defaultOfferType;
@@ -393,6 +394,7 @@ export class CreateOfferComponent implements OnInit {
     this.offerService.query().subscribe(
       (res: HttpResponse<Offer[]>) => {
         this.offers = res.body;
+        this.filteredOffers = this.offers;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -599,6 +601,50 @@ export class CreateOfferComponent implements OnInit {
     });
   }
 
+  removeCountry(country: Country): void {
+    this.offer.countries = _.pull(this.offer.countries, country);
+    this.onCountryChange(this.offer.countries);
+  }
+
+  removeState(state: State): void {
+    this.offer.states = _.pull(this.offer.states, state);
+    this.onStateChange(this.offer.states);
+  }
+
+  removeCity(city: City): void {
+    this.offer.cities = _.pull(this.offer.cities, city);
+  }
+
+  removeActiveDate(activeDate: Date): void {
+    this.offer.activeDates = _.pull(this.offer.activeDates, activeDate);
+  }
+
+  removeActiveDay(activeDay: Day): void {
+    this.offer.activeDays = _.pull(this.offer.activeDays, activeDay);
+  }
+
+  removeOperatingSystem(operatingSystem: OperatingSystem): void {
+    this.offer.operatingSystems = _.pull(this.offer.operatingSystems, operatingSystem);
+  }
+
+  removeCategory(category: Category): void {
+    this.offerCategories = _.pull(this.offerCategories, category);
+    this.onCategoryChange(this.offerCategories);
+  }
+
+  removeSubCategory(subCategory: SubCategory): void {
+    this.offer.subCategories = _.pull(this.offer.subCategories, subCategory);
+    this.onSubCategoryChange(this.offer.subCategories);
+  }
+
+  removeServiceProvider(serviceProvider: ServiceProvider): void {
+    this.offer.serviceProviders = _.pull(this.offer.serviceProviders, serviceProvider);
+  }
+
+  removePaymentCard(dataItem, card: Card): void {
+    dataItem.payment.cards = _.pull(dataItem.payment.cards, card);
+  }
+
   goToNextTab(tabNumber: number): void {
     this.enableTab(tabNumber);
     this.createOfferTabs.tabs[tabNumber].active = true;
@@ -608,44 +654,52 @@ export class CreateOfferComponent implements OnInit {
     this.createOfferTabs.tabs[tabNumber].active = true;
   }
 
+  commonFilter(entities: any, value: string): Array<any> {
+    return entities.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+  }
+
   filterStates(value) {
-    this.refinedStates = this.filteredStates.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    this.refinedStates = this.commonFilter(this.filteredStates, value);
   }
 
   filterCities(value) {
-    this.refinedCities = this.filteredCities.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    this.refinedCities = this.commonFilter(this.filteredCities, value);
   }
 
   filterMerchants(value) {
-    this.filteredMerchants = this.merchants.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    this.filteredMerchants = this.commonFilter(this.merchants, value);
   }
 
   filterSubCategories(value) {
-    this.refinedSubCategories = this.filteredSubCategories.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    this.refinedSubCategories = this.commonFilter(this.filteredSubCategories, value);
   }
 
   filterServiceProviders(value) {
-    this.refinedServiceProviders = this.filteredServiceProviders.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    this.refinedServiceProviders = this.commonFilter(this.filteredServiceProviders, value);
   }
 
   filterCircles(value) {
-    this.filteredCircles = this.circles.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    this.filteredCircles = this.commonFilter(this.circles, value);
   }
 
   filterCards(value) {
-    this.refinedCards = this.filteredCards.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+    this.refinedCards = this.commonFilter(this.filteredCards, value);
+  }
+
+  filterOffers(value) {
+    this.filteredOffers = this.commonFilter(this.offers, value);
   }
 
   saveOffer(): void {
     console.log(this.offer);
     this.isSaving = true;
-    if (this.offer.id !== undefined) {
-      this.subscribeToSaveResponse(
-        this.offerService.update(this.offer));
-    } else {
-      this.subscribeToSaveResponse(
-        this.offerService.create(this.offer));
-    }
+    // if (this.offer.id !== undefined) {
+    //   this.subscribeToSaveResponse(
+    //     this.offerService.update(this.offer));
+    // } else {
+    //   this.subscribeToSaveResponse(
+    //     this.offerService.create(this.offer));
+    // }
   }
 
   private subscribeToSaveResponse(result: Observable<HttpResponse<Offer>>) {

@@ -208,32 +208,68 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="dates">Active Dates</label>
+                        <span class="badge badge-info mr-2 p-1 mb-3" *ngFor="let activeDate of offer.activeDates">
+                            {{ activeDate.date }}
+                            <button type="button" class="close" aria-label="Close" (click)="removeActiveDate(activeDate)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </span>
                         <kendo-multiselect id="dates" name="dates" [data]="dates" textField="date" valueField="id" [(ngModel)]="offer.activeDates"
                             [placeholder]="defaultDate" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="days">Active Days</label>
+                        <span class="badge badge-info mr-2 p-1 mb-3" *ngFor="let activeDay of offer.activeDays">
+                            {{ activeDay.day }}
+                            <button type="button" class="close" aria-label="Close" (click)="removeActiveDay(activeDay)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </span>
                         <kendo-multiselect id="days" name="days" [data]="days" textField="day" valueField="id" [(ngModel)]="offer.activeDays" [placeholder]="defaultDay"
                             [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="countries">Countries</label>
+                        <span class="badge badge-info mr-2 p-1 mb-3" *ngFor="let country of offer.countries">
+                            {{ country.name }}
+                            <button type="button" class="close" aria-label="Close" (click)="removeCountry(country)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </span>
                         <kendo-multiselect id="countries" name="countries" [data]="countries" textField="name" valueField="id" [(ngModel)]="offer.countries"
                             [placeholder]="defaultCountry" (valueChange)="onCountryChange($event)" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="states">States</label>
+                        <span class="badge badge-info mr-2 p-1 mb-3" *ngFor="let state of offer.states">
+                            {{ state.name }}
+                            <button type="button" class="close" aria-label="Close" (click)="removeState(state)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </span>
                         <kendo-multiselect id="states" name="states" [data]="refinedStates" textField="name" valueField="id" [(ngModel)]="offer.states"
                             [placeholder]="defaultState" [filterable]="true" (filterChange)="filterStates($event)" (valueChange)="onStateChange($event)"
                             [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="cities">Cities</label>
+                        <span class="badge badge-info mr-2 p-1 mb-3" *ngFor="let city of offer.cities">
+                            {{ city.name }}
+                            <button type="button" class="close" aria-label="Close" (click)="removeCity(city)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </span>
                         <kendo-multiselect id="cities" name="cities" [data]="refinedCities" textField="name" valueField="id" [(ngModel)]="offer.cities"
                             [placeholder]="defaultCity" [filterable]="true" (filterChange)="filterCities($event)" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="operatingSystems">Operating Systems</label>
+                        <span class="badge badge-info mr-2 p-1 mb-3" *ngFor="let operatingSystem of offer.operatingSystems">
+                            {{ operatingSystem.name }}
+                            <button type="button" class="close" aria-label="Close" (click)="removeOperatingSystem(operatingSystem)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </span>
                         <kendo-multiselect id="operatingSystems" name="operatingSystems" [data]="operatingSystems" textField="name" valueField="id"
                             [(ngModel)]="offer.operatingSystems" [placeholder]="defaultOperatingSystem" [autoClose]="false"></kendo-multiselect>
                     </div>
@@ -263,17 +299,35 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="categories">Categories</label>
+                        <span class="badge badge-info mr-2 p-1 mb-3" *ngFor="let category of offerCategories">
+                            {{ category.name }}
+                            <button type="button" class="close" aria-label="Close" (click)="removeCategory(category)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </span>
                         <kendo-multiselect id="categories" name="categories" [data]="categories" textField="name" valueField="id" [(ngModel)]="offerCategories"
                             [placeholder]="defaultCategory" (valueChange)="onCategoryChange($event)" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="subCategories">Sub Categories</label>
+                        <span class="badge badge-info mr-2 p-1 mb-3" *ngFor="let subCategory of offer.subCategories">
+                            {{ subCategory.name }}
+                            <button type="button" class="close" aria-label="Close" (click)="removeSubCategory(subCategory)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </span>
                         <kendo-multiselect id="subCategories" name="subCategories" [data]="refinedSubCategories" textField="name" valueField="id"
                             [(ngModel)]="offer.subCategories" [placeholder]="defaultSubCategory" [filterable]="true" (filterChange)="filterSubCategories($event)"
                             (valueChange)="onSubCategoryChange($event)" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="serviceProviders">Service Providers</label>
+                        <span class="badge badge-info mr-2 p-1 mb-3" *ngFor="let serviceProvider of offer.serviceProviders">
+                            {{ serviceProvider.name }}
+                            <button type="button" class="close" aria-label="Close" (click)="removeServiceProvider(serviceProvider)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </span>
                         <kendo-multiselect id="serviceProviders" name="serviceProviders" [data]="refinedServiceProviders" textField="name" valueField="id"
                             [(ngModel)]="offer.serviceProviders" [placeholder]="defaultServiceProvider" [autoClose]="false" [filterable]="true"
                             (filterChange)="filterServiceProviders($event)"></kendo-multiselect>
@@ -286,7 +340,7 @@
                             <ng-container *ngSwitchCase="categoryEnum.REECHARGE">
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="reecharge_info_circles">Circles</label>
-                                    <kendo-multiselect id="reecharge_info_circles" name="reecharge_info_circles" [data]="circles" textField="name" valueField="id"
+                                    <kendo-multiselect id="reecharge_info_circles" name="reecharge_info_circles" [data]="filteredCircles" textField="name" valueField="id"
                                         [(ngModel)]="offer.reechargeInfo.circles" [placeholder]="defaultCircle" [autoClose]="false"
                                         [filterable]="true" (filterChange)="filterCircles($event)"></kendo-multiselect>
                                 </div>
@@ -390,71 +444,85 @@
                                             </legend>
                                             <div class="form-group">
                                                 <label class="mr-5" for="returnOffer">Return Offer</label>
-                                                <kendo-dropdownlist id="returnOffer" name="returnOffer" [data]="offers" [defaultItem]="defaultOffer" textField="name" valueField="id"
-                                                    [(ngModel)]="dataItem.returnOffer"></kendo-dropdownlist>
+                                                <kendo-dropdownlist id="returnOffer" name="returnOffer" [data]="filteredOffers" [defaultItem]="defaultOffer" textField="name"
+                                                    valueField="id" [(ngModel)]="dataItem.returnOffer" [filterable]="true" (filterChange)="filterOffers($event)"></kendo-dropdownlist>
                                             </div>
                                         </fieldset>
                                     </ng-template>
                                     <ng-template #defaultType>
-                                        <fieldset class="fieldset-fix mb-3">
-                                            <legend class="legend-fix">
+                                        <fieldset class=" fieldset-fix mb-3 ">
+                                            <legend class="legend-fix ">
                                                 <strong>Main Return</strong>
                                             </legend>
-                                            <div class="row">
-                                                <div class="form-group col-sm-6 col-lg-4 mb-3">
-                                                    <label for="amount">Amount</label>
-                                                    <input type="number" class="form-control" id="amount" name="amount" [(ngModel)]="dataItem.mainReturn.amount" />
+                                            <div class="row ">
+                                                <div class="form-group col-sm-6 col-lg-4 mb-3 ">
+                                                    <label for="amount ">Amount</label>
+                                                    <input type="number " class="form-control " id="amount " name="amount
+                                                    " [(ngModel)]="dataItem.mainReturn.amount " />
                                                 </div>
-                                                <div class="form-group col-sm-6 col-lg-4 mb-3">
-                                                    <label for="defaultAmount">Default Amount</label>
-                                                    <input type="number" class="form-control" id="defaultAmount" name="defaultAmount" [(ngModel)]="dataItem.mainReturn.defaultAmount"
+                                                <div class="form-group col-sm-6 col-lg-4 mb-3 ">
+                                                    <label for="defaultAmount ">Default Amount</label>
+                                                    <input type="number " class="form-control " id="defaultAmount
+                                                    " name="defaultAmount " [(ngModel)]="dataItem.mainReturn.defaultAmount "
                                                     />
                                                 </div>
-                                                <div class="form-group col-sm-4 mb-3">
-                                                    <span class="col-sm-6">
-                                                        <label for="exact">Exact</label>
+                                                <div class="form-group col-sm-4 mb-3 ">
+                                                    <span class="col-sm-6 ">
+                                                        <label for="exact ">Exact</label>
                                                     </span>
-                                                    <span class="col-sm-6">
-                                                        <kendo-switch id="exact" name="exact" [(ngModel)]="dataItem.mainReturn.exact" onLabel="Y" offLabel="N"></kendo-switch>
+                                                    <span class="col-sm-6 ">
+                                                        <kendo-switch id="exact " name="exact " [(ngModel)]="dataItem.mainReturn.exact
+                                                    " onLabel="Y " offLabel="N "></kendo-switch>
                                                     </span>
                                                 </div>
-                                                <div class="form-group col-sm-6 col-lg-4 mb-3">
-                                                    <label for="mode">Mode</label>
-                                                    <kendo-dropdownlist id="mode" name="mode" [data]="returnModes" [defaultItem]="defaultReturnMode" textField="name" valueField="id"
-                                                        [(ngModel)]="dataItem.mainReturn.mode"></kendo-dropdownlist>
+                                                <div class="form-group col-sm-6 col-lg-4 mb-3 ">
+                                                    <label for="mode ">Mode</label>
+                                                    <kendo-dropdownlist id="mode " name="mode " [data]="returnModes
+                                                    " [defaultItem]="defaultReturnMode " textField="name " valueField="id "
+                                                        [(ngModel)]="dataItem.mainReturn.mode "></kendo-dropdownlist>
                                                 </div>
-                                                <div class="form-group col-sm-6 col-lg-4 mb-3">
-                                                    <label for="channel">Channel</label>
-                                                    <kendo-dropdownlist id="channel" name="channel" [data]="cards" [defaultItem]="defaultCard" textField="name" valueField="id"
-                                                        [(ngModel)]="dataItem.mainReturn.channel"></kendo-dropdownlist>
+                                                <div class="form-group col-sm-6 col-lg-4 mb-3 ">
+                                                    <label for="channel ">Channel</label>
+                                                    <kendo-dropdownlist id="channel " name="channel " [data]="cards
+                                                    " [defaultItem]="defaultCard " textField="name " valueField="id " [(ngModel)]="dataItem.mainReturn.channel "></kendo-dropdownlist>
                                                 </div>
                                             </div>
                                         </fieldset>
                                     </ng-template>
                                 </ng-container>
-                                <fieldset class="fieldset-fix mb-3">
-                                    <legend class="legend-fix">
+                                <fieldset class="fieldset-fix mb-3 ">
+                                    <legend class="legend-fix ">
                                         <strong>Payment Options</strong>
                                     </legend>
-                                    <div class="form-group mb-3">
-                                        <label for="paymentModes">Modes</label>
-                                        <kendo-multiselect id="paymentModes" name="paymentModes" [data]="cardTypes" textField="name" valueField="id" [(ngModel)]="dataItem.payment.modes"
-                                            [placeholder]="defaultPaymentMode" (valueChange)="onPaymentModeChange($event, dataItem)"
-                                            [autoClose]="false"></kendo-multiselect>
+                                    <div class="form-group mb-3 ">
+                                        <label for="paymentModes ">Modes</label>
+                                        <kendo-multiselect id="paymentModes " name="paymentModes " [data]="cardTypes
+                                                    " textField="name " valueField="id " [(ngModel)]="dataItem.payment.modes "
+                                            [placeholder]="defaultPaymentMode " (valueChange)="onPaymentModeChange($event,
+                                                    dataItem) " [autoClose]="false "></kendo-multiselect>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <label for="paymentCards">Cards</label>
-                                        <kendo-multiselect id="paymentCards" name="paymentCards" [data]="refinedCards" textField="name" valueField="id" [(ngModel)]="dataItem.payment.cards"
-                                            [placeholder]="defaultCards" [autoClose]="false" [filterable]="true" (filterChange)="filterCards($event)"></kendo-multiselect>
+                                    <div class="form-group mb-3 ">
+                                        <label for="paymentCards ">Cards</label>
+                                        <span class="badge badge-info mr-2 p-1 mb-3 " *ngFor="let paymentCard of dataItem.payment.cards ">
+                                            {{ paymentCard.name }}
+                                            <button type="button " class="close " aria-label="Close " (click)="removePaymentCard(dataItem,
+                                                    paymentCard) ">
+                                                <span aria-hidden="true ">&times;</span>
+                                            </button>
+                                        </span>
+                                        <kendo-multiselect id="paymentCards " name="paymentCards " [data]="refinedCards
+                                                    " textField="name " valueField="id " [(ngModel)]="dataItem.payment.cards "
+                                            [placeholder]="defaultCards " [autoClose]="false " [filterable]="true
+                                                    " (filterChange)="filterCards($event) "></kendo-multiselect>
                                     </div>
                                 </fieldset>
                             </ng-template>
                         </kendo-grid>
                     </ng-template>
                 </kendo-grid>
-                <div class="text-center mt-2">
-                    <button type="button" class="btn btn-primary mr-3" (click)="goToPreviousTab(3)">Previous</button>
-                    <button type="button" class="btn btn-success" [disabled]="isSaving" (click)="saveOffer()">Save</button>
+                <div class="text-center mt-2 ">
+                    <button type="button " class="btn btn-primary mr-3 " (click)="goToPreviousTab(3) ">Previous</button>
+                    <button type="button " class="btn btn-success " [disabled]="isSaving " (click)="saveOffer() ">Save</button>
                 </div>
             </tab>
         </tabset>
