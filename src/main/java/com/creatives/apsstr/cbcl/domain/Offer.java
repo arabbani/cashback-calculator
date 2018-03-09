@@ -88,10 +88,6 @@ public class Offer implements Serializable {
     private Long numberOfUses;
 
     @NotNull
-    @Column(name = "active", nullable = false)
-    private Boolean active;
-
-    @NotNull
     @Column(name = "dummy", nullable = false)
     private Boolean dummy;
 
@@ -370,19 +366,6 @@ public class Offer implements Serializable {
 
     public void setNumberOfUses(Long numberOfUses) {
         this.numberOfUses = numberOfUses;
-    }
-
-    public Boolean isActive() {
-        return active;
-    }
-
-    public Offer active(Boolean active) {
-        this.active = active;
-        return this;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
     }
 
     public Boolean isDummy() {

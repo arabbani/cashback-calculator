@@ -18,14 +18,14 @@ export class OfferService {
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils, private jsogService: JsogService) { }
 
     create(offer: Offer): Observable<EntityResponseType> {
-        const copy = this.convert(offer);
-        return this.http.post<Offer>(this.resourceUrl, copy, { observe: 'response' })
+        // const copy = this.convert(offer);
+        return this.http.post<Offer>(this.resourceUrl, offer, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(offer: Offer): Observable<EntityResponseType> {
-        const copy = this.convert(offer);
-        return this.http.put<Offer>(this.resourceUrl, copy, { observe: 'response' })
+        // const copy = this.convert(offer);
+        return this.http.put<Offer>(this.resourceUrl, offer, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 

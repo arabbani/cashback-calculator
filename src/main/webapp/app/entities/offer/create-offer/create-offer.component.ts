@@ -707,13 +707,13 @@ export class CreateOfferComponent implements OnInit {
     this.offer.startDate.setSeconds(0);
     this.offer.endDate.setSeconds(59);
     console.log(this.offer);
-    // if (this.offer.id !== undefined) {
-    //   this.subscribeToSaveResponse(
-    //     this.offerService.update(this.offer));
-    // } else {
-    //   this.subscribeToSaveResponse(
-    //     this.offerService.create(this.offer));
-    // }
+    if (this.offer.id !== undefined) {
+      this.subscribeToSaveResponse(
+        this.offerService.update(this.offer));
+    } else {
+      this.subscribeToSaveResponse(
+        this.offerService.create(this.offer));
+    }
   }
 
   private subscribeToSaveResponse(result: Observable<HttpResponse<Offer>>) {
