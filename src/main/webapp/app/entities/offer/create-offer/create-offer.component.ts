@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { State as GridState } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { TabsetComponent } from 'ngx-bootstrap';
@@ -18,7 +18,7 @@ import { Category, CategoryService } from '../../category';
 import { Circle, CircleService } from '../../circle';
 import { City, CityService } from '../../city';
 import { Country, CountryService } from '../../country';
-import { Date as DateEntity, DateService, Date } from '../../date';
+import { Date as DateEntity, Date, DateService } from '../../date';
 import { Day, DayService } from '../../day';
 import { MainReturn } from '../../main-return';
 import { Merchant, MerchantService } from '../../merchant';
@@ -205,7 +205,8 @@ export class CreateOfferComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.editMode = false;
-      this.loadOffer(+id);
+      this.offer = this.route.snapshot.data.offer;
+      this.extractCategories();
       const mode = this.route.snapshot.paramMap.get('edit');
       if (mode) {
         this.editMode = true;
@@ -234,23 +235,11 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private extractCategories(): void {
-    console.log(this.offer);
     const categorySet = new Set();
     _.forEach(this.offer.subCategories, (subCategory) => {
       categorySet.add(subCategory.category);
-      // arr = _.filter(this.states, (state) => state.country.id === country.id);
-      // this.filteredStates.push(...arr);
-      // arr = _.filter(selectedStates, (selectedState) => selectedState.country.id === country.id);
-      // this.offer.states.push(...arr);
     });
-  }
-
-  private loadOffer(id: number): void {
-    this.offerService.find(id)
-      .subscribe((offerResponse: HttpResponse<Offer>) => {
-        this.offer = offerResponse.body;
-        this.extractCategories();
-      });
+    this.offerCategories = _.toArray(categorySet);
   }
 
   private loadOfferTypes(): void {
@@ -769,7 +758,7 @@ export class CreateOfferComponent implements OnInit {
 
   private onSaveSuccess(result: Offer) {
     this.isSaving = false;
-    this.router.navigate(['/offer']);
+    this.router.navigate(['/offers']);
   }
 
   private onSaveError() {

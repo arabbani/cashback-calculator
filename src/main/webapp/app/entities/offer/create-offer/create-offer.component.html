@@ -2,7 +2,6 @@
     <div class="col-md-10">
         <div kendoDialogContainer></div>
         <tabset #createOfferTabs>
-            <ng-container *ngIf="offer">
                 <tab heading="Basic Info">
                     <form name="basicInfoForm" role="form" #basicInfoForm="ngForm" novalidate>
                         <div class="form-group mb-3">
@@ -540,7 +539,6 @@
                         <button type="button" class="btn btn-success" [disabled]="isSaving || offerReturnForm.form.invalid" (click)="saveOffer()">Save</button>
                     </div>
                 </tab>
-            </ng-container>
         </tabset>
     </div>
 </div>

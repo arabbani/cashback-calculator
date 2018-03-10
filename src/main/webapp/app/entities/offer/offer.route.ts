@@ -2,9 +2,7 @@ import { Routes } from '@angular/router';
 
 import { UserRouteAccessService } from '../../shared';
 import { CreateOfferComponent } from './create-offer/create-offer.component';
-import { OfferDeletePopupComponent } from './offer-delete-dialog.component';
-import { OfferDetailComponent } from './offer-detail.component';
-import { OfferPopupComponent } from './offer-dialog.component';
+import { OfferResolver } from './offer-resolver.service';
 import { OfferComponent } from './offer.component';
 
 export const offerRoute: Routes = [
@@ -24,7 +22,10 @@ export const offerRoute: Routes = [
             authorities: ['ROLE_ADMIN'],
             pageTitle: 'Offer'
         },
-        canActivate: [UserRouteAccessService]
+        canActivate: [UserRouteAccessService],
+        resolve: {
+            offer: OfferResolver
+        }
     }
 ];
 

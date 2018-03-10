@@ -21,6 +21,7 @@ import {
     OfferService,
 } from './';
 import { CreateOfferComponent } from './create-offer/create-offer.component';
+import { OfferResolver } from './offer-resolver.service';
 
 const ENTITY_STATES = [
     ...offerRoute,
@@ -60,6 +61,7 @@ const ENTITY_STATES = [
     providers: [
         OfferService,
         OfferPopupService,
+        OfferResolver
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
