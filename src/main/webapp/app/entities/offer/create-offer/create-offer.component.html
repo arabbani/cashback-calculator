@@ -520,7 +520,7 @@
                                                 </legend>
                                                 <div class="form-group">
                                                     <label class="mr-5" for="returnOffer">Return Offer</label>
-                                                    <h5>{{ dataItem.returnOffer.name }}</h5>
+                                                    <h5 *ngIf="dataItem.returnOffer">{{ dataItem.returnOffer.name }}</h5>
                                                     <kendo-dropdownlist *ngIf="editMode" id="returnOffer" name="returnOffer" [data]="filteredOffers" textField="name" valueField="id"
                                                         [(ngModel)]="dataItem.returnOffer" [filterable]="true" (filterChange)="filterOffers($event)"
                                                         required></kendo-dropdownlist>

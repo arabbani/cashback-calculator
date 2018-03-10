@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Offer, OfferService } from '..';
 import { Categories, OfferTypes, ReturnTypes } from '../../../apsstr-core-ui-config';
-import { ApsstrKendoDialogService } from '../../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrKendoDialogService, FilterEntitiesByRelationService } from '../../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../../shared';
 import { Affiliate, AffiliateService } from '../../affiliate';
 import { Card, CardService } from '../../card';
@@ -122,7 +122,7 @@ export class CreateOfferComponent implements OnInit {
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
     private apsstrKendoDialogService: ApsstrKendoDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
     private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService, private router: Router,
-    private route: ActivatedRoute, private location: Location) {
+    private route: ActivatedRoute, private location: Location, private filterEntitiesByRelationService: FilterEntitiesByRelationService) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
     this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
   }
@@ -461,145 +461,69 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private filterStatesForCountries(countries: Country[]): void {
-    this.filteredStates = [];
-    let arr = null;
-    _.forEach(countries, (country) => {
-      arr = _.filter(this.states, (state) => state.country.id === country.id);
-      this.filteredStates.push(...arr);
-    });
+    this.filteredStates = this.filterEntitiesByRelationService.forSingleRelationId(countries, this.states, 'country');
     this.refinedStates = this.filteredStates;
-  }
-
-  private filterSelectedStatesForCountries(countries: Country[]): void {
-    const selectedStates = this.offer.states;
-    this.offer.states = [];
-    let arr = null;
-    _.forEach(countries, (country) => {
-      arr = _.filter(selectedStates, (selectedState) => selectedState.country.id === country.id);
-      this.offer.states.push(...arr);
-    });
-    this.onStateChange(this.offer.states);
   }
 
   onCountryChange(countries: Country[]): void {
     this.filterStatesForCountries(countries);
-    this.filterSelectedStatesForCountries(countries);
-    // const selectedStates = this.offer.states;
-    // this.offer.states = [];
-    // this.filteredStates = [];
-    // let arr = null;
-    // _.forEach(countries, (country) => {
-    //   arr = _.filter(this.states, (state) => state.country.id === country.id);
-    //   this.filteredStates.push(...arr);
-    //   arr = _.filter(selectedStates, (selectedState) => selectedState.country.id === country.id);
-    //   this.offer.states.push(...arr);
-    // });
-    // this.refinedStates = this.filteredStates;
-    // this.onStateChange(this.offer.states);
+    this.offer.states = this.filterEntitiesByRelationService.forSingleRelationId(countries, this.offer.states, 'country');
+    this.onStateChange(this.offer.states);
   }
 
-  filterCitiesForStates(states: State[]): void {
-    this.filteredCities = [];
-    let arr = null;
-    _.forEach(states, (state) => {
-      arr = _.filter(this.cities, (city) => city.state.id === state.id);
-      this.filteredCities.push(...arr);
-    });
+  private filterCitiesForStates(states: State[]): void {
+    this.filteredCities = this.filterEntitiesByRelationService.forSingleRelationId(states, this.cities, 'state');
     this.refinedCities = this.filteredCities;
-  }
-
-  filterSelectedCitiesForStates(states: State[]): void {
-    let arr = null;
-    const selectedCities = this.offer.cities;
-    this.offer.cities = [];
-    _.forEach(states, (state) => {
-      arr = _.filter(selectedCities, (selectedCity) => selectedCity.state.id === state.id);
-      this.offer.cities.push(...arr);
-    });
   }
 
   onStateChange(states: State[]): void {
     this.filterCitiesForStates(states);
-    this.filterSelectedCitiesForStates(states);
-    // this.filteredCities = [];
-    // let arr = null;
-    // const selectedCities = this.offer.cities;
-    // this.offer.cities = [];
-    // _.forEach(states, (state) => {
-    //   arr = _.filter(this.cities, (city) => city.state.id === state.id);
-    //   this.filteredCities.push(...arr);
-    //   arr = _.filter(selectedCities, (selectedCity) => selectedCity.state.id === state.id);
-    //   this.offer.cities.push(...arr);
-    // });
-    // this.refinedCities = this.filteredCities;
+    this.offer.cities = this.filterEntitiesByRelationService.forSingleRelationId(states, this.offer.cities, 'state');
+  }
+
+  private filterSubCategoriesForCategories(categories: Category[]): void {
+    this.filteredSubCategories = this.filterEntitiesByRelationService.forSingleRelationId(categories, this.subCategories, 'category');
+    this.refinedSubCategories = this.filteredSubCategories;
   }
 
   onCategoryChange(categories: Category[]): void {
-    this.filteredSubCategories = [];
-    let arr = null;
-    const reechargeInfo = this.offer.reechargeInfo;
-    const travelInfo = this.offer.travelInfo;
-    this.offer.reechargeInfo = undefined;
-    this.offer.travelInfo = undefined;
-    const selectedSubCategories = this.offer.subCategories;
-    this.offer.subCategories = [];
+    this.filterSubCategoriesForCategories(categories);
+    this.offer.subCategories = this.filterEntitiesByRelationService.forSingleRelationId(categories, this.offer.subCategories, 'category');
+    this.onSubCategoryChange(this.offer.subCategories);
     _.forEach(categories, (category) => {
-      arr = _.filter(this.subCategories, (subCategory) => subCategory.category.id === category.id);
-      this.filteredSubCategories.push(...arr);
       switch (category.name) {
         case this.categoryEnum.REECHARGE:
-          this.offer.reechargeInfo = reechargeInfo ? reechargeInfo : new ReechargeInfo();
+          if (!this.offer.reechargeInfo) {
+            this.offer.reechargeInfo = new ReechargeInfo();
+          }
           break;
         case this.categoryEnum.TRAVEL:
-          this.offer.travelInfo = travelInfo ? travelInfo : new TravelInfo();
+          if (!this.offer.travelInfo) {
+            this.offer.travelInfo = new TravelInfo();
+          }
           break;
       }
-      arr = _.filter(selectedSubCategories, (selectedSubCategory) => selectedSubCategory.category.id === category.id);
-      this.offer.subCategories.push(...arr);
     });
-    this.refinedSubCategories = this.filteredSubCategories;
-    this.onSubCategoryChange(this.offer.subCategories);
   }
 
-  onSubCategoryChange(subCategories: SubCategory[]): void {
-    this.filteredServiceProviders = [];
-    let arr = null;
-    let found = null;
-    const selectedServiceProviders = this.offer.serviceProviders;
-    this.offer.serviceProviders = [];
-    _.forEach(subCategories, (subCategory) => {
-      arr = _.filter(this.serviceProviders, (serviceProvider) => {
-        found = _.find(serviceProvider.subCategories, (sCategory) => sCategory.id === subCategory.id);
-        if (found) {
-          return true;
-        }
-        return false;
-      });
-      this.filteredServiceProviders = _.union(this.filteredServiceProviders, arr);
-      arr = _.filter(selectedServiceProviders, (selectedServiceProvider) => {
-        found = _.find(selectedServiceProvider.subCategories, (sCategory) => sCategory.id === subCategory.id);
-        if (found) {
-          return true;
-        }
-        return false;
-      });
-      this.offer.serviceProviders = _.union(this.offer.serviceProviders, arr);
-    });
+  private filterServiceProvidersForSubCategories(subCategories: SubCategory[]): void {
+    this.filteredServiceProviders = this.filterEntitiesByRelationService.forManyRelationId(subCategories, this.serviceProviders, 'subCategories');
     this.refinedServiceProviders = this.filteredServiceProviders;
   }
 
-  onPaymentModeChange(modes: CardType[], dataItem): void {
-    this.filteredCards = [];
-    let arr = null;
-    const selectedCards = dataItem.payment.cards;
-    dataItem.payment.cards = [];
-    _.forEach(modes, (mode) => {
-      arr = _.filter(this.cards, (card) => card.type.id === mode.id);
-      this.filteredCards.push(...arr);
-      arr = _.filter(selectedCards, (selectedCard) => selectedCard.type.id === mode.id);
-      dataItem.payment.cards.push(...arr);
-    });
+  onSubCategoryChange(subCategories: SubCategory[]): void {
+    this.filterServiceProvidersForSubCategories(subCategories);
+    this.offer.serviceProviders = this.filterEntitiesByRelationService.forManyRelationId(subCategories, this.offer.serviceProviders, 'subCategories');
+  }
+
+  private filterCardsForPaymentModes(modes: CardType[]): void {
+    this.filteredCards = this.filterEntitiesByRelationService.forSingleRelationId(modes, this.cards, 'type');
     this.refinedCards = this.filteredCards;
+  }
+
+  onPaymentModeChange(modes: CardType[], dataItem): void {
+    this.filterCardsForPaymentModes(modes);
+    dataItem.payment.cards = this.filterEntitiesByRelationService.forSingleRelationId(modes, dataItem.payment.cards, 'type');
   }
 
   public createOfferReturnFormGroup(args: any): FormGroup {
