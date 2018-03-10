@@ -29,4 +29,8 @@ export class FilterEntitiesService {
     return filtered;
   }
 
+  byStringAttribute<T>(filterEntities: T[], attributeName: string, filterString: string): T[] {
+    return filterEntities.filter((filterEntity) => filterEntity[attributeName].toLowerCase().indexOf(filterString.toLowerCase()) !== -1);
+  }
+
 }

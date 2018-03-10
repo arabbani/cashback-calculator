@@ -661,40 +661,36 @@ export class CreateOfferComponent implements OnInit {
     this.createOfferTabs.tabs[tabNumber].active = true;
   }
 
-  commonFilter(entities: any, value: string): Array<any> {
-    return entities.filter((s) => s.name.toLowerCase().indexOf(value.toLowerCase()) !== -1);
-  }
-
   filterStates(value) {
-    this.refinedStates = this.commonFilter(this.filteredStates, value);
+    this.refinedStates = this.filterEntitiesService.byStringAttribute(this.filteredStates, 'name', value);
   }
 
   filterCities(value) {
-    this.refinedCities = this.commonFilter(this.filteredCities, value);
+    this.refinedCities = this.filterEntitiesService.byStringAttribute(this.filteredCities, 'name', value);
   }
 
   filterMerchants(value) {
-    this.filteredMerchants = this.commonFilter(this.merchants, value);
+    this.filteredMerchants = this.filterEntitiesService.byStringAttribute(this.merchants, 'name', value);
   }
 
   filterSubCategories(value) {
-    this.refinedSubCategories = this.commonFilter(this.filteredSubCategories, value);
+    this.refinedSubCategories = this.filterEntitiesService.byStringAttribute(this.filteredSubCategories, 'name', value);
   }
 
   filterServiceProviders(value) {
-    this.refinedServiceProviders = this.commonFilter(this.filteredServiceProviders, value);
+    this.refinedServiceProviders = this.filterEntitiesService.byStringAttribute(this.filteredServiceProviders, 'name', value);
   }
 
   filterCircles(value) {
-    this.filteredCircles = this.commonFilter(this.circles, value);
+    this.filteredCircles = this.filterEntitiesService.byStringAttribute(this.circles, 'name', value);
   }
 
   filterCards(value) {
-    this.refinedCards = this.commonFilter(this.filteredCards, value);
+    this.refinedCards = this.filterEntitiesService.byStringAttribute(this.filteredCards, 'name', value);
   }
 
   filterOffers(value) {
-    this.filteredOffers = this.commonFilter(this.offers, value);
+    this.filteredOffers = this.filterEntitiesService.byStringAttribute(this.offers, 'name', value);
   }
 
   onChangeStartDate(startDate: Date): void {
