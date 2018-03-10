@@ -51,26 +51,43 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group mb-3 row">
-                                <div class="col-md-6">
-                                    <label class="mr-5" for="startDate">Start Date</label>
-                                    <input type="text" class="form-control" id="startDate" name="startDate" [(ngModel)]="offer.startDate" required placeholder="Start Date"
-                                        bsDatepicker (bsValueChange)="onChangeStartDate($event)" />
-                                </div>
-                                <div class="col-md-6">
-                                    <timepicker name="startTime" [(ngModel)]="offer.startDate" [showMeridian]="false"></timepicker>
-                                </div>
+                                <ng-container *ngIf="!editMode">
+                                    <div class="col">
+                                        <label class="mr-5">Start Date</label>
+                                        {{ offer.startDate | date: 'medium' }}
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="editMode">
+                                    <div class="col-md-6">
+                                        <label class="mr-5" for="startDate">Start Date</label>
+                                        <input type="text" class="form-control" id="startDate" name="startDate" [(ngModel)]="offer.startDate" required placeholder="Start Date"
+                                            bsDatepicker (bsValueChange)="onChangeStartDate($event)" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <timepicker name="startTime" [(ngModel)]="offer.startDate" [showMeridian]="false"></timepicker>
+                                    </div>
+                                </ng-container>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-3 row">
-                                <div class="col-md-6">
-                                    <label class="mr-5" for="endDate">End Date</label>
-                                    <input type="text" class="form-control" id="endDate" name="endDate" [(ngModel)]="offer.endDate" required placeholder="End Date"
-                                        bsDatepicker />
-                                </div>
-                                <div class="col-md-6">
-                                    <timepicker name="endTime" [(ngModel)]="offer.endDate" [showMeridian]="false"></timepicker>
-                                </div>
+                                <ng-container *ngIf="!editMode">
+                                    <div class="col">
+                                        <label class="mr-5">End Date</label>
+                                        {{ offer.endDate | date: 'medium' }}
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="editMode">
+                                    <div class="col-md-6">
+                                        <label class="mr-5" for="endDate">End Date</label>
+                                        <input *ngIf="editMode" type="text" class="form-control" id="endDate" name="endDate" [(ngModel)]="offer.endDate" required
+                                            placeholder="End Date" bsDatepicker />
+                                    </div>
+                                    <div class="col-md-6" *ngIf="editMode">
+                                        {{ offer.endDate | date: 'medium'}}
+                                        <timepicker name="endTime" [(ngModel)]="offer.endDate" [showMeridian]="false"></timepicker>
+                                    </div>
+                                </ng-container>
                             </div>
                         </div>
                     </div>
@@ -86,17 +103,20 @@
                         <div class="col-md-6">
                             <div *ngIf="offer.type && isCoupon(offer.type)" class="form-group mb-3 row">
                                 <label class="col-md-3 col-form-label" for="code">Code</label>
-                                <div class="col-md-9">
-                                    <input type="text" class="form-control" id="code" name="code" [(ngModel)]="offer.code" #code="ngModel" maxlength="255" required
-                                        placeholder="Code" />
-                                </div>
-                                <ng-container *ngIf="code.dirty && code.invalid">
-                                    <span class="form-text text-danger" *ngIf="code.errors.required">
-                                        Code is required.
-                                    </span>
-                                    <span class="form-text text-danger" *ngIf="code.errors.maxlength">
-                                        This field cannot be longer than 255 characters.
-                                    </span>
+                                <h6>{{ offer.code }}</h6>
+                                <ng-container *ngIf="editMode">
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" id="code" name="code" [(ngModel)]="offer.code" #code="ngModel" maxlength="255" required
+                                            placeholder="Code" />
+                                    </div>
+                                    <ng-container *ngIf="code.dirty && code.invalid">
+                                        <span class="form-text text-danger" *ngIf="code.errors.required">
+                                            Code is required.
+                                        </span>
+                                        <span class="form-text text-danger" *ngIf="code.errors.maxlength">
+                                            This field cannot be longer than 255 characters.
+                                        </span>
+                                    </ng-container>
                                 </ng-container>
                             </div>
                         </div>
@@ -110,7 +130,7 @@
                             textField="name" valueField="id" [(ngModel)]="offer.policy"></kendo-dropdownlist>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="url">Url</label>
+                        <label class="mr-5" for="url">Url</label>
                         <a [href]="offer.url" target="_balnk">{{ offer.url }}</a>
                         <ng-container *ngIf="editMode">
                             <textarea class="form-control" id="url" name="url" [(ngModel)]="offer.url" #url="ngModel" maxlength="2000">
@@ -576,8 +596,9 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </span>
-                                            <kendo-multiselect *ngIf="editMode" id="paymentCards" name="paymentCards" [data]="refinedCards" textField="name" valueField="id" [(ngModel)]="dataItem.payment.cards"
-                                                [placeholder]="defaultCards" [autoClose]="false" [filterable]="true" (filterChange)="filterCards($event)"></kendo-multiselect>
+                                            <kendo-multiselect *ngIf="editMode" id="paymentCards" name="paymentCards" [data]="refinedCards" textField="name" valueField="id"
+                                                [(ngModel)]="dataItem.payment.cards" [placeholder]="defaultCards" [autoClose]="false"
+                                                [filterable]="true" (filterChange)="filterCards($event)"></kendo-multiselect>
                                         </div>
                                     </fieldset>
                                 </ng-template>
@@ -587,9 +608,19 @@
                 </form>
                 <div class="text-center mt-2">
                     <button type="button" class="btn btn-primary mr-3" (click)="goToPreviousTab(3)">Previous</button>
-                    <button type="button" class="btn btn-success" [disabled]="isSaving || offerReturnForm.form.invalid" (click)="saveOffer()">Save</button>
                 </div>
             </tab>
+            <div class="px-5 py-3 clearfix">
+                <div class="float-left">
+                    <button type="button" class="btn btn-success" (click)="goBack()">Go Back</button>
+                </div>
+                <div class="float-right">
+                    <button type="button" class="btn btn-info" *ngIf="!editMode" (click)="editOffer()">Edit</button>
+                    <button *ngIf="editMode" type="button" class="btn btn-success" [disabled]="isSaving || offerReturnForm.form.invalid || offerInfoForm.form.invalid || detailInfoForm.form.invalid || optionsForm.form.invalid || basicInfoForm.form.invalid"
+                        (click)="saveOffer()">Save</button>
+                    <button type="button" class="btn btn-danger" *ngIf="offer.id && editMode" (click)="cancelEdit()">Cancel</button>
+                </div>
+            </div>
         </tabset>
     </div>
 </div>

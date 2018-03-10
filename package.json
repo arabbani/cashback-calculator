@@ -33,6 +33,7 @@
     "bootstrap": "4.0.0",
     "core-js": "2.4.1",
     "font-awesome": "4.7.0",
+    "intl": "^1.2.5",
     "jquery": "3.2.1",
     "jsog-typescript": "^1.0.0-1",
     "lodash": "^4.17.5",

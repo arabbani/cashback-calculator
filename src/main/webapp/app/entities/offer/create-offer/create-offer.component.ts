@@ -39,6 +39,7 @@ import { State, StateService } from '../../state';
 import { SubCategory, SubCategoryService } from '../../sub-category';
 import { TravelInfo } from '../../travel-info';
 import { TravelType, TravelTypeService } from '../../travel-type';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -120,6 +121,7 @@ export class CreateOfferComponent implements OnInit {
   minStartDate: Date;
   minEndDate: Date;
   editMode: boolean;
+  editedOffer: Offer;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
     private dayService: DayService, private countryService: CountryService, private stateService: StateService, private cityService: CityService,
@@ -128,7 +130,7 @@ export class CreateOfferComponent implements OnInit {
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
     private apsstrKendoDialogService: ApsstrKendoDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
     private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService, private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private location: Location) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
     this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
   }
@@ -148,6 +150,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private initializeToEdit(): void {
+    this.editMode = true;
     this.loadEntities();
     this.defaultOfferType = { id: null, name: 'Select Type' };
     this.defaultOfferPolicy = { id: null, name: 'Select Policy' };
@@ -209,11 +212,9 @@ export class CreateOfferComponent implements OnInit {
       this.extractCategories();
       const mode = this.route.snapshot.paramMap.get('edit');
       if (mode) {
-        this.editMode = true;
         this.initializeToEdit();
       }
     } else {
-      this.editMode = true;
       this.initializeToEdit();
       this.createOffer();
     }
@@ -240,6 +241,21 @@ export class CreateOfferComponent implements OnInit {
       categorySet.add(subCategory.category);
     });
     this.offerCategories = _.toArray(categorySet);
+  }
+
+  editOffer(): void {
+    this.editedOffer = Object.assign({}, this.offer);
+    this.initializeToEdit();
+  }
+
+  cancelEdit(): void {
+    this.editMode = false;
+    this.offer = Object.assign({}, this.editedOffer);
+    this.editedOffer = undefined;
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   private loadOfferTypes(): void {
@@ -741,7 +757,6 @@ export class CreateOfferComponent implements OnInit {
     this.isSaving = true;
     this.offer.startDate.setSeconds(0);
     this.offer.endDate.setSeconds(59);
-    console.log(this.offer);
     if (this.offer.id !== undefined) {
       this.subscribeToSaveResponse(
         this.offerService.update(this.offer));

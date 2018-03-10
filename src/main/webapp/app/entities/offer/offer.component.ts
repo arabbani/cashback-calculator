@@ -44,6 +44,10 @@ export class OfferComponent implements OnInit {
         //     { relativeTo: this.route }
         // );
         // this.router.navigate([`${offerId}/edit`], { relativeTo: this.route });
+        this.router.navigate(['offer', { id: offer.id, edit: true }]);
+    }
+
+    viewOffer(offer: Offer): void {
         this.router.navigate(['offer', { id: offer.id }]);
     }
 
