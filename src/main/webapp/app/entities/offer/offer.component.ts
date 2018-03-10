@@ -44,7 +44,7 @@ export class OfferComponent implements OnInit {
         //     { relativeTo: this.route }
         // );
         // this.router.navigate([`${offerId}/edit`], { relativeTo: this.route });
-        this.router.navigate(['offer', { id: offer.id, edit: true }]);
+        this.router.navigate(['offer', { id: offer.id }]);
     }
 
     removeOffer({ rowIndex, dataItem }): void {
