@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -39,7 +40,6 @@ import { State, StateService } from '../../state';
 import { SubCategory, SubCategoryService } from '../../sub-category';
 import { TravelInfo } from '../../travel-info';
 import { TravelType, TravelTypeService } from '../../travel-type';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -86,16 +86,12 @@ export class CreateOfferComponent implements OnInit {
   filteredOffers: Offer[];
   cardTypes: CardType[];
 
-  defaultOfferType;
-  defaultOfferPolicy;
   defaultDate;
   defaultDay;
   defaultCountry;
   defaultState;
   defaultCity;
   defaultOperatingSystem;
-  defaultAffiliate;
-  defaultMerchant;
   defaultCategory;
   defaultSubCategory;
   defaultServiceProvider;
@@ -104,10 +100,6 @@ export class CreateOfferComponent implements OnInit {
   defaultTravelType;
   defaultRegion;
   defaultOrigin;
-  defaultReturnType;
-  defaultReturnMode;
-  defaultCard;
-  defaultOffer;
   defaultPaymentMode;
   defaultCards;
 
@@ -152,16 +144,12 @@ export class CreateOfferComponent implements OnInit {
   private initializeToEdit(): void {
     this.editMode = true;
     this.loadEntities();
-    this.defaultOfferType = { id: null, name: 'Select Type' };
-    this.defaultOfferPolicy = { id: null, name: 'Select Policy' };
     this.defaultDate = 'Select Dates';
     this.defaultDay = 'Select Days';
     this.defaultCountry = 'Select Countries';
     this.defaultState = 'Select States';
     this.defaultCity = 'Select Cities';
     this.defaultOperatingSystem = 'Select OS';
-    this.defaultAffiliate = { id: null, name: 'Select Affiliate' };
-    this.defaultMerchant = { id: null, name: 'Select Merchant' };
     this.defaultCategory = 'Select Categories';
     this.defaultSubCategory = 'Select Sub-Category';
     this.defaultServiceProvider = 'Select Service Provider';
@@ -170,11 +158,6 @@ export class CreateOfferComponent implements OnInit {
     this.defaultTravelType = 'Select Travel Types';
     this.defaultRegion = 'Select Regions';
     this.defaultOrigin = 'Select Origins';
-    this.defaultReturnType = { id: null, name: 'Select Return Type' };
-    this.defaultReturnMode = { id: null, name: 'Select Return Mode' };
-    this.defaultCard = { id: null, name: 'Select Card' };
-    this.defaultOffer = { id: null, name: 'Select Offer' };
-    this.defaultReturnMode = { id: null, name: 'Select Return Mode' };
     this.defaultPaymentMode = 'Select Payment Modes';
     this.defaultCards = 'Select Cards';
   }
@@ -477,7 +460,7 @@ export class CreateOfferComponent implements OnInit {
     }
   }
 
-  private selectStatesForCountries(countries: Country[]): void {
+  private filterStatesForCountries(countries: Country[]): void {
     this.filteredStates = [];
     let arr = null;
     _.forEach(countries, (country) => {
@@ -487,7 +470,7 @@ export class CreateOfferComponent implements OnInit {
     this.refinedStates = this.filteredStates;
   }
 
-  private selectOfferStatesForCountries(countries: Country[]): void {
+  private filterSelectedStatesForCountries(countries: Country[]): void {
     const selectedStates = this.offer.states;
     this.offer.states = [];
     let arr = null;
@@ -499,8 +482,8 @@ export class CreateOfferComponent implements OnInit {
   }
 
   onCountryChange(countries: Country[]): void {
-    this.selectStatesForCountries(countries);
-    this.selectOfferStatesForCountries(countries);
+    this.filterStatesForCountries(countries);
+    this.filterSelectedStatesForCountries(countries);
     // const selectedStates = this.offer.states;
     // this.offer.states = [];
     // this.filteredStates = [];
@@ -515,18 +498,40 @@ export class CreateOfferComponent implements OnInit {
     // this.onStateChange(this.offer.states);
   }
 
-  onStateChange(states: State[]): void {
+  filterCitiesForStates(states: State[]): void {
     this.filteredCities = [];
+    let arr = null;
+    _.forEach(states, (state) => {
+      arr = _.filter(this.cities, (city) => city.state.id === state.id);
+      this.filteredCities.push(...arr);
+    });
+    this.refinedCities = this.filteredCities;
+  }
+
+  filterSelectedCitiesForStates(states: State[]): void {
     let arr = null;
     const selectedCities = this.offer.cities;
     this.offer.cities = [];
     _.forEach(states, (state) => {
-      arr = _.filter(this.cities, (city) => city.state.id === state.id);
-      this.filteredCities.push(...arr);
       arr = _.filter(selectedCities, (selectedCity) => selectedCity.state.id === state.id);
       this.offer.cities.push(...arr);
     });
-    this.refinedCities = this.filteredCities;
+  }
+
+  onStateChange(states: State[]): void {
+    this.filterCitiesForStates(states);
+    this.filterSelectedCitiesForStates(states);
+    // this.filteredCities = [];
+    // let arr = null;
+    // const selectedCities = this.offer.cities;
+    // this.offer.cities = [];
+    // _.forEach(states, (state) => {
+    //   arr = _.filter(this.cities, (city) => city.state.id === state.id);
+    //   this.filteredCities.push(...arr);
+    //   arr = _.filter(selectedCities, (selectedCity) => selectedCity.state.id === state.id);
+    //   this.offer.cities.push(...arr);
+    // });
+    // this.refinedCities = this.filteredCities;
   }
 
   onCategoryChange(categories: Category[]): void {
@@ -780,6 +785,7 @@ export class CreateOfferComponent implements OnInit {
     this.isSaving = true;
     this.offer.startDate.setSeconds(0);
     this.offer.endDate.setSeconds(59);
+    console.log(this.offer);
     if (this.offer.id !== undefined) {
       this.subscribeToSaveResponse(
         this.offerService.update(this.offer));

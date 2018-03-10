@@ -96,8 +96,8 @@
                             <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.type && !editMode">
                                 {{ offer.type.name }}
                             </span>
-                            <kendo-dropdownlist *ngIf="editMode" id="type" name="type" [data]="offerTypes" [defaultItem]="defaultOfferType" textField="name"
-                                valueField="id" [(ngModel)]="offer.type" required></kendo-dropdownlist>
+                            <kendo-dropdownlist *ngIf="editMode" id="type" name="type" [data]="offerTypes" textField="name" valueField="id" [(ngModel)]="offer.type"
+                                required></kendo-dropdownlist>
                         </div>
                         <div class="col-md-6">
                             <div *ngIf="offer.type && isCoupon(offer.type)" class="form-group mb-3 row">
@@ -125,8 +125,7 @@
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.policy && !editMode">
                             {{ offer.policy.name }}
                         </span>
-                        <kendo-dropdownlist *ngIf="editMode" id="policy" name="policy" [data]="offerPolicies" [defaultItem]="defaultOfferPolicy"
-                            textField="name" valueField="id" [(ngModel)]="offer.policy"></kendo-dropdownlist>
+                        <kendo-dropdownlist *ngIf="editMode" id="policy" name="policy" [data]="offerPolicies" textField="name" valueField="id" [(ngModel)]="offer.policy"></kendo-dropdownlist>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="url">Url</label>
@@ -326,17 +325,16 @@
                             <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.affiliate && !editMode">
                                 {{ offer.affiliate.name }}
                             </span>
-                            <kendo-dropdownlist *ngIf="editMode" id="affiliate" name="affiliate" [data]="affiliates" [defaultItem]="defaultAffiliate"
-                                textField="name" valueField="id" [(ngModel)]="offer.affiliate" required></kendo-dropdownlist>
+                            <kendo-dropdownlist *ngIf="editMode" id="affiliate" name="affiliate" [data]="affiliates" textField="name" valueField="id"
+                                [(ngModel)]="offer.affiliate" required></kendo-dropdownlist>
                         </div>
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="merchant">Merchant</label>
                             <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.merchant && !editMode">
                                 {{ offer.merchant.name }}
                             </span>
-                            <kendo-dropdownlist *ngIf="editMode" id="merchant" name="merchant" [data]="filteredMerchants" [defaultItem]="defaultMerchant"
-                                textField="name" valueField="id" [(ngModel)]="offer.merchant" [filterable]="true" (filterChange)="filterMerchants($event)"
-                                required></kendo-dropdownlist>
+                            <kendo-dropdownlist *ngIf="editMode" id="merchant" name="merchant" [data]="filteredMerchants" textField="name" valueField="id"
+                                [(ngModel)]="offer.merchant" [filterable]="true" (filterChange)="filterMerchants($event)" required></kendo-dropdownlist>
                         </div>
                     </div>
                     <div class="text-center mt-2">
@@ -510,8 +508,8 @@
                                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.type && !editMode">
                                             {{ dataItem.type.name }}
                                         </span>
-                                        <kendo-dropdownlist *ngIf="editMode" id="type" name="type" [data]="returnTypes" [defaultItem]="defaultReturnType" textField="name"
-                                            valueField="id" [(ngModel)]="dataItem.type" required></kendo-dropdownlist>
+                                        <kendo-dropdownlist *ngIf="editMode" id="type" name="type" [data]="returnTypes" textField="name" valueField="id" [(ngModel)]="dataItem.type"
+                                            required></kendo-dropdownlist>
                                     </div>
                                     <ng-container *ngIf="dataItem.type">
                                         <div *ngIf="dataItem.type.name === returnTypesEnum.OFFER; then offerType; else defaultType"></div>
@@ -523,9 +521,9 @@
                                                 <div class="form-group">
                                                     <label class="mr-5" for="returnOffer">Return Offer</label>
                                                     <h5>{{ dataItem.returnOffer.name }}</h5>
-                                                    <kendo-dropdownlist *ngIf="editMode" id="returnOffer" name="returnOffer" [data]="filteredOffers" [defaultItem]="defaultOffer"
-                                                        textField="name" valueField="id" [(ngModel)]="dataItem.returnOffer" [filterable]="true"
-                                                        (filterChange)="filterOffers($event)" required></kendo-dropdownlist>
+                                                    <kendo-dropdownlist *ngIf="editMode" id="returnOffer" name="returnOffer" [data]="filteredOffers" textField="name" valueField="id"
+                                                        [(ngModel)]="dataItem.returnOffer" [filterable]="true" (filterChange)="filterOffers($event)"
+                                                        required></kendo-dropdownlist>
                                                 </div>
                                             </fieldset>
                                         </ng-template>
@@ -558,16 +556,15 @@
                                                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.mainReturn.mode && !editMode">
                                                             {{ dataItem.mainReturn.mode.name }}
                                                         </span>
-                                                        <kendo-dropdownlist *ngIf="editMode" id="mode" name="mode" [data]="returnModes" [defaultItem]="defaultReturnMode" textField="name"
-                                                            valueField="id" [(ngModel)]="dataItem.mainReturn.mode" required></kendo-dropdownlist>
+                                                        <kendo-dropdownlist *ngIf="editMode" id="mode" name="mode" [data]="returnModes" textField="name" valueField="id" [(ngModel)]="dataItem.mainReturn.mode"
+                                                            required></kendo-dropdownlist>
                                                     </div>
                                                     <div class="form-group col-sm-6 col-lg-4 mb-3">
                                                         <label for="channel">Channel</label>
                                                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.mainReturn.channel && !editMode">
                                                             {{ dataItem.mainReturn.channel.name }}
                                                         </span>
-                                                        <kendo-dropdownlist *ngIf="editMode" id="channel" name="channel" [data]="cards" [defaultItem]="defaultCard" textField="name"
-                                                            valueField="id" [(ngModel)]="dataItem.mainReturn.channel"></kendo-dropdownlist>
+                                                        <kendo-dropdownlist *ngIf="editMode" id="channel" name="channel" [data]="cards" textField="name" valueField="id" [(ngModel)]="dataItem.mainReturn.channel"></kendo-dropdownlist>
                                                     </div>
                                                 </div>
                                             </fieldset>
