@@ -8,25 +8,11 @@ import { MomentModule } from 'angular2-moment';
 import { BsDatepickerModule, TabsModule, TimepickerModule } from 'ngx-bootstrap';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    OfferComponent,
-    OfferDeleteDialogComponent,
-    OfferDeletePopupComponent,
-    OfferDetailComponent,
-    OfferDialogComponent,
-    OfferPopupComponent,
-    offerPopupRoute,
-    OfferPopupService,
-    offerRoute,
-    OfferService,
-} from './';
+import { OfferComponent, offerRoute, OfferService } from './';
 import { CreateOfferComponent } from './create-offer/create-offer.component';
 import { OfferResolver } from './offer-resolver.service';
 
-const ENTITY_STATES = [
-    ...offerRoute,
-    ...offerPopupRoute,
-];
+const ENTITY_STATES = offerRoute;
 
 @NgModule({
     imports: [
@@ -44,23 +30,13 @@ const ENTITY_STATES = [
     ],
     declarations: [
         OfferComponent,
-        OfferDetailComponent,
-        OfferDialogComponent,
-        OfferDeleteDialogComponent,
-        OfferPopupComponent,
-        OfferDeletePopupComponent,
         CreateOfferComponent,
     ],
     entryComponents: [
         OfferComponent,
-        OfferDialogComponent,
-        OfferPopupComponent,
-        OfferDeleteDialogComponent,
-        OfferDeletePopupComponent,
     ],
     providers: [
         OfferService,
-        OfferPopupService,
         OfferResolver
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

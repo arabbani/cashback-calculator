@@ -28,24 +28,3 @@ export const offerRoute: Routes = [
         }
     }
 ];
-
-export const offerPopupRoute: Routes = [
-    // {
-    //     path: 'offer',
-    //     component: CreateOfferComponent,
-    //     data: {
-    //         authorities: ['ROLE_ADMIN'],
-    //         pageTitle: 'Offers'
-    //     },
-    //     canActivate: [UserRouteAccessService]
-    // },
-    // {
-    //     path: 'offer/:id/?:edit',
-    //     component: CreateOfferComponent,
-    //     data: {
-    //         authorities: ['ROLE_ADMIN'],
-    //         pageTitle: 'Offers'
-    //     },
-    //     canActivate: [UserRouteAccessService]
-    // },
-];
