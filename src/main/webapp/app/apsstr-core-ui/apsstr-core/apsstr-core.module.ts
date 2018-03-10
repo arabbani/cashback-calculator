@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 
-import { ApsstrKendoDialogService, AssetPathService, FilterEntitiesByRelationService } from './services';
+import { ApsstrKendoDialogService, AssetPathService, FilterEntitiesService } from './services';
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import { ApsstrKendoDialogService, AssetPathService, FilterEntitiesByRelationSer
   providers: [
     AssetPathService,
     ApsstrKendoDialogService,
-    FilterEntitiesByRelationService
+    FilterEntitiesService
   ]
 })
 export class ApsstrCoreModule { }

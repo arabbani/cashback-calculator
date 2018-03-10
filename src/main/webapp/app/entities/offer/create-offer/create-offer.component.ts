@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Offer, OfferService } from '..';
 import { Categories, OfferTypes, ReturnTypes } from '../../../apsstr-core-ui-config';
-import { ApsstrKendoDialogService, FilterEntitiesByRelationService } from '../../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrKendoDialogService, FilterEntitiesService } from '../../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../../shared';
 import { Affiliate, AffiliateService } from '../../affiliate';
 import { Card, CardService } from '../../card';
@@ -122,7 +122,7 @@ export class CreateOfferComponent implements OnInit {
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
     private apsstrKendoDialogService: ApsstrKendoDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
     private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService, private router: Router,
-    private route: ActivatedRoute, private location: Location, private filterEntitiesByRelationService: FilterEntitiesByRelationService) {
+    private route: ActivatedRoute, private location: Location, private filterEntitiesService: FilterEntitiesService) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
     this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
   }
@@ -461,34 +461,34 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private filterStatesForCountries(countries: Country[]): void {
-    this.filteredStates = this.filterEntitiesByRelationService.forSingleRelationId(countries, this.states, 'country');
+    this.filteredStates = this.filterEntitiesService.bySingleRelationId(countries, this.states, 'country');
     this.refinedStates = this.filteredStates;
   }
 
   onCountryChange(countries: Country[]): void {
     this.filterStatesForCountries(countries);
-    this.offer.states = this.filterEntitiesByRelationService.forSingleRelationId(countries, this.offer.states, 'country');
+    this.offer.states = this.filterEntitiesService.bySingleRelationId(countries, this.offer.states, 'country');
     this.onStateChange(this.offer.states);
   }
 
   private filterCitiesForStates(states: State[]): void {
-    this.filteredCities = this.filterEntitiesByRelationService.forSingleRelationId(states, this.cities, 'state');
+    this.filteredCities = this.filterEntitiesService.bySingleRelationId(states, this.cities, 'state');
     this.refinedCities = this.filteredCities;
   }
 
   onStateChange(states: State[]): void {
     this.filterCitiesForStates(states);
-    this.offer.cities = this.filterEntitiesByRelationService.forSingleRelationId(states, this.offer.cities, 'state');
+    this.offer.cities = this.filterEntitiesService.bySingleRelationId(states, this.offer.cities, 'state');
   }
 
   private filterSubCategoriesForCategories(categories: Category[]): void {
-    this.filteredSubCategories = this.filterEntitiesByRelationService.forSingleRelationId(categories, this.subCategories, 'category');
+    this.filteredSubCategories = this.filterEntitiesService.bySingleRelationId(categories, this.subCategories, 'category');
     this.refinedSubCategories = this.filteredSubCategories;
   }
 
   onCategoryChange(categories: Category[]): void {
     this.filterSubCategoriesForCategories(categories);
-    this.offer.subCategories = this.filterEntitiesByRelationService.forSingleRelationId(categories, this.offer.subCategories, 'category');
+    this.offer.subCategories = this.filterEntitiesService.bySingleRelationId(categories, this.offer.subCategories, 'category');
     this.onSubCategoryChange(this.offer.subCategories);
     _.forEach(categories, (category) => {
       switch (category.name) {
@@ -507,23 +507,23 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private filterServiceProvidersForSubCategories(subCategories: SubCategory[]): void {
-    this.filteredServiceProviders = this.filterEntitiesByRelationService.forManyRelationId(subCategories, this.serviceProviders, 'subCategories');
+    this.filteredServiceProviders = this.filterEntitiesService.byManyRelationId(subCategories, this.serviceProviders, 'subCategories');
     this.refinedServiceProviders = this.filteredServiceProviders;
   }
 
   onSubCategoryChange(subCategories: SubCategory[]): void {
     this.filterServiceProvidersForSubCategories(subCategories);
-    this.offer.serviceProviders = this.filterEntitiesByRelationService.forManyRelationId(subCategories, this.offer.serviceProviders, 'subCategories');
+    this.offer.serviceProviders = this.filterEntitiesService.byManyRelationId(subCategories, this.offer.serviceProviders, 'subCategories');
   }
 
   private filterCardsForPaymentModes(modes: CardType[]): void {
-    this.filteredCards = this.filterEntitiesByRelationService.forSingleRelationId(modes, this.cards, 'type');
+    this.filteredCards = this.filterEntitiesService.bySingleRelationId(modes, this.cards, 'type');
     this.refinedCards = this.filteredCards;
   }
 
   onPaymentModeChange(modes: CardType[], dataItem): void {
     this.filterCardsForPaymentModes(modes);
-    dataItem.payment.cards = this.filterEntitiesByRelationService.forSingleRelationId(modes, dataItem.payment.cards, 'type');
+    dataItem.payment.cards = this.filterEntitiesService.bySingleRelationId(modes, dataItem.payment.cards, 'type');
   }
 
   public createOfferReturnFormGroup(args: any): FormGroup {

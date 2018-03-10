@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 
 @Injectable()
-export class FilterEntitiesByRelationService {
+export class FilterEntitiesService {
 
   constructor() { }
 
-  forSingleRelationId<T, U>(referenceEntities: T[], filterEntities: U[], relationName: string): U[] {
+  bySingleRelationId<T, U>(referenceEntities: T[], filterEntities: U[], relationName: string): U[] {
     const filtered = [];
     _.forEach(referenceEntities, (referenceEntity) => {
       filtered.push(..._.filter(filterEntities, (filterEntity) => filterEntity[relationName].id === referenceEntity.id));
@@ -14,7 +14,7 @@ export class FilterEntitiesByRelationService {
     return filtered;
   }
 
-  forManyRelationId<T, U>(referenceEntities: T[], filterEntities: U[], relationName: string): U[] {
+  byManyRelationId<T, U>(referenceEntities: T[], filterEntities: U[], relationName: string): U[] {
     let filtered = [];
     _.forEach(referenceEntities, (referenceEntity) => {
       const arr = _.filter(filterEntities, (filterEntity) => {
