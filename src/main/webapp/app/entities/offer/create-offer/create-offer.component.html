@@ -94,7 +94,7 @@
                     <div class="row">
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="type">Type</label>
-                            <span class="badge badge-secondary mr-2 p-1 mb-3" *ngIf="offer.type">
+                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.type">
                                 {{ offer.type.name }}
                             </span>
                             <kendo-dropdownlist *ngIf="editMode" id="type" name="type" [data]="offerTypes" [defaultItem]="defaultOfferType" textField="name"
@@ -123,7 +123,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="policy">Policy</label>
-                        <span class="badge badge-secondary mr-2 p-1 mb-3" *ngIf="offer.policy">
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.policy">
                             {{ offer.policy.name }}
                         </span>
                         <kendo-dropdownlist *ngIf="editMode" id="policy" name="policy" [data]="offerPolicies" [defaultItem]="defaultOfferPolicy"
@@ -256,7 +256,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="dates">Active Dates</label>
-                        <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let activeDate of offer.activeDates">
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let activeDate of offer.activeDates">
                             {{ activeDate.date }}
                             <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeActiveDate(activeDate)">
                                 <span aria-hidden="true">&times;</span>
@@ -267,7 +267,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="days">Active Days</label>
-                        <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let activeDay of offer.activeDays">
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let activeDay of offer.activeDays">
                             {{ activeDay.day }}
                             <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeActiveDay(activeDay)">
                                 <span aria-hidden="true">&times;</span>
@@ -278,7 +278,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="countries">Countries</label>
-                        <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let country of offer.countries">
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let country of offer.countries">
                             {{ country.name }}
                             <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeCountry(country)">
                                 <span aria-hidden="true">&times;</span>
@@ -289,7 +289,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="states">States</label>
-                        <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let state of offer.states">
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let state of offer.states">
                             {{ state.name }}
                             <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeState(state)">
                                 <span aria-hidden="true">&times;</span>
@@ -301,7 +301,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="cities">Cities</label>
-                        <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let city of offer.cities">
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let city of offer.cities">
                             {{ city.name }}
                             <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeCity(city)">
                                 <span aria-hidden="true">&times;</span>
@@ -312,7 +312,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="operatingSystems">Operating Systems</label>
-                        <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let operatingSystem of offer.operatingSystems">
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let operatingSystem of offer.operatingSystems">
                             {{ operatingSystem.name }}
                             <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeOperatingSystem(operatingSystem)">
                                 <span aria-hidden="true">&times;</span>
@@ -324,7 +324,7 @@
                     <div class="row">
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="affiliate">Affiliate</label>
-                            <span class="badge badge-secondary mr-2 p-1 mb-3" *ngIf="offer.affiliate">
+                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.affiliate">
                                 {{ offer.affiliate.name }}
                             </span>
                             <kendo-dropdownlist *ngIf="editMode" id="affiliate" name="affiliate" [data]="affiliates" [defaultItem]="defaultAffiliate"
@@ -332,7 +332,7 @@
                         </div>
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="merchant">Merchant</label>
-                            <span class="badge badge-secondary mr-2 p-1 mb-3" *ngIf="offer.merchant">
+                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.merchant">
                                 {{ offer.merchant.name }}
                             </span>
                             <kendo-dropdownlist *ngIf="editMode" id="merchant" name="merchant" [data]="filteredMerchants" [defaultItem]="defaultMerchant"
@@ -354,7 +354,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="categories">Categories</label>
-                        <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let category of offerCategories">
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let category of offerCategories">
                             {{ category.name }}
                             <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeCategory(category)">
                                 <span aria-hidden="true">&times;</span>
@@ -366,7 +366,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="subCategories">Sub Categories</label>
-                        <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let subCategory of offer.subCategories">
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let subCategory of offer.subCategories">
                             {{ subCategory.name }}
                             <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeSubCategory(subCategory)">
                                 <span aria-hidden="true">&times;</span>
@@ -379,7 +379,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="serviceProviders">Service Providers</label>
-                        <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let serviceProvider of offer.serviceProviders">
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let serviceProvider of offer.serviceProviders">
                             {{ serviceProvider.name }}
                             <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeServiceProvider(serviceProvider)">
                                 <span aria-hidden="true">&times;</span>
@@ -397,7 +397,7 @@
                             <ng-container *ngSwitchCase="categoryEnum.REECHARGE">
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="reecharge_info_circles">Circles</label>
-                                    <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let circle of offer.reechargeInfo.circles">
+                                    <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let circle of offer.reechargeInfo.circles">
                                         {{ circle.name }}
                                     </span>
                                     <kendo-multiselect *ngIf="editMode" id="reecharge_info_circles" name="reecharge_info_circles" [data]="filteredCircles" textField="name"
@@ -406,7 +406,7 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="reecharge_info_reecharge_types">Reecharge Types</label>
-                                    <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let reechargeType of offer.reechargeInfo.reechargeTypes">
+                                    <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let reechargeType of offer.reechargeInfo.reechargeTypes">
                                         {{ reechargeType.name }}
                                     </span>
                                     <kendo-multiselect *ngIf="editMode" id="reecharge_info_reecharge_types" name="reecharge_info_reecharge_types" [data]="reechargePlanTypes"
@@ -417,7 +417,7 @@
                             <ng-container *ngSwitchCase="categoryEnum.TRAVEL">
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="travel_info_types">Travel Types</label>
-                                    <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let traveltype of offer.travelInfo.types">
+                                    <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let traveltype of offer.travelInfo.types">
                                         {{ traveltype.name }}
                                     </span>
                                     <kendo-multiselect *ngIf="editMode" id="travel_info_types" name="travel_info_types" [data]="travelTypes" textField="name"
@@ -426,7 +426,7 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="travel_info_regions">Regions</label>
-                                    <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let region of offer.travelInfo.regions">
+                                    <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let region of offer.travelInfo.regions">
                                         {{ region.name }}
                                     </span>
                                     <kendo-multiselect *ngIf="editMode" id="travel_info_regions" name="travel_info_regions" [data]="regions" textField="name"
@@ -435,7 +435,7 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="travel_info_origins">Origins</label>
-                                    <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let origin of offer.travelInfo.origins">
+                                    <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let origin of offer.travelInfo.origins">
                                         {{ origin.name }}
                                     </span>
                                     <kendo-multiselect *ngIf="editMode" id="travel_info_origins" name="travel_info_origins" [data]="regions" textField="name"
@@ -508,7 +508,7 @@
                                 <ng-template kendoGridDetailTemplate let-dataItem>
                                     <div class="form-group mb-3">
                                         <label class="mr-5" for="type">Type</label>
-                                        <span class="badge badge-secondary mr-2 p-1 mb-3" *ngIf="dataItem.type">
+                                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.type">
                                             {{ dataItem.type.name }}
                                         </span>
                                         <kendo-dropdownlist *ngIf="editMode" id="type" name="type" [data]="returnTypes" [defaultItem]="defaultReturnType" textField="name"
@@ -556,7 +556,7 @@
                                                     </div>
                                                     <div class="form-group col-sm-6 col-lg-4 mb-3">
                                                         <label for="mode">Mode</label>
-                                                        <span class="badge badge-secondary mr-2 p-1 mb-3" *ngIf="dataItem.mainReturn.mode">
+                                                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.mainReturn.mode">
                                                             {{ dataItem.mainReturn.mode.name }}
                                                         </span>
                                                         <kendo-dropdownlist *ngIf="editMode" id="mode" name="mode" [data]="returnModes" [defaultItem]="defaultReturnMode" textField="name"
@@ -564,7 +564,7 @@
                                                     </div>
                                                     <div class="form-group col-sm-6 col-lg-4 mb-3">
                                                         <label for="channel">Channel</label>
-                                                        <span class="badge badge-secondary mr-2 p-1 mb-3" *ngIf="dataItem.mainReturn.channel">
+                                                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.mainReturn.channel">
                                                             {{ dataItem.mainReturn.channel.name }}
                                                         </span>
                                                         <kendo-dropdownlist *ngIf="editMode" id="channel" name="channel" [data]="cards" [defaultItem]="defaultCard" textField="name"
@@ -580,7 +580,7 @@
                                         </legend>
                                         <div class="form-group mb-3">
                                             <label for="paymentModes">Modes</label>
-                                            <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let paymentMode of dataItem.payment.modes">
+                                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let paymentMode of dataItem.payment.modes">
                                                 {{ paymentMode.name }}
                                             </span>
                                             <kendo-multiselect *ngIf="editMode" id="paymentModes" name="paymentModes" [data]="cardTypes" textField="name" valueField="id"
@@ -589,7 +589,7 @@
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="paymentCards">Cards</label>
-                                            <span class="badge badge-secondary mr-2 p-1 mb-3" *ngFor="let paymentCard of dataItem.payment.cards">
+                                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let paymentCard of dataItem.payment.cards">
                                                 {{ paymentCard.name }}
                                                 <button type="button" class="close" aria-label="Close" (click)="removePaymentCard(dataItem,
                                                             paymentCard)">

@@ -47,8 +47,8 @@ export class OfferComponent implements OnInit {
         this.router.navigate(['offer', { id: offer.id, edit: true }]);
     }
 
-    viewOffer(offer: Offer): void {
-        this.router.navigate(['offer', { id: offer.id }]);
+    viewOffer(offerId: number): void {
+        this.router.navigate(['offer', { id: offerId }]);
     }
 
     removeOffer({ rowIndex, dataItem }): void {

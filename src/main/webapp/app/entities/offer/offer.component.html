@@ -5,26 +5,26 @@
 </div>
 <div kendoDialogContainer></div>
 <kendo-grid [kendoGridBinding]="offers" [pageable]="true" [pageSize]="gridState.take" [skip]="gridState.skip" [filterable]="true"
-    [sortable]="true" [resizable]="true" [navigable]="true" (edit)="editOffer($event.dataItem)" (save)="viewOffer($event.dataItem)" (remove)="removeOffer($event)">
+    [sortable]="true" [resizable]="true" [navigable]="true" (edit)="editOffer($event.dataItem)" (remove)="removeOffer($event)">
     <ng-template kendoGridToolbarTemplate>
         <button class="btn btn-primary float-right" (click)="createOffer()">Add new</button>
     </ng-template>
     <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false"></kendo-grid-column>
     <kendo-grid-column class="text-center" field="name" title="Name" [filterable]="false" [sortable]="false"></kendo-grid-column>
-    <kendo-grid-column class="text-center" width="160" field="dummy" title="Dummy" filter="boolean">
+    <kendo-grid-column class="text-center" width="140" field="dummy" title="Dummy" filter="boolean">
         <ng-template kendoGridCellTemplate let-dataItem>
             <span [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': dataItem.dummy, 'badge-danger': !dataItem.dummy }">{{ dataItem.dummy ? 'YES' : 'NO' }}</span>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column class="text-center" width="160" field="apsstrExclusive" title="Apsstr Exclusive" filter="boolean">
+    <kendo-grid-column class="text-center" width="140" field="apsstrExclusive" title="Apsstr Exclusive" filter="boolean">
         <ng-template kendoGridCellTemplate let-dataItem>
             <span [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': dataItem.apsstrExclusive, 'badge-danger': !dataItem.apsstrExclusive }">{{ dataItem.apsstrExclusive ? 'YES' : 'NO' }}</span>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-command-column title="Action" width="180">
-        <ng-template kendoGridCellTemplate let-isNew="isNew">
+    <kendo-grid-command-column title="Action">
+        <ng-template kendoGridCellTemplate let-isNew="isNew" let-dataItem>
             <div class="text-center">
-                <button kendoGridSaveCommand class="k-secondary">View</button>
+                <button type="button" class="btn btn-info" (click)="viewOffer(dataItem.id)">View</button>
                 <button kendoGridEditCommand class="k-primary">Edit</button>
                 <button kendoGridRemoveCommand>Delete</button>
             </div>
