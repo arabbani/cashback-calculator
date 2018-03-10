@@ -159,27 +159,27 @@
                             <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerUser">Per User</label>
                                 <input type="number" class="form-control" id="maximumUsesPerUser" name="maximumUsesPerUser" [(ngModel)]="offer.maximumUsesPerUser"
-                                />
+                                    [readOnly]="!editMode" />
                             </div>
                             <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerDay">Per Day</label>
                                 <input type="number" class="form-control" id="maximumUsesPerDay" name="maximumUsesPerDay" [(ngModel)]="offer.maximumUsesPerDay"
-                                />
+                                    [readOnly]="!editMode" />
                             </div>
                             <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerWeek">Per Week</label>
                                 <input type="number" class="form-control" id="maximumUsesPerWeek" name="maximumUsesPerWeek" [(ngModel)]="offer.maximumUsesPerWeek"
-                                />
+                                    [readOnly]="!editMode" />
                             </div>
                             <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerMonth">Per Month</label>
                                 <input type="number" class="form-control" id="maximumUsesPerMonth" name="maximumUsesPerMonth" [(ngModel)]="offer.maximumUsesPerMonth"
-                                />
+                                    [readOnly]="!editMode" />
                             </div>
                             <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerNumber">Per Number</label>
                                 <input type="number" class="form-control" id="maximumUsesPerNumber" name="maximumUsesPerNumber" [(ngModel)]="offer.maximumUsesPerNumber"
-                                />
+                                    [readOnly]="!editMode" />
                             </div>
                         </div>
                     </fieldset>
@@ -194,7 +194,8 @@
                                         <label for="newUserOnly">New User Only</label>
                                     </span>
                                     <span class="col-md-6">
-                                        <kendo-switch id="newUserOnly" name="newUserOnly" [(ngModel)]="offer.newUserOnly" onLabel="Y" offLabel="N"></kendo-switch>
+                                        <span *ngIf="!editMode" [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': offer.newUserOnly, 'badge-danger': !offer.newUserOnly }">{{ offer.newUserOnly ? 'YES' : 'NO' }}</span>
+                                        <kendo-switch *ngIf="editMode" id="newUserOnly" name="newUserOnly" [(ngModel)]="offer.newUserOnly" onLabel="Y" offLabel="N"></kendo-switch>
                                     </span>
                                 </div>
                             </div>
@@ -204,7 +205,8 @@
                                         <label for="appOnly">App Only</label>
                                     </span>
                                     <span class="col-md-6">
-                                        <kendo-switch id="appOnly" name="appOnly" [(ngModel)]="offer.appOnly" onLabel="Y" offLabel="N"></kendo-switch>
+                                        <span *ngIf="!editMode" [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': offer.appOnly, 'badge-danger': !offer.appOnly }">{{ offer.appOnly ? 'YES' : 'NO' }}</span>
+                                        <kendo-switch *ngIf="editMode" id="appOnly" name="appOnly" [(ngModel)]="offer.appOnly" onLabel="Y" offLabel="N"></kendo-switch>
                                     </span>
                                 </div>
                             </div>
@@ -214,7 +216,8 @@
                                         <label for="websiteOnly">Website Only</label>
                                     </span>
                                     <span class="col-md-6">
-                                        <kendo-switch id="websiteOnly" name="websiteOnly" [(ngModel)]="offer.websiteOnly" onLabel="Y" offLabel="N"></kendo-switch>
+                                        <span *ngIf="!editMode" [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': offer.websiteOnly, 'badge-danger': !offer.websiteOnly }">{{ offer.websiteOnly ? 'YES' : 'NO' }}</span>
+                                        <kendo-switch *ngIf="editMode" id="websiteOnly" name="websiteOnly" [(ngModel)]="offer.websiteOnly" onLabel="Y" offLabel="N"></kendo-switch>
                                     </span>
                                 </div>
                             </div>
@@ -224,7 +227,8 @@
                                         <label for="dummy">Dummy</label>
                                     </span>
                                     <span class="col-md-6">
-                                        <kendo-switch id="dummy" name="dummy" [(ngModel)]="offer.dummy" onLabel="Y" offLabel="N"></kendo-switch>
+                                        <span *ngIf="!editMode" [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': offer.dummy, 'badge-danger': !offer.dummy }">{{ offer.dummy ? 'YES' : 'NO' }}</span>
+                                        <kendo-switch *ngIf="editMode" id="dummy" name="dummy" [(ngModel)]="offer.dummy" onLabel="Y" offLabel="N"></kendo-switch>
                                     </span>
                                 </div>
                             </div>
@@ -234,7 +238,9 @@
                                         <label for="apsstrExclusive">Apsstr Exclusive</label>
                                     </span>
                                     <span class="col-md-6">
-                                        <kendo-switch id="apsstrExclusive" name="apsstrExclusive" [(ngModel)]="offer.apsstrExclusive" onLabel="Y" offLabel="N"></kendo-switch>
+                                        <span *ngIf="!editMode" [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': offer.apsstrExclusive, 'badge-danger': !offer.apsstrExclusive }">{{ offer.apsstrExclusive ? 'YES' : 'NO' }}</span>
+                                        <kendo-switch *ngIf="editMode" id="apsstrExclusive" name="apsstrExclusive" [(ngModel)]="offer.apsstrExclusive" onLabel="Y"
+                                            offLabel="N"></kendo-switch>
                                     </span>
                                 </div>
                             </div>
