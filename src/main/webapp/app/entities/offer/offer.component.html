@@ -5,7 +5,7 @@
 </div>
 <div kendoDialogContainer></div>
 <kendo-grid [kendoGridBinding]="offers" [pageable]="true" [pageSize]="gridState.take" [skip]="gridState.skip" [filterable]="true"
-    [sortable]="true" [resizable]="true" [navigable]="true" (edit)="editOffer($event.dataItem.id)" (remove)="removeOffer($event)">
+    [sortable]="true" [resizable]="true" [navigable]="true" (edit)="editOffer($event.dataItem)" (remove)="removeOffer($event)">
     <ng-template kendoGridToolbarTemplate>
         <button class="btn btn-primary float-right" (click)="createOffer()">Add new</button>
     </ng-template>

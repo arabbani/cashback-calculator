@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { State as GridState } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { TabsetComponent } from 'ngx-bootstrap';
@@ -119,6 +119,7 @@ export class CreateOfferComponent implements OnInit {
   isSaving: boolean;
   minStartDate: Date;
   minEndDate: Date;
+  editMode: boolean;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
     private dayService: DayService, private countryService: CountryService, private stateService: StateService, private cityService: CityService,
@@ -126,45 +127,28 @@ export class CreateOfferComponent implements OnInit {
     private categoryService: CategoryService, private subCategoryService: SubCategoryService, private serviceProviderService: ServiceProviderService,
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
     private apsstrKendoDialogService: ApsstrKendoDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
-    private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService, private router: Router) {
+    private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService, private router: Router,
+    private route: ActivatedRoute) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
     this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
   }
 
   ngOnInit() {
-    this.loadOfferTypes();
-    this.loadOfferPolicies();
-    this.loadDates();
-    this.loadDays();
-    this.loadCountries();
-    this.loadStates();
-    this.loadCities();
-    this.loadOperatingSystems();
-    this.loadAffiliates();
-    this.loadMerchants();
-    this.loadCategories();
-    this.loadSubCategories();
-    this.loadServiceProviders();
-    this.loadCircles();
-    this.loadReechargePlanTypes();
-    this.loadTravelTypes();
-    this.loadRegions();
-    this.loadReturnTypes();
-    this.loadReturnModes();
-    this.loadCards();
-    this.loadOffersForReference();
-    this.loadCardTypes();
     this.initialize();
-    this.createOffer();
+    this.extractRouteParams();
+    // this.minStartDate = new Date();
+    // this.minEndDate = this.minStartDate;
   }
 
-  initialize(): void {
+  private initialize(): void {
     this.categoryEnum = Categories;
     this.returnTypesEnum = ReturnTypes;
     this.gridState = GRID_STATE;
     this.isSaving = false;
-    this.minStartDate = new Date();
-    this.minEndDate = this.minStartDate;
+  }
+
+  private initializeToEdit(): void {
+    this.loadEntities();
     this.defaultOfferType = { id: null, name: 'Select Type' };
     this.defaultOfferPolicy = { id: null, name: 'Select Policy' };
     this.defaultDate = 'Select Dates';
@@ -192,19 +176,81 @@ export class CreateOfferComponent implements OnInit {
     this.defaultCards = 'Select Cards';
   }
 
+  private loadEntities() {
+    this.loadOfferTypes();
+    this.loadOfferPolicies();
+    this.loadDates();
+    this.loadDays();
+    this.loadCountries();
+    this.loadStates();
+    this.loadCities();
+    this.loadOperatingSystems();
+    this.loadAffiliates();
+    this.loadMerchants();
+    this.loadCategories();
+    this.loadSubCategories();
+    this.loadServiceProviders();
+    this.loadCircles();
+    this.loadReechargePlanTypes();
+    this.loadTravelTypes();
+    this.loadRegions();
+    this.loadReturnTypes();
+    this.loadReturnModes();
+    this.loadCards();
+    this.loadOffersForReference();
+    this.loadCardTypes();
+  }
+
+  private extractRouteParams(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.editMode = false;
+      this.loadOffer(+id);
+      const mode = this.route.snapshot.paramMap.get('edit');
+      if (mode) {
+        this.editMode = true;
+        this.initializeToEdit();
+      }
+    } else {
+      this.editMode = true;
+      this.initializeToEdit();
+      this.createOffer();
+    }
+  }
+
   private enableTab(tabNumber: number): void {
     this.createOfferTabs.tabs[tabNumber].disabled = false;
   }
 
   private createOffer(): void {
+    this.offer = new Offer();
+    this.offer.offerReturns = [];
     _.forEach(this.createOfferTabs.tabs, (tab, index) => {
       if (index !== 0) {
         tab.disabled = true;
       }
     });
     this.enableTab(0);
-    this.offer = new Offer();
-    this.offer.offerReturns = [];
+  }
+
+  private extractCategories(): void {
+    console.log(this.offer);
+    const categorySet = new Set();
+    _.forEach(this.offer.subCategories, (subCategory) => {
+      categorySet.add(subCategory.category);
+      // arr = _.filter(this.states, (state) => state.country.id === country.id);
+      // this.filteredStates.push(...arr);
+      // arr = _.filter(selectedStates, (selectedState) => selectedState.country.id === country.id);
+      // this.offer.states.push(...arr);
+    });
+  }
+
+  private loadOffer(id: number): void {
+    this.offerService.find(id)
+      .subscribe((offerResponse: HttpResponse<Offer>) => {
+        this.offer = offerResponse.body;
+        this.extractCategories();
+      });
   }
 
   private loadOfferTypes(): void {

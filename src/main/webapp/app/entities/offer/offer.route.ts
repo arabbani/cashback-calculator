@@ -9,51 +9,42 @@ import { OfferComponent } from './offer.component';
 
 export const offerRoute: Routes = [
     {
-        path: 'offer',
+        path: 'offers',
         component: OfferComponent,
         data: {
             authorities: ['ROLE_ADMIN'],
             pageTitle: 'Offers'
         },
         canActivate: [UserRouteAccessService]
-    }, {
-        path: 'offer/:id',
-        component: OfferDetailComponent,
+    },
+    {
+        path: 'offer',
+        component: CreateOfferComponent,
         data: {
             authorities: ['ROLE_ADMIN'],
-            pageTitle: 'Offers'
+            pageTitle: 'Offer'
         },
         canActivate: [UserRouteAccessService]
     }
 ];
 
 export const offerPopupRoute: Routes = [
-    {
-        path: 'offer-new',
-        component: CreateOfferComponent,
-        data: {
-            authorities: ['ROLE_ADMIN'],
-            pageTitle: 'Offers'
-        },
-        canActivate: [UserRouteAccessService]
-    },
-    {
-        path: 'offer/:id/edit',
-        component: OfferPopupComponent,
-        data: {
-            authorities: ['ROLE_ADMIN'],
-            pageTitle: 'Offers'
-        },
-        canActivate: [UserRouteAccessService]
-    },
-    {
-        path: 'offer/:id/delete',
-        component: OfferDeletePopupComponent,
-        data: {
-            authorities: ['ROLE_ADMIN'],
-            pageTitle: 'Offers'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    }
+    // {
+    //     path: 'offer',
+    //     component: CreateOfferComponent,
+    //     data: {
+    //         authorities: ['ROLE_ADMIN'],
+    //         pageTitle: 'Offers'
+    //     },
+    //     canActivate: [UserRouteAccessService]
+    // },
+    // {
+    //     path: 'offer/:id/?:edit',
+    //     component: CreateOfferComponent,
+    //     data: {
+    //         authorities: ['ROLE_ADMIN'],
+    //         pageTitle: 'Offers'
+    //     },
+    //     canActivate: [UserRouteAccessService]
+    // },
 ];

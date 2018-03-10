@@ -129,7 +129,7 @@ export const ENTITIES = [
     },
     {
         name: 'Offer',
-        route: '/offer'
+        route: '/offers'
     },
     {
         name: 'Newsletter',

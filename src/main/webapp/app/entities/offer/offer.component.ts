@@ -35,16 +35,16 @@ export class OfferComponent implements OnInit {
     }
 
     createOffer(): void {
-        this.router.navigate(['offer-new']);
+        this.router.navigate(['offer']);
     }
 
-    editOffer(offerId: number): void {
+    editOffer(offer: Offer): void {
         // this.router.navigate(
         //     ['/', { outlets: { popup: 'offer/' + offerId + '/edit' } }],
         //     { relativeTo: this.route }
         // );
         // this.router.navigate([`${offerId}/edit`], { relativeTo: this.route });
-        this.router.navigate(['offer-new']);
+        this.router.navigate(['offer', { id: offer.id, edit: true }]);
     }
 
     removeOffer({ rowIndex, dataItem }): void {

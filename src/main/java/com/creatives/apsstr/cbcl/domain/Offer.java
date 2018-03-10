@@ -107,7 +107,7 @@ public class Offer implements Serializable {
     @JoinColumn(unique = true)
     private ReechargeInfo reechargeInfo;
 
-    @OneToMany(mappedBy = "offer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<OfferReturn> offerReturns = new HashSet<>();
