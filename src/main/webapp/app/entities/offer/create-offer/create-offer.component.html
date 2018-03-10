@@ -6,7 +6,7 @@
                 <form name="basicInfoForm" role="form" #basicInfoForm="ngForm" novalidate>
                     <div class="form-group mb-3">
                         <label for="name">Name</label>
-                        <h5>{{ offer.name }}</h5>
+                        <h5 *ngIf="!editMode">{{ offer.name }}</h5>
                         <ng-container *ngIf="editMode">
                             <input type="text" class="form-control" id="name" name="name" [(ngModel)]="offer.name" #name="ngModel" maxlength="500" required
                                 placeholder="Title" />
@@ -84,7 +84,6 @@
                                             placeholder="End Date" bsDatepicker />
                                     </div>
                                     <div class="col-md-6" *ngIf="editMode">
-                                        {{ offer.endDate | date: 'medium'}}
                                         <timepicker name="endTime" [(ngModel)]="offer.endDate" [showMeridian]="false"></timepicker>
                                     </div>
                                 </ng-container>
@@ -94,7 +93,7 @@
                     <div class="row">
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="type">Type</label>
-                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.type">
+                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.type && !editMode">
                                 {{ offer.type.name }}
                             </span>
                             <kendo-dropdownlist *ngIf="editMode" id="type" name="type" [data]="offerTypes" [defaultItem]="defaultOfferType" textField="name"
@@ -103,7 +102,7 @@
                         <div class="col-md-6">
                             <div *ngIf="offer.type && isCoupon(offer.type)" class="form-group mb-3 row">
                                 <label class="col-md-3 col-form-label" for="code">Code</label>
-                                <h6>{{ offer.code }}</h6>
+                                <h6 *ngIf="!editMode">{{ offer.code }}</h6>
                                 <ng-container *ngIf="editMode">
                                     <div class="col-md-9">
                                         <input type="text" class="form-control" id="code" name="code" [(ngModel)]="offer.code" #code="ngModel" maxlength="255" required
@@ -123,7 +122,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="policy">Policy</label>
-                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.policy">
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.policy && !editMode">
                             {{ offer.policy.name }}
                         </span>
                         <kendo-dropdownlist *ngIf="editMode" id="policy" name="policy" [data]="offerPolicies" [defaultItem]="defaultOfferPolicy"
@@ -324,7 +323,7 @@
                     <div class="row">
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="affiliate">Affiliate</label>
-                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.affiliate">
+                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.affiliate && !editMode">
                                 {{ offer.affiliate.name }}
                             </span>
                             <kendo-dropdownlist *ngIf="editMode" id="affiliate" name="affiliate" [data]="affiliates" [defaultItem]="defaultAffiliate"
@@ -332,7 +331,7 @@
                         </div>
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="merchant">Merchant</label>
-                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.merchant">
+                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.merchant && !editMode">
                                 {{ offer.merchant.name }}
                             </span>
                             <kendo-dropdownlist *ngIf="editMode" id="merchant" name="merchant" [data]="filteredMerchants" [defaultItem]="defaultMerchant"
@@ -508,7 +507,7 @@
                                 <ng-template kendoGridDetailTemplate let-dataItem>
                                     <div class="form-group mb-3">
                                         <label class="mr-5" for="type">Type</label>
-                                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.type">
+                                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.type && !editMode">
                                             {{ dataItem.type.name }}
                                         </span>
                                         <kendo-dropdownlist *ngIf="editMode" id="type" name="type" [data]="returnTypes" [defaultItem]="defaultReturnType" textField="name"
@@ -556,7 +555,7 @@
                                                     </div>
                                                     <div class="form-group col-sm-6 col-lg-4 mb-3">
                                                         <label for="mode">Mode</label>
-                                                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.mainReturn.mode">
+                                                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.mainReturn.mode && !editMode">
                                                             {{ dataItem.mainReturn.mode.name }}
                                                         </span>
                                                         <kendo-dropdownlist *ngIf="editMode" id="mode" name="mode" [data]="returnModes" [defaultItem]="defaultReturnMode" textField="name"
@@ -564,7 +563,7 @@
                                                     </div>
                                                     <div class="form-group col-sm-6 col-lg-4 mb-3">
                                                         <label for="channel">Channel</label>
-                                                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.mainReturn.channel">
+                                                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.mainReturn.channel && !editMode">
                                                             {{ dataItem.mainReturn.channel.name }}
                                                         </span>
                                                         <kendo-dropdownlist *ngIf="editMode" id="channel" name="channel" [data]="cards" [defaultItem]="defaultCard" textField="name"

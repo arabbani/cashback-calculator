@@ -477,19 +477,42 @@ export class CreateOfferComponent implements OnInit {
     }
   }
 
-  onCountryChange(countries: Country[]): void {
-    const selectedStates = this.offer.states;
-    this.offer.states = [];
+  private selectStatesForCountries(countries: Country[]): void {
     this.filteredStates = [];
     let arr = null;
     _.forEach(countries, (country) => {
       arr = _.filter(this.states, (state) => state.country.id === country.id);
       this.filteredStates.push(...arr);
+    });
+    this.refinedStates = this.filteredStates;
+  }
+
+  private selectOfferStatesForCountries(countries: Country[]): void {
+    const selectedStates = this.offer.states;
+    this.offer.states = [];
+    let arr = null;
+    _.forEach(countries, (country) => {
       arr = _.filter(selectedStates, (selectedState) => selectedState.country.id === country.id);
       this.offer.states.push(...arr);
     });
-    this.refinedStates = this.filteredStates;
     this.onStateChange(this.offer.states);
+  }
+
+  onCountryChange(countries: Country[]): void {
+    this.selectStatesForCountries(countries);
+    this.selectOfferStatesForCountries(countries);
+    // const selectedStates = this.offer.states;
+    // this.offer.states = [];
+    // this.filteredStates = [];
+    // let arr = null;
+    // _.forEach(countries, (country) => {
+    //   arr = _.filter(this.states, (state) => state.country.id === country.id);
+    //   this.filteredStates.push(...arr);
+    //   arr = _.filter(selectedStates, (selectedState) => selectedState.country.id === country.id);
+    //   this.offer.states.push(...arr);
+    // });
+    // this.refinedStates = this.filteredStates;
+    // this.onStateChange(this.offer.states);
   }
 
   onStateChange(states: State[]): void {
