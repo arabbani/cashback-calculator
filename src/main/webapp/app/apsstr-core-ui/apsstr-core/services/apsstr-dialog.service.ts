@@ -3,7 +3,7 @@ import { DialogRef, DialogResult, DialogService } from '@progress/kendo-angular-
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
-export class ApsstrKendoDialogService {
+export class ApsstrDialogService {
 
   constructor(private dialogService: DialogService) { }
 

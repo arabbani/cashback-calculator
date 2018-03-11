@@ -5,7 +5,7 @@ import { State as GridState } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 import { Country, CountryService } from '../country';
 import { State } from './state.model';
@@ -25,7 +25,7 @@ export class StateComponent implements OnInit {
     defaultCountry = {id: null, name: 'Select Country'};
 
     constructor(private stateService: StateService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService, private countryService: CountryService) {
+        private apsstrKendoDialogService: ApsstrDialogService, private countryService: CountryService) {
         this.createStateFormGroup = this.createStateFormGroup.bind(this);
     }
 

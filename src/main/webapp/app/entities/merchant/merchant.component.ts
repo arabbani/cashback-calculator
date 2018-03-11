@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 import { SubCategory, SubCategoryService } from '../sub-category';
 import { Merchant } from './merchant.model';
@@ -25,7 +25,7 @@ export class MerchantComponent implements OnInit {
     defaultSubCategory = 'Select Sub Categories';
 
     constructor(private merchantService: MerchantService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService, private subCategoryService: SubCategoryService) {
+        private apsstrKendoDialogService: ApsstrDialogService, private subCategoryService: SubCategoryService) {
         this.createMerchantFormGroup = this.createMerchantFormGroup.bind(this);
     }
 

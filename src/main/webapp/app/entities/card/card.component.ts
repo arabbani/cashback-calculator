@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 import { Bank, BankService } from '../bank';
 import { CardType, CardTypeService } from '../card-type';
@@ -28,7 +28,7 @@ export class CardComponent implements OnInit {
     defaultBank = {id: null, name: 'Select Bank'};
 
     constructor(private cardService: CardService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService, private cardTypeService: CardTypeService, private bankService: BankService) {
+        private apsstrKendoDialogService: ApsstrDialogService, private cardTypeService: CardTypeService, private bankService: BankService) {
         this.createCardFormGroup = this.createCardFormGroup.bind(this);
     }
 

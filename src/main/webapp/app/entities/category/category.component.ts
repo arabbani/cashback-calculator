@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 import { Category } from './category.model';
 import { CategoryService } from './category.service';
@@ -21,7 +21,7 @@ export class CategoryComponent implements OnInit {
     categoryFormGroup: FormGroup;
 
     constructor(private categoryService: CategoryService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService) {
+        private apsstrKendoDialogService: ApsstrDialogService) {
         this.createCategoryFormGroup = this.createCategoryFormGroup.bind(this);
     }
 

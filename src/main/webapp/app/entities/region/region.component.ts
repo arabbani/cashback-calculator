@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 import { Region } from './region.model';
 import { RegionService } from './region.service';
@@ -21,7 +21,7 @@ export class RegionComponent implements OnInit {
     returnModeFormGroup: FormGroup;
 
     constructor(private regionService: RegionService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService) {
+        private apsstrKendoDialogService: ApsstrDialogService) {
         this.createRegionFormGroup = this.createRegionFormGroup.bind(this);
     }
 

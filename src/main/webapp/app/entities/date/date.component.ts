@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 import { Date } from './date.model';
 import { DateService } from './date.service';
@@ -21,7 +21,7 @@ export class DateComponent implements OnInit {
     dateFormGroup: FormGroup;
 
     constructor(private dateService: DateService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService) {
+        private apsstrKendoDialogService: ApsstrDialogService) {
         this.createDateFormGroup = this.createDateFormGroup.bind(this);
     }
 

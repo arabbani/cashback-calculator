@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 import { Circle } from './circle.model';
 import { CircleService } from './circle.service';
@@ -21,7 +21,7 @@ export class CircleComponent implements OnInit {
     circleFormGroup: FormGroup;
 
     constructor(private circleService: CircleService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService) {
+        private apsstrKendoDialogService: ApsstrDialogService) {
         this.createCircleFormGroup = this.createCircleFormGroup.bind(this);
     }
 

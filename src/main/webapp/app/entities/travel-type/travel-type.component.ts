@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 import { TravelType } from './travel-type.model';
 import { TravelTypeService } from './travel-type.service';
@@ -21,7 +21,7 @@ export class TravelTypeComponent implements OnInit {
     travelTypeFormGroup: FormGroup;
 
     constructor(private travelTypeService: TravelTypeService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService) {
+        private apsstrKendoDialogService: ApsstrDialogService) {
         this.createTravelTypeFormGroup = this.createTravelTypeFormGroup.bind(this);
     }
 

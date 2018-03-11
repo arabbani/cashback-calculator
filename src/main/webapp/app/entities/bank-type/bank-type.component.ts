@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 import { BankType } from './bank-type.model';
 import { BankTypeService } from './bank-type.service';
@@ -21,7 +21,7 @@ export class BankTypeComponent implements OnInit {
     bankTypeFormGroup: FormGroup;
 
     constructor(private bankTypeService: BankTypeService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService) {
+        private apsstrKendoDialogService: ApsstrDialogService) {
         this.createBankTypeFormGroup = this.createBankTypeFormGroup.bind(this);
     }
 

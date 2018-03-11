@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 import { ReechargePlanType } from './reecharge-plan-type.model';
 import { ReechargePlanTypeService } from './reecharge-plan-type.service';
@@ -21,7 +21,7 @@ export class ReechargePlanTypeComponent implements OnInit {
     reechargePlanTypeFormGroup: FormGroup;
 
     constructor(private reechargePlanTypeService: ReechargePlanTypeService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService) {
+        private apsstrKendoDialogService: ApsstrDialogService) {
         this.createReechargePlanTypeFormGroup = this.createReechargePlanTypeFormGroup.bind(this);
     }
 

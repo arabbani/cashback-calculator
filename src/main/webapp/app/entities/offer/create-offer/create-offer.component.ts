@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Offer, OfferService } from '..';
 import { Categories, OfferTypes, ReturnTypes } from '../../../apsstr-core-ui-config';
-import { ApsstrKendoDialogService, FilterEntitiesService } from '../../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService, FilterEntitiesService } from '../../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../../shared';
 import { Affiliate, AffiliateService } from '../../affiliate';
 import { Card, CardService } from '../../card';
@@ -120,7 +120,7 @@ export class CreateOfferComponent implements OnInit {
     private operatingSystemService: OperatingSystemService, private affiliateService: AffiliateService, private merchantService: MerchantService,
     private categoryService: CategoryService, private subCategoryService: SubCategoryService, private serviceProviderService: ServiceProviderService,
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
-    private apsstrKendoDialogService: ApsstrKendoDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
+    private apsstrKendoDialogService: ApsstrDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
     private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService, private router: Router,
     private route: ActivatedRoute, private location: Location, private filterEntitiesService: FilterEntitiesService) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);

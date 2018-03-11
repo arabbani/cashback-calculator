@@ -11,7 +11,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 
 @Component({
@@ -25,7 +25,7 @@ export class CardTypeComponent implements OnInit {
     cardTypeFormGroup: FormGroup;
 
     constructor(private cardTypeService: CardTypeService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService) {
+        private apsstrKendoDialogService: ApsstrDialogService) {
         this.createCardTypeFormGroup = this.createCardTypeFormGroup.bind(this);
     }
 

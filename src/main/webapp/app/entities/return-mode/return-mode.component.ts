@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 import { ReturnMode } from './return-mode.model';
 import { ReturnModeService } from './return-mode.service';
@@ -21,7 +21,7 @@ export class ReturnModeComponent implements OnInit {
     returnModeFormGroup: FormGroup;
 
     constructor(private returnModeService: ReturnModeService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService) {
+        private apsstrKendoDialogService: ApsstrDialogService) {
         this.createReturnModeFormGroup = this.createReturnModeFormGroup.bind(this);
     }
 

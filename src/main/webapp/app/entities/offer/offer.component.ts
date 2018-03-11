@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 import { Offer } from './offer.model';
 import { OfferService } from './offer.service';
@@ -18,7 +18,7 @@ export class OfferComponent implements OnInit {
     public offers: Offer[];
     public gridState: State;
 
-    constructor(private offerService: OfferService, private router: Router, private apsstrKendoDialogService: ApsstrKendoDialogService) { }
+    constructor(private offerService: OfferService, private router: Router, private apsstrKendoDialogService: ApsstrDialogService) { }
 
     ngOnInit() {
         this.gridState = GRID_STATE;

@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrKendoDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
 import { Affiliate, AffiliateService } from '../affiliate';
 import { AffiliateCredential } from './affiliate-credential.model';
@@ -25,7 +25,7 @@ export class AffiliateCredentialComponent implements OnInit {
     defaultAffiliate = {id: null, name: 'Select Affiliate'};
 
     constructor(private affiliateCredentialService: AffiliateCredentialService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrKendoDialogService, private affiliateService: AffiliateService) {
+        private apsstrKendoDialogService: ApsstrDialogService, private affiliateService: AffiliateService) {
         this.createAffiliateCredentialFormGroup = this.createAffiliateCredentialFormGroup.bind(this);
     }
 
