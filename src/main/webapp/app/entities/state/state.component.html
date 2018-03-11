@@ -11,13 +11,17 @@
         <button class="float-right" kendoGridAddCommand>Add new</button>
     </ng-template>
     <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
-    <kendo-grid-column class="text-center" field="name" title="Name" [filterable]="false" [sortable]="false"></kendo-grid-column>
-    <kendo-grid-column class="text-center" width="190" field="country" title="Country" [filterable]="false" [sortable]="false">
+    <kendo-grid-column class="text-center" field="name" title="Name" [sortable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" width="190" field="country" title="Country" [sortable]="false">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{ dataItem.country?.name }}
         </ng-template>
         <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
             <kendo-dropdownlist [data]="countries" [defaultItem]="defaultCountry" textField="name" valueField="id" [formControl]="formGroup.get('country')"></kendo-dropdownlist>
+        </ng-template>
+        <ng-template kendoGridFilterCellTemplate let-dataItem>
+            <apsstr-drop-down-list-filter [filter]="dataItem" [data]="countries" textField="name" valueField="id">
+            </apsstr-drop-down-list-filter>
         </ng-template>
     </kendo-grid-column>
     <kendo-grid-command-column title="Action" width="220">

@@ -12,13 +12,17 @@
     </ng-template>
     <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
     <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
-    <kendo-grid-column class="text-center" width="190" field="type" title="Type" [filterable]="false" [sortable]="false">
+    <kendo-grid-column class="text-center" width="190" field="type" title="Type" [sortable]="false">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{ dataItem.type?.name }}
         </ng-template>
         <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
             <kendo-dropdownlist [data]="operatingSystemTypes" [defaultItem]="defaultOperatingSystemType" textField="name" valueField="id"
                 [formControl]="formGroup.get('type')"></kendo-dropdownlist>
+        </ng-template>
+        <ng-template kendoGridFilterCellTemplate let-dataItem>
+            <apsstr-drop-down-list-filter [filter]="dataItem" [data]="operatingSystemTypes" textField="name" valueField="id">
+            </apsstr-drop-down-list-filter>
         </ng-template>
     </kendo-grid-column>
     <kendo-grid-command-column title="Action" width="220">

@@ -20,7 +20,7 @@ export class DropDownListFilterComponent extends BaseFilterCellComponent impleme
   @Input() private data: any[];
   @Input() public textField: string;
   @Input() public valueField: string;
-  @Input() public filterable?: boolean;
+  @Input() public filterable = true;
   public filteredData: any[];
 
   constructor(filterService: FilterService, private filterEntitiesService: FilterEntitiesService) {
