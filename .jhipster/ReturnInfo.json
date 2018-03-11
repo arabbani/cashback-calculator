@@ -1,0 +1,48 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "mainReturn",
+            "otherEntityName": "mainReturn",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "returnInfo"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "extras",
+            "otherEntityName": "returnExtras",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "returnInfo"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "payment",
+            "otherEntityName": "offerPayment",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "returnInfo"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "returnOffer",
+            "otherEntityName": "offer",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "offerReturn",
+            "otherEntityName": "offerReturn",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [],
+    "changelogDate": "20180214101702",
+    "entityTableName": "return_info",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

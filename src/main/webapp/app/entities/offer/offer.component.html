@@ -1,0 +1,184 @@
+<div>
+    <h2>
+        <span>Offers</span>
+        <button class="btn btn-primary float-right jh-create-entity create-offer" [routerLink]="['/', { outlets: { popup: ['offer-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Offer
+            </span>
+        </button>
+    </h2>
+    <apsstr-alert></apsstr-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="offers">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th><span>Description</span></th>
+            <th><span>Admin Description</span></th>
+            <th><span>Code</span></th>
+            <th><span>Start Date</span></th>
+            <th><span>End Date</span></th>
+            <th><span>Maximum Uses Per User</span></th>
+            <th><span>Maximum Uses Per Day</span></th>
+            <th><span>Maximum Uses Per Week</span></th>
+            <th><span>Maximum Uses Per Month</span></th>
+            <th><span>Maximum Uses Per Number</span></th>
+            <th><span>New User Only</span></th>
+            <th><span>App Only</span></th>
+            <th><span>Website Only</span></th>
+            <th><span>Number Of Uses</span></th>
+            <th><span>Active</span></th>
+            <th><span>Dummy</span></th>
+            <th><span>Apsstr Exclusive</span></th>
+            <th><span>Url</span></th>
+            <th><span>Travel Info</span></th>
+            <th><span>Reecharge Info</span></th>
+            <th><span>Policy</span></th>
+            <th><span>Operating System</span></th>
+            <th><span>Country</span></th>
+            <th><span>State</span></th>
+            <th><span>City</span></th>
+            <th><span>Sub Category</span></th>
+            <th><span>Service Provider</span></th>
+            <th><span>Active Date</span></th>
+            <th><span>Active Day</span></th>
+            <th><span>Reecharge Type</span></th>
+            <th><span>Affiliate</span></th>
+            <th><span>Merchant</span></th>
+            <th><span>Type</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let offer of offers ;trackBy: trackId">
+                <td><a [routerLink]="['../offer', offer.id ]">{{offer.id}}</a></td>
+                <td>{{offer.name}}</td>
+                <td>{{offer.description}}</td>
+                <td>{{offer.adminDescription}}</td>
+                <td>{{offer.code}}</td>
+                <td>{{offer.startDate | date:'medium'}}</td>
+                <td>{{offer.endDate | date:'medium'}}</td>
+                <td>{{offer.maximumUsesPerUser}}</td>
+                <td>{{offer.maximumUsesPerDay}}</td>
+                <td>{{offer.maximumUsesPerWeek}}</td>
+                <td>{{offer.maximumUsesPerMonth}}</td>
+                <td>{{offer.maximumUsesPerNumber}}</td>
+                <td>{{offer.newUserOnly}}</td>
+                <td>{{offer.appOnly}}</td>
+                <td>{{offer.websiteOnly}}</td>
+                <td>{{offer.numberOfUses}}</td>
+                <td>{{offer.active}}</td>
+                <td>{{offer.dummy}}</td>
+                <td>{{offer.apsstrExclusive}}</td>
+                <td>{{offer.url}}</td>
+                <td>
+                    <div *ngIf="offer.travelInfo">
+                        <a [routerLink]="['../travel-info', offer.travelInfo?.id ]" >{{offer.travelInfo?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="offer.reechargeInfo">
+                        <a [routerLink]="['../reecharge-info', offer.reechargeInfo?.id ]" >{{offer.reechargeInfo?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="offer.policy">
+                        <a [routerLink]="['../offer-policy', offer.policy?.id ]" >{{offer.policy?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    <span *ngFor="let operatingSystem of offer.operatingSystems; let last = last">
+                            <a class="form-control-static" [routerLink]="['../operating-system', operatingSystem?.id ]">{{operatingSystem.name}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let country of offer.countries; let last = last">
+                            <a class="form-control-static" [routerLink]="['../country', country?.id ]">{{country.name}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let state of offer.states; let last = last">
+                            <a class="form-control-static" [routerLink]="['../state', state?.id ]">{{state.name}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let city of offer.cities; let last = last">
+                            <a class="form-control-static" [routerLink]="['../city', city?.id ]">{{city.name}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let subCategory of offer.subCategories; let last = last">
+                            <a class="form-control-static" [routerLink]="['../sub-category', subCategory?.id ]">{{subCategory.code}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let serviceProvider of offer.serviceProviders; let last = last">
+                            <a class="form-control-static" [routerLink]="['../service-provider', serviceProvider?.id ]">{{serviceProvider.name}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let activeDate of offer.activeDates; let last = last">
+                            <a class="form-control-static" [routerLink]="['../date', activeDate?.id ]">{{activeDate.date}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let activeDay of offer.activeDays; let last = last">
+                            <a class="form-control-static" [routerLink]="['../day', activeDay?.id ]">{{activeDay.day}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let reechargeType of offer.reechargeTypes; let last = last">
+                            <a class="form-control-static" [routerLink]="['../reecharge-plan-type', reechargeType?.id ]">{{reechargeType.name}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <div *ngIf="offer.affiliate">
+                        <a [routerLink]="['../affiliate', offer.affiliate?.id ]" >{{offer.affiliate?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="offer.merchant">
+                        <a [routerLink]="['../merchant', offer.merchant?.id ]" >{{offer.merchant?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="offer.type">
+                        <a [routerLink]="['../offer-type', offer.type?.id ]" >{{offer.type?.name}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../offer', offer.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'offer/'+ offer.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'offer/'+ offer.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

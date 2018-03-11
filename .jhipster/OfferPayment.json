@@ -1,0 +1,28 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "mode",
+            "otherEntityName": "cardType",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "card",
+            "otherEntityName": "card",
+            "otherEntityField": "name",
+            "ownerSide": true
+        }
+    ],
+    "fields": [],
+    "changelogDate": "20180214101713",
+    "entityTableName": "offer_payment",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

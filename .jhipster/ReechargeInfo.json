@@ -1,0 +1,20 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "circle",
+            "otherEntityName": "circle",
+            "otherEntityField": "name",
+            "ownerSide": true
+        }
+    ],
+    "fields": [],
+    "changelogDate": "20180214101707",
+    "entityTableName": "reecharge_info",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

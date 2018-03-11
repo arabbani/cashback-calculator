@@ -1,0 +1,42 @@
+
+<div *ngIf="newsletter">
+    <h2><span>Newsletter</span> {{newsletter.id}}</h2>
+    <hr>
+    <apsstr-alert-error></apsstr-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Email Id</span></dt>
+        <dd>
+            <span>{{newsletter.emailId}}</span>
+        </dd>
+        <dt><span>Phone Number</span></dt>
+        <dd>
+            <span>{{newsletter.phoneNumber}}</span>
+        </dd>
+        <dt><span>Mail Per Week</span></dt>
+        <dd>
+            <span>{{newsletter.mailPerWeek}}</span>
+        </dd>
+        <dt><span>Number Of Mails Sent</span></dt>
+        <dd>
+            <span>{{newsletter.numberOfMailsSent}}</span>
+        </dd>
+        <dt><span>Active</span></dt>
+        <dd>
+            <span>{{newsletter.active}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'newsletter/'+ newsletter.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

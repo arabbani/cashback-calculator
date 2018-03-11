@@ -1,0 +1,57 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myUserInfoLabel">Create or edit a User Info</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <apsstr-alert-error></apsstr-alert-error>
+        <div class="form-group" [hidden]="!userInfo.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="userInfo.id" readonly />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_city">City</label>
+            <select class="form-control" id="field_city" name="city" [(ngModel)]="userInfo.city" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="cityOption.id === userInfo.city?.id ? userInfo.city : cityOption" *ngFor="let cityOption of cities; trackBy: trackCityById">{{cityOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_user">User</label>
+            <select class="form-control" id="field_user" name="user" [(ngModel)]="userInfo.user" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="userOption.id === userInfo.user?.id ? userInfo.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_merchant">Merchant</label>
+            <select class="form-control" id="field_merchant" multiple name="merchant" [(ngModel)]="userInfo.merchants">
+                <option [ngValue]="getSelected(userInfo.merchants, merchantOption)" *ngFor="let merchantOption of merchants; trackBy: trackMerchantById">{{merchantOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_card">Card</label>
+            <select class="form-control" id="field_card" multiple name="card" [(ngModel)]="userInfo.cards">
+                <option [ngValue]="getSelected(userInfo.cards, cardOption)" *ngFor="let cardOption of cards; trackBy: trackCardById">{{cardOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="field_operatingSystem">Operating System</label>
+            <select class="form-control" id="field_operatingSystem" multiple name="operatingSystem" [(ngModel)]="userInfo.operatingSystems">
+                <option [ngValue]="getSelected(userInfo.operatingSystems, operatingSystemOption)" *ngFor="let operatingSystemOption of operatingsystems; trackBy: trackOperatingSystemById">{{operatingSystemOption.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101643_added_entity_Merchant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101644_added_entity_AffiliateCredential.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101645_added_entity_Affiliate.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101646_added_entity_OperatingSystemType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101647_added_entity_OperatingSystem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101648_added_entity_Country.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101649_added_entity_State.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101650_added_entity_City.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101651_added_entity_OfferPolicy.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101652_added_entity_OfferType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101653_added_entity_Category.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101654_added_entity_SubCategory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101655_added_entity_ServiceProvider.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101656_added_entity_Date.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101657_added_entity_Day.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101658_added_entity_ReturnType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101659_added_entity_ReturnMode.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101700_added_entity_ReturnExtras.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101701_added_entity_MainReturn.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101702_added_entity_ReturnInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101703_added_entity_OfferReturn.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101704_added_entity_Circle.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101705_added_entity_TravelType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101706_added_entity_Region.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101707_added_entity_ReechargeInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101708_added_entity_TravelInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101709_added_entity_BankType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101710_added_entity_Bank.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101711_added_entity_CardType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101712_added_entity_Card.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101713_added_entity_OfferPayment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101714_added_entity_ReechargePlanType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101715_added_entity_Offer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101716_added_entity_Newsletter.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101717_added_entity_UserInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101718_added_entity_Brand.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101719_added_entity_ElectronicsInfo.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20180214101643_added_entity_constraints_Merchant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101644_added_entity_constraints_AffiliateCredential.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101647_added_entity_constraints_OperatingSystem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101649_added_entity_constraints_State.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101650_added_entity_constraints_City.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101654_added_entity_constraints_SubCategory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101655_added_entity_constraints_ServiceProvider.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101701_added_entity_constraints_MainReturn.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101702_added_entity_constraints_ReturnInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101703_added_entity_constraints_OfferReturn.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101707_added_entity_constraints_ReechargeInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101708_added_entity_constraints_TravelInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101710_added_entity_constraints_Bank.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101712_added_entity_constraints_Card.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101713_added_entity_constraints_OfferPayment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101715_added_entity_constraints_Offer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101717_added_entity_constraints_UserInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101718_added_entity_constraints_Brand.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180214101719_added_entity_constraints_ElectronicsInfo.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+</databaseChangeLog>
