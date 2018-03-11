@@ -3,7 +3,7 @@
     "promptValues": {
       "packageName": "com.creatives.apsstr.cbcl"
     },
-    "jhipsterVersion": "4.14.0",
+    "jhipsterVersion": "4.14.1",
     "baseName": "cbcl",
     "packageName": "com.creatives.apsstr.cbcl",
     "packageFolder": "com/creatives/apsstr/cbcl",
