@@ -5,6 +5,7 @@ import { DialogModule } from '@progress/kendo-angular-dialog';
 import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
 import { GridModule } from '@progress/kendo-angular-grid';
 
+import { ApsstrSharedModule } from '../../apsstr-core-ui';
 import { CbclSharedModule } from '../../shared';
 import { AffiliateCredentialComponent, affiliateCredentialRoute, AffiliateCredentialService } from './';
 
@@ -19,7 +20,8 @@ const ENTITY_STATES = [
         ReactiveFormsModule,
         GridModule,
         DialogModule,
-        DropDownListModule
+        DropDownListModule,
+        ApsstrSharedModule
     ],
     declarations: [
         AffiliateCredentialComponent
@@ -32,4 +34,4 @@ const ENTITY_STATES = [
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class CbclAffiliateCredentialModule {}
+export class CbclAffiliateCredentialModule { }
