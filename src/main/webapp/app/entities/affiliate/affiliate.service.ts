@@ -7,7 +7,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { createRequestOption } from '../../shared';
 import { Affiliate } from './affiliate.model';
 
-export type EntityResponseType = HttpResponse<Affiliate>;
+type EntityResponseType = HttpResponse<Affiliate>;
 
 @Injectable()
 export class AffiliateService {

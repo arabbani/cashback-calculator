@@ -7,7 +7,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { createRequestOption } from '../../shared';
 import { Merchant } from './merchant.model';
 
-export type EntityResponseType = HttpResponse<Merchant>;
+type EntityResponseType = HttpResponse<Merchant>;
 
 @Injectable()
 export class MerchantService {

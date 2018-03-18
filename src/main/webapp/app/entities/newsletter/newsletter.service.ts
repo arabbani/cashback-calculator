@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { Newsletter } from './newsletter.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<Newsletter>;
+type EntityResponseType = HttpResponse<Newsletter>;
 
 @Injectable()
 export class NewsletterService {

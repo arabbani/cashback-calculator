@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import { JhiEventManager } from 'ng-jhipster';
-import { LocalStorageService } from 'ng2-webstorage';
+import { LocalStorageService } from 'ngx-webstorage';
 
 import { CASHBACK_STORE_SIZE } from '../../../constants';
 import { StoredCashback } from '../../../model/';

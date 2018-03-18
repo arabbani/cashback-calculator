@@ -7,7 +7,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { createRequestOption } from '../../shared';
 import { AffiliateCredential } from './affiliate-credential.model';
 
-export type EntityResponseType = HttpResponse<AffiliateCredential>;
+type EntityResponseType = HttpResponse<AffiliateCredential>;
 
 @Injectable()
 export class AffiliateCredentialService {

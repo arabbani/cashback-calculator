@@ -7,7 +7,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { createRequestOption } from '../../shared';
 import { OfferType } from './offer-type.model';
 
-export type EntityResponseType = HttpResponse<OfferType>;
+type EntityResponseType = HttpResponse<OfferType>;
 
 @Injectable()
 export class OfferTypeService {

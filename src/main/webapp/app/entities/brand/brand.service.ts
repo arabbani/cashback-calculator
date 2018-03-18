@@ -7,7 +7,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { createRequestOption } from '../../shared';
 import { Brand } from './brand.model';
 
-export type EntityResponseType = HttpResponse<Brand>;
+type EntityResponseType = HttpResponse<Brand>;
 
 @Injectable()
 export class BrandService {
