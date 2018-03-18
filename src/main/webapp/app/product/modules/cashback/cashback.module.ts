@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ApsstrSharedModule } from '../../../apsstr-core-ui';
 import { CashbackRoutingModule } from './cashback-routing.module';
 import { CashbackComponent } from './components/cashback/cashback.component';
+import { MobileComponent } from './components/mobile/mobile.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,6 @@ import { CashbackComponent } from './components/cashback/cashback.component';
     FormsModule,
     ApsstrSharedModule
   ],
-  declarations: [CashbackComponent]
+  declarations: [CashbackComponent, MobileComponent]
 })
 export class CashbackModule { }
