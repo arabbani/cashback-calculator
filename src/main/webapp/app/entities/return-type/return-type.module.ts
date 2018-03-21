@@ -1,32 +1,48 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DialogModule } from '@progress/kendo-angular-dialog';
-import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import { ReturnTypeComponent, returnTypeRoute, ReturnTypeService } from './';
+import {
+    ReturnTypeService,
+    ReturnTypePopupService,
+    ReturnTypeComponent,
+    ReturnTypeDetailComponent,
+    ReturnTypeDialogComponent,
+    ReturnTypePopupComponent,
+    ReturnTypeDeletePopupComponent,
+    ReturnTypeDeleteDialogComponent,
+    returnTypeRoute,
+    returnTypePopupRoute,
+} from './';
 
 const ENTITY_STATES = [
-    returnTypeRoute
+    ...returnTypeRoute,
+    ...returnTypePopupRoute,
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES),
-        ReactiveFormsModule,
-        GridModule,
-        DialogModule
+        RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
-        ReturnTypeComponent
+        ReturnTypeComponent,
+        ReturnTypeDetailComponent,
+        ReturnTypeDialogComponent,
+        ReturnTypeDeleteDialogComponent,
+        ReturnTypePopupComponent,
+        ReturnTypeDeletePopupComponent,
     ],
     entryComponents: [
-        ReturnTypeComponent
+        ReturnTypeComponent,
+        ReturnTypeDialogComponent,
+        ReturnTypePopupComponent,
+        ReturnTypeDeleteDialogComponent,
+        ReturnTypeDeletePopupComponent,
     ],
     providers: [
-        ReturnTypeService
+        ReturnTypeService,
+        ReturnTypePopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -1,32 +1,48 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DialogModule } from '@progress/kendo-angular-dialog';
-import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import { ReturnModeComponent, returnModeRoute, ReturnModeService } from './';
+import {
+    ReturnModeService,
+    ReturnModePopupService,
+    ReturnModeComponent,
+    ReturnModeDetailComponent,
+    ReturnModeDialogComponent,
+    ReturnModePopupComponent,
+    ReturnModeDeletePopupComponent,
+    ReturnModeDeleteDialogComponent,
+    returnModeRoute,
+    returnModePopupRoute,
+} from './';
 
 const ENTITY_STATES = [
-    returnModeRoute
+    ...returnModeRoute,
+    ...returnModePopupRoute,
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES),
-        ReactiveFormsModule,
-        GridModule,
-        DialogModule
+        RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
-        ReturnModeComponent
+        ReturnModeComponent,
+        ReturnModeDetailComponent,
+        ReturnModeDialogComponent,
+        ReturnModeDeleteDialogComponent,
+        ReturnModePopupComponent,
+        ReturnModeDeletePopupComponent,
     ],
     entryComponents: [
-        ReturnModeComponent
+        ReturnModeComponent,
+        ReturnModeDialogComponent,
+        ReturnModePopupComponent,
+        ReturnModeDeleteDialogComponent,
+        ReturnModeDeletePopupComponent,
     ],
     providers: [
-        ReturnModeService
+        ReturnModeService,
+        ReturnModePopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

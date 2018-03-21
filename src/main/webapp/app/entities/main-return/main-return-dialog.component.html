@@ -1,0 +1,60 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myMainReturnLabel">Create or edit a Main Return</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <apsstr-alert-error></apsstr-alert-error>
+        <div class="form-group" [hidden]="!mainReturn.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="mainReturn.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_amount">Amount</label>
+            <input type="number" class="form-control" name="amount" id="field_amount"
+                [(ngModel)]="mainReturn.amount" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_exact">Exact</label>
+            <input type="checkbox" class="form-control" name="exact" id="field_exact"
+                [(ngModel)]="mainReturn.exact" />
+            <div [hidden]="!(editForm.controls.exact?.dirty && editForm.controls.exact?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.exact?.errors?.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_defaultAmount">Default Amount</label>
+            <input type="number" class="form-control" name="defaultAmount" id="field_defaultAmount"
+                [(ngModel)]="mainReturn.defaultAmount" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_mode">Mode</label>
+            <select class="form-control" id="field_mode" name="mode" [(ngModel)]="mainReturn.mode" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="returnModeOption.id === mainReturn.mode?.id ? mainReturn.mode : returnModeOption" *ngFor="let returnModeOption of returnmodes; trackBy: trackReturnModeById">{{returnModeOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_channel">Channel</label>
+            <select class="form-control" id="field_channel" name="channel" [(ngModel)]="mainReturn.channel" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="cardOption.id === mainReturn.channel?.id ? mainReturn.channel : cardOption" *ngFor="let cardOption of cards; trackBy: trackCardById">{{cardOption.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

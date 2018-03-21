@@ -1,9 +1,6 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -21,7 +18,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "state")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class State implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,9 +35,6 @@ public class State implements Serializable {
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<City> cities = new HashSet<>();
-
-    @ManyToOne
-    private Country country;
 
     @ManyToMany(mappedBy = "states")
     @JsonIgnore
@@ -93,19 +86,6 @@ public class State implements Serializable {
 
     public void setCities(Set<City> cities) {
         this.cities = cities;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public State country(Country country) {
-        this.country = country;
-        return this;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
     }
 
     public Set<Offer> getOffers() {

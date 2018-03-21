@@ -1,20 +1,19 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JsogService } from 'jsog-typescript';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-
 import { SERVER_API_URL } from '../../app.constants';
-import { createRequestOption } from '../../shared';
-import { OfferType } from './offer-type.model';
 
-type EntityResponseType = HttpResponse<OfferType>;
+import { OfferType } from './offer-type.model';
+import { createRequestOption } from '../../shared';
+
+export type EntityResponseType = HttpResponse<OfferType>;
 
 @Injectable()
 export class OfferTypeService {
 
-    private resourceUrl = SERVER_API_URL + 'api/offer-types';
+    private resourceUrl =  SERVER_API_URL + 'api/offer-types';
 
-    constructor(private http: HttpClient, private jsogService: JsogService) { }
+    constructor(private http: HttpClient) { }
 
     create(offerType: OfferType): Observable<EntityResponseType> {
         const copy = this.convert(offerType);
@@ -29,7 +28,7 @@ export class OfferTypeService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<OfferType>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+        return this.http.get<OfferType>(`${this.resourceUrl}/${id}`, { observe: 'response'})
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -40,21 +39,21 @@ export class OfferTypeService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: OfferType = this.convertItemFromServer(this.deserializeObject(res.body));
-        return res.clone({ body });
+        const body: OfferType = this.convertItemFromServer(res.body);
+        return res.clone({body});
     }
 
     private convertArrayResponse(res: HttpResponse<OfferType[]>): HttpResponse<OfferType[]> {
-        const jsonResponse: OfferType[] = this.deserializeArray(res.body);
+        const jsonResponse: OfferType[] = res.body;
         const body: OfferType[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({ body });
+        return res.clone({body});
     }
 
     /**
@@ -71,13 +70,5 @@ export class OfferTypeService {
     private convert(offerType: OfferType): OfferType {
         const copy: OfferType = Object.assign({}, offerType);
         return copy;
-    }
-
-    private deserializeArray(json: any): OfferType[] {
-        return this.jsogService.deserializeArray(json, OfferType);
-    }
-
-    private deserializeObject(json: any): OfferType {
-        return this.jsogService.deserializeObject(json, OfferType);
     }
 }

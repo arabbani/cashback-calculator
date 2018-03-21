@@ -31,7 +31,7 @@
             "fieldType": "Integer"
         }
     ],
-    "changelogDate": "20180214101700",
+    "changelogDate": "20180321120523",
     "entityTableName": "return_extras",
     "dto": "no",
     "pagination": "no",

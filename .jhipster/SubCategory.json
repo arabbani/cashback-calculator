@@ -49,7 +49,7 @@
             "fieldValidateRulesMaxlength": 100
         }
     ],
-    "changelogDate": "20180214101654",
+    "changelogDate": "20180321120517",
     "entityTableName": "sub_category",
     "dto": "no",
     "pagination": "no",

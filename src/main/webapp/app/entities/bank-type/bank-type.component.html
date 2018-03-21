@@ -1,25 +1,58 @@
 <div>
     <h2>
-        <span>Bank Type</span>
+        <span>Bank Types</span>
+        <button class="btn btn-primary float-right jh-create-entity create-bank-type" [routerLink]="['/', { outlets: { popup: ['bank-type-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Bank Type
+            </span>
+        </button>
     </h2>
+    <apsstr-alert></apsstr-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="bankTypes">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let bankType of bankTypes ;trackBy: trackId">
+                <td><a [routerLink]="['../bank-type', bankType.id ]">{{bankType.id}}</a></td>
+                <td>{{bankType.name}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../bank-type', bankType.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'bank-type/'+ bankType.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'bank-type/'+ bankType.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-<div kendoDialogContainer></div>
-<kendo-grid [kendoGridReactiveEditing]="createBankTypeFormGroup" [kendoGridBinding]="bankTypes" [pageable]="true" [pageSize]="gridState.take"
-    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (save)="saveItem($event)"
-    (remove)="deleteItem($event.dataItem)">
-    <ng-template kendoGridToolbarTemplate>
-        <button class="float-right" kendoGridAddCommand>Add new</button>
-    </ng-template>
-    <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
-    <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
-    <kendo-grid-command-column title="Action" width="200">
-        <ng-template kendoGridCellTemplate let-isNew="isNew">
-            <div class="text-center">
-                <button kendoGridEditCommand class="k-primary">Edit</button>
-                <button kendoGridRemoveCommand>Delete</button>
-                <button kendoGridSaveCommand [disabled]="bankTypeFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
-                <button kendoGridCancelCommand>{{ isNew ? 'Discard' : 'Cancel' }}</button>
-            </div>
-        </ng-template>
-    </kendo-grid-command-column>
-</kendo-grid>

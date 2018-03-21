@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { ReturnType } from './return-type.model';
 import { createRequestOption } from '../../shared';
 
-type EntityResponseType = HttpResponse<ReturnType>;
+export type EntityResponseType = HttpResponse<ReturnType>;
 
 @Injectable()
 export class ReturnTypeService {

@@ -5,9 +5,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +16,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_info")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,10 +26,6 @@ public class UserInfo implements Serializable {
 
     @ManyToOne
     private City city;
-
-    @OneToOne
-    @JoinColumn(unique = true)
-    private User user;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -76,19 +68,6 @@ public class UserInfo implements Serializable {
 
     public void setCity(City city) {
         this.city = city;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public UserInfo user(User user) {
-        this.user = user;
-        return this;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Set<Merchant> getMerchants() {

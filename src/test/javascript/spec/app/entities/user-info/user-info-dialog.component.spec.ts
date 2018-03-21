@@ -10,7 +10,6 @@ import { UserInfoDialogComponent } from '../../../../../../main/webapp/app/entit
 import { UserInfoService } from '../../../../../../main/webapp/app/entities/user-info/user-info.service';
 import { UserInfo } from '../../../../../../main/webapp/app/entities/user-info/user-info.model';
 import { CityService } from '../../../../../../main/webapp/app/entities/city';
-import { UserService } from '../../../../../../main/webapp/app/shared';
 import { MerchantService } from '../../../../../../main/webapp/app/entities/merchant';
 import { CardService } from '../../../../../../main/webapp/app/entities/card';
 import { OperatingSystemService } from '../../../../../../main/webapp/app/entities/operating-system';
@@ -30,7 +29,6 @@ describe('Component Tests', () => {
                 declarations: [UserInfoDialogComponent],
                 providers: [
                     CityService,
-                    UserService,
                     MerchantService,
                     CardService,
                     OperatingSystemService,

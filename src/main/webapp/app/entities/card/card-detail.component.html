@@ -1,0 +1,38 @@
+
+<div *ngIf="card">
+    <h2><span>Card</span> {{card.id}}</h2>
+    <hr>
+    <apsstr-alert-error></apsstr-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{card.name}}</span>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+            <div *ngIf="card.type">
+                <a [routerLink]="['/card-type', card.type?.id]">{{card.type?.name}}</a>
+            </div>
+        </dd>
+        <dt><span>Bank</span></dt>
+        <dd>
+            <div *ngIf="card.bank">
+                <a [routerLink]="['/bank', card.bank?.id]">{{card.bank?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'card/'+ card.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

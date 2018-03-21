@@ -89,6 +89,9 @@ public class OfferResourceIntTest {
     private static final Long DEFAULT_NUMBER_OF_USES = 1L;
     private static final Long UPDATED_NUMBER_OF_USES = 2L;
 
+    private static final Boolean DEFAULT_ACTIVE = false;
+    private static final Boolean UPDATED_ACTIVE = true;
+
     private static final Boolean DEFAULT_DUMMY = false;
     private static final Boolean UPDATED_DUMMY = true;
 
@@ -154,6 +157,7 @@ public class OfferResourceIntTest {
             .appOnly(DEFAULT_APP_ONLY)
             .websiteOnly(DEFAULT_WEBSITE_ONLY)
             .numberOfUses(DEFAULT_NUMBER_OF_USES)
+            .active(DEFAULT_ACTIVE)
             .dummy(DEFAULT_DUMMY)
             .apsstrExclusive(DEFAULT_APSSTR_EXCLUSIVE)
             .url(DEFAULT_URL);
@@ -195,6 +199,7 @@ public class OfferResourceIntTest {
         assertThat(testOffer.isAppOnly()).isEqualTo(DEFAULT_APP_ONLY);
         assertThat(testOffer.isWebsiteOnly()).isEqualTo(DEFAULT_WEBSITE_ONLY);
         assertThat(testOffer.getNumberOfUses()).isEqualTo(DEFAULT_NUMBER_OF_USES);
+        assertThat(testOffer.isActive()).isEqualTo(DEFAULT_ACTIVE);
         assertThat(testOffer.isDummy()).isEqualTo(DEFAULT_DUMMY);
         assertThat(testOffer.isApsstrExclusive()).isEqualTo(DEFAULT_APSSTR_EXCLUSIVE);
         assertThat(testOffer.getUrl()).isEqualTo(DEFAULT_URL);
@@ -329,6 +334,24 @@ public class OfferResourceIntTest {
 
     @Test
     @Transactional
+    public void checkActiveIsRequired() throws Exception {
+        int databaseSizeBeforeTest = offerRepository.findAll().size();
+        // set the field null
+        offer.setActive(null);
+
+        // Create the Offer, which fails.
+
+        restOfferMockMvc.perform(post("/api/offers")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(offer)))
+            .andExpect(status().isBadRequest());
+
+        List<Offer> offerList = offerRepository.findAll();
+        assertThat(offerList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void checkDummyIsRequired() throws Exception {
         int databaseSizeBeforeTest = offerRepository.findAll().size();
         // set the field null
@@ -389,6 +412,7 @@ public class OfferResourceIntTest {
             .andExpect(jsonPath("$.[*].appOnly").value(hasItem(DEFAULT_APP_ONLY.booleanValue())))
             .andExpect(jsonPath("$.[*].websiteOnly").value(hasItem(DEFAULT_WEBSITE_ONLY.booleanValue())))
             .andExpect(jsonPath("$.[*].numberOfUses").value(hasItem(DEFAULT_NUMBER_OF_USES.intValue())))
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())))
             .andExpect(jsonPath("$.[*].dummy").value(hasItem(DEFAULT_DUMMY.booleanValue())))
             .andExpect(jsonPath("$.[*].apsstrExclusive").value(hasItem(DEFAULT_APSSTR_EXCLUSIVE.booleanValue())))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())));
@@ -420,6 +444,7 @@ public class OfferResourceIntTest {
             .andExpect(jsonPath("$.appOnly").value(DEFAULT_APP_ONLY.booleanValue()))
             .andExpect(jsonPath("$.websiteOnly").value(DEFAULT_WEBSITE_ONLY.booleanValue()))
             .andExpect(jsonPath("$.numberOfUses").value(DEFAULT_NUMBER_OF_USES.intValue()))
+            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()))
             .andExpect(jsonPath("$.dummy").value(DEFAULT_DUMMY.booleanValue()))
             .andExpect(jsonPath("$.apsstrExclusive").value(DEFAULT_APSSTR_EXCLUSIVE.booleanValue()))
             .andExpect(jsonPath("$.url").value(DEFAULT_URL.toString()));
@@ -461,6 +486,7 @@ public class OfferResourceIntTest {
             .appOnly(UPDATED_APP_ONLY)
             .websiteOnly(UPDATED_WEBSITE_ONLY)
             .numberOfUses(UPDATED_NUMBER_OF_USES)
+            .active(UPDATED_ACTIVE)
             .dummy(UPDATED_DUMMY)
             .apsstrExclusive(UPDATED_APSSTR_EXCLUSIVE)
             .url(UPDATED_URL);
@@ -489,6 +515,7 @@ public class OfferResourceIntTest {
         assertThat(testOffer.isAppOnly()).isEqualTo(UPDATED_APP_ONLY);
         assertThat(testOffer.isWebsiteOnly()).isEqualTo(UPDATED_WEBSITE_ONLY);
         assertThat(testOffer.getNumberOfUses()).isEqualTo(UPDATED_NUMBER_OF_USES);
+        assertThat(testOffer.isActive()).isEqualTo(UPDATED_ACTIVE);
         assertThat(testOffer.isDummy()).isEqualTo(UPDATED_DUMMY);
         assertThat(testOffer.isApsstrExclusive()).isEqualTo(UPDATED_APSSTR_EXCLUSIVE);
         assertThat(testOffer.getUrl()).isEqualTo(UPDATED_URL);

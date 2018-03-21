@@ -1,0 +1,46 @@
+
+<div *ngIf="mainReturn">
+    <h2><span>Main Return</span> {{mainReturn.id}}</h2>
+    <hr>
+    <apsstr-alert-error></apsstr-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Amount</span></dt>
+        <dd>
+            <span>{{mainReturn.amount}}</span>
+        </dd>
+        <dt><span>Exact</span></dt>
+        <dd>
+            <span>{{mainReturn.exact}}</span>
+        </dd>
+        <dt><span>Default Amount</span></dt>
+        <dd>
+            <span>{{mainReturn.defaultAmount}}</span>
+        </dd>
+        <dt><span>Mode</span></dt>
+        <dd>
+            <div *ngIf="mainReturn.mode">
+                <a [routerLink]="['/return-mode', mainReturn.mode?.id]">{{mainReturn.mode?.name}}</a>
+            </div>
+        </dd>
+        <dt><span>Channel</span></dt>
+        <dd>
+            <div *ngIf="mainReturn.channel">
+                <a [routerLink]="['/card', mainReturn.channel?.id]">{{mainReturn.channel?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'main-return/'+ mainReturn.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

@@ -3,12 +3,6 @@
     "relationships": [
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "type",
-            "otherEntityName": "returnType",
-            "otherEntityField": "name"
-        },
-        {
-            "relationshipType": "many-to-one",
             "relationshipName": "mode",
             "otherEntityName": "returnMode",
             "otherEntityField": "name"
@@ -37,7 +31,7 @@
             "fieldType": "Integer"
         }
     ],
-    "changelogDate": "20180214101701",
+    "changelogDate": "20180321120524",
     "entityTableName": "main_return",
     "dto": "no",
     "pagination": "no",

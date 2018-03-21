@@ -5,9 +5,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +16,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "reecharge_info")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class ReechargeInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,12 +26,16 @@ public class ReechargeInfo implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "reecharge_info_circle", joinColumns = @JoinColumn(name = "reecharge_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "circles_id", referencedColumnName = "id"))
+    @JoinTable(name = "reecharge_info_circle",
+               joinColumns = @JoinColumn(name="reecharge_infos_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="circles_id", referencedColumnName="id"))
     private Set<Circle> circles = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "reecharge_info_reecharge_type", joinColumns = @JoinColumn(name = "reecharge_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "reecharge_types_id", referencedColumnName = "id"))
+    @JoinTable(name = "reecharge_info_reecharge_type",
+               joinColumns = @JoinColumn(name="reecharge_infos_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="reecharge_types_id", referencedColumnName="id"))
     private Set<ReechargePlanType> reechargeTypes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -116,6 +116,8 @@ public class ReechargeInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "ReechargeInfo{" + "id=" + getId() + "}";
+        return "ReechargeInfo{" +
+            "id=" + getId() +
+            "}";
     }
 }

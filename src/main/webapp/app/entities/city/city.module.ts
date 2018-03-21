@@ -1,34 +1,48 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DialogModule } from '@progress/kendo-angular-dialog';
-import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
-import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import { CityComponent, cityRoute, CityService } from './';
+import {
+    CityService,
+    CityPopupService,
+    CityComponent,
+    CityDetailComponent,
+    CityDialogComponent,
+    CityPopupComponent,
+    CityDeletePopupComponent,
+    CityDeleteDialogComponent,
+    cityRoute,
+    cityPopupRoute,
+} from './';
 
 const ENTITY_STATES = [
-    cityRoute
+    ...cityRoute,
+    ...cityPopupRoute,
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES),
-        ReactiveFormsModule,
-        GridModule,
-        DialogModule,
-        DropDownListModule
+        RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
-        CityComponent
+        CityComponent,
+        CityDetailComponent,
+        CityDialogComponent,
+        CityDeleteDialogComponent,
+        CityPopupComponent,
+        CityDeletePopupComponent,
     ],
     entryComponents: [
-        CityComponent
+        CityComponent,
+        CityDialogComponent,
+        CityPopupComponent,
+        CityDeleteDialogComponent,
+        CityDeletePopupComponent,
     ],
     providers: [
-        CityService
+        CityService,
+        CityPopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -5,9 +5,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +16,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "electronics_info")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class ElectronicsInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;

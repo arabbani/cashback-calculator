@@ -7,5 +7,4 @@ export class ReechargeInfo implements BaseEntity {
         public reechargeTypes?: BaseEntity[],
     ) {
     }
-
 }

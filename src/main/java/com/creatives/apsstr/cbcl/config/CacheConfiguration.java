@@ -54,9 +54,6 @@ public class CacheConfiguration {
             cm.createCache(com.creatives.apsstr.cbcl.domain.Affiliate.class.getName() + ".offers", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.OperatingSystemType.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.OperatingSystem.class.getName(), jcacheConfiguration);
-            cm.createCache(com.creatives.apsstr.cbcl.domain.Country.class.getName(), jcacheConfiguration);
-            cm.createCache(com.creatives.apsstr.cbcl.domain.Country.class.getName() + ".states", jcacheConfiguration);
-            cm.createCache(com.creatives.apsstr.cbcl.domain.Country.class.getName() + ".offers", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.State.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.State.class.getName() + ".cities", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.State.class.getName() + ".offers", jcacheConfiguration);

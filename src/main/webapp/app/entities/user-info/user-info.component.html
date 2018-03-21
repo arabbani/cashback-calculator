@@ -18,7 +18,6 @@
             <tr>
             <th><span>ID</span></th>
             <th><span>City</span></th>
-            <th><span>User</span></th>
             <th><span>Merchant</span></th>
             <th><span>Card</span></th>
             <th><span>Operating System</span></th>
@@ -32,9 +31,6 @@
                     <div *ngIf="userInfo.city">
                         <a [routerLink]="['../city', userInfo.city?.id ]" >{{userInfo.city?.id}}</a>
                     </div>
-                </td>
-                <td>
-                    {{userInfo.user?.id}}
                 </td>
                 <td>
                     <span *ngFor="let merchant of userInfo.merchants; let last = last">

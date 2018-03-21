@@ -8,10 +8,18 @@
             "otherEntityName": "circle",
             "otherEntityField": "name",
             "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "reechargeType",
+            "otherEntityName": "reechargePlanType",
+            "otherEntityField": "name",
+            "ownerSide": true
         }
     ],
     "fields": [],
-    "changelogDate": "20180214101707",
+    "changelogDate": "20180321120530",
     "entityTableName": "reecharge_info",
     "dto": "no",
     "pagination": "no",

@@ -8,14 +8,6 @@
             "otherEntityField": "id"
         },
         {
-            "relationshipType": "one-to-one",
-            "relationshipName": "user",
-            "otherEntityName": "user",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "userInfo"
-        },
-        {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "",
             "relationshipName": "merchant",
@@ -41,7 +33,7 @@
         }
     ],
     "fields": [],
-    "changelogDate": "20180214101717",
+    "changelogDate": "20180321120539",
     "entityTableName": "user_info",
     "dto": "no",
     "pagination": "no",

@@ -8,12 +8,6 @@
             "otherEntityRelationshipName": "state"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "country",
-            "otherEntityName": "country",
-            "otherEntityField": "name"
-        },
-        {
             "relationshipType": "many-to-many",
             "relationshipName": "offer",
             "otherEntityName": "offer",
@@ -32,7 +26,7 @@
             "fieldValidateRulesMaxlength": 100
         }
     ],
-    "changelogDate": "20180214101649",
+    "changelogDate": "20180321120512",
     "entityTableName": "state",
     "dto": "no",
     "pagination": "no",

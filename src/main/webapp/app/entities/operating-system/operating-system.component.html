@@ -1,38 +1,64 @@
 <div>
     <h2>
-        <span>Operating System</span>
+        <span>Operating Systems</span>
+        <button class="btn btn-primary float-right jh-create-entity create-operating-system" [routerLink]="['/', { outlets: { popup: ['operating-system-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Operating System
+            </span>
+        </button>
     </h2>
+    <apsstr-alert></apsstr-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="operatingSystems">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th><span>Type</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let operatingSystem of operatingSystems ;trackBy: trackId">
+                <td><a [routerLink]="['../operating-system', operatingSystem.id ]">{{operatingSystem.id}}</a></td>
+                <td>{{operatingSystem.name}}</td>
+                <td>
+                    <div *ngIf="operatingSystem.type">
+                        <a [routerLink]="['../operating-system-type', operatingSystem.type?.id ]" >{{operatingSystem.type?.name}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../operating-system', operatingSystem.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'operating-system/'+ operatingSystem.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'operating-system/'+ operatingSystem.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-<div kendoDialogContainer></div>
-<kendo-grid [kendoGridReactiveEditing]="createOperatingSystemFormGroup" [kendoGridBinding]="operatingSystems" [pageable]="true"
-    [pageSize]="gridState.take" [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true"
-    (save)="saveItem($event)" (remove)="deleteItem($event.dataItem)">
-    <ng-template kendoGridToolbarTemplate>
-        <button class="float-right" kendoGridAddCommand>Add new</button>
-    </ng-template>
-    <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
-    <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
-    <kendo-grid-column class="text-center" width="190" field="type" title="Type" [sortable]="false">
-        <ng-template kendoGridCellTemplate let-dataItem>
-            {{ dataItem.type?.name }}
-        </ng-template>
-        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
-            <kendo-dropdownlist [data]="operatingSystemTypes" [defaultItem]="defaultOperatingSystemType" textField="name" valueField="id"
-                [formControl]="formGroup.get('type')"></kendo-dropdownlist>
-        </ng-template>
-        <ng-template kendoGridFilterCellTemplate let-dataItem>
-            <apsstr-drop-down-list-filter [filter]="dataItem" [data]="operatingSystemTypes" textField="name" valueField="id">
-            </apsstr-drop-down-list-filter>
-        </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-command-column title="Action" width="220">
-        <ng-template kendoGridCellTemplate let-isNew="isNew">
-            <div class="text-center">
-                <button kendoGridEditCommand class="k-primary">Edit</button>
-                <button kendoGridRemoveCommand>Delete</button>
-                <button kendoGridSaveCommand [disabled]="operatingSystemFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
-                <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
-            </div>
-        </ng-template>
-    </kendo-grid-command-column>
-</kendo-grid>

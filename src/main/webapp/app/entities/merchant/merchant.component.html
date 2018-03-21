@@ -1,40 +1,68 @@
 <div>
     <h2>
-        <span>Merchant</span>
+        <span>Merchants</span>
+        <button class="btn btn-primary float-right jh-create-entity create-merchant" [routerLink]="['/', { outlets: { popup: ['merchant-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Merchant
+            </span>
+        </button>
     </h2>
+    <apsstr-alert></apsstr-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="merchants">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th><span>Url</span></th>
+            <th><span>Active</span></th>
+            <th><span>Sub Category</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let merchant of merchants ;trackBy: trackId">
+                <td><a [routerLink]="['../merchant', merchant.id ]">{{merchant.id}}</a></td>
+                <td>{{merchant.name}}</td>
+                <td>{{merchant.url}}</td>
+                <td>{{merchant.active}}</td>
+                <td>
+                    <span *ngFor="let subCategory of merchant.subCategories; let last = last">
+                            <a class="form-control-static" [routerLink]="['../sub-category', subCategory?.id ]">{{subCategory.code}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../merchant', merchant.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'merchant/'+ merchant.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'merchant/'+ merchant.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-<div kendoDialogContainer></div>
-<kendo-grid [kendoGridReactiveEditing]="createMerchantFormGroup" [kendoGridBinding]="merchants" [pageable]="true" [pageSize]="gridState.take"
-    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (save)="saveItem($event)"
-    (remove)="deleteItem($event.dataItem)">
-    <ng-template kendoGridToolbarTemplate>
-        <button class="float-right" kendoGridAddCommand>Add new</button>
-    </ng-template>
-    <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
-    <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
-    <kendo-grid-column class="text-center" width="190" field="active" title="Status" filter="boolean" editor="boolean">
-        <ng-template kendoGridCellTemplate let-dataItem>
-            <span [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': dataItem.active, 'badge-danger': !dataItem.active }">{{ dataItem.active ? 'Active' : 'InActive' }}</span>
-        </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-column class="text-center" width="190" field="subCategories" title="Sub Categories" [filterable]="false" [sortable]="false">
-        <ng-template kendoGridCellTemplate let-dataItem>
-            {{ constructSubCategoryNames(dataItem.subCategories) }}
-        </ng-template>
-        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
-            <kendo-multiselect [data]="subCategories" textField="name" valueField="id" [formControl]="formGroup.get('subCategories')"
-                [placeholder]="defaultSubCategory" [filterable]="true" [autoClose]="false"></kendo-multiselect>
-        </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-column class="text-center" field="url" title="Url" [filterable]="false" [sortable]="false"></kendo-grid-column>
-    <kendo-grid-command-column title="Action" width="220">
-        <ng-template kendoGridCellTemplate let-isNew="isNew">
-            <div class="text-center">
-                <button kendoGridEditCommand class="k-primary">Edit</button>
-                <button kendoGridRemoveCommand>Delete</button>
-                <button kendoGridSaveCommand [disabled]="merchantFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
-                <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
-            </div>
-        </ng-template>
-    </kendo-grid-command-column>
-</kendo-grid>

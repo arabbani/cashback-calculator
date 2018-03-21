@@ -1,37 +1,49 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DialogModule } from '@progress/kendo-angular-dialog';
-import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
-import { GridModule } from '@progress/kendo-angular-grid';
 
-import { ApsstrSharedModule } from '../../apsstr-core-ui';
 import { CbclSharedModule } from '../../shared';
-import { OperatingSystemComponent, operatingSystemRoute, OperatingSystemService } from './';
+import {
+    OperatingSystemService,
+    OperatingSystemPopupService,
+    OperatingSystemComponent,
+    OperatingSystemDetailComponent,
+    OperatingSystemDialogComponent,
+    OperatingSystemPopupComponent,
+    OperatingSystemDeletePopupComponent,
+    OperatingSystemDeleteDialogComponent,
+    operatingSystemRoute,
+    operatingSystemPopupRoute,
+} from './';
 
 const ENTITY_STATES = [
-    operatingSystemRoute
+    ...operatingSystemRoute,
+    ...operatingSystemPopupRoute,
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES),
-        ReactiveFormsModule,
-        GridModule,
-        DialogModule,
-        DropDownListModule,
-        ApsstrSharedModule
+        RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
-        OperatingSystemComponent
+        OperatingSystemComponent,
+        OperatingSystemDetailComponent,
+        OperatingSystemDialogComponent,
+        OperatingSystemDeleteDialogComponent,
+        OperatingSystemPopupComponent,
+        OperatingSystemDeletePopupComponent,
     ],
     entryComponents: [
-        OperatingSystemComponent
+        OperatingSystemComponent,
+        OperatingSystemDialogComponent,
+        OperatingSystemPopupComponent,
+        OperatingSystemDeleteDialogComponent,
+        OperatingSystemDeletePopupComponent,
     ],
     providers: [
-        OperatingSystemService
+        OperatingSystemService,
+        OperatingSystemPopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class CbclOperatingSystemModule { }
+export class CbclOperatingSystemModule {}

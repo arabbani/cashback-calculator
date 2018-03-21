@@ -1,11 +1,6 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -22,7 +17,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "offer_return")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class OfferReturn implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,17 +25,16 @@ public class OfferReturn implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     @JoinColumn(unique = true)
     private ReturnExtras extras;
 
-    @OneToMany(mappedBy = "offerReturn", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "offerReturn")
+    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ReturnInfo> returnInfos = new HashSet<>();
 
     @ManyToOne
-    @JsonBackReference
     private Offer offer;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

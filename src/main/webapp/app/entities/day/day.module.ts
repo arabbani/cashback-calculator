@@ -1,32 +1,48 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DialogModule } from '@progress/kendo-angular-dialog';
-import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import { DayComponent, dayRoute, DayService } from './';
+import {
+    DayService,
+    DayPopupService,
+    DayComponent,
+    DayDetailComponent,
+    DayDialogComponent,
+    DayPopupComponent,
+    DayDeletePopupComponent,
+    DayDeleteDialogComponent,
+    dayRoute,
+    dayPopupRoute,
+} from './';
 
 const ENTITY_STATES = [
-    dayRoute
+    ...dayRoute,
+    ...dayPopupRoute,
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES),
-        ReactiveFormsModule,
-        GridModule,
-        DialogModule
+        RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
-        DayComponent
+        DayComponent,
+        DayDetailComponent,
+        DayDialogComponent,
+        DayDeleteDialogComponent,
+        DayPopupComponent,
+        DayDeletePopupComponent,
     ],
     entryComponents: [
-        DayComponent
+        DayComponent,
+        DayDialogComponent,
+        DayPopupComponent,
+        DayDeleteDialogComponent,
+        DayDeletePopupComponent,
     ],
     providers: [
-        DayService
+        DayService,
+        DayPopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

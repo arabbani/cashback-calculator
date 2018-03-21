@@ -28,10 +28,6 @@ entity OperatingSystem {
 	name String required maxlength(50)
 }
 
-entity Country {
-	name String required maxlength(100)
-}
-
 entity State {
 	name String required maxlength(100)
 }
@@ -168,14 +164,6 @@ entity Offer {
     url String maxlength(DEFAULT_URL_LENGTH)
 }
 
-entity Newsletter {
- 	emailId String maxlength(254),
-    phoneNumber Long,
-    mailPerWeek Integer,
-    numberOfMailsSent Integer,
-    active Boolean required
-}
-
 entity UserInfo {
 
 }
@@ -194,8 +182,7 @@ relationship OneToOne {
     ReturnInfo{extras} to ReturnExtras,
     ReturnInfo{payment} to OfferPayment,
     Offer{travelInfo} to TravelInfo,
-    Offer{reechargeInfo} to ReechargeInfo,
-    UserInfo{user} to User
+    Offer{reechargeInfo} to ReechargeInfo
 }
 
 relationship OneToMany {
@@ -204,7 +191,6 @@ relationship OneToMany {
 	Offer{offerReturn} to OfferReturn{offer},	
     Affiliate{offer} to Offer{affiliate(name)},
     Merchant{offer} to Offer{merchant(name)},
-    Country{state} to State{country(name)},
     State{city} to City{state(name)},
   	Category{subCategory} to SubCategory{category(name)},
     OfferType{offer} to Offer{type(name)},
@@ -213,7 +199,7 @@ relationship OneToMany {
 }
 
 relationship ManyToOne {
-    MainReturn{type(name)} to ReturnType,
+    ReturnInfo{type(name)} to ReturnType,
     MainReturn{mode(name)} to ReturnMode,
     MainReturn{channel(name)} to Card,
     Offer{policy(name)} to OfferPolicy,
@@ -225,7 +211,6 @@ relationship ManyToOne {
 
 relationship ManyToMany {
 	Offer{operatingSystem(name)} to OperatingSystem,
-    Offer{country(name)} to Country{offer},
     Offer{state(name)} to State{offer},
     Offer{city(name)} to City{offer},
     Offer{subCategory(code)} to SubCategory{offer},
@@ -240,12 +225,12 @@ relationship ManyToMany {
     ReechargeInfo{circle(name)} to Circle,
     OfferPayment{mode(name)} to CardType,
     OfferPayment{card(name)} to Card,
-    Offer{reechargeType(name)} to ReechargePlanType,
     UserInfo{merchant(name)} to Merchant,
     UserInfo{card(name)} to Card,
     UserInfo{operatingSystem(name)} to OperatingSystem,
     Brand{subCategory(name)} to SubCategory,
-    ElectronicsInfo{brand(name)} to Brand
+    ElectronicsInfo{brand(name)} to Brand,
+    ReechargeInfo{reechargeType(name)} to ReechargePlanType
 }
 
-service Offer, Newsletter with serviceClass
+service Offer with serviceClass
