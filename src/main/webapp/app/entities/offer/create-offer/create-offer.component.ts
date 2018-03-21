@@ -189,7 +189,7 @@ export class CreateOfferComponent implements OnInit {
       this.extractCategories();
       const mode = this.route.snapshot.paramMap.get('edit');
       if (mode) {
-        this.initializeToEdit();
+        this.editOffer();
       }
     } else {
       this.initializeToEdit();
