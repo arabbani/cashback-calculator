@@ -43,7 +43,7 @@ public class OfferService {
     @Transactional(readOnly = true)
     public List<Offer> findAll() {
         log.debug("Request to get all Offers");
-        return offerRepository.findAllWithEagerRelationships();
+        return offerRepository.findAll();
     }
 
     /**
@@ -55,7 +55,7 @@ public class OfferService {
     @Transactional(readOnly = true)
     public Offer findOne(Long id) {
         log.debug("Request to get Offer : {}", id);
-        return offerRepository.findOneWithEagerRelationships(id);
+        return offerRepository.findOneById(id);
     }
 
     /**

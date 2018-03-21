@@ -110,7 +110,6 @@ public class CacheConfiguration {
             cm.createCache(com.creatives.apsstr.cbcl.domain.Offer.class.getName() + ".serviceProviders", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.Offer.class.getName() + ".activeDates", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.Offer.class.getName() + ".activeDays", jcacheConfiguration);
-            cm.createCache(com.creatives.apsstr.cbcl.domain.Newsletter.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.UserInfo.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.UserInfo.class.getName() + ".merchants", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.UserInfo.class.getName() + ".cards", jcacheConfiguration);

@@ -420,8 +420,8 @@
                             <ng-container *ngSwitchCase="categoryEnum.TRAVEL">
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="travel_info_types">Travel Types</label>
-                                    <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let traveltype of offer.travelInfo.types">
-                                        {{ traveltype.name }}
+                                    <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let travelType of offer.travelInfo.types">
+                                        {{ travelType.name }}
                                     </span>
                                     <kendo-multiselect *ngIf="editMode" id="travel_info_types" name="travel_info_types" [data]="travelTypes" textField="name"
                                         valueField="id" [(ngModel)]="offer.travelInfo.types" [placeholder]="defaultTravelType"
