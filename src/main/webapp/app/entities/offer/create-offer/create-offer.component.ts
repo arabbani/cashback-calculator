@@ -54,7 +54,6 @@ export class CreateOfferComponent implements OnInit {
   dates: DateEntity[];
   days: Day[];
   states: State[];
-  filteredStates: State[];
   refinedStates: State[];
   cities: City[];
   filteredCities: City[];
@@ -276,7 +275,7 @@ export class CreateOfferComponent implements OnInit {
     this.stateService.query().subscribe(
       (res: HttpResponse<State[]>) => {
         this.states = res.body;
-        this.refinedStates = [];
+        this.refinedStates = this.states;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -632,7 +631,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   filterStates(value) {
-    this.refinedStates = this.filterEntitiesService.byStringAttribute(this.filteredStates, 'name', value);
+    this.refinedStates = this.filterEntitiesService.byStringAttribute(this.states, 'name', value);
   }
 
   filterCities(value) {

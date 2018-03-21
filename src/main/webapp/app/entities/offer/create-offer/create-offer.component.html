@@ -375,7 +375,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </span>
-                        <kendo-multiselect *ngIf="editMode" id="subCategories" name="subCategories" [data]="refinedSubCategories" textField="name"
+                        <kendo-multiselect *ngIf="editMode" id="subCategories" name="subCategories" [data]="refinedSubCategories" textField="code"
                             valueField="id" [(ngModel)]="offer.subCategories" [placeholder]="defaultSubCategory" [filterable]="true"
                             (filterChange)="filterSubCategories($event)" (valueChange)="onSubCategoryChange($event)" [autoClose]="false"
                             required></kendo-multiselect>
