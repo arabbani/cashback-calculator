@@ -5,6 +5,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -14,6 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "return_info")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class ReturnInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,25 +27,26 @@ public class ReturnInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
+    private ReturnType type;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true)
     private MainReturn mainReturn;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true)
     private ReturnExtras extras;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true)
     private OfferPayment payment;
-
-    @ManyToOne
-    private ReturnType type;
 
     @ManyToOne
     private Offer returnOffer;
 
     @ManyToOne
+    @JsonBackReference
     private OfferReturn offerReturn;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -50,6 +56,19 @@ public class ReturnInfo implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public ReturnType getType() {
+        return type;
+    }
+
+    public ReturnInfo type(ReturnType returnType) {
+        this.type = returnType;
+        return this;
+    }
+
+    public void setType(ReturnType returnType) {
+        this.type = returnType;
     }
 
     public MainReturn getMainReturn() {
@@ -89,19 +108,6 @@ public class ReturnInfo implements Serializable {
 
     public void setPayment(OfferPayment offerPayment) {
         this.payment = offerPayment;
-    }
-
-    public ReturnType getType() {
-        return type;
-    }
-
-    public ReturnInfo type(ReturnType returnType) {
-        this.type = returnType;
-        return this;
-    }
-
-    public void setType(ReturnType returnType) {
-        this.type = returnType;
     }
 
     public Offer getReturnOffer() {
@@ -153,8 +159,6 @@ public class ReturnInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "ReturnInfo{" +
-            "id=" + getId() +
-            "}";
+        return "ReturnInfo{" + "id=" + getId() + "}";
     }
 }
