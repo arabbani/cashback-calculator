@@ -13,7 +13,6 @@ import { CbclCardModule } from './card/card.module';
 import { CbclCategoryModule } from './category/category.module';
 import { CbclCircleModule } from './circle/circle.module';
 import { CbclCityModule } from './city/city.module';
-import { CbclCountryModule } from './country/country.module';
 import { CbclDateModule } from './date/date.module';
 import { CbclDayModule } from './day/day.module';
 import { EntityComponent } from './entity/entity.component';
@@ -43,7 +42,6 @@ import { CbclUserInfoModule } from './user-info/user-info.module';
         CbclAffiliateModule,
         CbclOperatingSystemTypeModule,
         CbclOperatingSystemModule,
-        CbclCountryModule,
         CbclStateModule,
         CbclCityModule,
         CbclOfferPolicyModule,

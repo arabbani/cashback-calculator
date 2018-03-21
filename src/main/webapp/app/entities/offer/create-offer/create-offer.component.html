@@ -191,6 +191,17 @@
                             <div class="form-group col-md-4 mb-3">
                                 <div class="row">
                                     <span class="col-md-6">
+                                        <label for="active">Active</label>
+                                    </span>
+                                    <span class="col-md-6">
+                                        <span *ngIf="!editMode" [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': offer.active, 'badge-danger': !offer.active }">{{ offer.active ? 'YES' : 'NO' }}</span>
+                                        <kendo-switch *ngIf="editMode" id="active" name="active" [(ngModel)]="offer.active" onLabel="Y" offLabel="N"></kendo-switch>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 mb-3">
+                                <div class="row">
+                                    <span class="col-md-6">
                                         <label for="newUserOnly">New User Only</label>
                                     </span>
                                     <span class="col-md-6">
@@ -279,17 +290,6 @@
                         </span>
                         <kendo-multiselect *ngIf="editMode" id="days" name="days" [data]="days" textField="day" valueField="id" [(ngModel)]="offer.activeDays"
                             [placeholder]="defaultDay" [autoClose]="false"></kendo-multiselect>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="mr-5" for="countries">Countries</label>
-                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let country of offer.countries">
-                            {{ country.name }}
-                            <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeCountry(country)">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </span>
-                        <kendo-multiselect *ngIf="editMode" id="countries" name="countries" [data]="countries" textField="name" valueField="id" [(ngModel)]="offer.countries"
-                            [placeholder]="defaultCountry" (valueChange)="onCountryChange($event)" [autoClose]="false"></kendo-multiselect>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="states">States</label>

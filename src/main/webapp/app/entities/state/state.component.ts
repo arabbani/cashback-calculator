@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/Observable';
 
 import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
 import { GRID_STATE } from '../../shared';
-import { Country, CountryService } from '../country';
 import { State } from './state.model';
 import { StateService } from './state.service';
 
@@ -21,27 +20,14 @@ export class StateComponent implements OnInit {
     public gridState: GridState;
     stateFormGroup: FormGroup;
 
-    countries: Country[];
-    defaultCountry = {id: null, name: 'Select Country'};
-
     constructor(private stateService: StateService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrDialogService, private countryService: CountryService) {
+        private apsstrKendoDialogService: ApsstrDialogService) {
         this.createStateFormGroup = this.createStateFormGroup.bind(this);
     }
 
     ngOnInit() {
         this.gridState = GRID_STATE;
-        this.loadAllCountry();
         this.loadAllState();
-    }
-
-    private loadAllCountry() {
-        this.countryService.query().subscribe(
-            (res: HttpResponse<Country[]>) => {
-                this.countries = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
     }
 
     private loadAllState() {
@@ -57,8 +43,7 @@ export class StateComponent implements OnInit {
         const item = args.isNew ? new State() : args.dataItem;
         this.stateFormGroup = this.formBuilder.group({
             'id': item.id,
-            'name': [item.name, Validators.required],
-            'country': [item.country, Validators.required],
+            'name': [item.name, Validators.required]
         });
         return this.stateFormGroup;
     }

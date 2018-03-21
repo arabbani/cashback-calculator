@@ -18,7 +18,6 @@ import { CardType, CardTypeService } from '../../card-type';
 import { Category, CategoryService } from '../../category';
 import { Circle, CircleService } from '../../circle';
 import { City, CityService } from '../../city';
-import { Country, CountryService } from '../../country';
 import { Date as DateEntity, Date, DateService } from '../../date';
 import { Day, DayService } from '../../day';
 import { MainReturn } from '../../main-return';
@@ -54,7 +53,6 @@ export class CreateOfferComponent implements OnInit {
   offerPolicies: OfferPolicy[];
   dates: DateEntity[];
   days: Day[];
-  countries: Country[];
   states: State[];
   filteredStates: State[];
   refinedStates: State[];
@@ -88,7 +86,6 @@ export class CreateOfferComponent implements OnInit {
 
   defaultDate;
   defaultDay;
-  defaultCountry;
   defaultState;
   defaultCity;
   defaultOperatingSystem;
@@ -116,7 +113,7 @@ export class CreateOfferComponent implements OnInit {
   editedOffer: Offer;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
-    private dayService: DayService, private countryService: CountryService, private stateService: StateService, private cityService: CityService,
+    private dayService: DayService, private stateService: StateService, private cityService: CityService,
     private operatingSystemService: OperatingSystemService, private affiliateService: AffiliateService, private merchantService: MerchantService,
     private categoryService: CategoryService, private subCategoryService: SubCategoryService, private serviceProviderService: ServiceProviderService,
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
@@ -146,7 +143,6 @@ export class CreateOfferComponent implements OnInit {
     this.loadEntities();
     this.defaultDate = 'Select Dates';
     this.defaultDay = 'Select Days';
-    this.defaultCountry = 'Select Countries';
     this.defaultState = 'Select States';
     this.defaultCity = 'Select Cities';
     this.defaultOperatingSystem = 'Select OS';
@@ -167,7 +163,6 @@ export class CreateOfferComponent implements OnInit {
     this.loadOfferPolicies();
     this.loadDates();
     this.loadDays();
-    this.loadCountries();
     this.loadStates();
     this.loadCities();
     this.loadOperatingSystems();
@@ -272,15 +267,6 @@ export class CreateOfferComponent implements OnInit {
     this.dayService.query().subscribe(
       (res: HttpResponse<Day[]>) => {
         this.days = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadCountries(): void {
-    this.countryService.query().subscribe(
-      (res: HttpResponse<Country[]>) => {
-        this.countries = res.body;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -460,17 +446,6 @@ export class CreateOfferComponent implements OnInit {
     }
   }
 
-  private filterStatesForCountries(countries: Country[]): void {
-    this.filteredStates = this.filterEntitiesService.bySingleRelationId(countries, this.states, 'country');
-    this.refinedStates = this.filteredStates;
-  }
-
-  onCountryChange(countries: Country[]): void {
-    this.filterStatesForCountries(countries);
-    this.offer.states = this.filterEntitiesService.bySingleRelationId(countries, this.offer.states, 'country');
-    this.onStateChange(this.offer.states);
-  }
-
   private filterCitiesForStates(states: State[]): void {
     this.filteredCities = this.filterEntitiesService.bySingleRelationId(states, this.cities, 'state');
     this.refinedCities = this.filteredCities;
@@ -606,11 +581,6 @@ export class CreateOfferComponent implements OnInit {
         // event.sender.data.data = _.sortBy(event.data, (item) => item.id);
       }
     });
-  }
-
-  removeCountry(country: Country): void {
-    this.offer.countries = _.pull(this.offer.countries, country);
-    this.onCountryChange(this.offer.countries);
   }
 
   removeState(state: State): void {
