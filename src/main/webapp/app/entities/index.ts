@@ -12,7 +12,6 @@ export * from './city';
 export * from './date';
 export * from './day';
 export * from './merchant';
-export * from './newsletter';
 export * from './offer';
 export * from './offer-payment';
 export * from './offer-policy';

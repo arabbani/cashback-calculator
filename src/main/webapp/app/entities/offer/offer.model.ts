@@ -14,6 +14,7 @@ export class Offer implements BaseEntity {
         public maximumUsesPerWeek?: number,
         public maximumUsesPerMonth?: number,
         public maximumUsesPerNumber?: number,
+        public active?: boolean,
         public newUserOnly?: boolean,
         public appOnly?: boolean,
         public websiteOnly?: boolean,
@@ -37,6 +38,7 @@ export class Offer implements BaseEntity {
         public merchant?: BaseEntity,
         public type?: BaseEntity,
     ) {
+        this.active = false;
         this.newUserOnly = false;
         this.appOnly = false;
         this.websiteOnly = false;

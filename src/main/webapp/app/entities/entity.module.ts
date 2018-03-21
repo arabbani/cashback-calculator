@@ -17,7 +17,6 @@ import { CbclDateModule } from './date/date.module';
 import { CbclDayModule } from './day/day.module';
 import { EntityComponent } from './entity/entity.component';
 import { CbclMerchantModule } from './merchant/merchant.module';
-import { CbclNewsletterModule } from './newsletter/newsletter.module';
 import { CbclOfferPolicyModule } from './offer-policy/offer-policy.module';
 import { CbclOfferTypeModule } from './offer-type/offer-type.module';
 import { CbclOfferModule } from './offer/offer.module';
@@ -62,7 +61,6 @@ import { CbclUserInfoModule } from './user-info/user-info.module';
         CbclCardModule,
         CbclReechargePlanTypeModule,
         CbclOfferModule,
-        CbclNewsletterModule,
         CbclUserInfoModule,
         CbclBrandModule,
         RouterModule.forChild([
