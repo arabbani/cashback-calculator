@@ -1,48 +1,36 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
+import { GridModule } from '@progress/kendo-angular-grid';
 
+import { ApsstrSharedModule } from '../../apsstr-core-ui';
 import { CbclSharedModule } from '../../shared';
-import {
-    StateService,
-    StatePopupService,
-    StateComponent,
-    StateDetailComponent,
-    StateDialogComponent,
-    StatePopupComponent,
-    StateDeletePopupComponent,
-    StateDeleteDialogComponent,
-    stateRoute,
-    statePopupRoute,
-} from './';
+import { StateComponent, stateRoute, StateService } from './';
 
 const ENTITY_STATES = [
-    ...stateRoute,
-    ...statePopupRoute,
+    stateRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule,
+        DropDownListModule,
+        ApsstrSharedModule
     ],
     declarations: [
-        StateComponent,
-        StateDetailComponent,
-        StateDialogComponent,
-        StateDeleteDialogComponent,
-        StatePopupComponent,
-        StateDeletePopupComponent,
+        StateComponent
     ],
     entryComponents: [
-        StateComponent,
-        StateDialogComponent,
-        StatePopupComponent,
-        StateDeleteDialogComponent,
-        StateDeletePopupComponent,
+        StateComponent
     ],
     providers: [
-        StateService,
-        StatePopupService,
+        StateService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -1,48 +1,34 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { MultiSelectModule } from '@progress/kendo-angular-dropdowns';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    ServiceProviderService,
-    ServiceProviderPopupService,
-    ServiceProviderComponent,
-    ServiceProviderDetailComponent,
-    ServiceProviderDialogComponent,
-    ServiceProviderPopupComponent,
-    ServiceProviderDeletePopupComponent,
-    ServiceProviderDeleteDialogComponent,
-    serviceProviderRoute,
-    serviceProviderPopupRoute,
-} from './';
+import { ServiceProviderComponent, serviceProviderRoute, ServiceProviderService } from './';
 
 const ENTITY_STATES = [
-    ...serviceProviderRoute,
-    ...serviceProviderPopupRoute,
+    serviceProviderRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule,
+        MultiSelectModule
     ],
     declarations: [
-        ServiceProviderComponent,
-        ServiceProviderDetailComponent,
-        ServiceProviderDialogComponent,
-        ServiceProviderDeleteDialogComponent,
-        ServiceProviderPopupComponent,
-        ServiceProviderDeletePopupComponent,
+        ServiceProviderComponent
     ],
     entryComponents: [
-        ServiceProviderComponent,
-        ServiceProviderDialogComponent,
-        ServiceProviderPopupComponent,
-        ServiceProviderDeleteDialogComponent,
-        ServiceProviderDeletePopupComponent,
+        ServiceProviderComponent
     ],
     providers: [
-        ServiceProviderService,
-        ServiceProviderPopupService,
+        ServiceProviderService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

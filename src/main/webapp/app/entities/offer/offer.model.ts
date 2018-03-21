@@ -18,7 +18,6 @@ export class Offer implements BaseEntity {
         public appOnly?: boolean,
         public websiteOnly?: boolean,
         public numberOfUses?: number,
-        public active?: boolean,
         public dummy?: boolean,
         public apsstrExclusive?: boolean,
         public url?: string,
@@ -27,6 +26,7 @@ export class Offer implements BaseEntity {
         public offerReturns?: BaseEntity[],
         public policy?: BaseEntity,
         public operatingSystems?: BaseEntity[],
+        public countries?: BaseEntity[],
         public states?: BaseEntity[],
         public cities?: BaseEntity[],
         public subCategories?: BaseEntity[],
@@ -40,7 +40,6 @@ export class Offer implements BaseEntity {
         this.newUserOnly = false;
         this.appOnly = false;
         this.websiteOnly = false;
-        this.active = false;
         this.dummy = false;
         this.apsstrExclusive = false;
     }

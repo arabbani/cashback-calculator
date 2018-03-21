@@ -20,10 +20,6 @@ export const ENTITIES = [
         route: '/operating-system'
     },
     {
-        name: 'Country',
-        route: '/country'
-    },
-    {
         name: 'State',
         route: '/state'
     },

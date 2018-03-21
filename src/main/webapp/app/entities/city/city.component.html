@@ -1,64 +1,33 @@
 <div>
     <h2>
-        <span>Cities</span>
-        <button class="btn btn-primary float-right jh-create-entity create-city" [routerLink]="['/', { outlets: { popup: ['city-new'] } }]">
-            <span class="fa fa-plus"></span>
-            <span >
-            Create new City
-            </span>
-        </button>
+        <span>City</span>
     </h2>
-    <apsstr-alert></apsstr-alert>
-    <div class="row">
-    </div>
-    <br/>
-    <div class="table-responsive" *ngIf="cities">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Name</span></th>
-            <th><span>State</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let city of cities ;trackBy: trackId">
-                <td><a [routerLink]="['../city', city.id ]">{{city.id}}</a></td>
-                <td>{{city.name}}</td>
-                <td>
-                    <div *ngIf="city.state">
-                        <a [routerLink]="['../state', city.state?.id ]" >{{city.state?.name}}</a>
-                    </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../city', city.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'city/'+ city.id + '/edit'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'city/'+ city.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
 </div>
+<div kendoDialogContainer></div>
+<kendo-grid [kendoGridReactiveEditing]="createCityFormGroup" [kendoGridBinding]="cities" [pageable]="true" [pageSize]="gridState.take"
+    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (save)="saveItem($event)"
+    (remove)="deleteItem($event.dataItem)">
+    <ng-template kendoGridToolbarTemplate>
+        <button class="float-right" kendoGridAddCommand>Add new</button>
+    </ng-template>
+    <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="name" title="Name" [filterable]="false" [sortable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" width="190" field="state" title="State" [filterable]="false" [sortable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.state?.name }}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+            <kendo-dropdownlist [data]="states" [defaultItem]="defaultState" textField="name" valueField="id" [formControl]="formGroup.get('state')"></kendo-dropdownlist>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-command-column title="Action" width="220">
+        <ng-template kendoGridCellTemplate let-isNew="isNew">
+            <div class="text-center">
+                <button kendoGridEditCommand class="k-primary">Edit</button>
+                <button kendoGridRemoveCommand>Delete</button>
+                <button kendoGridSaveCommand [disabled]="cityFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+                <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+            </div>
+        </ng-template>
+    </kendo-grid-command-column>
+</kendo-grid>

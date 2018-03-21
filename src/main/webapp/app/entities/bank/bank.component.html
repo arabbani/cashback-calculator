@@ -1,64 +1,33 @@
 <div>
     <h2>
-        <span>Banks</span>
-        <button class="btn btn-primary float-right jh-create-entity create-bank" [routerLink]="['/', { outlets: { popup: ['bank-new'] } }]">
-            <span class="fa fa-plus"></span>
-            <span >
-            Create new Bank
-            </span>
-        </button>
+        <span>Bank</span>
     </h2>
-    <apsstr-alert></apsstr-alert>
-    <div class="row">
-    </div>
-    <br/>
-    <div class="table-responsive" *ngIf="banks">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-            <th><span>ID</span></th>
-            <th><span>Name</span></th>
-            <th><span>Type</span></th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let bank of banks ;trackBy: trackId">
-                <td><a [routerLink]="['../bank', bank.id ]">{{bank.id}}</a></td>
-                <td>{{bank.name}}</td>
-                <td>
-                    <div *ngIf="bank.type">
-                        <a [routerLink]="['../bank-type', bank.type?.id ]" >{{bank.type?.name}}</a>
-                    </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['../bank', bank.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'bank/'+ bank.id + '/edit'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'bank/'+ bank.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
 </div>
+<div kendoDialogContainer></div>
+<kendo-grid [kendoGridReactiveEditing]="createBankFormGroup" [kendoGridBinding]="banks" [pageable]="true" [pageSize]="gridState.take"
+    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (save)="saveItem($event)"
+    (remove)="deleteItem($event.dataItem)">
+    <ng-template kendoGridToolbarTemplate>
+        <button class="float-right" kendoGridAddCommand>Add new</button>
+    </ng-template>
+    <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
+    <kendo-grid-column class="text-center" width="200" field="type" title="Type" [filterable]="false" [sortable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.type?.name }}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+            <kendo-dropdownlist [data]="bankTypes" [defaultItem]="defaultBankType" textField="name" valueField="id" [formControl]="formGroup.get('type')"></kendo-dropdownlist>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-command-column title="Action" width="200">
+        <ng-template kendoGridCellTemplate let-isNew="isNew">
+            <div class="text-center">
+                <button kendoGridEditCommand class="k-primary">Edit</button>
+                <button kendoGridRemoveCommand>Delete</button>
+                <button kendoGridSaveCommand [disabled]="bankFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+                <button kendoGridCancelCommand>{{ isNew ? 'Discard' : 'Cancel' }}</button>
+            </div>
+        </ng-template>
+    </kendo-grid-command-column>
+</kendo-grid>

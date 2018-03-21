@@ -5,6 +5,7 @@ export class State implements BaseEntity {
         public id?: number,
         public name?: string,
         public cities?: BaseEntity[],
+        public country?: BaseEntity,
         public offers?: BaseEntity[],
     ) {
     }

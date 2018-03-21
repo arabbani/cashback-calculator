@@ -10,6 +10,10 @@
                 <a [routerLink]="['/city', userInfo.city?.id]">{{userInfo.city?.id}}</a>
             </div>
         </dd>
+        <dt><span>User</span></dt>
+        <dd>
+            {{userInfo.user?.id}}
+        </dd>
         <dt><span>Merchant</span></dt>
         <dd>
             <span *ngFor="let merchant of userInfo.merchants; let last = last">

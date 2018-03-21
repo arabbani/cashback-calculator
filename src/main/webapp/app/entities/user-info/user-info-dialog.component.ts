@@ -10,6 +10,7 @@ import { UserInfo } from './user-info.model';
 import { UserInfoPopupService } from './user-info-popup.service';
 import { UserInfoService } from './user-info.service';
 import { City, CityService } from '../city';
+import { User, UserService } from '../../shared';
 import { Merchant, MerchantService } from '../merchant';
 import { Card, CardService } from '../card';
 import { OperatingSystem, OperatingSystemService } from '../operating-system';
@@ -25,6 +26,8 @@ export class UserInfoDialogComponent implements OnInit {
 
     cities: City[];
 
+    users: User[];
+
     merchants: Merchant[];
 
     cards: Card[];
@@ -36,6 +39,7 @@ export class UserInfoDialogComponent implements OnInit {
         private jhiAlertService: JhiAlertService,
         private userInfoService: UserInfoService,
         private cityService: CityService,
+        private userService: UserService,
         private merchantService: MerchantService,
         private cardService: CardService,
         private operatingSystemService: OperatingSystemService,
@@ -47,6 +51,8 @@ export class UserInfoDialogComponent implements OnInit {
         this.isSaving = false;
         this.cityService.query()
             .subscribe((res: HttpResponse<City[]>) => { this.cities = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
+        this.userService.query()
+            .subscribe((res: HttpResponse<User[]>) => { this.users = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.merchantService.query()
             .subscribe((res: HttpResponse<Merchant[]>) => { this.merchants = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.cardService.query()
@@ -90,6 +96,10 @@ export class UserInfoDialogComponent implements OnInit {
     }
 
     trackCityById(index: number, item: City) {
+        return item.id;
+    }
+
+    trackUserById(index: number, item: User) {
         return item.id;
     }
 

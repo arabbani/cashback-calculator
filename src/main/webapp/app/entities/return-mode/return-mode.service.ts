@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { ReturnMode } from './return-mode.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<ReturnMode>;
+type EntityResponseType = HttpResponse<ReturnMode>;
 
 @Injectable()
 export class ReturnModeService {

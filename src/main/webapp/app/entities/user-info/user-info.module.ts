@@ -2,6 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { CbclSharedModule } from '../../shared';
+import { CbclAdminModule } from '../../admin/admin.module';
 import {
     UserInfoService,
     UserInfoPopupService,
@@ -23,6 +24,7 @@ const ENTITY_STATES = [
 @NgModule({
     imports: [
         CbclSharedModule,
+        CbclAdminModule,
         RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [

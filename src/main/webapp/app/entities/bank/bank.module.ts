@@ -1,48 +1,34 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    BankService,
-    BankPopupService,
-    BankComponent,
-    BankDetailComponent,
-    BankDialogComponent,
-    BankPopupComponent,
-    BankDeletePopupComponent,
-    BankDeleteDialogComponent,
-    bankRoute,
-    bankPopupRoute,
-} from './';
+import { BankComponent, bankRoute, BankService } from './';
 
 const ENTITY_STATES = [
-    ...bankRoute,
-    ...bankPopupRoute,
+    bankRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule,
+        DropDownListModule
     ],
     declarations: [
-        BankComponent,
-        BankDetailComponent,
-        BankDialogComponent,
-        BankDeleteDialogComponent,
-        BankPopupComponent,
-        BankDeletePopupComponent,
+        BankComponent
     ],
     entryComponents: [
-        BankComponent,
-        BankDialogComponent,
-        BankPopupComponent,
-        BankDeleteDialogComponent,
-        BankDeletePopupComponent,
+        BankComponent
     ],
     providers: [
-        BankService,
-        BankPopupService,
+        BankService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -1,48 +1,32 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    CircleService,
-    CirclePopupService,
-    CircleComponent,
-    CircleDetailComponent,
-    CircleDialogComponent,
-    CirclePopupComponent,
-    CircleDeletePopupComponent,
-    CircleDeleteDialogComponent,
-    circleRoute,
-    circlePopupRoute,
-} from './';
+import { CircleComponent, circleRoute, CircleService } from './';
 
 const ENTITY_STATES = [
-    ...circleRoute,
-    ...circlePopupRoute,
+    circleRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule
     ],
     declarations: [
-        CircleComponent,
-        CircleDetailComponent,
-        CircleDialogComponent,
-        CircleDeleteDialogComponent,
-        CirclePopupComponent,
-        CircleDeletePopupComponent,
+        CircleComponent
     ],
     entryComponents: [
-        CircleComponent,
-        CircleDialogComponent,
-        CirclePopupComponent,
-        CircleDeleteDialogComponent,
-        CircleDeletePopupComponent,
+        CircleComponent
     ],
     providers: [
-        CircleService,
-        CirclePopupService,
+        CircleService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
