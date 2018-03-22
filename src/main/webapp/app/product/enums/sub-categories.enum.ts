@@ -1,9 +1,9 @@
 export enum SubCategories {
-    PrepaidMobile = 'MOBILE_PREPAID',
-    PostpaidMobile = 'MOBILE_POSTPAID',
+    PrepaidMobile = 'PREPAID_MOBILE',
+    PostpaidMobile = 'POSTPAID_MOBILE',
     Dth = 'DTH',
-    PrepaidDatacard = 'DATACARD_PREPAID',
-    PostpaidDatacard = 'DATACARD_POSTPAID',
+    PrepaidDatacard = 'PREPAID_DATACARD',
+    PostpaidDatacard = 'POSTPAID_DATACARD',
     Broadband = 'BROADBAND',
     Landline = 'LANDLINE',
     Electricity = 'ELECTRICITY',

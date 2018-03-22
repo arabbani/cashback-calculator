@@ -1,12 +1,15 @@
 <apsstr-card>
-    <apsstr-card-header primaryText="YOUR MOBILE DETAILS" icon="fa fa-lg fa-mobile">
+    <apsstr-card-header>
+        <i class="fa fa-lg fa-mobile" aria-hidden="true"></i>
+        <span>YOUR MOBILE DETAILS</span>
     </apsstr-card-header>
     <apsstr-card-body>
         <form role="form" #mobileInputForm="ngForm" novalidate>
             <div class="form-group">
                 <label class="radio-inline" for="{{ 'subCategory_' + subCategory.value }}" *ngFor="let subCategory of subCategories">
                     <input type="radio" id="{{ 'subCategory_' + subCategory.value }}" name="subCategory" [(ngModel)]="subCategoryCode" value="{{ subCategory.value }}"
-                        (click)="onSelectSubCategory(subCategory.value)"> {{ subCategory.name }}
+                        (click)="onSelectSubCategory(subCategory.value)">
+                        <span class="mr-2 ml-1">{{ subCategory.name }}</span>
                 </label>
             </div>
             <div class="form-group">
@@ -33,7 +36,7 @@
         </form>
     </apsstr-card-body>
     <apsstr-card-footer class="text-center">
-        <apsstr-button type="submit" text="Find Best Offer" color="primary" icon="fa fa-search" [disabled]="!mobileInputForm.form.valid || calculating"
-            (onClick)="calculate()"></apsstr-button>
+        <!-- <apsstr-button type="submit" text="Find Best Offer" color="primary" icon="fa fa-search" [disabled]="!mobileInputForm.form.valid || calculating"
+            (onClick)="calculate()"></apsstr-button> -->
     </apsstr-card-footer>
 </apsstr-card>

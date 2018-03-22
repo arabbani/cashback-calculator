@@ -24,8 +24,8 @@ export class MobileComponent implements OnInit {
   serviceProviders: Selectable[];
   calculating = false;
   subCategoryCode: string;
-  prepaidProviders: ServiceProvider[];
-  postpaidProviders: ServiceProvider[];
+  prepaidProviders: ServiceProvider[] = undefined;
+  postpaidProviders: ServiceProvider[] = undefined;
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
     private calculateCashbackService: CalculateCashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
@@ -95,13 +95,13 @@ export class MobileComponent implements OnInit {
               this.postpaidProviders = providers;
               break;
           }
-          console.log('1');
+          this.serviceProviders = this.selectableService.toSelectable(providers, 'name');
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
+    } else {
+      this.serviceProviders = this.selectableService.toSelectable(providers, 'name');
     }
-    console.log('2');
-    this.serviceProviders = this.selectableService.toSelectable(providers, 'name');
   }
 
   private initializeSubCategories(): void {
