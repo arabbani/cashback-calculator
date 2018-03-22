@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class OfferBenefit {
 	
-private Long offerId;
+	private Long offerId;
 	
 	private Set<CompoundBenefit> compoundBenefits = new HashSet<>();
 
