@@ -5,7 +5,7 @@ export const SIDEBAR_NAV_ITEMS = [
   },
   {
     name: 'Reecharge',
-    url: '/',
+    url: '/cashback',
     icon: 'icon-screen-smartphone',
     children: [
       {

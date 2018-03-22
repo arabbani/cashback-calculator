@@ -1,7 +1,7 @@
-<!-- <jhi-card>
-    <jhi-card-header primaryText="YOUR MOBILE DETAILS" icon="fa fa-lg fa-mobile">
-    </jhi-card-header>
-    <jhi-card-body>
+<apsstr-card>
+    <apsstr-card-header primaryText="YOUR MOBILE DETAILS" icon="fa fa-lg fa-mobile">
+    </apsstr-card-header>
+    <apsstr-card-body>
         <form role="form" #mobileInputForm="ngForm" novalidate>
             <div class="form-group">
                 <label class="radio-inline" for="{{ 'subCategory_' + subCategory.value }}" *ngFor="let subCategory of subCategories">
@@ -23,17 +23,17 @@
                 <div class="controls">
                     <div class="input-group">
                         <input class="form-control" type="text" name="expense" id="expense" [(ngModel)]="mobileInput.expense.expense" placeholder="Amount"
-                            jhiNumber required>
+                            apsstrNumber required>
                         <span class="input-group-btn">
-                            <jhi-button type="button" text="View Plans" color="primary" icon="fa fa-search"></jhi-button>
+                            <!-- <apsstr-button type="button" text="View Plans" color="primary" icon="fa fa-search"></apsstr-button> -->
                         </span>
                     </div>
                 </div>
             </div>
         </form>
-    </jhi-card-body>
-    <jhi-card-footer class="text-center">
-        <jhi-button type="submit" text="Find Best Offer" color="primary" icon="fa fa-search" [disabled]="!mobileInputForm.form.valid || calculating"
-            (onClick)="calculate()"></jhi-button>
-    </jhi-card-footer>
-</jhi-card> -->
+    </apsstr-card-body>
+    <apsstr-card-footer class="text-center">
+        <apsstr-button type="submit" text="Find Best Offer" color="primary" icon="fa fa-search" [disabled]="!mobileInputForm.form.valid || calculating"
+            (onClick)="calculate()"></apsstr-button>
+    </apsstr-card-footer>
+</apsstr-card>

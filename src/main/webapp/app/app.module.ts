@@ -19,6 +19,7 @@ import { NotificationInterceptor } from './blocks/interceptor/notification.inter
 import { CbclEntityModule } from './entities/entity.module';
 import { CbclHomeModule } from './home/home.module';
 import { ApsstrMainComponent, ErrorComponent, PageRibbonComponent, ProfileService } from './layouts';
+import { CashbackModule, ProductCoreModule } from './product';
 import { CbclSharedModule, UserRouteAccessService } from './shared';
 import { StateStorageService } from './shared/auth/state-storage.service';
 
@@ -36,6 +37,8 @@ import { StateStorageService } from './shared/auth/state-storage.service';
         CoreUiLayoutModule,
         ApsstrCoreModule,
         BrowserAnimationsModule,
+        ProductCoreModule,
+        CashbackModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [

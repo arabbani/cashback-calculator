@@ -43,6 +43,11 @@ export class ServiceProviderService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
+    bySubCategoryCode(subCategoryCode: string): Observable<HttpResponse<ServiceProvider[]>> {
+        return this.http.get<ServiceProvider[]>(`${this.resourceUrl}/by-sub-category-code/${subCategoryCode}`, { observe: 'response' })
+            .map((res: HttpResponse<ServiceProvider[]>) => this.convertArrayResponse(res));
+    }
+
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: ServiceProvider = this.convertItemFromServer(this.deserializeObject(res.body));
         return res.clone({ body });
