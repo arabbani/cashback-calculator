@@ -6,7 +6,6 @@ export class CommonInput {
     public serviceProviderId: number;
     public cityId?: number;
     public stateId?: number;
-    public countryId?: number;
     public dateTime: any;
     public expense: Expense;
 

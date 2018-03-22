@@ -9,8 +9,8 @@ import { TabsetComponent } from 'ngx-bootstrap';
 import { Observable } from 'rxjs/Observable';
 
 import { Offer, OfferService } from '..';
-import { Categories, OfferTypes, ReturnTypes } from '../../../apsstr-core-ui-config';
 import { ApsstrDialogService, FilterEntitiesService } from '../../../apsstr-core-ui/apsstr-core/services';
+import { Categories, OfferTypes, ReturnTypes } from '../../../product';
 import { GRID_STATE } from '../../../shared';
 import { Affiliate, AffiliateService } from '../../affiliate';
 import { Card, CardService } from '../../card';

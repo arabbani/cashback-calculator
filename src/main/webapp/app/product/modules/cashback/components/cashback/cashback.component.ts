@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { List } from 'immutable';
 import * as _ from 'lodash';
+import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 import { ISubscription } from 'rxjs/Subscription';
 
@@ -10,13 +11,13 @@ import { CashbackInfo, CompoundBenefit, StoredCashback } from '../../../../model
 import { StoredCashbackService } from '../../../product-core';
 
 @Component({
-  selector: 'apsstr-cashback',
-  templateUrl: './cashback.component.html',
-  styles: []
+    selector: 'apsstr-cashback',
+    templateUrl: './cashback.component.html',
+    styles: []
 })
 export class CashbackComponent implements OnInit, OnDestroy {
 
-  cashbackInfos: List<CashbackInfo>;
+    cashbackInfos: List<CashbackInfo>;
     showDefault: boolean;
     showError: boolean;
     private calculateCashbackErrorEvent: ISubscription;
@@ -24,7 +25,7 @@ export class CashbackComponent implements OnInit, OnDestroy {
     private newCashbackInfosEvent: ISubscription;
     private navigationEndEvent: ISubscription;
 
-    constructor(private router: Router, private jhiEventManager: JhiEventManager,
+    constructor(private router: Router, private jhiEventManager: JhiEventManager, private blockUIService: BlockUIService,
         private offerFilterService: OfferFilterService, private storedCashbackService: StoredCashbackService) {}
 
     ngOnInit() {
@@ -67,12 +68,14 @@ export class CashbackComponent implements OnInit, OnDestroy {
 
     private registerStoredCashbackInfosEvent(): void {
         this.storedCashbackInfosEvent = this.jhiEventManager.subscribe('storedCashbackInfos', (response) => {
+            this.blockUIService.stop('calculateCashback');
             this.onBroadcastCashbackInfos(<StoredCashback> response.content);
         });
     }
 
     private registerNewCashbackInfosEvent(): void {
         this.newCashbackInfosEvent = this.jhiEventManager.subscribe('newCashbackInfos', (response) => {
+            this.blockUIService.stop('calculateCashback');
             this.onBroadcastCashbackInfos(<StoredCashback> response.content);
         });
     }

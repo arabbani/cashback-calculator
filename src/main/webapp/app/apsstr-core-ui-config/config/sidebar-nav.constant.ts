@@ -10,36 +10,36 @@ export const SIDEBAR_NAV_ITEMS = [
     children: [
       {
         name: 'Mobile',
-        url: '/',
+        url: '/cashback/mobile',
         icon: 'icon-screen-smartphone'
       },
-      {
-        name: 'DTH',
-        url: '/',
-        icon: 'icon-puzzle'
-      },
-      {
-        name: 'Datacard',
-        url: '/',
-        icon: 'icon-puzzle'
-      }
+      // {
+      //   name: 'DTH',
+      //   url: '/',
+      //   icon: 'icon-puzzle'
+      // },
+      // {
+      //   name: 'Datacard',
+      //   url: '/',
+      //   icon: 'icon-puzzle'
+      // }
     ]
   },
-  {
-    name: 'Travel',
-    url: '/',
-    icon: 'icon-cursor',
-    children: [
-      {
-        name: 'Flight',
-        url: '/',
-        icon: 'icon-cursor'
-      },
-      {
-        name: 'Hotel',
-        url: '/',
-        icon: 'icon-cursor'
-      }
-    ]
-  }
+  // {
+  //   name: 'Travel',
+  //   url: '/',
+  //   icon: 'icon-cursor',
+  //   children: [
+  //     {
+  //       name: 'Flight',
+  //       url: '/',
+  //       icon: 'icon-cursor'
+  //     },
+  //     {
+  //       name: 'Hotel',
+  //       url: '/',
+  //       icon: 'icon-cursor'
+  //     }
+  //   ]
+  // }
 ];

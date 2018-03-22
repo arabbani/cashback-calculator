@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BlockUIModule } from 'ng-block-ui';
 
 import { ApsstrSharedModule } from '../../../apsstr-core-ui';
 import { CashbackRoutingModule } from './cashback-routing.module';
@@ -12,7 +13,8 @@ import { MobileComponent } from './components/mobile/mobile.component';
     CommonModule,
     CashbackRoutingModule,
     FormsModule,
-    ApsstrSharedModule
+    ApsstrSharedModule,
+    BlockUIModule
   ],
   declarations: [CashbackComponent, MobileComponent]
 })

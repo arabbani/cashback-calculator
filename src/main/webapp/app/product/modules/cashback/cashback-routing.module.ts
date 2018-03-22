@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CashbackComponent } from './components';
+import { CashbackComponent, MobileComponent } from './components';
 
 const routes: Routes = [
   {
-    path: 'calculate',
+    path: 'cashback',
     component: CashbackComponent,
     children: [
-      // {
-      //   path: 'mobile',
-      //   component: MobileComponent
-      // },
+      {
+        path: 'mobile',
+        component: MobileComponent
+      },
       // {
       //   path: 'dth',
       //   component: DthComponent
