@@ -12,6 +12,7 @@ import { CbclAccountModule } from './account/account.module';
 import { CbclAdminModule } from './admin/admin.module';
 import { CbclAppRoutingModule } from './app-routing.module';
 import { ApsstrCoreModule, CoreUiLayoutModule } from './apsstr-core-ui';
+import { APP_CONFIG } from './apsstr-core-ui-config';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
@@ -28,7 +29,7 @@ import { StateStorageService } from './shared/auth/state-storage.service';
     imports: [
         BrowserModule,
         CbclAppRoutingModule,
-        Ng2Webstorage.forRoot({ prefix: 'cbcl', separator: '-'}),
+        Ng2Webstorage.forRoot({ prefix: APP_CONFIG.appStorageName , separator: '-'}),
         CbclSharedModule.forRoot(),
         CbclHomeModule,
         CbclAdminModule,

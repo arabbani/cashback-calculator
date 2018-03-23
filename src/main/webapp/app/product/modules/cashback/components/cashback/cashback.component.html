@@ -7,6 +7,8 @@
         <div *ngIf="cashbackInfos; then showCashbackInfos else noCashbackInfos"></div>
         <ng-template #showCashbackInfos>
             INFO
+
+            {{ cashbackInfos | json }}
             <!-- <jhi-cashback-info *ngIf="isExistCashbackInfos(); else offerNotFound" [cashbackInfos]="cashbackInfos"></jhi-cashback-info>
           <ng-template #offerNotFound>
               <jhi-offer-not-found></jhi-offer-not-found>

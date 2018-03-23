@@ -9,3 +9,4 @@ export * from './landline-input';
 export * from './mobile-input';
 export * from './offer-benefit';
 export * from './stored-cashback';
+export * from './app-storage';

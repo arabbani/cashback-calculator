@@ -7,10 +7,7 @@ import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../..
 import { CashbackInfo, MobileInput, SubCategories } from '../../../..';
 import { Selectable } from '../../../../../apsstr-core-ui-config';
 import { SelectableService } from '../../../../../apsstr-core-ui/apsstr-core/services';
-import { ServiceProvider, ServiceProviderService } from '../../../../../entities';
-
-// import { SelectableService } from '../../../../../../apsstr-core-ui';
-// import { Selectable } from '../../../../../../apsstr-core-ui-utility';
+import { Circle, CircleService, ServiceProvider, ServiceProviderService } from '../../../../../entities';
 
 @Component({
   selector: 'apsstr-mobile',
@@ -29,7 +26,7 @@ export class MobileComponent implements OnInit {
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
     private calculateCashbackService: CalculateCashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
-    private serviceProviderService: ServiceProviderService, private selectableService: SelectableService) { }
+    private serviceProviderService: ServiceProviderService, private selectableService: SelectableService, private circleService: CircleService) { }
 
   ngOnInit() {
     this.initializeSubCategories();
@@ -123,7 +120,12 @@ export class MobileComponent implements OnInit {
   }
 
   private getCircles(): void {
-    // this.circles = this.selectableService.toSelectable(this.appStorageAccessorService.getCircles());
+    this.circleService.query().subscribe(
+      (res: HttpResponse<Circle[]>) => {
+        this.circles = this.selectableService.toSelectable(res.body, 'name');
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
   }
 
   private onError(error): void {
