@@ -91,16 +91,17 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group mb-3 col-md-6">
-                            <label class="mr-5" for="type">Type</label>
+                        <div class="mb-3 col-md-6">
+                            <label class="col-md-3 col-form-label" for="type">Type</label>
                             <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.type && !editMode">
                                 {{ offer.type.name }}
                             </span>
-                            <!-- <kendo-dropdownlist *ngIf="editMode" id="type" name="type" [data]="offerTypes" textField="name" valueField="id" [(ngModel)]="offer.type"
-                                required></kendo-dropdownlist> -->
-
-                            <ng-select *ngIf="editMode" id="type" name="type" [(ngModel)]="offer.type" [items]="offerTypes" bindLabel="name" placeholder="Offer Type"
-                                required appendTo="body"></ng-select>
+                            <ng-container *ngIf="editMode">
+                                <div class="col-md-9">
+                                    <ng-select *ngIf="editMode" id="type" name="type" [(ngModel)]="offer.type" [items]="offerTypes" bindLabel="name" placeholder="Offer Type"
+                                        required appendTo="body"></ng-select>
+                                </div>
+                            </ng-container>
                         </div>
                         <div class="col-md-6">
                             <div *ngIf="offer.type && isCoupon(offer.type)" class="form-group mb-3 row">
@@ -128,7 +129,8 @@
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.policy && !editMode">
                             {{ offer.policy.name }}
                         </span>
-                        <kendo-dropdownlist *ngIf="editMode" id="policy" name="policy" [data]="offerPolicies" textField="name" valueField="id" [(ngModel)]="offer.policy"></kendo-dropdownlist>
+                        <ng-select *ngIf="editMode" id="policy" name="policy" [(ngModel)]="offer.policy" [items]="offerPolicies" bindLabel="name"
+                            placeholder="Policy" appendTo="body"></ng-select>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="url">Url</label>
