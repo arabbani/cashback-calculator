@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { DropDownListModule, MultiSelectModule } from '@progress/kendo-angular-dropdowns';
 import { GridModule } from '@progress/kendo-angular-grid';
@@ -26,7 +27,8 @@ const ENTITY_STATES = offerRoute;
         SwitchModule,
         MultiSelectModule,
         BsDatepickerModule.forRoot(),
-        TimepickerModule.forRoot()
+        TimepickerModule.forRoot(),
+        NgSelectModule
     ],
     declarations: [
         OfferComponent,

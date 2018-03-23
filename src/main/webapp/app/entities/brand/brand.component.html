@@ -17,8 +17,8 @@
             {{ constructSubCategoryNames(dataItem.subCategories) }}
         </ng-template>
         <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
-            <kendo-multiselect [data]="subCategories" textField="name" valueField="id" [formControl]="formGroup.get('subCategories')"
-                [placeholder]="defaultSubCategory" [filterable]="true" [autoClose]="false"></kendo-multiselect>
+            <ng-select [formControl]="formGroup.get('subCategories')" [items]="subCategories" bindLabel="name" [multiple]="true" [closeOnSelect]="false"
+                placeholder="Sub Categories" required appendTo="body"></ng-select>
         </ng-template>
     </kendo-grid-column>
     <kendo-grid-command-column title="Action" width="200">

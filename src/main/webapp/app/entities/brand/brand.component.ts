@@ -20,9 +20,7 @@ export class BrandComponent implements OnInit {
     public brands: Brand[];
     public gridState: State;
     brandFormGroup: FormGroup;
-
     subCategories: SubCategory[];
-    defaultSubCategory = 'Select Sub Categories';
 
     constructor(private brandService: BrandService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrDialogService, private subCategoryService: SubCategoryService) {

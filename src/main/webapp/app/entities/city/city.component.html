@@ -17,7 +17,7 @@
             {{ dataItem.state?.name }}
         </ng-template>
         <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
-            <kendo-dropdownlist [data]="states" [defaultItem]="defaultState" textField="name" valueField="id" [formControl]="formGroup.get('state')"></kendo-dropdownlist>
+            <ng-select [formControl]="formGroup.get('state')" [items]="states" bindLabel="name" placeholder="State" required appendTo="body"></ng-select>
         </ng-template>
     </kendo-grid-column>
     <kendo-grid-command-column title="Action" width="220">

@@ -21,11 +21,8 @@ export class CardComponent implements OnInit {
     public cards: Card[];
     public gridState: State;
     bankFormGroup: FormGroup;
-
     cardTypes: CardType[];
     banks: Bank[];
-    defaultCardType = {id: null, name: 'Select Type'};
-    defaultBank = {id: null, name: 'Select Bank'};
 
     constructor(private cardService: CardService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrDialogService, private cardTypeService: CardTypeService, private bankService: BankService) {

@@ -17,7 +17,7 @@
             {{ dataItem.type?.name }}
         </ng-template>
         <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
-            <kendo-dropdownlist [data]="bankTypes" [defaultItem]="defaultBankType" textField="name" valueField="id" [formControl]="formGroup.get('type')"></kendo-dropdownlist>
+            <ng-select [formControl]="formGroup.get('type')" [items]="bankTypes" bindLabel="name" placeholder="Type" required appendTo="body"></ng-select>
         </ng-template>
     </kendo-grid-column>
     <kendo-grid-command-column title="Action" width="200">

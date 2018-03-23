@@ -20,9 +20,7 @@ export class ServiceProviderComponent implements OnInit {
     public serviceProviders: ServiceProvider[];
     public gridState: State;
     serviceProviderFormGroup: FormGroup;
-
     subCategories: SubCategory[];
-    defaultSubCategory = 'Select Sub Categories';
 
     constructor(private serviceProviderService: ServiceProviderService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrDialogService, private subCategoryService: SubCategoryService) {

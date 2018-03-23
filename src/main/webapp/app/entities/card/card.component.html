@@ -1,12 +1,12 @@
-
 <div>
     <h2>
         <span>Card</span>
     </h2>
-</div><div kendoDialogContainer></div>
-<kendo-grid [kendoGridReactiveEditing]="createCardFormGroup" [kendoGridBinding]="cards" [pageable]="true"
-    [pageSize]="gridState.take" [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true"
-    (save)="saveItem($event)" (remove)="deleteItem($event.dataItem)">
+</div>
+<div kendoDialogContainer></div>
+<kendo-grid [kendoGridReactiveEditing]="createCardFormGroup" [kendoGridBinding]="cards" [pageable]="true" [pageSize]="gridState.take"
+    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (save)="saveItem($event)"
+    (remove)="deleteItem($event.dataItem)">
     <ng-template kendoGridToolbarTemplate>
         <button class="float-right" kendoGridAddCommand>Add new</button>
     </ng-template>
@@ -17,7 +17,7 @@
             {{ dataItem.type?.name }}
         </ng-template>
         <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
-            <kendo-dropdownlist [data]="cardTypes" [defaultItem]="defaultCardType" textField="name" valueField="id" [formControl]="formGroup.get('type')"></kendo-dropdownlist>
+            <ng-select [formControl]="formGroup.get('type')" [items]="cardTypes" bindLabel="name" placeholder="Type" required appendTo="body"></ng-select>
         </ng-template>
     </kendo-grid-column>
 
@@ -26,7 +26,7 @@
             {{ dataItem.bank?.name }}
         </ng-template>
         <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
-            <kendo-dropdownlist [data]="banks" [defaultItem]="defaultBank" textField="name" valueField="id" [formControl]="formGroup.get('bank')"></kendo-dropdownlist>
+            <ng-select [formControl]="formGroup.get('bank')" [items]="banks" bindLabel="name" placeholder="Bank" required appendTo="body"></ng-select>
         </ng-template>
     </kendo-grid-column>
     <kendo-grid-command-column title="Action" width="200">

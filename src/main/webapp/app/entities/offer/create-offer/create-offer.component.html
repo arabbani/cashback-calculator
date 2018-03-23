@@ -96,8 +96,11 @@
                             <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.type && !editMode">
                                 {{ offer.type.name }}
                             </span>
-                            <kendo-dropdownlist *ngIf="editMode" id="type" name="type" [data]="offerTypes" textField="name" valueField="id" [(ngModel)]="offer.type"
-                                required></kendo-dropdownlist>
+                            <!-- <kendo-dropdownlist *ngIf="editMode" id="type" name="type" [data]="offerTypes" textField="name" valueField="id" [(ngModel)]="offer.type"
+                                required></kendo-dropdownlist> -->
+
+                            <ng-select *ngIf="editMode" id="type" name="type" [(ngModel)]="offer.type" [items]="offerTypes" bindLabel="name" placeholder="Offer Type"
+                                required appendTo="body"></ng-select>
                         </div>
                         <div class="col-md-6">
                             <div *ngIf="offer.type && isCoupon(offer.type)" class="form-group mb-3 row">

@@ -20,9 +20,7 @@ export class CityComponent implements OnInit {
     public cities: City[];
     public gridState: GridState;
     cityFormGroup: FormGroup;
-
     states: State[];
-    defaultState = { id: null, name: 'Select State' };
 
     constructor(private cityService: CityService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrDialogService, private stateService: StateService) {
