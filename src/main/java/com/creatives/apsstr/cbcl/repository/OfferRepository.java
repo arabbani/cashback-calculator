@@ -16,9 +16,14 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long> {
-    
-    @Query(OfferRepositoryConstants.DEFAULT + OfferRepositoryConstants.CHILD_RELATIONS
-			+ SharedRepositoryConstants.WHERE + OfferRepositoryConstants.WHERE_ID)
+
+	@Query(OfferRepositoryConstants.DEFAULT + OfferRepositoryConstants.CHILD_RELATIONS + SharedRepositoryConstants.WHERE
+			+ OfferRepositoryConstants.WHERE_ID)
 	Offer findOneById(@Param("id") Long id);
+
+	@Query(OfferRepositoryConstants.CASHBACK_MOBILE)
+	List<Offer> findAllToCalculateCashbackForMobile(@Param("active") boolean active, @Param("dummy") boolean dummy,
+			@Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
+			@Param("dateTime") String dateTime, @Param("circleId") Long circleId);
 
 }

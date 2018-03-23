@@ -9,7 +9,7 @@
                 <label class="radio-inline" for="{{ 'subCategory_' + subCategory.value }}" *ngFor="let subCategory of subCategories">
                     <input type="radio" id="{{ 'subCategory_' + subCategory.value }}" name="subCategory" [(ngModel)]="subCategoryCode" value="{{ subCategory.value }}"
                         (click)="onSelectSubCategory(subCategory.value)">
-                        <span class="mr-2 ml-1">{{ subCategory.name }}</span>
+                    <span class="mr-2 ml-1">{{ subCategory.name }}</span>
                 </label>
             </div>
             <div class="form-group">
@@ -36,7 +36,7 @@
         </form>
     </apsstr-card-body>
     <apsstr-card-footer class="text-center">
-        <!-- <apsstr-button type="submit" text="Find Best Offer" color="primary" icon="fa fa-search" [disabled]="!mobileInputForm.form.valid || calculating"
-            (onClick)="calculate()"></apsstr-button> -->
+        <button type="button" class="btn btn-primary" [disabled]="calculating || mobileInputForm.form.invalid" (click)="calculate()">
+            <i class="fa fa-search"></i>&nbsp;Find Best Offer</button>
     </apsstr-card-footer>
 </apsstr-card>

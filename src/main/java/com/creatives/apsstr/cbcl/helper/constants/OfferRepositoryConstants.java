@@ -46,19 +46,23 @@ public class OfferRepositoryConstants {
 	 * ####################### CHILD RELATIONNS BY CATEGORY #######################
 	 */
 
-	public static final String REECHERGE_INFO_CHILDS = REECHERGE_INFO + REECHERGE_INFO_CIRCLES + REECHERGE_INFO_REECHARGE_TYPES;
+	public static final String REECHERGE_INFO_CHILDS = REECHERGE_INFO + REECHERGE_INFO_CIRCLES
+			+ REECHERGE_INFO_REECHARGE_TYPES;
 
-	public static final String TRAVEL_INFO_CHILDS = TRAVEL_INFO + TRAVEL_INFO_TYPES + TRAVEL_INFO_REGIONS + TRAVEL_INFO_ORIGINS;
+	public static final String TRAVEL_INFO_CHILDS = TRAVEL_INFO + TRAVEL_INFO_TYPES + TRAVEL_INFO_REGIONS
+			+ TRAVEL_INFO_ORIGINS;
 
 	public static final String SERVICE_PROVIDERS_CHILDS = SERVICE_PROVIDERS + SERVICE_PROVIDERS_SUB_CATEGORIES;
 
 	/* ####################### SELECT ####################### */
 
-	public static final String DEFAULT = SELF + OPERATING_SYSTEMS + CITIES + SUB_CATEGORIES + SERVICE_PROVIDERS + ACTIVE_DATES + ACTIVE_DAYS;
+	public static final String DEFAULT = SELF + OPERATING_SYSTEMS + CITIES + SUB_CATEGORIES + SERVICE_PROVIDERS
+			+ ACTIVE_DATES + ACTIVE_DAYS;
 
 	public static final String INFO = REECHERGE_INFO + TRAVEL_INFO;
 
-	public static final String CHILD_RELATIONS = REECHERGE_INFO_CHILDS + TRAVEL_INFO_CHILDS + SERVICE_PROVIDERS_SUB_CATEGORIES;
+	public static final String CHILD_RELATIONS = REECHERGE_INFO_CHILDS + TRAVEL_INFO_CHILDS
+			+ SERVICE_PROVIDERS_SUB_CATEGORIES;
 
 	/* ####################### CASHBACK SELECT ####################### */
 
@@ -95,7 +99,7 @@ public class OfferRepositoryConstants {
 	/* ####################### CHILD CONDITIONS ####################### */
 
 	public static final String WHERE_REECHARGE_INFO_CIRCLE = " reechargeInfoCircles.id =:circleId";
-	
+
 	public static final String WHERE_REECHARGE_INFO_REECHARGE_TYPE = " reechargeInfoReechargeTypes.id =:reechargeTypeId";
 
 	/* ####################### CASHBACK CONDITIONS ####################### */
@@ -105,7 +109,8 @@ public class OfferRepositoryConstants {
 			+ WHERE_DATE_BOUND;
 
 	public static final String CASHBACK_CONDITION_MOBILE = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
-			+ WHERE_REECHARGE_INFO_CIRCLE + SharedRepositoryConstants.AND + WHERE_REECHARGE_INFO_REECHARGE_TYPE;
+			+ WHERE_REECHARGE_INFO_CIRCLE;
+	//  + SharedRepositoryConstants.AND + WHERE_REECHARGE_INFO_REECHARGE_TYPE;
 
 	public static final String CASHBACK_CONDITION_DTH = CASHBACK_CONDITION_COMMON;
 
