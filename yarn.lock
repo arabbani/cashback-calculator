@@ -440,12 +440,6 @@ angular2-moment@^1.8.0:
   dependencies:
     moment "^2.16.0"
 
-angular2-multiselect-dropdown@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/angular2-multiselect-dropdown/-/angular2-multiselect-dropdown-2.5.0.tgz#ea16a513f6742cde55df5d9faae992cd3854edd3"
-  dependencies:
-    font-awesome "*"
-
 angular2-template-loader@0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/angular2-template-loader/-/angular2-template-loader-0.6.2.tgz#c0d44e90fff0fac95e8b23f043acda7fd1c51d7c"
@@ -3154,7 +3148,7 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.1"
     readable-stream "^2.0.4"
 
-font-awesome@*, font-awesome@4.7.0:
+font-awesome@4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
 
@@ -5608,10 +5602,6 @@ ng-jhipster@0.4.0:
   dependencies:
     "@ngx-translate/core" "^8.0.0"
     "@ngx-translate/http-loader" "^2.0.0"
-
-ng-select@^1.0.0-rc.5:
-  version "1.0.0-rc.5"
-  resolved "https://registry.yarnpkg.com/ng-select/-/ng-select-1.0.0-rc.5.tgz#d5523d31dc822ff2c489fa7c9b0a1035cf2fa9a3"
 
 ngx-bootstrap@^2.0.2:
   version "2.0.2"

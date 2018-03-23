@@ -20,9 +20,7 @@ export class OperatingSystemComponent implements OnInit {
     public operatingSystems: OperatingSystem[];
     public gridState: State;
     operatingSystemFormGroup: FormGroup;
-
     operatingSystemTypes: OperatingSystemType[];
-    defaultOperatingSystemType = {id: null, name: 'Select Type'};
 
     constructor(private operatingSystemService: OperatingSystemService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrDialogService, private operatingSystemTypeService: OperatingSystemTypeService) {

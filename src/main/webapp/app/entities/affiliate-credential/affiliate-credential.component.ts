@@ -20,9 +20,7 @@ export class AffiliateCredentialComponent implements OnInit {
     public affiliateCredentials: AffiliateCredential[];
     public gridState: State;
     affiliateCredentialFormGroup: FormGroup;
-
     affiliates: Affiliate[];
-    defaultAffiliate = {id: null, name: 'Select Affiliate'};
 
     constructor(private affiliateCredentialService: AffiliateCredentialService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrDialogService, private affiliateService: AffiliateService) {

@@ -20,9 +20,7 @@ export class MerchantComponent implements OnInit {
     public merchants: Merchant[];
     public gridState: State;
     merchantFormGroup: FormGroup;
-
     subCategories: SubCategory[];
-    defaultSubCategory = 'Select Sub Categories';
 
     constructor(private merchantService: MerchantService, private formBuilder: FormBuilder,
         private apsstrKendoDialogService: ApsstrDialogService, private subCategoryService: SubCategoryService) {
