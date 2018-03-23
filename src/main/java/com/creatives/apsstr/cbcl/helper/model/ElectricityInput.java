@@ -10,8 +10,7 @@ public class ElectricityInput extends CommonInput {
 	@Override
 	public String toString() {
 		return "ElectricityInput [getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()="
-				+ getServiceProviderId() + ", getCityId()=" + getCityId() + ", getStateId()=" + getStateId()
-				+ ", getCountryId()=" + getCountryId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
+				+ getServiceProviderId() + ", getCityId()=" + getCityId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
 				+ getExpense() + "]";
 	}
 

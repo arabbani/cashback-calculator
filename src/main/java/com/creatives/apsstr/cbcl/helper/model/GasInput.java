@@ -10,8 +10,7 @@ public class GasInput extends CommonInput {
 	@Override
 	public String toString() {
 		return "GasInput [getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()="
-				+ getServiceProviderId() + ", getCityId()=" + getCityId() + ", getStateId()=" + getStateId()
-				+ ", getCountryId()=" + getCountryId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
+				+ getServiceProviderId() + ", getCityId()=" + getCityId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
 				+ getExpense() + "]";
 	}
 

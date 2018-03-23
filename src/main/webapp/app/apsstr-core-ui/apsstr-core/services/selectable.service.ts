@@ -7,7 +7,15 @@ export class SelectableService {
 
   constructor() { }
 
-  public toSelectable(objects: any, labelField: string): Selectable[] {
+  public toSelectableObject(objects: any, labelField: string): Selectable[] {
+    const selectable: Selectable[] = [];
+    for (const object of objects) {
+      selectable.push(new Selectable(object, object[labelField]));
+    }
+    return selectable;
+  }
+
+  public toSelectableValue(objects: any, labelField: string): Selectable[] {
     const selectable: Selectable[] = [];
     for (const object of objects) {
       selectable.push(new Selectable(object.id, object[labelField]));

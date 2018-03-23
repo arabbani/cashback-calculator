@@ -13,14 +13,13 @@
                 </label>
             </div>
             <div class="form-group">
-                <ng-select [options]="circles" [(ngModel)]="mobileInput.circleId" name="circle" id="circle" placeholder="Circle" filterPlaceholder="Type to Search"
-                    [noFilter]="6" notFoundMsg="No options found" required>
+                <ng-select name="circle" [items]="circles" bindLabel="name" bindValue="id" [(ngModel)]="mobileInput.circleId" placeholder="Circle"
+                    required>
                 </ng-select>
             </div>
             <div class="form-group">
-                <ng-select [options]="serviceProviders" [(ngModel)]="mobileInput.serviceProviderId" name="serviceProvider" id="serviceProvider"
-                    placeholder="Operator" filterPlaceholder="Type to Search" [noFilter]="6" notFoundMsg="No options found" required>
-                </ng-select>
+                <ng-select name="serviceProvider" [items]="serviceProviders" bindLabel="name" bindValue="id" [(ngModel)]="mobileInput.serviceProviderId"
+                    placeholder="Operator" required>
             </div>
             <div class="form-group">
                 <div class="controls">

@@ -1,9 +1,7 @@
-import { IOption } from 'ng-select';
-
-export class Selectable implements IOption {
+export class Selectable {
 
     constructor(
-        public value: any,
-        public label: string
-    ) {}
+        public id: any,
+        public itemName: string
+    ) { }
 }

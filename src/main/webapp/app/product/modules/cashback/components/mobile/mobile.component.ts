@@ -6,8 +6,6 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../..';
 import { CashbackInfo, MobileInput, SubCategories } from '../../../..';
-import { Selectable } from '../../../../../apsstr-core-ui-config';
-import { SelectableService } from '../../../../../apsstr-core-ui/apsstr-core/services';
 import { Circle, CircleService, ServiceProvider, ServiceProviderService } from '../../../../../entities';
 
 @Component({
@@ -18,8 +16,8 @@ export class MobileComponent implements OnInit {
 
   mobileInput = new MobileInput();
   subCategories: any;
-  circles: Selectable[];
-  serviceProviders: Selectable[];
+  circles: Circle[];
+  serviceProviders: ServiceProvider[];
   calculating = false;
   subCategoryCode: string;
   prepaidProviders: ServiceProvider[] = undefined;
@@ -27,7 +25,7 @@ export class MobileComponent implements OnInit {
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
     private calculateCashbackService: CalculateCashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
-    private serviceProviderService: ServiceProviderService, private selectableService: SelectableService, private circleService: CircleService) { }
+    private serviceProviderService: ServiceProviderService, private circleService: CircleService) { }
 
   ngOnInit() {
     this.initializeSubCategories();
@@ -126,12 +124,12 @@ export class MobileComponent implements OnInit {
               this.postpaidProviders = providers;
               break;
           }
-          this.serviceProviders = this.selectableService.toSelectable(providers, 'name');
+          this.serviceProviders = providers;
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
     } else {
-      this.serviceProviders = this.selectableService.toSelectable(providers, 'name');
+      this.serviceProviders = providers;
     }
   }
 
@@ -156,7 +154,7 @@ export class MobileComponent implements OnInit {
   private getCircles(): void {
     this.circleService.query().subscribe(
       (res: HttpResponse<Circle[]>) => {
-        this.circles = this.selectableService.toSelectable(res.body, 'name');
+        this.circles = res.body;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
