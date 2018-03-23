@@ -10,8 +10,6 @@ public class CommonInput {
 	private Long subCategoryId;
 	private Long serviceProviderId;
 	private Long cityId;
-	private Long stateId;
-	private Long countryId;
 	private String dateTime;
 	private Expense expense;
 
@@ -37,22 +35,6 @@ public class CommonInput {
 
 	public void setCityId(Long cityId) {
 		this.cityId = cityId;
-	}
-
-	public Long getStateId() {
-		return stateId;
-	}
-
-	public void setStateId(Long stateId) {
-		this.stateId = stateId;
-	}
-
-	public Long getCountryId() {
-		return countryId;
-	}
-
-	public void setCountryId(Long countryId) {
-		this.countryId = countryId;
 	}
 
 	public String getDateTime() {
