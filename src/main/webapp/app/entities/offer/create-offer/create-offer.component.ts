@@ -54,23 +54,17 @@ export class CreateOfferComponent implements OnInit {
   dates: DateEntity[];
   days: Day[];
   states: State[];
-  refinedStates: State[];
   cities: City[];
   filteredCities: City[];
-  refinedCities: City[];
   operatingSystems: OperatingSystem[];
   affiliates: Affiliate[];
   merchants: Merchant[];
-  filteredMerchants: Merchant[];
   categories: Category[];
   subCategories: SubCategory[];
   filteredSubCategories: SubCategory[];
-  refinedSubCategories: SubCategory[];
   serviceProviders: ServiceProvider[];
   filteredServiceProviders: ServiceProvider[];
-  refinedServiceProviders: ServiceProvider[];
   circles: Circle[];
-  filteredCircles: Circle[];
   reechargePlanTypes: ReechargePlanType[];
   travelTypes: TravelType[];
   regions: Region[];
@@ -78,9 +72,7 @@ export class CreateOfferComponent implements OnInit {
   returnModes: ReturnMode[];
   cards: Card[];
   filteredCards: Card[];
-  refinedCards: Card[];
   offers: Offer[];
-  filteredOffers: Offer[];
   cardTypes: CardType[];
 
   defaultDate;
@@ -100,6 +92,7 @@ export class CreateOfferComponent implements OnInit {
   defaultCards;
 
   offerCategories: Category[];
+  offerStates: State[];
   categoryEnum;
   returnTypesEnum;
   offerReturnFormGroup: FormGroup;
@@ -140,19 +133,6 @@ export class CreateOfferComponent implements OnInit {
   private initializeToEdit(): void {
     this.editMode = true;
     this.loadEntities();
-    this.defaultDate = 'Select Dates';
-    this.defaultDay = 'Select Days';
-    this.defaultState = 'Select States';
-    this.defaultCity = 'Select Cities';
-    this.defaultOperatingSystem = 'Select OS';
-    this.defaultCategory = 'Select Categories';
-    this.defaultSubCategory = 'Select Sub-Category';
-    this.defaultServiceProvider = 'Select Service Provider';
-    this.defaultCircle = 'Select Circles';
-    this.defaultReechargePlanType = 'Select Reecharge Plan Type';
-    this.defaultTravelType = 'Select Travel Types';
-    this.defaultRegion = 'Select Regions';
-    this.defaultOrigin = 'Select Origins';
     this.defaultPaymentMode = 'Select Payment Modes';
     this.defaultCards = 'Select Cards';
   }
@@ -187,6 +167,7 @@ export class CreateOfferComponent implements OnInit {
       this.editMode = false;
       this.offer = this.route.snapshot.data.offer;
       this.extractCategories();
+      this.extractStates();
       const mode = this.route.snapshot.paramMap.get('edit');
       if (mode) {
         this.editOffer();
@@ -206,7 +187,8 @@ export class CreateOfferComponent implements OnInit {
     this.offer.offerReturns = [];
     _.forEach(this.createOfferTabs.tabs, (tab, index) => {
       if (index !== 0) {
-        tab.disabled = true;
+        // tab.disabled = true;
+        tab.disabled = false;
       }
     });
     this.enableTab(0);
@@ -218,6 +200,14 @@ export class CreateOfferComponent implements OnInit {
       categorySet.add(subCategory.category);
     });
     this.offerCategories = _.toArray(categorySet);
+  }
+
+  private extractStates(): void {
+    const stateSet = new Set();
+    _.forEach(this.offer.cities, (city) => {
+      stateSet.add(city.state);
+    });
+    this.offerStates = _.toArray(stateSet);
   }
 
   editOffer(): void {
@@ -275,7 +265,6 @@ export class CreateOfferComponent implements OnInit {
     this.stateService.query().subscribe(
       (res: HttpResponse<State[]>) => {
         this.states = res.body;
-        this.refinedStates = this.states;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -285,7 +274,7 @@ export class CreateOfferComponent implements OnInit {
     this.cityService.query().subscribe(
       (res: HttpResponse<City[]>) => {
         this.cities = res.body;
-        this.refinedCities = [];
+        this.filteredCities = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -313,7 +302,6 @@ export class CreateOfferComponent implements OnInit {
     this.merchantService.query().subscribe(
       (res: HttpResponse<Merchant[]>) => {
         this.merchants = res.body;
-        this.filteredMerchants = this.merchants;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -332,7 +320,7 @@ export class CreateOfferComponent implements OnInit {
     this.subCategoryService.query().subscribe(
       (res: HttpResponse<SubCategory[]>) => {
         this.subCategories = res.body;
-        this.refinedSubCategories = [];
+        this.filteredSubCategories = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -342,7 +330,7 @@ export class CreateOfferComponent implements OnInit {
     this.serviceProviderService.query().subscribe(
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
-        this.refinedServiceProviders = [];
+        this.filteredServiceProviders = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -352,7 +340,6 @@ export class CreateOfferComponent implements OnInit {
     this.circleService.query().subscribe(
       (res: HttpResponse<Circle[]>) => {
         this.circles = res.body;
-        this.filteredCircles = this.circles;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -407,7 +394,7 @@ export class CreateOfferComponent implements OnInit {
     this.cardService.query().subscribe(
       (res: HttpResponse<Card[]>) => {
         this.cards = res.body;
-        this.refinedCards = [];
+        this.filteredCards = [];
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -417,7 +404,6 @@ export class CreateOfferComponent implements OnInit {
     this.offerService.query().subscribe(
       (res: HttpResponse<Offer[]>) => {
         this.offers = res.body;
-        this.filteredOffers = this.offers;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -447,7 +433,6 @@ export class CreateOfferComponent implements OnInit {
 
   private filterCitiesForStates(states: State[]): void {
     this.filteredCities = this.filterEntitiesService.bySingleRelationId(states, this.cities, 'state');
-    this.refinedCities = this.filteredCities;
   }
 
   onStateChange(states: State[]): void {
@@ -457,7 +442,6 @@ export class CreateOfferComponent implements OnInit {
 
   private filterSubCategoriesForCategories(categories: Category[]): void {
     this.filteredSubCategories = this.filterEntitiesService.bySingleRelationId(categories, this.subCategories, 'category');
-    this.refinedSubCategories = this.filteredSubCategories;
   }
 
   onCategoryChange(categories: Category[]): void {
@@ -482,7 +466,6 @@ export class CreateOfferComponent implements OnInit {
 
   private filterServiceProvidersForSubCategories(subCategories: SubCategory[]): void {
     this.filteredServiceProviders = this.filterEntitiesService.byManyRelationId(subCategories, this.serviceProviders, 'subCategories');
-    this.refinedServiceProviders = this.filteredServiceProviders;
   }
 
   onSubCategoryChange(subCategories: SubCategory[]): void {
@@ -492,7 +475,6 @@ export class CreateOfferComponent implements OnInit {
 
   private filterCardsForPaymentModes(modes: CardType[]): void {
     this.filteredCards = this.filterEntitiesService.bySingleRelationId(modes, this.cards, 'type');
-    this.refinedCards = this.filteredCards;
   }
 
   onPaymentModeChange(modes: CardType[], dataItem): void {
@@ -582,41 +564,6 @@ export class CreateOfferComponent implements OnInit {
     });
   }
 
-  removeState(state: State): void {
-    this.offer.states = _.pull(this.offer.states, state);
-    this.onStateChange(this.offer.states);
-  }
-
-  removeCity(city: City): void {
-    this.offer.cities = _.pull(this.offer.cities, city);
-  }
-
-  removeActiveDate(activeDate: DateEntity): void {
-    this.offer.activeDates = _.pull(this.offer.activeDates, activeDate);
-  }
-
-  removeActiveDay(activeDay: Day): void {
-    this.offer.activeDays = _.pull(this.offer.activeDays, activeDay);
-  }
-
-  removeOperatingSystem(operatingSystem: OperatingSystem): void {
-    this.offer.operatingSystems = _.pull(this.offer.operatingSystems, operatingSystem);
-  }
-
-  removeCategory(category: Category): void {
-    this.offerCategories = _.pull(this.offerCategories, category);
-    this.onCategoryChange(this.offerCategories);
-  }
-
-  removeSubCategory(subCategory: SubCategory): void {
-    this.offer.subCategories = _.pull(this.offer.subCategories, subCategory);
-    this.onSubCategoryChange(this.offer.subCategories);
-  }
-
-  removeServiceProvider(serviceProvider: ServiceProvider): void {
-    this.offer.serviceProviders = _.pull(this.offer.serviceProviders, serviceProvider);
-  }
-
   removePaymentCard(dataItem, card: Card): void {
     dataItem.payment.cards = _.pull(dataItem.payment.cards, card);
   }
@@ -628,38 +575,6 @@ export class CreateOfferComponent implements OnInit {
 
   goToPreviousTab(tabNumber: number): void {
     this.createOfferTabs.tabs[tabNumber].active = true;
-  }
-
-  filterStates(value) {
-    this.refinedStates = this.filterEntitiesService.byStringAttribute(this.states, 'name', value);
-  }
-
-  filterCities(value) {
-    this.refinedCities = this.filterEntitiesService.byStringAttribute(this.filteredCities, 'name', value);
-  }
-
-  filterMerchants(value) {
-    this.filteredMerchants = this.filterEntitiesService.byStringAttribute(this.merchants, 'name', value);
-  }
-
-  filterSubCategories(value) {
-    this.refinedSubCategories = this.filterEntitiesService.byStringAttribute(this.filteredSubCategories, 'name', value);
-  }
-
-  filterServiceProviders(value) {
-    this.refinedServiceProviders = this.filterEntitiesService.byStringAttribute(this.filteredServiceProviders, 'name', value);
-  }
-
-  filterCircles(value) {
-    this.filteredCircles = this.filterEntitiesService.byStringAttribute(this.circles, 'name', value);
-  }
-
-  filterCards(value) {
-    this.refinedCards = this.filterEntitiesService.byStringAttribute(this.filteredCards, 'name', value);
-  }
-
-  filterOffers(value) {
-    this.filteredOffers = this.filterEntitiesService.byStringAttribute(this.offers, 'name', value);
   }
 
   onChangeStartDate(startDate: Date): void {
@@ -675,13 +590,13 @@ export class CreateOfferComponent implements OnInit {
     this.offer.startDate.setSeconds(0);
     this.offer.endDate.setSeconds(59);
     console.log(this.offer);
-    if (this.offer.id !== undefined) {
-      this.subscribeToSaveResponse(
-        this.offerService.update(this.offer));
-    } else {
-      this.subscribeToSaveResponse(
-        this.offerService.create(this.offer));
-    }
+    // if (this.offer.id !== undefined) {
+    //   this.subscribeToSaveResponse(
+    //     this.offerService.update(this.offer));
+    // } else {
+    //   this.subscribeToSaveResponse(
+    //     this.offerService.create(this.offer));
+    // }
   }
 
   private subscribeToSaveResponse(result: Observable<HttpResponse<Offer>>) {

@@ -278,57 +278,41 @@
                         <label class="mr-5" for="dates">Active Dates</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let activeDate of offer.activeDates">
                             {{ activeDate.date }}
-                            <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeActiveDate(activeDate)">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
                         </span>
-                        <kendo-multiselect *ngIf="editMode" id="dates" name="dates" [data]="dates" textField="date" valueField="id" [(ngModel)]="offer.activeDates"
-                            [placeholder]="defaultDate" [autoClose]="false"></kendo-multiselect>
+                        <ng-select *ngIf="editMode" id="dates" name="dates" [(ngModel)]="offer.activeDates" [items]="dates" bindLabel="date" [multiple]="true"
+                            [closeOnSelect]="false" placeholder="Dates" appendTo="body"></ng-select>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="days">Active Days</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let activeDay of offer.activeDays">
                             {{ activeDay.day }}
-                            <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeActiveDay(activeDay)">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
                         </span>
-                        <kendo-multiselect *ngIf="editMode" id="days" name="days" [data]="days" textField="day" valueField="id" [(ngModel)]="offer.activeDays"
-                            [placeholder]="defaultDay" [autoClose]="false"></kendo-multiselect>
+                        <ng-select *ngIf="editMode" id="days" name="days" [(ngModel)]="offer.activeDays" [items]="days" bindLabel="day" [multiple]="true"
+                            [closeOnSelect]="false" placeholder="Days" appendTo="body"></ng-select>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="states">States</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let state of offer.states">
                             {{ state.name }}
-                            <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeState(state)">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
                         </span>
-                        <kendo-multiselect *ngIf="editMode" id="states" name="states" [data]="refinedStates" textField="name" valueField="id" [(ngModel)]="offer.states"
-                            [placeholder]="defaultState" [filterable]="true" (filterChange)="filterStates($event)" (valueChange)="onStateChange($event)"
-                            [autoClose]="false"></kendo-multiselect>
+                        <ng-select *ngIf="editMode" id="states" name="states" [(ngModel)]="offerStates" [items]="states" bindLabel="name" [multiple]="true"
+                            [closeOnSelect]="false" placeholder="States" appendTo="body" (change)="onStateChange($event)"></ng-select>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="cities">Cities</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let city of offer.cities">
                             {{ city.name }}
-                            <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeCity(city)">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
                         </span>
-                        <kendo-multiselect *ngIf="editMode" id="cities" name="cities" [data]="refinedCities" textField="name" valueField="id" [(ngModel)]="offer.cities"
-                            [placeholder]="defaultCity" [filterable]="true" (filterChange)="filterCities($event)" [autoClose]="false"></kendo-multiselect>
+                        <ng-select *ngIf="editMode" id="cities" name="cities" [(ngModel)]="offer.cities" [items]="filteredCities" bindLabel="name"
+                            [multiple]="true" [closeOnSelect]="false" placeholder="Cities" appendTo="body"></ng-select>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="operatingSystems">Operating Systems</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let operatingSystem of offer.operatingSystems">
                             {{ operatingSystem.name }}
-                            <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeOperatingSystem(operatingSystem)">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
                         </span>
-                        <kendo-multiselect *ngIf="editMode" id="operatingSystems" name="operatingSystems" [data]="operatingSystems" textField="name"
-                            valueField="id" [(ngModel)]="offer.operatingSystems" [placeholder]="defaultOperatingSystem" [autoClose]="false"></kendo-multiselect>
+                        <ng-select *ngIf="editMode" id="operatingSystems" name="operatingSystems" [(ngModel)]="offer.operatingSystems" [items]="operatingSystems"
+                            bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="OS" appendTo="body"></ng-select>
                     </div>
                     <div class="row">
                         <div class="form-group mb-3 col-md-6">
@@ -336,16 +320,16 @@
                             <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.affiliate && !editMode">
                                 {{ offer.affiliate.name }}
                             </span>
-                            <kendo-dropdownlist *ngIf="editMode" id="affiliate" name="affiliate" [data]="affiliates" textField="name" valueField="id"
-                                [(ngModel)]="offer.affiliate" required></kendo-dropdownlist>
+                            <ng-select *ngIf="editMode" id="affiliate" name="affiliate" [(ngModel)]="offer.affiliate" [items]="affiliates" bindLabel="name"
+                                placeholder="Affiliate" appendTo="body" required></ng-select>
                         </div>
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="merchant">Merchant</label>
                             <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.merchant && !editMode">
                                 {{ offer.merchant.name }}
                             </span>
-                            <kendo-dropdownlist *ngIf="editMode" id="merchant" name="merchant" [data]="filteredMerchants" textField="name" valueField="id"
-                                [(ngModel)]="offer.merchant" [filterable]="true" (filterChange)="filterMerchants($event)" required></kendo-dropdownlist>
+                            <ng-select *ngIf="editMode" id="merchant" name="merchant" [(ngModel)]="offer.merchant" [items]="merchants" bindLabel="name"
+                                placeholder="Merchant" appendTo="body" required></ng-select>
                         </div>
                     </div>
                     <div class="text-center mt-2">
@@ -364,38 +348,27 @@
                         <label class="mr-5" for="categories">Categories</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let category of offerCategories">
                             {{ category.name }}
-                            <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeCategory(category)">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
                         </span>
-                        <kendo-multiselect *ngIf="editMode" id="categories" name="categories" [data]="categories" textField="name" valueField="id"
-                            [(ngModel)]="offerCategories" [placeholder]="defaultCategory" (valueChange)="onCategoryChange($event)"
-                            [autoClose]="false"></kendo-multiselect>
+                        <ng-select *ngIf="editMode" id="categories" name="categories" [(ngModel)]="offerCategories" [items]="categories" bindLabel="name"
+                            [multiple]="true" [closeOnSelect]="false" placeholder="Categories" appendTo="body" (change)="onCategoryChange($event)"></ng-select>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="subCategories">Sub Categories</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let subCategory of offer.subCategories">
                             {{ subCategory.name }}
-                            <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeSubCategory(subCategory)">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
                         </span>
-                        <kendo-multiselect *ngIf="editMode" id="subCategories" name="subCategories" [data]="refinedSubCategories" textField="code"
-                            valueField="id" [(ngModel)]="offer.subCategories" [placeholder]="defaultSubCategory" [filterable]="true"
-                            (filterChange)="filterSubCategories($event)" (valueChange)="onSubCategoryChange($event)" [autoClose]="false"
-                            required></kendo-multiselect>
+                        <ng-select *ngIf="editMode" id="subCategories" name="subCategories" [(ngModel)]="offer.subCategories" [items]="filteredSubCategories"
+                            bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Sub Categories" appendTo="body"
+                            (change)="onSubCategoryChange($event)" required></ng-select>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="serviceProviders">Service Providers</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let serviceProvider of offer.serviceProviders">
                             {{ serviceProvider.name }}
-                            <button *ngIf="editMode" type="button" class="close" aria-label="Close" (click)="removeServiceProvider(serviceProvider)">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
                         </span>
-                        <kendo-multiselect *ngIf="editMode" id="serviceProviders" name="serviceProviders" [data]="refinedServiceProviders" textField="name"
-                            valueField="id" [(ngModel)]="offer.serviceProviders" [placeholder]="defaultServiceProvider" [autoClose]="false"
-                            [filterable]="true" (filterChange)="filterServiceProviders($event)"></kendo-multiselect>
+                        <ng-select *ngIf="editMode" id="serviceProviders" name="serviceProviders" [(ngModel)]="offer.serviceProviders" [items]="filteredServiceProviders"
+                            bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Service Providers" appendTo="body"
+                            required></ng-select>
                     </div>
                     <fieldset class="fieldset-fix mb-3" *ngFor="let offerCategory of offerCategories">
                         <legend class="legend-fix">
@@ -408,18 +381,18 @@
                                     <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let circle of offer.reechargeInfo.circles">
                                         {{ circle.name }}
                                     </span>
-                                    <kendo-multiselect *ngIf="editMode" id="reecharge_info_circles" name="reecharge_info_circles" [data]="filteredCircles" textField="name"
-                                        valueField="id" [(ngModel)]="offer.reechargeInfo.circles" [placeholder]="defaultCircle"
-                                        [autoClose]="false" [filterable]="true" (filterChange)="filterCircles($event)"></kendo-multiselect>
+                                    <ng-select *ngIf="editMode" id="reecharge_info_circles" name="reecharge_info_circles" [(ngModel)]="offer.reechargeInfo.circles"
+                                        [items]="circles" bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Circles"
+                                        appendTo="body" required></ng-select>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="reecharge_info_reecharge_types">Reecharge Types</label>
                                     <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let reechargeType of offer.reechargeInfo.reechargeTypes">
                                         {{ reechargeType.name }}
                                     </span>
-                                    <kendo-multiselect *ngIf="editMode" id="reecharge_info_reecharge_types" name="reecharge_info_reecharge_types" [data]="reechargePlanTypes"
-                                        textField="name" valueField="id" [(ngModel)]="offer.reechargeInfo.reechargeTypes" [placeholder]="defaultReechargePlanType"
-                                        [autoClose]="false"></kendo-multiselect>
+                                    <ng-select *ngIf="editMode" id="reecharge_info_reecharge_types" name="reecharge_info_reecharge_types" [(ngModel)]="offer.reechargeInfo.reechargeTypes"
+                                        [items]="reechargePlanTypes" bindLabel="name" [multiple]="true" [closeOnSelect]="false"
+                                        placeholder="Reecharge Types" appendTo="body" required></ng-select>
                                 </div>
                             </ng-container>
                             <ng-container *ngSwitchCase="categoryEnum.TRAVEL">
@@ -428,29 +401,28 @@
                                     <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let travelType of offer.travelInfo.types">
                                         {{ travelType.name }}
                                     </span>
-                                    <kendo-multiselect *ngIf="editMode" id="travel_info_types" name="travel_info_types" [data]="travelTypes" textField="name"
-                                        valueField="id" [(ngModel)]="offer.travelInfo.types" [placeholder]="defaultTravelType"
-                                        [autoClose]="false"></kendo-multiselect>
+                                    <ng-select *ngIf="editMode" id="travel_info_types" name="travel_info_types" [(ngModel)]="offer.travelInfo.types" [items]="travelTypes"
+                                        bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Travel Types"
+                                        appendTo="body" required></ng-select>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="travel_info_regions">Regions</label>
                                     <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let region of offer.travelInfo.regions">
                                         {{ region.name }}
                                     </span>
-                                    <kendo-multiselect *ngIf="editMode" id="travel_info_regions" name="travel_info_regions" [data]="regions" textField="name"
-                                        valueField="id" [(ngModel)]="offer.travelInfo.regions" [placeholder]="defaultRegion"
-                                        [autoClose]="false"></kendo-multiselect>
+                                    <ng-select *ngIf="editMode" id="travel_info_regions" name="travel_info_regions" [(ngModel)]="offer.travelInfo.regions" [items]="regions"
+                                        bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Regions" appendTo="body"
+                                        required></ng-select>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="travel_info_origins">Origins</label>
                                     <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let origin of offer.travelInfo.origins">
                                         {{ origin.name }}
                                     </span>
-                                    <kendo-multiselect *ngIf="editMode" id="travel_info_origins" name="travel_info_origins" [data]="regions" textField="name"
-                                        valueField="id" [(ngModel)]="offer.travelInfo.origins" [placeholder]="defaultOrigin"
-                                        [autoClose]="false"></kendo-multiselect>
+                                    <ng-select *ngIf="editMode" id="travel_info_origins" name="travel_info_origins" [(ngModel)]="offer.travelInfo.origins" [items]="regions"
+                                        bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Origins" appendTo="body"
+                                        required></ng-select>
                                 </div>
-
                             </ng-container>
                         </ng-container>
                     </fieldset>
@@ -515,12 +487,12 @@
                                 </kendo-grid-command-column>
                                 <ng-template kendoGridDetailTemplate let-dataItem>
                                     <div class="form-group mb-3">
-                                        <label class="mr-5" for="type">Type</label>
+                                        <label class="mr-5" for="type">Return Type</label>
                                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.type && !editMode">
                                             {{ dataItem.type.name }}
                                         </span>
-                                        <kendo-dropdownlist *ngIf="editMode" id="type" name="type" [data]="returnTypes" textField="name" valueField="id" [(ngModel)]="dataItem.type"
-                                            required></kendo-dropdownlist>
+                                        <ng-select *ngIf="editMode" id="type" name="type" [(ngModel)]="dataItem.type" [items]="returnTypes" bindLabel="name" placeholder="Return Type"
+                                            appendTo="body" required></ng-select>
                                     </div>
                                     <ng-container *ngIf="dataItem.type">
                                         <div *ngIf="dataItem.type.name === returnTypesEnum.OFFER; then offerType; else defaultType"></div>
@@ -532,9 +504,8 @@
                                                 <div class="form-group">
                                                     <label class="mr-5" for="returnOffer">Return Offer</label>
                                                     <h5 *ngIf="dataItem.returnOffer">{{ dataItem.returnOffer.name }}</h5>
-                                                    <kendo-dropdownlist *ngIf="editMode" id="returnOffer" name="returnOffer" [data]="filteredOffers" textField="name" valueField="id"
-                                                        [(ngModel)]="dataItem.returnOffer" [filterable]="true" (filterChange)="filterOffers($event)"
-                                                        required></kendo-dropdownlist>
+                                                    <ng-select *ngIf="editMode" id="returnOffer" name="returnOffer" [(ngModel)]="dataItem.returnOffer" [items]="offers" bindLabel="name"
+                                                        placeholder="Return Offer" appendTo="body" required></ng-select>
                                                 </div>
                                             </fieldset>
                                         </ng-template>
@@ -567,15 +538,16 @@
                                                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.mainReturn.mode && !editMode">
                                                             {{ dataItem.mainReturn.mode.name }}
                                                         </span>
-                                                        <kendo-dropdownlist *ngIf="editMode" id="mode" name="mode" [data]="returnModes" textField="name" valueField="id" [(ngModel)]="dataItem.mainReturn.mode"
-                                                            required></kendo-dropdownlist>
+                                                        <ng-select *ngIf="editMode" id="mode" name="mode" [(ngModel)]="dataItem.mainReturn.mode" [items]="returnModes" bindLabel="name"
+                                                            placeholder="Mode" appendTo="body" required></ng-select>
                                                     </div>
                                                     <div class="form-group col-sm-6 col-lg-4 mb-3">
                                                         <label for="channel">Channel</label>
                                                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.mainReturn.channel && !editMode">
                                                             {{ dataItem.mainReturn.channel.name }}
                                                         </span>
-                                                        <kendo-dropdownlist *ngIf="editMode" id="channel" name="channel" [data]="cards" textField="name" valueField="id" [(ngModel)]="dataItem.mainReturn.channel"></kendo-dropdownlist>
+                                                        <ng-select *ngIf="editMode" id="channel" name="channel" [(ngModel)]="dataItem.mainReturn.channel" [items]="cards" bindLabel="name"
+                                                            placeholder="Channel" appendTo="body"></ng-select>
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -590,9 +562,9 @@
                                             <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let paymentMode of dataItem.payment.modes">
                                                 {{ paymentMode.name }}
                                             </span>
-                                            <kendo-multiselect *ngIf="editMode" id="paymentModes" name="paymentModes" [data]="cardTypes" textField="name" valueField="id"
-                                                [(ngModel)]="dataItem.payment.modes" [placeholder]="defaultPaymentMode" (valueChange)="onPaymentModeChange($event,
-                                                            dataItem)" [autoClose]="false"></kendo-multiselect>
+                                            <ng-select *ngIf="editMode" id="paymentModes" name="paymentModes" [(ngModel)]="dataItem.payment.modes" [items]="cardTypes"
+                                                bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Payment Modes"
+                                                appendTo="body" (change)="onPaymentModeChange($event, dataItem)"></ng-select>
                                         </div>
                                         <div class="form-group mb-3">
                                             <label for="paymentCards">Cards</label>
@@ -603,9 +575,9 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </span>
-                                            <kendo-multiselect *ngIf="editMode" id="paymentCards" name="paymentCards" [data]="refinedCards" textField="name" valueField="id"
-                                                [(ngModel)]="dataItem.payment.cards" [placeholder]="defaultCards" [autoClose]="false"
-                                                [filterable]="true" (filterChange)="filterCards($event)"></kendo-multiselect>
+                                            <ng-select *ngIf="editMode" id="paymentCards" name="paymentCards" [(ngModel)]="dataItem.payment.cards" [items]="filteredCards"
+                                                bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Cards"
+                                                appendTo="body"></ng-select>
                                         </div>
                                     </fieldset>
                                 </ng-template>

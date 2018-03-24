@@ -27,8 +27,6 @@ export class Offer implements BaseEntity {
         public offerReturns?: BaseEntity[],
         public policy?: BaseEntity,
         public operatingSystems?: BaseEntity[],
-        public countries?: BaseEntity[],
-        public states?: BaseEntity[],
         public cities?: BaseEntity[],
         public subCategories?: BaseEntity[],
         public serviceProviders?: BaseEntity[],
