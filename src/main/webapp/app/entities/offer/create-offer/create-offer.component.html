@@ -296,7 +296,14 @@
                             {{ state.name }}
                         </span>
                         <ng-select *ngIf="editMode" id="states" name="states" [(ngModel)]="offerStates" [items]="states" bindLabel="name" [multiple]="true"
-                            [closeOnSelect]="false" placeholder="States" appendTo="body" (change)="onStateChange($event)"></ng-select>
+                            [closeOnSelect]="false" placeholder="States" appendTo="body" (change)="onStateChange($event)">
+                            <ng-template ng-header-tmp>
+                                <div class="my-2 ml-5">
+                                    <button (click)="selectAllStates()" class="btn btn-sm btn-secondary">Select all</button>
+                                    <button (click)="unselectAllStates()" class="btn btn-sm btn-danger">Unselect all</button>
+                                </div>
+                            </ng-template>
+                        </ng-select>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="cities">Cities</label>
@@ -304,7 +311,14 @@
                             {{ city.name }}
                         </span>
                         <ng-select *ngIf="editMode" id="cities" name="cities" [(ngModel)]="offer.cities" [items]="filteredCities" bindLabel="name"
-                            [multiple]="true" [closeOnSelect]="false" placeholder="Cities" appendTo="body"></ng-select>
+                            [multiple]="true" [closeOnSelect]="false" placeholder="Cities" appendTo="body" required>
+                            <ng-template ng-header-tmp>
+                                <div class="my-2 ml-5">
+                                    <button (click)="selectAllCities()" class="btn btn-sm btn-secondary">Select all</button>
+                                    <button (click)="unselectAllCities()" class="btn btn-sm btn-danger">Unselect all</button>
+                                </div>
+                            </ng-template>
+                        </ng-select>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="operatingSystems">Operating Systems</label>
@@ -312,7 +326,14 @@
                             {{ operatingSystem.name }}
                         </span>
                         <ng-select *ngIf="editMode" id="operatingSystems" name="operatingSystems" [(ngModel)]="offer.operatingSystems" [items]="operatingSystems"
-                            bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="OS" appendTo="body"></ng-select>
+                            bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="OS" appendTo="body">
+                            <ng-template ng-header-tmp>
+                                <div class="my-2 ml-5">
+                                    <button (click)="selectAllOS()" class="btn btn-sm btn-secondary">Select all</button>
+                                    <button (click)="unselectAllOS()" class="btn btn-sm btn-danger">Unselect all</button>
+                                </div>
+                            </ng-template>
+                        </ng-select>
                     </div>
                     <div class="row">
                         <div class="form-group mb-3 col-md-6">
@@ -368,7 +389,14 @@
                         </span>
                         <ng-select *ngIf="editMode" id="serviceProviders" name="serviceProviders" [(ngModel)]="offer.serviceProviders" [items]="filteredServiceProviders"
                             bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Service Providers" appendTo="body"
-                            required></ng-select>
+                            required>
+                            <ng-template ng-header-tmp>
+                                <div class="my-2 ml-5">
+                                    <button (click)="selectAllServiceProviders()" class="btn btn-sm btn-secondary">Select all</button>
+                                    <button (click)="unselectAllServiceProviders()" class="btn btn-sm btn-danger">Unselect all</button>
+                                </div>
+                            </ng-template>
+                        </ng-select>
                     </div>
                     <fieldset class="fieldset-fix mb-3" *ngFor="let offerCategory of offerCategories">
                         <legend class="legend-fix">
@@ -383,7 +411,14 @@
                                     </span>
                                     <ng-select *ngIf="editMode" id="reecharge_info_circles" name="reecharge_info_circles" [(ngModel)]="offer.reechargeInfo.circles"
                                         [items]="circles" bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Circles"
-                                        appendTo="body" required></ng-select>
+                                        appendTo="body" required>
+                                        <ng-template ng-header-tmp>
+                                            <div class="my-2 ml-5">
+                                                <button (click)="selectAllCircles()" class="btn btn-sm btn-secondary">Select all</button>
+                                                <button (click)="unselectAllCircles()" class="btn btn-sm btn-danger">Unselect all</button>
+                                            </div>
+                                        </ng-template>
+                                    </ng-select>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="reecharge_info_reecharge_types">Reecharge Types</label>
@@ -392,7 +427,14 @@
                                     </span>
                                     <ng-select *ngIf="editMode" id="reecharge_info_reecharge_types" name="reecharge_info_reecharge_types" [(ngModel)]="offer.reechargeInfo.reechargeTypes"
                                         [items]="reechargePlanTypes" bindLabel="name" [multiple]="true" [closeOnSelect]="false"
-                                        placeholder="Reecharge Types" appendTo="body" required></ng-select>
+                                        placeholder="Reecharge Types" appendTo="body" required>
+                                        <ng-template ng-header-tmp>
+                                            <div class="my-2 ml-5">
+                                                <button (click)="selectAllReechargeTypes()" class="btn btn-sm btn-secondary">Select all</button>
+                                                <button (click)="unselectAllReechargeTypes()" class="btn btn-sm btn-danger">Unselect all</button>
+                                            </div>
+                                        </ng-template>
+                                    </ng-select>
                                 </div>
                             </ng-container>
                             <ng-container *ngSwitchCase="categoryEnum.TRAVEL">

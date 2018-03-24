@@ -585,18 +585,67 @@ export class CreateOfferComponent implements OnInit {
     }
   }
 
+  selectAllCities(): void {
+    this.offer.cities = _.cloneDeep(this.filteredCities);
+  }
+
+  unselectAllCities(): void {
+    this.offer.cities = [];
+  }
+
+  selectAllOS(): void {
+    this.offer.operatingSystems = _.cloneDeep(this.operatingSystems);
+  }
+
+  unselectAllOS(): void {
+    this.offer.operatingSystems = [];
+  }
+
+  selectAllServiceProviders(): void {
+    this.offer.serviceProviders = _.cloneDeep(this.filteredServiceProviders);
+  }
+
+  unselectAllServiceProviders(): void {
+    this.offer.serviceProviders = [];
+  }
+
+  selectAllCircles(): void {
+    this.offer.reechargeInfo['circles'] = _.cloneDeep(this.circles);
+  }
+
+  unselectAllCircles(): void {
+    this.offer.reechargeInfo['circles'] = [];
+  }
+
+  selectAllReechargeTypes(): void {
+    this.offer.reechargeInfo['reechargeTypes'] = _.cloneDeep(this.circles);
+  }
+
+  unselectAllReechargeTypes(): void {
+    this.offer.reechargeInfo['reechargeTypes'] = [];
+  }
+
+  selectAllStates(): void {
+    this.offerStates = _.cloneDeep(this.states);
+    this.onStateChange(this.offerStates);
+  }
+
+  unselectAllStates(): void {
+    this.offerStates = [];
+    this.onStateChange(this.offerStates);
+  }
+
   saveOffer(): void {
     this.isSaving = true;
     this.offer.startDate.setSeconds(0);
     this.offer.endDate.setSeconds(59);
-    console.log(this.offer);
-    // if (this.offer.id !== undefined) {
-    //   this.subscribeToSaveResponse(
-    //     this.offerService.update(this.offer));
-    // } else {
-    //   this.subscribeToSaveResponse(
-    //     this.offerService.create(this.offer));
-    // }
+    if (this.offer.id !== undefined) {
+      this.subscribeToSaveResponse(
+        this.offerService.update(this.offer));
+    } else {
+      this.subscribeToSaveResponse(
+        this.offerService.create(this.offer));
+    }
   }
 
   private subscribeToSaveResponse(result: Observable<HttpResponse<Offer>>) {
