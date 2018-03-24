@@ -5,8 +5,15 @@ import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../..';
-import { CashbackInfo, MobileInput, SubCategories } from '../../../..';
-import { Circle, CircleService, ServiceProvider, ServiceProviderService } from '../../../../../entities';
+import { CashbackInfo, MobileInput, StoredCashback, SubCategories } from '../../../..';
+import {
+  Circle,
+  CircleService,
+  ReechargePlanType,
+  ReechargePlanTypeService,
+  ServiceProvider,
+  ServiceProviderService,
+} from '../../../../../entities';
 
 @Component({
   selector: 'apsstr-mobile',
@@ -18,6 +25,7 @@ export class MobileComponent implements OnInit {
   subCategories: any;
   circles: Circle[];
   serviceProviders: ServiceProvider[];
+  reechargePlanTypes: ReechargePlanType[];
   calculating = false;
   subCategoryCode: string;
   prepaidProviders: ServiceProvider[] = undefined;
@@ -25,11 +33,12 @@ export class MobileComponent implements OnInit {
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
     private calculateCashbackService: CalculateCashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
-    private serviceProviderService: ServiceProviderService, private circleService: CircleService) { }
+    private serviceProviderService: ServiceProviderService, private circleService: CircleService, private reechargePlanTypeService: ReechargePlanTypeService) { }
 
   ngOnInit() {
     this.initializeSubCategories();
     this.getCircles();
+    this.getReechargePlanTypes();
   }
 
   onSelectSubCategory(subCategoryCode: string): void {
@@ -48,14 +57,6 @@ export class MobileComponent implements OnInit {
         this.broadcastCashbackInfo(res.body);
       },
       (res: HttpErrorResponse) => this.onCashbackError(res.message)
-
-      // (cashbackInfos: CashbackInfo[]) => {
-      //     this.calculating = false;
-      //     this.broadcastCashbackInfo(cashbackInfos);
-      // },
-      // (res: any) => {
-      //     this.onCashbackError(res);
-      // }
     );
   }
 
@@ -86,7 +87,7 @@ export class MobileComponent implements OnInit {
   }
 
   private broadcastCashbackInfo(cashbackInfos: CashbackInfo[]): void {
-    // this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.mobileInput, this.subCategoryCode));
+    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.mobileInput, this.subCategoryCode));
   }
 
   private extractServiceProviders(subCategoryCode: string): void {
@@ -155,6 +156,15 @@ export class MobileComponent implements OnInit {
     this.circleService.query().subscribe(
       (res: HttpResponse<Circle[]>) => {
         this.circles = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private getReechargePlanTypes(): void {
+    this.reechargePlanTypeService.query().subscribe(
+      (res: HttpResponse<ReechargePlanType[]>) => {
+        this.reechargePlanTypes = res.body;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );

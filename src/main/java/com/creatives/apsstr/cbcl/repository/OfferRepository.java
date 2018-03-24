@@ -24,6 +24,6 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 	@Query(OfferRepositoryConstants.CASHBACK_MOBILE)
 	List<Offer> findAllToCalculateCashbackForMobile(@Param("active") boolean active, @Param("dummy") boolean dummy,
 			@Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
-			@Param("dateTime") String dateTime, @Param("circleId") Long circleId);
+			@Param("dateTime") String dateTime, @Param("circleId") Long circleId, @Param("reechargePlaneTypeId") Long reechargePlaneTypeId);
 
 }

@@ -8,6 +8,7 @@ package com.creatives.apsstr.cbcl.helper.model;
 public class MobileInput extends CommonInput {
 
 	private Long circleId;
+	private Long reechargePlaneTypeId;
 
 	public Long getCircleId() {
 		return circleId;
@@ -17,12 +18,20 @@ public class MobileInput extends CommonInput {
 		this.circleId = circleId;
 	}
 
+	public Long getReechargePlaneTypeId() {
+		return reechargePlaneTypeId;
+	}
+
+	public void setReechargePlaneTypeId(Long reechargePlaneTypeId) {
+		this.reechargePlaneTypeId = reechargePlaneTypeId;
+	}
+
 	@Override
 	public String toString() {
-		return "MobileInput [circleId=" + circleId + ", getSubCategoryId()=" + getSubCategoryId()
-				+ ", getServiceProviderId()=" + getServiceProviderId() + ", getCityId()=" + getCityId()
-				+ ", getDateTime()="
-				+ getDateTime() + ", getExpense()=" + getExpense() + "]";
+		return "MobileInput [circleId=" + circleId + ", reechargePlaneTypeId()=" + reechargePlaneTypeId
+				+ ", getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()=" + getServiceProviderId()
+				+ ", getCityId()=" + getCityId() + ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense()
+				+ "]";
 	}
 
 }

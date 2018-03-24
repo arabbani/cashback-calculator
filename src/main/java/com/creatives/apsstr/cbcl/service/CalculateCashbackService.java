@@ -36,13 +36,13 @@ public class CalculateCashbackService {
 	/**
 	 * Calculate cashback for mobile
 	 *
-	 * @return the list of cashbackResults
+	 * @return the list of cashbackInfos
 	 */
 	public List<CashbackInfo> calculateCashbackForMobile(MobileInput mobileInput) {
 		log.debug("REST request to calculate cashback for mobile : {} ", mobileInput);
 		List<Offer> offers = offerRepository.findAllToCalculateCashbackForMobile(true, false,
 				mobileInput.getSubCategoryId(), mobileInput.getServiceProviderId(), mobileInput.getDateTime(),
-				mobileInput.getCircleId());
+				mobileInput.getCircleId(), mobileInput.getReechargePlaneTypeId());
 		return this.cashbackCalculatorAlgo.calculate(offers, mobileInput.getExpense());
 	}
 

@@ -19,12 +19,16 @@ import com.creatives.apsstr.cbcl.helper.model.CompoundBenefit;
 import com.creatives.apsstr.cbcl.helper.model.Expense;
 import com.creatives.apsstr.cbcl.helper.model.OfferBenefit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CashbackCalculatorAlgoVersionTwo {
 
 	private List<CashbackInfo> cashbackInfos;
+
+	private final Logger log = LoggerFactory.getLogger(CashbackCalculatorAlgoVersionTwo.class);
 
 	/**
 	 * Bound the price within minimumReturn and maximumReturn
@@ -228,6 +232,7 @@ public class CashbackCalculatorAlgoVersionTwo {
 	public List<CashbackInfo> calculate(List<Offer> offers, Expense expense) {
 		cashbackInfos = new ArrayList<>();
 		offers.forEach(offer -> {
+			log.debug("####### ", offer);
 			if (!alreadyCalculated(offer.getId(), true)) {
 				OfferBenefit ob = processOffer(offer, expense);
 				if (ob.getCompoundBenefits().size() > 0) {

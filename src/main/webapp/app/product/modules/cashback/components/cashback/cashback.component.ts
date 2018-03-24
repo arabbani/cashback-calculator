@@ -6,6 +6,7 @@ import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 import { ISubscription } from 'rxjs/Subscription';
 
+import { OfferFilterService } from '../../../../../entities/offer/offer-filter.service';
 import { CashbackInfo, CompoundBenefit, StoredCashback } from '../../../../model';
 import { StoredCashbackService } from '../../../product-core';
 
@@ -24,7 +25,8 @@ export class CashbackComponent implements OnInit, OnDestroy {
     private newCashbackInfosEvent: ISubscription;
     private navigationEndEvent: ISubscription;
 
-    constructor(private router: Router, private jhiEventManager: JhiEventManager, private blockUIService: BlockUIService, private storedCashbackService: StoredCashbackService) {}
+    constructor(private router: Router, private jhiEventManager: JhiEventManager, private blockUIService: BlockUIService, private storedCashbackService: StoredCashbackService,
+    private offerFilterService: OfferFilterService) {}
 
     ngOnInit() {
         this.showDefault = true;
@@ -39,6 +41,7 @@ export class CashbackComponent implements OnInit, OnDestroy {
         this.newCashbackInfosEvent.unsubscribe();
         this.calculateCashbackErrorEvent.unsubscribe();
         this.navigationEndEvent.unsubscribe();
+        this.blockUIService.stop('calculateCashback');
     }
 
     isExistCashbackInfos(): boolean {
@@ -89,7 +92,7 @@ export class CashbackComponent implements OnInit, OnDestroy {
         for (let i = 0; i < length; i++) {
             cashbackInfos[i].offerBenefit.compoundBenefits = this.sortCompoundBenefits(cashbackInfos[i].offerBenefit.compoundBenefits);
         }
-        // this.cashbackInfos = this.offerFilterService.excludeDummyCashbackInfos(List(cashbackInfos));
+        this.cashbackInfos = this.offerFilterService.excludeDummyCashbackInfos(List(cashbackInfos));
     }
 
     private sortCompoundBenefits(compoundBenefits: CompoundBenefit[]): CompoundBenefit[] {

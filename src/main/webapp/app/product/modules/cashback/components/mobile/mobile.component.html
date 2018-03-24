@@ -22,6 +22,10 @@
                     placeholder="Operator" required></ng-select>
             </div>
             <div class="form-group">
+                <ng-select name="reechargePlaneType" [items]="reechargePlanTypes" bindLabel="name" bindValue="id" [(ngModel)]="mobileInput.reechargePlaneTypeId"
+                    placeholder="Reecharge Type" required></ng-select>
+            </div>
+            <div class="form-group">
                 <div class="controls">
                     <div class="input-group">
                         <input class="form-control" type="text" name="expense" id="expense" [(ngModel)]="mobileInput.expense.expense" placeholder="Amount"
@@ -36,6 +40,6 @@
     </apsstr-card-body>
     <apsstr-card-footer class="text-center">
         <button type="button" class="btn btn-primary" [disabled]="calculating || mobileInputForm.form.invalid" (click)="calculate()">
-            <i class="fa fa-search"></i>&nbsp;Find Best Offer</button>
+            <i class="fa fa-search"></i>&nbsp;My Offer</button>
     </apsstr-card-footer>
 </apsstr-card>

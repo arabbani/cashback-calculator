@@ -9,7 +9,7 @@ import { MomentModule } from 'angular2-moment';
 import { BsDatepickerModule, TabsModule, TimepickerModule } from 'ngx-bootstrap';
 
 import { CbclSharedModule } from '../../shared';
-import { OfferComponent, offerRoute, OfferService } from './';
+import { OfferComponent, OfferFilterService, offerRoute, OfferService } from './';
 import { CreateOfferComponent } from './create-offer/create-offer.component';
 import { OfferResolver } from './offer-resolver.service';
 
@@ -39,7 +39,8 @@ const ENTITY_STATES = offerRoute;
     ],
     providers: [
         OfferService,
-        OfferResolver
+        OfferResolver,
+        OfferFilterService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

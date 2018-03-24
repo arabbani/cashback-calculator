@@ -98,7 +98,7 @@ public class OfferRepositoryConstants {
 
 	public static final String WHERE_REECHARGE_INFO_CIRCLE = " reechargeInfoCircles.id =:circleId";
 
-	public static final String WHERE_REECHARGE_INFO_REECHARGE_TYPE = " reechargeInfoReechargeTypes.id =:reechargeTypeId";
+	public static final String WHERE_REECHARGE_INFO_REECHARGE_TYPE = " reechargeInfoReechargeTypes.id =:reechargePlaneTypeId";
 
 	/* ####################### CASHBACK CONDITIONS ####################### */
 
@@ -107,8 +107,7 @@ public class OfferRepositoryConstants {
 			+ WHERE_DATE_BOUND;
 
 	public static final String CASHBACK_CONDITION_MOBILE = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
-			+ WHERE_REECHARGE_INFO_CIRCLE;
-	//  + SharedRepositoryConstants.AND + WHERE_REECHARGE_INFO_REECHARGE_TYPE;
+			+ WHERE_REECHARGE_INFO_CIRCLE + SharedRepositoryConstants.AND + WHERE_REECHARGE_INFO_REECHARGE_TYPE;
 
 	public static final String CASHBACK_CONDITION_DTH = CASHBACK_CONDITION_COMMON;
 
