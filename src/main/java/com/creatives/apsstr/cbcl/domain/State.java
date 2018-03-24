@@ -1,19 +1,26 @@
 package com.creatives.apsstr.cbcl.domain;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.voodoodyne.jackson.jsog.JSOGGenerator;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
 
 /**
  * A State.
@@ -39,11 +46,6 @@ public class State implements Serializable {
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<City> cities = new HashSet<>();
-
-    @ManyToMany(mappedBy = "states")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Offer> offers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -92,30 +94,6 @@ public class State implements Serializable {
         this.cities = cities;
     }
 
-    public Set<Offer> getOffers() {
-        return offers;
-    }
-
-    public State offers(Set<Offer> offers) {
-        this.offers = offers;
-        return this;
-    }
-
-    public State addOffer(Offer offer) {
-        this.offers.add(offer);
-        offer.getStates().add(this);
-        return this;
-    }
-
-    public State removeOffer(Offer offer) {
-        this.offers.remove(offer);
-        offer.getStates().remove(this);
-        return this;
-    }
-
-    public void setOffers(Set<Offer> offers) {
-        this.offers = offers;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

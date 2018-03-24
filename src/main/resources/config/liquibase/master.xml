@@ -59,5 +59,6 @@
     <include file="config/liquibase/changelog/20180321120539_added_entity_constraints_UserInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180321120540_added_entity_constraints_Brand.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180321120541_added_entity_constraints_ElectronicsInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180324100751_changelog.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

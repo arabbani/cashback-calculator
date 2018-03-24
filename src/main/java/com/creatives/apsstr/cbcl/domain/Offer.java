@@ -1,21 +1,34 @@
 package com.creatives.apsstr.cbcl.domain;
 
+import java.io.Serializable;
+import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.voodoodyne.jackson.jsog.JSOGGenerator;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import java.io.Serializable;
-import java.time.ZonedDateTime;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
 
 /**
  * A Offer.
@@ -125,13 +138,6 @@ public class Offer implements Serializable {
                joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
                inverseJoinColumns = @JoinColumn(name="operating_systems_id", referencedColumnName="id"))
     private Set<OperatingSystem> operatingSystems = new HashSet<>();
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_state",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="states_id", referencedColumnName="id"))
-    private Set<State> states = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -518,31 +524,6 @@ public class Offer implements Serializable {
 
     public void setOperatingSystems(Set<OperatingSystem> operatingSystems) {
         this.operatingSystems = operatingSystems;
-    }
-
-    public Set<State> getStates() {
-        return states;
-    }
-
-    public Offer states(Set<State> states) {
-        this.states = states;
-        return this;
-    }
-
-    public Offer addState(State state) {
-        this.states.add(state);
-        state.getOffers().add(this);
-        return this;
-    }
-
-    public Offer removeState(State state) {
-        this.states.remove(state);
-        state.getOffers().remove(this);
-        return this;
-    }
-
-    public void setStates(Set<State> states) {
-        this.states = states;
     }
 
     public Set<City> getCities() {

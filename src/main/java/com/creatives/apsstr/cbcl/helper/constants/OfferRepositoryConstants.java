@@ -14,8 +14,6 @@ public class OfferRepositoryConstants {
 
 	public static final String CITIES = " left join fetch offer.cities cities";
 
-	public static final String STATES = " left join fetch offer.states states";
-
 	public static final String SUB_CATEGORIES = " left join fetch offer.subCategories subCategories";
 
 	public static final String SERVICE_PROVIDERS = " left join fetch offer.serviceProviders serviceProviders";
