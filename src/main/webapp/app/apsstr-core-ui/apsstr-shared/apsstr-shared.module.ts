@@ -11,9 +11,14 @@ import {
   CardHeaderComponent,
   DropDownListFilterComponent,
 } from './components';
+import { NumberInputDirective } from './directives';
 
 const COMPONENTS = [
   CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, AlertComponent, DropDownListFilterComponent
+];
+
+const DIRECTIVES = [
+  NumberInputDirective
 ];
 
 @NgModule({
@@ -22,7 +27,13 @@ const COMPONENTS = [
     AlertModule.forRoot(),
     DropDownListModule
   ],
-  declarations: COMPONENTS,
-  exports: COMPONENTS
+  declarations: [
+    ...COMPONENTS,
+    ...DIRECTIVES
+  ],
+  exports: [
+    ...COMPONENTS,
+    ...DIRECTIVES
+  ]
 })
 export class ApsstrSharedModule { }
