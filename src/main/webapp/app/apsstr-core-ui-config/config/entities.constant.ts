@@ -63,22 +63,6 @@ export const ENTITIES = [
         name: 'Return Mode',
         route: '/return-mode'
     },
-    // {
-    //     name: 'Return Extras',
-    //     route: '/return-extras'
-    // },
-    // {
-    //     name: 'Main Return',
-    //     route: '/main-return'
-    // },
-    // {
-    //     name: 'Return Info',
-    //     route: '/return-info'
-    // },
-    // {
-    //     name: 'Offer Return',
-    //     route: '/offer-return'
-    // },
     {
         name: 'Circle',
         route: '/circle'
@@ -91,14 +75,6 @@ export const ENTITIES = [
         name: 'Region',
         route: '/region'
     },
-    // {
-    //     name: 'Reecharge Info',
-    //     route: '/reecharge-info'
-    // },
-    // {
-    //     name: 'Travel Info',
-    //     route: '/travel-info'
-    // },
     {
         name: 'Bank Type',
         route: '/bank-type'
@@ -115,10 +91,6 @@ export const ENTITIES = [
         name: 'Card',
         route: '/card'
     },
-    // {
-    //     name: 'Offer Payment',
-    //     route: '/offer-payment'
-    // },
     {
         name: 'Reecharge Plan Type',
         route: '/reecharge-plan-type'
@@ -131,16 +103,16 @@ export const ENTITIES = [
         name: 'Newsletter',
         route: '/newsletter'
     },
-    // {
-    //     name: 'User Info',
-    //     route: '/user-info'
-    // },
     {
         name: 'Brand',
         route: '/brand'
     },
-    // {
-    //     name: 'Electronics Info',
-    //     route: '/electronics-info'
-    // }
+    {
+        name: 'Card Provider',
+        route: '/card-provider'
+    },
+    {
+        name: 'Flight Class',
+        route: '/flight-class'
+    }
 ];
