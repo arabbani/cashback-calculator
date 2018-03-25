@@ -65,7 +65,7 @@ public class OfferRepositoryConstants {
 	/* ####################### CASHBACK SELECT ####################### */
 
 	public static final String CASHBACK_SELECT_REECHARGE = DEFAULT + REECHERGE_INFO_CHILDS;
-	
+
 	public static final String CASHBACK_SELECT_TRAVEL = DEFAULT + TRAVEL_INFO_CHILDS;
 
 	/* ####################### CONDITIONS ####################### */
@@ -96,19 +96,20 @@ public class OfferRepositoryConstants {
 			+ WHERE_SUBCATEGORY + SharedRepositoryConstants.AND + WHERE_SERVICE_PROVIDER + SharedRepositoryConstants.AND
 			+ WHERE_DATE_BOUND;
 
-	public static final String CASHBACK_CONDITION_REECHARGE_CHILD = WHERE_REECHARGE_INFO_CIRCLE + SharedRepositoryConstants.AND + WHERE_REECHARGE_INFO_REECHARGE_TYPE;
+	public static final String CASHBACK_CONDITION_REECHARGE_CHILD = WHERE_REECHARGE_INFO_CIRCLE
+			+ SharedRepositoryConstants.AND + WHERE_REECHARGE_INFO_REECHARGE_TYPE;
 
 	/*
 	 * ####################### CASHBACK SELECT WITH CONDITIONS #######################
 	 */
 
-	public static final String CASHBACK_SELECT_REECHARGE_COMMON_CONDITION = CASHBACK_SELECT_REECHARGE + SharedRepositoryConstants.WHERE
-			+ CASHBACK_CONDITION_COMMON;
+	public static final String CASHBACK_SELECT_REECHARGE_COMMON_CONDITION = CASHBACK_SELECT_REECHARGE
+			+ SharedRepositoryConstants.WHERE + CASHBACK_CONDITION_COMMON;
 
-	public static final String CASHBACK_MOBILE = CASHBACK_SELECT_REECHARGE_COMMON_CONDITION + SharedRepositoryConstants.WHERE
-			+ CASHBACK_CONDITION_REECHARGE_CHILD;
+	public static final String CASHBACK_MOBILE = CASHBACK_SELECT_REECHARGE_COMMON_CONDITION
+			+ SharedRepositoryConstants.AND + CASHBACK_CONDITION_REECHARGE_CHILD;
 
-	public static final String CASHBACK_DATACARD = CASHBACK_SELECT_REECHARGE_COMMON_CONDITION + SharedRepositoryConstants.WHERE
-			+ CASHBACK_CONDITION_REECHARGE_CHILD;
+	public static final String CASHBACK_DATACARD = CASHBACK_SELECT_REECHARGE_COMMON_CONDITION
+			+ SharedRepositoryConstants.AND + CASHBACK_CONDITION_REECHARGE_CHILD;
 
 }
