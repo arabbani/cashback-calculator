@@ -4,9 +4,9 @@ import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../..';
-import { CashbackInfo, DthInput, StoredCashback, SubCategories, BroadbandInput } from '../../../..';
-import { ServiceProvider, ServiceProviderService } from '../../../../../entities';
+import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
+import { BroadbandInput, CashbackInfo, StoredCashback, SubCategories } from '../../../../..';
+import { ServiceProvider, ServiceProviderService } from '../../../../../../entities';
 
 @Component({
   selector: 'apsstr-broadband',

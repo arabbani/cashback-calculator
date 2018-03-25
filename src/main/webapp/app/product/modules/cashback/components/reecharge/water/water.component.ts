@@ -4,18 +4,18 @@ import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../..';
-import { CashbackInfo, ElectricityInput, StoredCashback, SubCategories } from '../../../..';
-import { ServiceProvider, ServiceProviderService } from '../../../../../entities';
+import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
+import { CashbackInfo, StoredCashback, SubCategories, WaterInput } from '../../../../..';
+import { ServiceProvider, ServiceProviderService } from '../../../../../../entities';
 
 @Component({
-  selector: 'apsstr-electricity',
-  templateUrl: './electricity.component.html',
+  selector: 'apsstr-water',
+  templateUrl: './water.component.html',
   styles: []
 })
-export class ElectricityComponent implements OnInit {
+export class WaterComponent implements OnInit {
 
-  electricityInput = new ElectricityInput();
+  waterInput = new WaterInput();
   serviceProviders: ServiceProvider[];
   calculating = false;
   subCategoryCode: string;
@@ -27,13 +27,13 @@ export class ElectricityComponent implements OnInit {
   ngOnInit() {
     this.initializeSubCategory();
     this.getServiceProvidersBySubCategoryCode(this.subCategoryCode);
-    this.electricityInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
+    this.waterInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
   }
 
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.calculateCashbackService.calculateCashbackForElectricity(this.electricityInput).subscribe(
+    this.calculateCashbackService.calculateCashbackForWater(this.waterInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);
@@ -60,7 +60,7 @@ export class ElectricityComponent implements OnInit {
   }
 
   private broadcastCashbackInfo(cashbackInfos: CashbackInfo[]): void {
-    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.electricityInput, this.subCategoryCode));
+    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.waterInput, this.subCategoryCode));
   }
 
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {
@@ -73,7 +73,7 @@ export class ElectricityComponent implements OnInit {
   }
 
   private initializeSubCategory(): void {
-    this.subCategoryCode = SubCategories.Electricity;
+    this.subCategoryCode = SubCategories.Water;
   }
 
   private onError(error): void {

@@ -6,16 +6,18 @@ import { BlockUIModule } from 'ng-block-ui';
 
 import { ApsstrSharedModule } from '../../../apsstr-core-ui';
 import { CashbackRoutingModule } from './cashback-routing.module';
-import { BroadbandComponent } from './components/broadband/broadband.component';
-import { CashbackComponent } from './components/cashback/cashback.component';
-import { DatacardComponent } from './components/datacard/datacard.component';
-import { DthComponent } from './components/dth/dth.component';
-import { ElectricityComponent } from './components/electricity/electricity.component';
-import { GasComponent } from './components/gas/gas.component';
-import { LandlineComponent } from './components/landline/landline.component';
-import { MetroComponent } from './components/metro/metro.component';
-import { MobileComponent } from './components/mobile/mobile.component';
-import { WaterComponent } from './components/water/water.component';
+import {
+  BroadbandComponent,
+  CashbackComponent,
+  DatacardComponent,
+  DthComponent,
+  ElectricityComponent,
+  GasComponent,
+  LandlineComponent,
+  MetroComponent,
+  MobileComponent,
+  WaterComponent,
+} from './components';
 
 @NgModule({
   imports: [

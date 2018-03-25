@@ -4,8 +4,8 @@ import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../..';
-import { CashbackInfo, DatacardInput, SubCategories, StoredCashback } from '../../../..';
+import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
+import { CashbackInfo, DatacardInput, StoredCashback, SubCategories } from '../../../../..';
 import {
   Circle,
   CircleService,
@@ -13,7 +13,7 @@ import {
   ReechargePlanTypeService,
   ServiceProvider,
   ServiceProviderService,
-} from '../../../../../entities';
+} from '../../../../../../entities';
 
 @Component({
   selector: 'apsstr-datacard',

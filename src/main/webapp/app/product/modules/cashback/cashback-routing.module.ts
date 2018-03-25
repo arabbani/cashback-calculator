@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CashbackComponent, MobileComponent } from './components';
-import { BroadbandComponent } from './components/broadband';
-import { DatacardComponent } from './components/datacard';
-import { DthComponent } from './components/dth';
-import { ElectricityComponent } from './components/electricity';
-import { GasComponent } from './components/gas';
-import { LandlineComponent } from './components/landline';
-import { MetroComponent } from './components/metro';
-import { WaterComponent } from './components/water';
+import {
+  BroadbandComponent,
+  CashbackComponent,
+  DatacardComponent,
+  DthComponent,
+  ElectricityComponent,
+  GasComponent,
+  LandlineComponent,
+  MetroComponent,
+  MobileComponent,
+  WaterComponent,
+} from './components';
 
 const routes: Routes = [
   {

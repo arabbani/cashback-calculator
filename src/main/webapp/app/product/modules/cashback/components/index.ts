@@ -1,2 +1,2 @@
 export * from './cashback';
-export * from './mobile';
+export * from './reecharge';

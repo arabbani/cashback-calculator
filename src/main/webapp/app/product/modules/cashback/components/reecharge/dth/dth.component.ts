@@ -4,18 +4,18 @@ import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../..';
-import { CashbackInfo, LandlineInput, StoredCashback, SubCategories } from '../../../..';
-import { ServiceProvider, ServiceProviderService } from '../../../../../entities';
+import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
+import { CashbackInfo, DthInput, StoredCashback, SubCategories } from '../../../../..';
+import { ServiceProvider, ServiceProviderService } from '../../../../../../entities';
 
 @Component({
-  selector: 'apsstr-landline',
-  templateUrl: './landline.component.html',
+  selector: 'apsstr-dth',
+  templateUrl: './dth.component.html',
   styles: []
 })
-export class LandlineComponent implements OnInit {
+export class DthComponent implements OnInit {
 
-  landlineInput = new LandlineInput();
+  dthInput = new DthInput();
   serviceProviders: ServiceProvider[];
   calculating = false;
   subCategoryCode: string;
@@ -27,13 +27,13 @@ export class LandlineComponent implements OnInit {
   ngOnInit() {
     this.initializeSubCategory();
     this.getServiceProvidersBySubCategoryCode(this.subCategoryCode);
-    this.landlineInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
+    this.dthInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
   }
 
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.calculateCashbackService.calculateCashbackForLandline(this.landlineInput).subscribe(
+    this.calculateCashbackService.calculateCashbackForDth(this.dthInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);
@@ -60,7 +60,7 @@ export class LandlineComponent implements OnInit {
   }
 
   private broadcastCashbackInfo(cashbackInfos: CashbackInfo[]): void {
-    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.landlineInput, this.subCategoryCode));
+    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.dthInput, this.subCategoryCode));
   }
 
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {
@@ -73,7 +73,7 @@ export class LandlineComponent implements OnInit {
   }
 
   private initializeSubCategory(): void {
-    this.subCategoryCode = SubCategories.Landline;
+    this.subCategoryCode = SubCategories.Dth;
   }
 
   private onError(error): void {

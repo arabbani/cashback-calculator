@@ -4,18 +4,18 @@ import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../..';
-import { CashbackInfo, GasInput, StoredCashback, SubCategories } from '../../../..';
-import { ServiceProvider, ServiceProviderService } from '../../../../../entities';
+import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
+import { CashbackInfo, LandlineInput, StoredCashback, SubCategories } from '../../../../..';
+import { ServiceProvider, ServiceProviderService } from '../../../../../../entities';
 
 @Component({
-  selector: 'apsstr-gas',
-  templateUrl: './gas.component.html',
+  selector: 'apsstr-landline',
+  templateUrl: './landline.component.html',
   styles: []
 })
-export class GasComponent implements OnInit {
+export class LandlineComponent implements OnInit {
 
-  gasInput = new GasInput();
+  landlineInput = new LandlineInput();
   serviceProviders: ServiceProvider[];
   calculating = false;
   subCategoryCode: string;
@@ -27,13 +27,13 @@ export class GasComponent implements OnInit {
   ngOnInit() {
     this.initializeSubCategory();
     this.getServiceProvidersBySubCategoryCode(this.subCategoryCode);
-    this.gasInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
+    this.landlineInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
   }
 
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.calculateCashbackService.calculateCashbackForGas(this.gasInput).subscribe(
+    this.calculateCashbackService.calculateCashbackForLandline(this.landlineInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);
@@ -60,7 +60,7 @@ export class GasComponent implements OnInit {
   }
 
   private broadcastCashbackInfo(cashbackInfos: CashbackInfo[]): void {
-    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.gasInput, this.subCategoryCode));
+    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.landlineInput, this.subCategoryCode));
   }
 
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {
@@ -73,7 +73,7 @@ export class GasComponent implements OnInit {
   }
 
   private initializeSubCategory(): void {
-    this.subCategoryCode = SubCategories.Gas;
+    this.subCategoryCode = SubCategories.Landline;
   }
 
   private onError(error): void {
