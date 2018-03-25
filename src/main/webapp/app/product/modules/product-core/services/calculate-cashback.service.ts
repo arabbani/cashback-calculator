@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 
-import { CashbackInfo, MobileInput } from '../../..';
+import { CashbackInfo, DthInput, MobileInput, DatacardInput } from '../../..';
 import { SERVER_API_URL } from '../../../../app.constants';
 
 type EntityResponseType = HttpResponse<CashbackInfo[]>;
@@ -18,6 +18,16 @@ export class CalculateCashbackService {
   calculateCashbackForMobile(mobileInput: MobileInput): Observable<EntityResponseType> {
     mobileInput.dateTime = this.setDateTime();
     return this.calculate(`${this.restUrl}/mobile`, mobileInput);
+  }
+
+  calculateCashbackForDth(dthInput: DthInput): Observable<EntityResponseType> {
+    dthInput.dateTime = this.setDateTime();
+    return this.calculate(`${this.restUrl}/dth`, dthInput);
+  }
+
+  calculateCashbackForDatacard(datacardInput: DatacardInput): Observable<EntityResponseType> {
+    datacardInput.dateTime = this.setDateTime();
+    return this.calculate(`${this.restUrl}/datacard`, datacardInput);
   }
 
   private calculate(restUrl: string, input: any): Observable<EntityResponseType> {

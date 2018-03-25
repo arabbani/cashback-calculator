@@ -13,16 +13,16 @@ export const SIDEBAR_NAV_ITEMS = [
         url: '/cashback/mobile',
         icon: 'icon-screen-smartphone'
       },
-      // {
-      //   name: 'DTH',
-      //   url: '/',
-      //   icon: 'icon-puzzle'
-      // },
-      // {
-      //   name: 'Datacard',
-      //   url: '/',
-      //   icon: 'icon-puzzle'
-      // }
+      {
+        name: 'DTH',
+        url: '/cashback/dth',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'Datacard',
+        url: '/cashback/datacard',
+        icon: 'icon-puzzle'
+      }
     ]
   },
   // {

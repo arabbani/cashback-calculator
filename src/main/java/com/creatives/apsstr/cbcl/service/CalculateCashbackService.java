@@ -5,6 +5,8 @@ import java.util.List;
 import com.creatives.apsstr.cbcl.domain.Offer;
 import com.creatives.apsstr.cbcl.helper.CashbackCalculatorAlgoVersionTwo;
 import com.creatives.apsstr.cbcl.helper.model.CashbackInfo;
+import com.creatives.apsstr.cbcl.helper.model.DatacardInput;
+import com.creatives.apsstr.cbcl.helper.model.DthInput;
 import com.creatives.apsstr.cbcl.helper.model.MobileInput;
 import com.creatives.apsstr.cbcl.repository.OfferRepository;
 
@@ -44,6 +46,31 @@ public class CalculateCashbackService {
 				mobileInput.getSubCategoryId(), mobileInput.getServiceProviderId(), mobileInput.getDateTime(),
 				mobileInput.getCircleId(), mobileInput.getReechargePlaneTypeId());
 		return this.cashbackCalculatorAlgo.calculate(offers, mobileInput.getExpense());
+	}
+
+	/**
+	 * Calculate cashback for dth
+	 *
+	 * @return the list of cashbackInfos
+	 */
+	public List<CashbackInfo> calculateCashbackForDth(DthInput dthInput) {
+		log.debug("REST request to calculate cashback for dth : {} ", dthInput);
+		List<Offer> offers = offerRepository.findAllToCalculateCashbackForDth(true, false, dthInput.getSubCategoryId(),
+				dthInput.getServiceProviderId(), dthInput.getDateTime());
+		return this.cashbackCalculatorAlgo.calculate(offers, dthInput.getExpense());
+	}
+
+	/**
+	 * Calculate cashback for datacard
+	 *
+	 * @return the list of cashbackInfos
+	 */
+	public List<CashbackInfo> calculateCashbackForDatacard(DatacardInput datacardInput) {
+		log.debug("REST request to calculate cashback for datacard : {} ", datacardInput);
+		List<Offer> offers = offerRepository.findAllToCalculateCashbackForDatacard(true, false,
+				datacardInput.getSubCategoryId(), datacardInput.getServiceProviderId(), datacardInput.getDateTime(),
+				datacardInput.getCircleId(), datacardInput.getReechargePlaneTypeId());
+		return this.cashbackCalculatorAlgo.calculate(offers, datacardInput.getExpense());
 	}
 
 }

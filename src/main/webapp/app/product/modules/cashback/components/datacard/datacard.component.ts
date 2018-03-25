@@ -5,7 +5,7 @@ import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../..';
-import { CashbackInfo, MobileInput, StoredCashback, SubCategories } from '../../../..';
+import { CashbackInfo, DatacardInput, SubCategories, StoredCashback } from '../../../..';
 import {
   Circle,
   CircleService,
@@ -16,12 +16,13 @@ import {
 } from '../../../../../entities';
 
 @Component({
-  selector: 'apsstr-mobile',
-  templateUrl: './mobile.component.html'
+  selector: 'apsstr-datacard',
+  templateUrl: './datacard.component.html',
+  styles: []
 })
-export class MobileComponent implements OnInit {
+export class DatacardComponent implements OnInit {
 
-  mobileInput = new MobileInput();
+  datacardInput = new DatacardInput();
   subCategories: any;
   circles: Circle[];
   serviceProviders: ServiceProvider[];
@@ -42,15 +43,15 @@ export class MobileComponent implements OnInit {
   }
 
   onSelectSubCategory(subCategoryCode: string): void {
-    this.mobileInput.serviceProviderId = undefined;
+    this.datacardInput.serviceProviderId = undefined;
     this.getServiceProvidersBySubCategoryCode(subCategoryCode);
   }
 
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.mobileInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
-    this.calculateCashbackService.calculateCashbackForMobile(this.mobileInput).subscribe(
+    this.datacardInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
+    this.calculateCashbackService.calculateCashbackForDatacard(this.datacardInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);
@@ -63,10 +64,10 @@ export class MobileComponent implements OnInit {
     let sId: number = undefined;
     let providers = undefined;
     switch (this.subCategoryCode) {
-      case SubCategories.PrepaidMobile:
+      case SubCategories.PrepaidDatacard:
         providers = _.cloneDeep(this.prepaidProviders);
         break;
-      case SubCategories.PostpaidMobile:
+      case SubCategories.PostpaidDatacard:
         providers = _.cloneDeep(this.postpaidProviders);
         break;
     }
@@ -86,14 +87,14 @@ export class MobileComponent implements OnInit {
   }
 
   private broadcastCashbackInfo(cashbackInfos: CashbackInfo[]): void {
-    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.mobileInput, this.subCategoryCode));
+    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.datacardInput, this.subCategoryCode));
   }
 
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {
     let providers: ServiceProvider[];
     let crawlFromServer = false;
     switch (subCategoryCode) {
-      case SubCategories.PrepaidMobile:
+      case SubCategories.PrepaidDatacard:
         if (!this.prepaidProviders && this.prepaidProviders === undefined) {
           crawlFromServer = true;
         } else {
@@ -101,7 +102,7 @@ export class MobileComponent implements OnInit {
           providers = this.prepaidProviders;
         }
         break;
-      case SubCategories.PostpaidMobile:
+      case SubCategories.PostpaidDatacard:
         if (!this.postpaidProviders && this.postpaidProviders === undefined) {
           crawlFromServer = true;
         } else {
@@ -117,10 +118,10 @@ export class MobileComponent implements OnInit {
         (res: HttpResponse<ServiceProvider[]>) => {
           providers = res.body;
           switch (subCategoryCode) {
-            case SubCategories.PrepaidMobile:
+            case SubCategories.PrepaidDatacard:
               this.prepaidProviders = providers;
               break;
-            case SubCategories.PostpaidMobile:
+            case SubCategories.PostpaidDatacard:
               this.postpaidProviders = providers;
               break;
           }
@@ -136,11 +137,11 @@ export class MobileComponent implements OnInit {
   private initializeSubCategory(): void {
     this.subCategories = [{
       'name': 'Prepaid',
-      'value': SubCategories.PrepaidMobile
+      'value': SubCategories.PrepaidDatacard
     },
     {
       'name': 'Postpaid',
-      'value': SubCategories.PostpaidMobile
+      'value': SubCategories.PostpaidDatacard
     }
     ];
     this.initializeSubCategoryCode();
@@ -182,4 +183,5 @@ export class MobileComponent implements OnInit {
     });
     this.onError(error);
   }
+
 }

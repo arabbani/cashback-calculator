@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CashbackComponent, MobileComponent } from './components';
+import { DatacardComponent } from './components/datacard';
+import { DthComponent } from './components/dth';
 
 const routes: Routes = [
   {
@@ -12,14 +14,14 @@ const routes: Routes = [
         path: 'mobile',
         component: MobileComponent
       },
-      // {
-      //   path: 'dth',
-      //   component: DthComponent
-      // },
-      // {
-      //   path: 'datacard',
-      //   component: DatacardComponent
-      // },
+      {
+        path: 'dth',
+        component: DthComponent
+      },
+      {
+        path: 'datacard',
+        component: DatacardComponent
+      },
       // {
       //   path: 'broadband',
       //   component: BroadbandComponent

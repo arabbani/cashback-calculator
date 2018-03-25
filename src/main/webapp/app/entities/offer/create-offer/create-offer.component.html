@@ -376,10 +376,10 @@
                     <div class="form-group mb-3">
                         <label class="mr-5" for="subCategories">Sub Categories</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let subCategory of offer.subCategories">
-                            {{ subCategory.name }}
+                            {{ subCategory.code }}
                         </span>
                         <ng-select *ngIf="editMode" id="subCategories" name="subCategories" [(ngModel)]="offer.subCategories" [items]="filteredSubCategories"
-                            bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Sub Categories" appendTo="body"
+                            bindLabel="code" [multiple]="true" [closeOnSelect]="false" placeholder="Sub Categories" appendTo="body"
                             (change)="onSubCategoryChange($event)" required></ng-select>
                     </div>
                     <div class="form-group mb-3">

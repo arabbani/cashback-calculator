@@ -1,10 +1,10 @@
 <apsstr-card>
     <apsstr-card-header>
         <i class="fa fa-lg fa-mobile" aria-hidden="true"></i>
-        <span>YOUR MOBILE DETAILS</span>
+        <span>YOUR DATACARD DETAILS</span>
     </apsstr-card-header>
     <apsstr-card-body>
-        <form role="form" #mobileInputForm="ngForm" novalidate>
+        <form role="form" #datacardInputForm="ngForm" novalidate>
             <div class="form-group">
                 <label class="radio-inline" for="{{ 'subCategory_' + subCategory.value }}" *ngFor="let subCategory of subCategories">
                     <input type="radio" id="{{ 'subCategory_' + subCategory.value }}" name="subCategory" [(ngModel)]="subCategoryCode" value="{{ subCategory.value }}"
@@ -13,26 +13,26 @@
                 </label>
             </div>
             <div class="form-group">
-                <ng-select name="circle" [items]="circles" bindLabel="name" bindValue="id" [(ngModel)]="mobileInput.circleId" placeholder="Circle"
+                <ng-select name="circle" [items]="circles" bindLabel="name" bindValue="id" [(ngModel)]="datacardInput.circleId" placeholder="Circle"
                     required>
                 </ng-select>
             </div>
             <div class="form-group">
-                <ng-select name="serviceProvider" [items]="serviceProviders" bindLabel="name" bindValue="id" [(ngModel)]="mobileInput.serviceProviderId"
+                <ng-select name="serviceProvider" [items]="serviceProviders" bindLabel="name" bindValue="id" [(ngModel)]="datacardInput.serviceProviderId"
                     placeholder="Operator" required></ng-select>
             </div>
             <div class="form-group">
-                <ng-select name="reechargePlaneType" [items]="reechargePlanTypes" bindLabel="name" bindValue="id" [(ngModel)]="mobileInput.reechargePlaneTypeId"
+                <ng-select name="reechargePlaneType" [items]="reechargePlanTypes" bindLabel="name" bindValue="id" [(ngModel)]="datacardInput.reechargePlaneTypeId"
                     placeholder="Reecharge Type" required></ng-select>
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" name="expense" id="expense" [(ngModel)]="mobileInput.expense.expense" placeholder="Amount"
+                <input class="form-control" type="text" name="expense" id="expense" [(ngModel)]="datacardInput.expense.expense" placeholder="Amount"
                     apsstrNumber required>
             </div>
         </form>
     </apsstr-card-body>
     <apsstr-card-footer class="text-center">
-        <button type="button" class="btn btn-primary" [disabled]="calculating || mobileInputForm.form.invalid" (click)="calculate()">
+        <button type="button" class="btn btn-primary" [disabled]="calculating || datacardInputForm.form.invalid" (click)="calculate()">
             <i class="fa fa-search"></i>&nbsp;My Offer</button>
     </apsstr-card-footer>
 </apsstr-card>

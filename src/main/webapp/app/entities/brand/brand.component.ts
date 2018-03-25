@@ -113,7 +113,7 @@ export class BrandComponent implements OnInit {
         if (subCategories) {
             const length = subCategories.length;
             _.forEach(subCategories, function(value, index) {
-                subCategoriesName += value.name;
+                subCategoriesName += value.code;
                 if (index < length - 1) {
                     subCategoriesName += ', ';
                 }

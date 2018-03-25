@@ -8,6 +8,8 @@ import { ApsstrSharedModule } from '../../../apsstr-core-ui';
 import { CashbackRoutingModule } from './cashback-routing.module';
 import { CashbackComponent } from './components/cashback/cashback.component';
 import { MobileComponent } from './components/mobile/mobile.component';
+import { DthComponent } from './components/dth/dth.component';
+import { DatacardComponent } from './components/datacard/datacard.component';
 
 @NgModule({
   imports: [
@@ -18,6 +20,6 @@ import { MobileComponent } from './components/mobile/mobile.component';
     BlockUIModule,
     NgSelectModule
   ],
-  declarations: [CashbackComponent, MobileComponent]
+  declarations: [CashbackComponent, MobileComponent, DthComponent, DatacardComponent]
 })
 export class CashbackModule { }

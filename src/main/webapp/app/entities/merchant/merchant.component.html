@@ -11,18 +11,18 @@
         <button class="float-right" kendoGridAddCommand>Add new</button>
     </ng-template>
     <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
-    <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
+    <kendo-grid-column class="text-center" width="180" field="name" title="Name"></kendo-grid-column>
     <kendo-grid-column class="text-center" width="190" field="active" title="Status" filter="boolean" editor="boolean">
         <ng-template kendoGridCellTemplate let-dataItem>
             <span [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': dataItem.active, 'badge-danger': !dataItem.active }">{{ dataItem.active ? 'Active' : 'InActive' }}</span>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column class="text-center" width="190" field="subCategories" title="Sub Categories" [filterable]="false" [sortable]="false">
+    <kendo-grid-column class="text-center" field="subCategories" title="Sub Categories" [filterable]="false" [sortable]="false">
         <ng-template kendoGridCellTemplate let-dataItem>
             {{ constructSubCategoryNames(dataItem.subCategories) }}
         </ng-template>
         <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
-            <ng-select [formControl]="formGroup.get('subCategories')" [items]="subCategories" bindLabel="name" [multiple]="true" [closeOnSelect]="false"
+            <ng-select [formControl]="formGroup.get('subCategories')" [items]="subCategories" bindLabel="code" [multiple]="true" [closeOnSelect]="false"
                 placeholder="Sub Categories" required appendTo="body"></ng-select>
         </ng-template>
     </kendo-grid-column>

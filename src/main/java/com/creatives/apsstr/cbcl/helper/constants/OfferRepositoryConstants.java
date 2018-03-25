@@ -111,7 +111,8 @@ public class OfferRepositoryConstants {
 
 	public static final String CASHBACK_CONDITION_DTH = CASHBACK_CONDITION_COMMON;
 
-	public static final String CASHBACK_CONDITION_DATACARD = CASHBACK_CONDITION_COMMON;
+	public static final String CASHBACK_CONDITION_DATACARD = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
+	+ WHERE_REECHARGE_INFO_CIRCLE + SharedRepositoryConstants.AND + WHERE_REECHARGE_INFO_REECHARGE_TYPE;
 
 	public static final String CASHBACK_CONDITION_BROADBAND = CASHBACK_CONDITION_COMMON;
 
