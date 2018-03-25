@@ -82,7 +82,7 @@ export class CardComponent implements OnInit {
             'id': item.id,
             'name': [item.name, Validators.required],
             'type': [item.type, Validators.required],
-            'cardProviders': [item.cardProviders, Validators.required],
+            'cardProviders': item.cardProviders,
             'bank': [item.bank, Validators.required]
         });
         return this.bankFormGroup;
@@ -134,4 +134,19 @@ export class CardComponent implements OnInit {
     private onError(error) {
         console.log('ERROR');
     }
+
+    public constructCardProviderNames(cardProviders: CardProvider[]): string {
+        let cardProvidersName = '';
+        if (cardProviders) {
+            const length = cardProviders.length;
+            _.forEach(cardProviders, function(value, index) {
+                cardProvidersName += value.name;
+                if (index < length - 1) {
+                    cardProvidersName += ', ';
+                }
+            });
+        }
+        return cardProvidersName;
+    }
+
 }
