@@ -1,15 +1,28 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Card.
@@ -17,6 +30,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "card")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class Card implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,9 +49,7 @@ public class Card implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "card_card_provider",
-               joinColumns = @JoinColumn(name="cards_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="card_providers_id", referencedColumnName="id"))
+    @JoinTable(name = "card_card_provider", joinColumns = @JoinColumn(name = "cards_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "card_providers_id", referencedColumnName = "id"))
     private Set<CardProvider> cardProviders = new HashSet<>();
 
     @ManyToOne
@@ -137,9 +149,6 @@ public class Card implements Serializable {
 
     @Override
     public String toString() {
-        return "Card{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            "}";
+        return "Card{" + "id=" + getId() + ", name='" + getName() + "'" + "}";
     }
 }

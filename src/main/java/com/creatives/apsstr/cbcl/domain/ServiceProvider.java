@@ -1,16 +1,28 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A ServiceProvider.
@@ -18,6 +30,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "service_provider")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class ServiceProvider implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,9 +46,7 @@ public class ServiceProvider implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "service_provider_sub_category",
-               joinColumns = @JoinColumn(name="service_providers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="sub_categories_id", referencedColumnName="id"))
+    @JoinTable(name = "service_provider_sub_category", joinColumns = @JoinColumn(name = "service_providers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "sub_categories_id", referencedColumnName = "id"))
     private Set<SubCategory> subCategories = new HashSet<>();
 
     @ManyToMany(mappedBy = "serviceProviders")
@@ -138,9 +149,6 @@ public class ServiceProvider implements Serializable {
 
     @Override
     public String toString() {
-        return "ServiceProvider{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            "}";
+        return "ServiceProvider{" + "id=" + getId() + ", name='" + getName() + "'" + "}";
     }
 }

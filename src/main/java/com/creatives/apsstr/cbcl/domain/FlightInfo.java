@@ -1,14 +1,24 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A FlightInfo.
@@ -16,6 +26,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "flight_info")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class FlightInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,23 +37,17 @@ public class FlightInfo implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "flight_info_type",
-               joinColumns = @JoinColumn(name="flight_infos_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="types_id", referencedColumnName="id"))
+    @JoinTable(name = "flight_info_type", joinColumns = @JoinColumn(name = "flight_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "types_id", referencedColumnName = "id"))
     private Set<Region> types = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "flight_info_origin",
-               joinColumns = @JoinColumn(name="flight_infos_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="origins_id", referencedColumnName="id"))
+    @JoinTable(name = "flight_info_origin", joinColumns = @JoinColumn(name = "flight_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "origins_id", referencedColumnName = "id"))
     private Set<Region> origins = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "flight_info_travel_class",
-               joinColumns = @JoinColumn(name="flight_infos_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="travel_classes_id", referencedColumnName="id"))
+    @JoinTable(name = "flight_info_travel_class", joinColumns = @JoinColumn(name = "flight_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "travel_classes_id", referencedColumnName = "id"))
     private Set<FlightClass> travelClasses = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -146,8 +151,6 @@ public class FlightInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "FlightInfo{" +
-            "id=" + getId() +
-            "}";
+        return "FlightInfo{" + "id=" + getId() + "}";
     }
 }

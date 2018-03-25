@@ -1,14 +1,24 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A BusInfo.
@@ -16,6 +26,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "bus_info")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class BusInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,16 +37,12 @@ public class BusInfo implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "bus_info_from",
-               joinColumns = @JoinColumn(name="bus_infos_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="froms_id", referencedColumnName="id"))
+    @JoinTable(name = "bus_info_from", joinColumns = @JoinColumn(name = "bus_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "froms_id", referencedColumnName = "id"))
     private Set<City> froms = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "bus_info_to",
-               joinColumns = @JoinColumn(name="bus_infos_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="tos_id", referencedColumnName="id"))
+    @JoinTable(name = "bus_info_to", joinColumns = @JoinColumn(name = "bus_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "tos_id", referencedColumnName = "id"))
     private Set<City> tos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -116,8 +123,6 @@ public class BusInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "BusInfo{" +
-            "id=" + getId() +
-            "}";
+        return "BusInfo{" + "id=" + getId() + "}";
     }
 }

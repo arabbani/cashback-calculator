@@ -1,15 +1,29 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A OfferReturn.
@@ -17,6 +31,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "offer_return")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class OfferReturn implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -25,20 +40,21 @@ public class OfferReturn implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true)
     private ReturnExtras extras;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true)
     private OfferPayment payment;
 
-    @OneToMany(mappedBy = "offerReturn")
-    @JsonIgnore
+    @OneToMany(mappedBy = "offerReturn", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<ReturnInfo> returnInfos = new HashSet<>();
 
     @ManyToOne
+    @JsonBackReference
     private Offer offer;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -137,8 +153,6 @@ public class OfferReturn implements Serializable {
 
     @Override
     public String toString() {
-        return "OfferReturn{" +
-            "id=" + getId() +
-            "}";
+        return "OfferReturn{" + "id=" + getId() + "}";
     }
 }
