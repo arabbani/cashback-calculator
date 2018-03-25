@@ -87,7 +87,7 @@ public class CardResource {
     @Timed
     public List<Card> getAllCards() {
         log.debug("REST request to get all Cards");
-        return cardRepository.findAll();
+        return cardRepository.findAllWithEagerRelationships();
         }
 
     /**
@@ -100,7 +100,7 @@ public class CardResource {
     @Timed
     public ResponseEntity<Card> getCard(@PathVariable Long id) {
         log.debug("REST request to get Card : {}", id);
-        Card card = cardRepository.findOne(id);
+        Card card = cardRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(card));
     }
 

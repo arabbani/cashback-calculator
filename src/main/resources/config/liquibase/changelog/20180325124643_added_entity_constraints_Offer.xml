@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Offer.
+    -->
+    <changeSet id="20180325124643-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="travel_info_id"
+                                 baseTableName="offer"
+                                 constraintName="fk_offer_travel_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="travel_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="reecharge_info_id"
+                                 baseTableName="offer"
+                                 constraintName="fk_offer_reecharge_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="reecharge_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="electronics_info_id"
+                                 baseTableName="offer"
+                                 constraintName="fk_offer_electronics_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="electronics_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="policy_id"
+                                 baseTableName="offer"
+                                 constraintName="fk_offer_policy_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offer_policy"/>
+
+        <addForeignKeyConstraint baseColumnNames="offers_id"
+                                 baseTableName="offer_operating_system"
+                                 constraintName="fk_offer_operating_system_offers_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offer"/>
+        <addForeignKeyConstraint baseColumnNames="operating_systems_id"
+                                 baseTableName="offer_operating_system"
+                                 constraintName="fk_offer_operating_system_operating_systems_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="operating_system"/>
+        
+        <addForeignKeyConstraint baseColumnNames="offers_id"
+                                 baseTableName="offer_city"
+                                 constraintName="fk_offer_city_offers_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offer"/>
+        <addForeignKeyConstraint baseColumnNames="cities_id"
+                                 baseTableName="offer_city"
+                                 constraintName="fk_offer_city_cities_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="city"/>
+        
+        <addForeignKeyConstraint baseColumnNames="offers_id"
+                                 baseTableName="offer_sub_category"
+                                 constraintName="fk_offer_sub_category_offers_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offer"/>
+        <addForeignKeyConstraint baseColumnNames="sub_categories_id"
+                                 baseTableName="offer_sub_category"
+                                 constraintName="fk_offer_sub_category_sub_categories_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sub_category"/>
+        
+        <addForeignKeyConstraint baseColumnNames="offers_id"
+                                 baseTableName="offer_service_provider"
+                                 constraintName="fk_offer_service_provider_offers_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offer"/>
+        <addForeignKeyConstraint baseColumnNames="service_providers_id"
+                                 baseTableName="offer_service_provider"
+                                 constraintName="fk_offer_service_provider_service_providers_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="service_provider"/>
+        
+        <addForeignKeyConstraint baseColumnNames="offers_id"
+                                 baseTableName="offer_active_date"
+                                 constraintName="fk_offer_active_date_offers_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offer"/>
+        <addForeignKeyConstraint baseColumnNames="active_dates_id"
+                                 baseTableName="offer_active_date"
+                                 constraintName="fk_offer_active_date_active_dates_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="date"/>
+        
+        <addForeignKeyConstraint baseColumnNames="offers_id"
+                                 baseTableName="offer_active_day"
+                                 constraintName="fk_offer_active_day_offers_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offer"/>
+        <addForeignKeyConstraint baseColumnNames="active_days_id"
+                                 baseTableName="offer_active_day"
+                                 constraintName="fk_offer_active_day_active_days_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="day"/>
+        
+        <addForeignKeyConstraint baseColumnNames="affiliate_id"
+                                 baseTableName="offer"
+                                 constraintName="fk_offer_affiliate_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="affiliate"/>
+
+        <addForeignKeyConstraint baseColumnNames="merchant_id"
+                                 baseTableName="offer"
+                                 constraintName="fk_offer_merchant_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="merchant"/>
+
+        <addForeignKeyConstraint baseColumnNames="type_id"
+                                 baseTableName="offer"
+                                 constraintName="fk_offer_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offer_type"/>
+
+    </changeSet>
+</databaseChangeLog>

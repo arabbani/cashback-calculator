@@ -1,20 +1,19 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JsogService } from 'jsog-typescript';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-
 import { SERVER_API_URL } from '../../app.constants';
-import { createRequestOption } from '../../shared';
-import { Affiliate } from './affiliate.model';
 
-type EntityResponseType = HttpResponse<Affiliate>;
+import { Affiliate } from './affiliate.model';
+import { createRequestOption } from '../../shared';
+
+export type EntityResponseType = HttpResponse<Affiliate>;
 
 @Injectable()
 export class AffiliateService {
 
-    private resourceUrl = SERVER_API_URL + 'api/affiliates';
+    private resourceUrl =  SERVER_API_URL + 'api/affiliates';
 
-    constructor(private http: HttpClient, private jsogService: JsogService) { }
+    constructor(private http: HttpClient) { }
 
     create(affiliate: Affiliate): Observable<EntityResponseType> {
         const copy = this.convert(affiliate);
@@ -29,7 +28,7 @@ export class AffiliateService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<Affiliate>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+        return this.http.get<Affiliate>(`${this.resourceUrl}/${id}`, { observe: 'response'})
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -40,21 +39,21 @@ export class AffiliateService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Affiliate = this.convertItemFromServer(this.deserializeObject(res.body));
-        return res.clone({ body });
+        const body: Affiliate = this.convertItemFromServer(res.body);
+        return res.clone({body});
     }
 
     private convertArrayResponse(res: HttpResponse<Affiliate[]>): HttpResponse<Affiliate[]> {
-        const jsonResponse: Affiliate[] = this.deserializeArray(res.body);
+        const jsonResponse: Affiliate[] = res.body;
         const body: Affiliate[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({ body });
+        return res.clone({body});
     }
 
     /**
@@ -71,13 +70,5 @@ export class AffiliateService {
     private convert(affiliate: Affiliate): Affiliate {
         const copy: Affiliate = Object.assign({}, affiliate);
         return copy;
-    }
-
-    private deserializeArray(json: any): Affiliate[] {
-        return this.jsogService.deserializeArray(json, Affiliate);
-    }
-
-    private deserializeObject(json: any): Affiliate {
-        return this.jsogService.deserializeObject(json, Affiliate);
     }
 }

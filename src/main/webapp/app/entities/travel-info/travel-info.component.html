@@ -1,0 +1,74 @@
+<div>
+    <h2>
+        <span>Travel Infos</span>
+        <button class="btn btn-primary float-right jh-create-entity create-travel-info" [routerLink]="['/', { outlets: { popup: ['travel-info-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Travel Info
+            </span>
+        </button>
+    </h2>
+    <apsstr-alert></apsstr-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="travelInfos">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Flight Info</span></th>
+            <th><span>Bus Info</span></th>
+            <th><span>Type</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let travelInfo of travelInfos ;trackBy: trackId">
+                <td><a [routerLink]="['../travel-info', travelInfo.id ]">{{travelInfo.id}}</a></td>
+                <td>
+                    <div *ngIf="travelInfo.flightInfo">
+                        <a [routerLink]="['../flight-info', travelInfo.flightInfo?.id ]" >{{travelInfo.flightInfo?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="travelInfo.busInfo">
+                        <a [routerLink]="['../bus-info', travelInfo.busInfo?.id ]" >{{travelInfo.busInfo?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <span *ngFor="let type of travelInfo.types; let last = last">
+                            <a class="form-control-static" [routerLink]="['../travel-type', type?.id ]">{{type.name}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../travel-info', travelInfo.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'travel-info/'+ travelInfo.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'travel-info/'+ travelInfo.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

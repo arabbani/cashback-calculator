@@ -24,8 +24,8 @@ public class CardType implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 50)
-    @Column(name = "name", length = 50, nullable = false)
+    @Size(max = 30)
+    @Column(name = "name", length = 30, nullable = false)
     private String name;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

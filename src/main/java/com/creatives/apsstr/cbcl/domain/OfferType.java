@@ -1,9 +1,6 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -21,7 +18,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "offer_type")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class OfferType implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,8 +27,8 @@ public class OfferType implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 50)
-    @Column(name = "name", length = 50, nullable = false)
+    @Size(max = 25)
+    @Column(name = "name", length = 25, nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "type")

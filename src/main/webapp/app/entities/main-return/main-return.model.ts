@@ -7,7 +7,7 @@ export class MainReturn implements BaseEntity {
         public exact?: boolean,
         public defaultAmount?: number,
         public mode?: BaseEntity,
-        public channel?: BaseEntity,
+        public cashbackChannel?: BaseEntity,
     ) {
         this.exact = false;
     }

@@ -23,8 +23,8 @@ public class OfferPolicy implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 255)
-    @Column(name = "name", length = 255)
+    @Size(max = 50)
+    @Column(name = "name", length = 50)
     private String name;
 
     @NotNull

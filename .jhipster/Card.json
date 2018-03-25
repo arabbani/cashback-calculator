@@ -8,6 +8,14 @@
             "otherEntityField": "name"
         },
         {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "cardProvider",
+            "otherEntityName": "cardProvider",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
             "relationshipType": "many-to-one",
             "relationshipName": "bank",
             "otherEntityName": "bank",
@@ -25,7 +33,7 @@
             "fieldValidateRulesMaxlength": 255
         }
     ],
-    "changelogDate": "20180321120535",
+    "changelogDate": "20180325124640",
     "entityTableName": "card",
     "dto": "no",
     "pagination": "no",

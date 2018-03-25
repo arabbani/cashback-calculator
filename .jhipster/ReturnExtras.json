@@ -7,10 +7,6 @@
             "fieldType": "Integer"
         },
         {
-            "fieldName": "exact",
-            "fieldType": "Boolean"
-        },
-        {
             "fieldName": "maximumExpense",
             "fieldType": "Integer"
         },
@@ -25,13 +21,9 @@
         {
             "fieldName": "minimumTicketRequired",
             "fieldType": "Integer"
-        },
-        {
-            "fieldName": "minimumRideRequired",
-            "fieldType": "Integer"
         }
     ],
-    "changelogDate": "20180321120523",
+    "changelogDate": "20180325124624",
     "entityTableName": "return_extras",
     "dto": "no",
     "pagination": "no",

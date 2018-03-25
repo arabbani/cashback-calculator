@@ -41,9 +41,6 @@ public class ReturnExtrasResourceIntTest {
     private static final Integer DEFAULT_MINIMUM_EXPENSE = 1;
     private static final Integer UPDATED_MINIMUM_EXPENSE = 2;
 
-    private static final Boolean DEFAULT_EXACT = false;
-    private static final Boolean UPDATED_EXACT = true;
-
     private static final Integer DEFAULT_MAXIMUM_EXPENSE = 1;
     private static final Integer UPDATED_MAXIMUM_EXPENSE = 2;
 
@@ -55,9 +52,6 @@ public class ReturnExtrasResourceIntTest {
 
     private static final Integer DEFAULT_MINIMUM_TICKET_REQUIRED = 1;
     private static final Integer UPDATED_MINIMUM_TICKET_REQUIRED = 2;
-
-    private static final Integer DEFAULT_MINIMUM_RIDE_REQUIRED = 1;
-    private static final Integer UPDATED_MINIMUM_RIDE_REQUIRED = 2;
 
     @Autowired
     private ReturnExtrasRepository returnExtrasRepository;
@@ -98,12 +92,10 @@ public class ReturnExtrasResourceIntTest {
     public static ReturnExtras createEntity(EntityManager em) {
         ReturnExtras returnExtras = new ReturnExtras()
             .minimumExpense(DEFAULT_MINIMUM_EXPENSE)
-            .exact(DEFAULT_EXACT)
             .maximumExpense(DEFAULT_MAXIMUM_EXPENSE)
             .minimumReturn(DEFAULT_MINIMUM_RETURN)
             .maximumReturn(DEFAULT_MAXIMUM_RETURN)
-            .minimumTicketRequired(DEFAULT_MINIMUM_TICKET_REQUIRED)
-            .minimumRideRequired(DEFAULT_MINIMUM_RIDE_REQUIRED);
+            .minimumTicketRequired(DEFAULT_MINIMUM_TICKET_REQUIRED);
         return returnExtras;
     }
 
@@ -128,12 +120,10 @@ public class ReturnExtrasResourceIntTest {
         assertThat(returnExtrasList).hasSize(databaseSizeBeforeCreate + 1);
         ReturnExtras testReturnExtras = returnExtrasList.get(returnExtrasList.size() - 1);
         assertThat(testReturnExtras.getMinimumExpense()).isEqualTo(DEFAULT_MINIMUM_EXPENSE);
-        assertThat(testReturnExtras.isExact()).isEqualTo(DEFAULT_EXACT);
         assertThat(testReturnExtras.getMaximumExpense()).isEqualTo(DEFAULT_MAXIMUM_EXPENSE);
         assertThat(testReturnExtras.getMinimumReturn()).isEqualTo(DEFAULT_MINIMUM_RETURN);
         assertThat(testReturnExtras.getMaximumReturn()).isEqualTo(DEFAULT_MAXIMUM_RETURN);
         assertThat(testReturnExtras.getMinimumTicketRequired()).isEqualTo(DEFAULT_MINIMUM_TICKET_REQUIRED);
-        assertThat(testReturnExtras.getMinimumRideRequired()).isEqualTo(DEFAULT_MINIMUM_RIDE_REQUIRED);
     }
 
     @Test
@@ -167,12 +157,10 @@ public class ReturnExtrasResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(returnExtras.getId().intValue())))
             .andExpect(jsonPath("$.[*].minimumExpense").value(hasItem(DEFAULT_MINIMUM_EXPENSE)))
-            .andExpect(jsonPath("$.[*].exact").value(hasItem(DEFAULT_EXACT.booleanValue())))
             .andExpect(jsonPath("$.[*].maximumExpense").value(hasItem(DEFAULT_MAXIMUM_EXPENSE)))
             .andExpect(jsonPath("$.[*].minimumReturn").value(hasItem(DEFAULT_MINIMUM_RETURN)))
             .andExpect(jsonPath("$.[*].maximumReturn").value(hasItem(DEFAULT_MAXIMUM_RETURN)))
-            .andExpect(jsonPath("$.[*].minimumTicketRequired").value(hasItem(DEFAULT_MINIMUM_TICKET_REQUIRED)))
-            .andExpect(jsonPath("$.[*].minimumRideRequired").value(hasItem(DEFAULT_MINIMUM_RIDE_REQUIRED)));
+            .andExpect(jsonPath("$.[*].minimumTicketRequired").value(hasItem(DEFAULT_MINIMUM_TICKET_REQUIRED)));
     }
 
     @Test
@@ -187,12 +175,10 @@ public class ReturnExtrasResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(returnExtras.getId().intValue()))
             .andExpect(jsonPath("$.minimumExpense").value(DEFAULT_MINIMUM_EXPENSE))
-            .andExpect(jsonPath("$.exact").value(DEFAULT_EXACT.booleanValue()))
             .andExpect(jsonPath("$.maximumExpense").value(DEFAULT_MAXIMUM_EXPENSE))
             .andExpect(jsonPath("$.minimumReturn").value(DEFAULT_MINIMUM_RETURN))
             .andExpect(jsonPath("$.maximumReturn").value(DEFAULT_MAXIMUM_RETURN))
-            .andExpect(jsonPath("$.minimumTicketRequired").value(DEFAULT_MINIMUM_TICKET_REQUIRED))
-            .andExpect(jsonPath("$.minimumRideRequired").value(DEFAULT_MINIMUM_RIDE_REQUIRED));
+            .andExpect(jsonPath("$.minimumTicketRequired").value(DEFAULT_MINIMUM_TICKET_REQUIRED));
     }
 
     @Test
@@ -216,12 +202,10 @@ public class ReturnExtrasResourceIntTest {
         em.detach(updatedReturnExtras);
         updatedReturnExtras
             .minimumExpense(UPDATED_MINIMUM_EXPENSE)
-            .exact(UPDATED_EXACT)
             .maximumExpense(UPDATED_MAXIMUM_EXPENSE)
             .minimumReturn(UPDATED_MINIMUM_RETURN)
             .maximumReturn(UPDATED_MAXIMUM_RETURN)
-            .minimumTicketRequired(UPDATED_MINIMUM_TICKET_REQUIRED)
-            .minimumRideRequired(UPDATED_MINIMUM_RIDE_REQUIRED);
+            .minimumTicketRequired(UPDATED_MINIMUM_TICKET_REQUIRED);
 
         restReturnExtrasMockMvc.perform(put("/api/return-extras")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -233,12 +217,10 @@ public class ReturnExtrasResourceIntTest {
         assertThat(returnExtrasList).hasSize(databaseSizeBeforeUpdate);
         ReturnExtras testReturnExtras = returnExtrasList.get(returnExtrasList.size() - 1);
         assertThat(testReturnExtras.getMinimumExpense()).isEqualTo(UPDATED_MINIMUM_EXPENSE);
-        assertThat(testReturnExtras.isExact()).isEqualTo(UPDATED_EXACT);
         assertThat(testReturnExtras.getMaximumExpense()).isEqualTo(UPDATED_MAXIMUM_EXPENSE);
         assertThat(testReturnExtras.getMinimumReturn()).isEqualTo(UPDATED_MINIMUM_RETURN);
         assertThat(testReturnExtras.getMaximumReturn()).isEqualTo(UPDATED_MAXIMUM_RETURN);
         assertThat(testReturnExtras.getMinimumTicketRequired()).isEqualTo(UPDATED_MINIMUM_TICKET_REQUIRED);
-        assertThat(testReturnExtras.getMinimumRideRequired()).isEqualTo(UPDATED_MINIMUM_RIDE_REQUIRED);
     }
 
     @Test

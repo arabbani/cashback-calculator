@@ -24,8 +24,8 @@ public class ReturnType implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 50)
-    @Column(name = "name", length = 50, nullable = false)
+    @Size(max = 25)
+    @Column(name = "name", length = 25, nullable = false)
     private String name;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

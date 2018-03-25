@@ -12,14 +12,14 @@
         {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "",
-            "relationshipName": "reechargeType",
+            "relationshipName": "reechargePlanType",
             "otherEntityName": "reechargePlanType",
             "otherEntityField": "name",
             "ownerSide": true
         }
     ],
     "fields": [],
-    "changelogDate": "20180321120530",
+    "changelogDate": "20180325124632",
     "entityTableName": "reecharge_info",
     "dto": "no",
     "pagination": "no",

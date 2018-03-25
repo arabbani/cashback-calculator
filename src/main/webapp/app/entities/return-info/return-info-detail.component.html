@@ -1,0 +1,52 @@
+
+<div *ngIf="returnInfo">
+    <h2><span>Return Info</span> {{returnInfo.id}}</h2>
+    <hr>
+    <apsstr-alert-error></apsstr-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Main Return</span></dt>
+        <dd>
+            <div *ngIf="returnInfo.mainReturn">
+                <a [routerLink]="['/main-return', returnInfo.mainReturn?.id]">{{returnInfo.mainReturn?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Extras</span></dt>
+        <dd>
+            <div *ngIf="returnInfo.extras">
+                <a [routerLink]="['/return-extras', returnInfo.extras?.id]">{{returnInfo.extras?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+            <div *ngIf="returnInfo.type">
+                <a [routerLink]="['/return-type', returnInfo.type?.id]">{{returnInfo.type?.name}}</a>
+            </div>
+        </dd>
+        <dt><span>Return Offer</span></dt>
+        <dd>
+            <div *ngIf="returnInfo.returnOffer">
+                <a [routerLink]="['/offer', returnInfo.returnOffer?.id]">{{returnInfo.returnOffer?.name}}</a>
+            </div>
+        </dd>
+        <dt><span>Offer Return</span></dt>
+        <dd>
+            <div *ngIf="returnInfo.offerReturn">
+                <a [routerLink]="['/offer-return', returnInfo.offerReturn?.id]">{{returnInfo.offerReturn?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'return-info/'+ returnInfo.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

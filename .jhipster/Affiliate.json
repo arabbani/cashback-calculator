@@ -22,7 +22,7 @@
                 "required",
                 "maxlength"
             ],
-            "fieldValidateRulesMaxlength": 255
+            "fieldValidateRulesMaxlength": 50
         },
         {
             "fieldName": "url",
@@ -40,7 +40,7 @@
             ]
         }
     ],
-    "changelogDate": "20180321120509",
+    "changelogDate": "20180325124610",
     "entityTableName": "affiliate",
     "dto": "no",
     "pagination": "no",

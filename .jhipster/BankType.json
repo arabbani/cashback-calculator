@@ -9,10 +9,10 @@
                 "required",
                 "maxlength"
             ],
-            "fieldValidateRulesMaxlength": 50
+            "fieldValidateRulesMaxlength": 20
         }
     ],
-    "changelogDate": "20180321120532",
+    "changelogDate": "20180325124636",
     "entityTableName": "bank_type",
     "dto": "no",
     "pagination": "no",

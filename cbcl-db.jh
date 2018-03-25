@@ -2,20 +2,20 @@
 DEFAULT_URL_LENGTH = 2000
 
 entity Merchant {
-	name String required maxlength(255),
+	name String required maxlength(50),
     url String maxlength(DEFAULT_URL_LENGTH),
     active Boolean required
 }
 
 entity AffiliateCredential {
-	trackingId String maxlength(255),
-    token String maxlength(255),
-    apiKey String maxlength(255),
+	trackingId String maxlength(100),
+    token String maxlength(100),
+    apiKey String maxlength(100),
     active Boolean required
 }
 
 entity Affiliate {
-	name String required maxlength(255),
+	name String required maxlength(50),
     url String maxlength(DEFAULT_URL_LENGTH),
     active Boolean required
 }
@@ -37,21 +37,21 @@ entity City {
 }
 
 entity OfferPolicy {
-	name String maxlength(255),
+	name String maxlength(50),
  	description String required maxlength(2000)
 }
 
 entity OfferType {
-	name String required maxlength(50)
+	name String required maxlength(25)
 }
 
 entity Category {
-	name String required maxlength(100)
+	name String required maxlength(50)
 }
 
 entity SubCategory {
-	name String required maxlength(100),
-    code String required maxlength(100)
+	name String required maxlength(50),
+    code String required maxlength(50)
 }
 
 entity ServiceProvider {
@@ -67,7 +67,7 @@ entity Day {
 }
 
 entity ReturnType {
-	name String required maxlength(50)
+	name String required maxlength(25)
 }
 
 entity ReturnMode {
@@ -76,12 +76,10 @@ entity ReturnMode {
 
 entity ReturnExtras {
 	minimumExpense Integer,
-    exact Boolean,
     maximumExpense Integer,
     minimumReturn Integer,
     maximumReturn Integer,
-    minimumTicketRequired Integer,
-    minimumRideRequired Integer
+    minimumTicketRequired Integer
 }
 
 entity MainReturn {
@@ -98,8 +96,12 @@ entity OfferReturn {
 }
 
 entity Circle {
-	name String required maxlength(100),
+	name String required maxlength(50),
     code String required maxlength(50)
+}
+
+entity FlightClass {
+	name String required maxlength(30)
 }
 
 entity TravelType {
@@ -114,20 +116,32 @@ entity ReechargeInfo {
 
 }
 
+entity FlightInfo {
+
+}
+
+entity BusInfo {
+
+}
+
 entity TravelInfo {
 
 }
 
 entity BankType {
-	name String required maxlength(50)
+	name String required maxlength(20)
 }
 
 entity Bank {
-	name String required maxlength(100)
+	name String required maxlength(70)
 }
 
 entity CardType {
-	name String required maxlength(50)
+	name String required maxlength(30)
+}
+
+entity CardProvider {
+	name String required maxlength(30)
 }
 
 entity Card {
@@ -139,7 +153,7 @@ entity OfferPayment {
 }
 
 entity ReechargePlanType {
-	name String required maxlength(255)
+	name String required maxlength(150)
 }
 
 entity Offer {
@@ -178,59 +192,65 @@ entity ElectronicsInfo {
 
 relationship OneToOne {
 	OfferReturn{extras} to ReturnExtras,
-    ReturnInfo{mainReturn} to MainReturn,
-    ReturnInfo{extras} to ReturnExtras,
-    ReturnInfo{payment} to OfferPayment,
-    Offer{travelInfo} to TravelInfo,
-    Offer{reechargeInfo} to ReechargeInfo
+   	ReturnInfo{mainReturn} to MainReturn,
+   	ReturnInfo{extras} to ReturnExtras,
+   	OfferReturn{payment} to OfferPayment,
+   	Offer{travelInfo} to TravelInfo,
+  	Offer{reechargeInfo} to ReechargeInfo,
+    Offer{electronicsInfo} to ElectronicsInfo,
+   	TravelInfo{flightInfo} to FlightInfo,
+   	TravelInfo{busInfo} to BusInfo
 }
 
 relationship OneToMany {
 	Affiliate{credential} to AffiliateCredential{affiliate(name)},
 	OfferReturn{returnInfo} to ReturnInfo{offerReturn},
 	Offer{offerReturn} to OfferReturn{offer},	
-    Affiliate{offer} to Offer{affiliate(name)},
+   	Affiliate{offer} to Offer{affiliate(name)},
     Merchant{offer} to Offer{merchant(name)},
     State{city} to City{state(name)},
   	Category{subCategory} to SubCategory{category(name)},
-    OfferType{offer} to Offer{type(name)},
-    Bank{card} to Card{bank(name)},
-    City{user} to UserInfo
+   	OfferType{offer} to Offer{type(name)},
+   	Bank{card} to Card{bank(name)},
+   	City{user} to UserInfo
 }
 
 relationship ManyToOne {
-    ReturnInfo{type(name)} to ReturnType,
+   	ReturnInfo{type(name)} to ReturnType,
     MainReturn{mode(name)} to ReturnMode,
-    MainReturn{channel(name)} to Card,
+    MainReturn{cashbackChannel(name)} to Card,
     Offer{policy(name)} to OfferPolicy,
    	OperatingSystem{type(name)} to OperatingSystemType,
     ReturnInfo{returnOffer(name)} to Offer,
     Card{type(name)} to CardType,
-    Bank{type(name)} to BankType
+   	Bank{type(name)} to BankType
 }
 
 relationship ManyToMany {
 	Offer{operatingSystem(name)} to OperatingSystem,
-    Offer{state(name)} to State{offer},
-    Offer{city(name)} to City{offer},
+   	Offer{city(name)} to City{offer},
     Offer{subCategory(code)} to SubCategory{offer},
     Offer{serviceProvider(name)} to ServiceProvider{offer},
     Offer{activeDate(date)} to Date,
     Offer{activeDay(day)} to Day,
     ServiceProvider{subCategory(code)} to SubCategory{serviceProvider},
-    Merchant{subCategory(code)} to SubCategory{merchant},
+	Merchant{subCategory(code)} to SubCategory{merchant},
     TravelInfo{type(name)} to TravelType,
-    TravelInfo{region(name)} to Region,
-    TravelInfo{origin(name)} to Region,
-    ReechargeInfo{circle(name)} to Circle,
-    OfferPayment{mode(name)} to CardType,
+    FlightInfo{type(name)} to Region,
+    FlightInfo{origin(name)} to Region,
+    FlightInfo{travelClass(name)} to FlightClass,
+   	BusInfo{from(name)} to City,
+   	BusInfo{to(name)} to City,
+   	ReechargeInfo{circle(name)} to Circle,
+   	OfferPayment{mode(name)} to CardType,
     OfferPayment{card(name)} to Card,
     UserInfo{merchant(name)} to Merchant,
     UserInfo{card(name)} to Card,
     UserInfo{operatingSystem(name)} to OperatingSystem,
-    Brand{subCategory(name)} to SubCategory,
+	Brand{subCategory(name)} to SubCategory,
     ElectronicsInfo{brand(name)} to Brand,
-    ReechargeInfo{reechargeType(name)} to ReechargePlanType
+    Card{cardProvider(name)} to CardProvider,
+    ReechargeInfo{reechargePlanType(name)} to ReechargePlanType
 }
 
 service Offer with serviceClass

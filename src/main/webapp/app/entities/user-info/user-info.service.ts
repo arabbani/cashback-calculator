@@ -1,20 +1,19 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JsogService } from 'jsog-typescript';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-
 import { SERVER_API_URL } from '../../app.constants';
-import { createRequestOption } from '../../shared';
-import { UserInfo } from './user-info.model';
 
-type EntityResponseType = HttpResponse<UserInfo>;
+import { UserInfo } from './user-info.model';
+import { createRequestOption } from '../../shared';
+
+export type EntityResponseType = HttpResponse<UserInfo>;
 
 @Injectable()
 export class UserInfoService {
 
-    private resourceUrl = SERVER_API_URL + 'api/user-infos';
+    private resourceUrl =  SERVER_API_URL + 'api/user-infos';
 
-    constructor(private http: HttpClient, private jsogService: JsogService) { }
+    constructor(private http: HttpClient) { }
 
     create(userInfo: UserInfo): Observable<EntityResponseType> {
         const copy = this.convert(userInfo);
@@ -29,7 +28,7 @@ export class UserInfoService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<UserInfo>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+        return this.http.get<UserInfo>(`${this.resourceUrl}/${id}`, { observe: 'response'})
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -40,21 +39,21 @@ export class UserInfoService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: UserInfo = this.convertItemFromServer(this.deserializeObject(res.body));
-        return res.clone({ body });
+        const body: UserInfo = this.convertItemFromServer(res.body);
+        return res.clone({body});
     }
 
     private convertArrayResponse(res: HttpResponse<UserInfo[]>): HttpResponse<UserInfo[]> {
-        const jsonResponse: UserInfo[] = this.deserializeArray(res.body);
+        const jsonResponse: UserInfo[] = res.body;
         const body: UserInfo[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({ body });
+        return res.clone({body});
     }
 
     /**
@@ -71,13 +70,5 @@ export class UserInfoService {
     private convert(userInfo: UserInfo): UserInfo {
         const copy: UserInfo = Object.assign({}, userInfo);
         return copy;
-    }
-
-    private deserializeArray(json: any): UserInfo[] {
-        return this.jsogService.deserializeArray(json, UserInfo);
-    }
-
-    private deserializeObject(json: any): UserInfo {
-        return this.jsogService.deserializeObject(json, UserInfo);
     }
 }

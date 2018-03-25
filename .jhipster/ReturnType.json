@@ -9,10 +9,10 @@
                 "required",
                 "maxlength"
             ],
-            "fieldValidateRulesMaxlength": 50
+            "fieldValidateRulesMaxlength": 25
         }
     ],
-    "changelogDate": "20180321120521",
+    "changelogDate": "20180325124622",
     "entityTableName": "return_type",
     "dto": "no",
     "pagination": "no",

@@ -24,8 +24,8 @@ public class ReechargePlanType implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 255)
-    @Column(name = "name", length = 255, nullable = false)
+    @Size(max = 150)
+    @Column(name = "name", length = 150, nullable = false)
     private String name;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

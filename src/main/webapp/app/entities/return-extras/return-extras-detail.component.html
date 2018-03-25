@@ -1,0 +1,42 @@
+
+<div *ngIf="returnExtras">
+    <h2><span>Return Extras</span> {{returnExtras.id}}</h2>
+    <hr>
+    <apsstr-alert-error></apsstr-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Minimum Expense</span></dt>
+        <dd>
+            <span>{{returnExtras.minimumExpense}}</span>
+        </dd>
+        <dt><span>Maximum Expense</span></dt>
+        <dd>
+            <span>{{returnExtras.maximumExpense}}</span>
+        </dd>
+        <dt><span>Minimum Return</span></dt>
+        <dd>
+            <span>{{returnExtras.minimumReturn}}</span>
+        </dd>
+        <dt><span>Maximum Return</span></dt>
+        <dd>
+            <span>{{returnExtras.maximumReturn}}</span>
+        </dd>
+        <dt><span>Minimum Ticket Required</span></dt>
+        <dd>
+            <span>{{returnExtras.minimumTicketRequired}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'return-extras/'+ returnExtras.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

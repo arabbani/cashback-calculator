@@ -12,7 +12,7 @@
             "fieldValidateRulesMaxlength": 25
         }
     ],
-    "changelogDate": "20180321120528",
+    "changelogDate": "20180325124630",
     "entityTableName": "travel_type",
     "dto": "no",
     "pagination": "no",

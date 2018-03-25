@@ -5,6 +5,7 @@ export class Card implements BaseEntity {
         public id?: number,
         public name?: string,
         public type?: BaseEntity,
+        public cardProviders?: BaseEntity[],
         public bank?: BaseEntity,
     ) {
     }

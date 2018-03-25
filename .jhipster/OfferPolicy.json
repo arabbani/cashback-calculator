@@ -8,7 +8,7 @@
             "fieldValidateRules": [
                 "maxlength"
             ],
-            "fieldValidateRulesMaxlength": 255
+            "fieldValidateRulesMaxlength": 50
         },
         {
             "fieldName": "description",
@@ -20,7 +20,7 @@
             "fieldValidateRulesMaxlength": 2000
         }
     ],
-    "changelogDate": "20180321120514",
+    "changelogDate": "20180325124615",
     "entityTableName": "offer_policy",
     "dto": "no",
     "pagination": "no",

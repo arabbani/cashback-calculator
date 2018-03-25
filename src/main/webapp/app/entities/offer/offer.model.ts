@@ -14,16 +14,17 @@ export class Offer implements BaseEntity {
         public maximumUsesPerWeek?: number,
         public maximumUsesPerMonth?: number,
         public maximumUsesPerNumber?: number,
-        public active?: boolean,
         public newUserOnly?: boolean,
         public appOnly?: boolean,
         public websiteOnly?: boolean,
         public numberOfUses?: number,
+        public active?: boolean,
         public dummy?: boolean,
         public apsstrExclusive?: boolean,
         public url?: string,
         public travelInfo?: BaseEntity,
         public reechargeInfo?: BaseEntity,
+        public electronicsInfo?: BaseEntity,
         public offerReturns?: BaseEntity[],
         public policy?: BaseEntity,
         public operatingSystems?: BaseEntity[],
@@ -36,10 +37,10 @@ export class Offer implements BaseEntity {
         public merchant?: BaseEntity,
         public type?: BaseEntity,
     ) {
-        this.active = false;
         this.newUserOnly = false;
         this.appOnly = false;
         this.websiteOnly = false;
+        this.active = false;
         this.dummy = false;
         this.apsstrExclusive = false;
     }

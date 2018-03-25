@@ -9,7 +9,7 @@
                 "required",
                 "maxlength"
             ],
-            "fieldValidateRulesMaxlength": 100
+            "fieldValidateRulesMaxlength": 50
         },
         {
             "fieldName": "code",
@@ -21,7 +21,7 @@
             "fieldValidateRulesMaxlength": 50
         }
     ],
-    "changelogDate": "20180321120527",
+    "changelogDate": "20180325124628",
     "entityTableName": "circle",
     "dto": "no",
     "pagination": "no",

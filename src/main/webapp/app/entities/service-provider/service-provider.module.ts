@@ -1,34 +1,48 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { DialogModule } from '@progress/kendo-angular-dialog';
-import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import { ServiceProviderComponent, serviceProviderRoute, ServiceProviderService } from './';
+import {
+    ServiceProviderService,
+    ServiceProviderPopupService,
+    ServiceProviderComponent,
+    ServiceProviderDetailComponent,
+    ServiceProviderDialogComponent,
+    ServiceProviderPopupComponent,
+    ServiceProviderDeletePopupComponent,
+    ServiceProviderDeleteDialogComponent,
+    serviceProviderRoute,
+    serviceProviderPopupRoute,
+} from './';
 
 const ENTITY_STATES = [
-    serviceProviderRoute
+    ...serviceProviderRoute,
+    ...serviceProviderPopupRoute,
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES),
-        ReactiveFormsModule,
-        GridModule,
-        DialogModule,
-        NgSelectModule
+        RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
-        ServiceProviderComponent
+        ServiceProviderComponent,
+        ServiceProviderDetailComponent,
+        ServiceProviderDialogComponent,
+        ServiceProviderDeleteDialogComponent,
+        ServiceProviderPopupComponent,
+        ServiceProviderDeletePopupComponent,
     ],
     entryComponents: [
-        ServiceProviderComponent
+        ServiceProviderComponent,
+        ServiceProviderDialogComponent,
+        ServiceProviderPopupComponent,
+        ServiceProviderDeleteDialogComponent,
+        ServiceProviderDeletePopupComponent,
     ],
     providers: [
-        ServiceProviderService
+        ServiceProviderService,
+        ServiceProviderPopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -6,10 +6,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -18,7 +17,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "card")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class Card implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,6 +32,13 @@ public class Card implements Serializable {
 
     @ManyToOne
     private CardType type;
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "card_card_provider",
+               joinColumns = @JoinColumn(name="cards_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="card_providers_id", referencedColumnName="id"))
+    private Set<CardProvider> cardProviders = new HashSet<>();
 
     @ManyToOne
     private Bank bank;
@@ -71,6 +76,29 @@ public class Card implements Serializable {
 
     public void setType(CardType cardType) {
         this.type = cardType;
+    }
+
+    public Set<CardProvider> getCardProviders() {
+        return cardProviders;
+    }
+
+    public Card cardProviders(Set<CardProvider> cardProviders) {
+        this.cardProviders = cardProviders;
+        return this;
+    }
+
+    public Card addCardProvider(CardProvider cardProvider) {
+        this.cardProviders.add(cardProvider);
+        return this;
+    }
+
+    public Card removeCardProvider(CardProvider cardProvider) {
+        this.cardProviders.remove(cardProvider);
+        return this;
+    }
+
+    public void setCardProviders(Set<CardProvider> cardProviders) {
+        this.cardProviders = cardProviders;
     }
 
     public Bank getBank() {

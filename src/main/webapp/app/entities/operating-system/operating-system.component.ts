@@ -1,48 +1,30 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { State } from '@progress/kendo-data-query';
-import * as _ from 'lodash';
-import { Observable } from 'rxjs/Observable';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs/Subscription';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
-import { GRID_STATE } from '../../shared';
-import { OperatingSystemType, OperatingSystemTypeService } from '../operating-system-type';
 import { OperatingSystem } from './operating-system.model';
 import { OperatingSystemService } from './operating-system.service';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'apsstr-operating-system',
     templateUrl: './operating-system.component.html'
 })
-export class OperatingSystemComponent implements OnInit {
+export class OperatingSystemComponent implements OnInit, OnDestroy {
+operatingSystems: OperatingSystem[];
+    currentAccount: any;
+    eventSubscriber: Subscription;
 
-    public operatingSystems: OperatingSystem[];
-    public gridState: State;
-    operatingSystemFormGroup: FormGroup;
-    operatingSystemTypes: OperatingSystemType[];
-
-    constructor(private operatingSystemService: OperatingSystemService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrDialogService, private operatingSystemTypeService: OperatingSystemTypeService) {
-        this.createOperatingSystemFormGroup = this.createOperatingSystemFormGroup.bind(this);
+    constructor(
+        private operatingSystemService: OperatingSystemService,
+        private jhiAlertService: JhiAlertService,
+        private eventManager: JhiEventManager,
+        private principal: Principal
+    ) {
     }
 
-    ngOnInit() {
-        this.gridState = GRID_STATE;
-        this.loadAllOperatingSystemTypes();
-        this.loadAllOperatingSystem();
-    }
-
-    private loadAllOperatingSystemTypes() {
-        this.operatingSystemTypeService.query().subscribe(
-            (res: HttpResponse<OperatingSystemType[]>) => {
-                this.operatingSystemTypes = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
-    }
-
-    private loadAllOperatingSystem() {
+    loadAll() {
         this.operatingSystemService.query().subscribe(
             (res: HttpResponse<OperatingSystem[]>) => {
                 this.operatingSystems = res.body;
@@ -50,61 +32,26 @@ export class OperatingSystemComponent implements OnInit {
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
-
-    public createOperatingSystemFormGroup(args: any): FormGroup {
-        const item = args.isNew ? new OperatingSystem() : args.dataItem;
-        this.operatingSystemFormGroup = this.formBuilder.group({
-            'id': item.id,
-            'name': [item.name, Validators.required],
-            'type': [item.type, Validators.required]
+    ngOnInit() {
+        this.loadAll();
+        this.principal.identity().then((account) => {
+            this.currentAccount = account;
         });
-        return this.operatingSystemFormGroup;
+        this.registerChangeInOperatingSystems();
     }
 
-    public saveItem({ formGroup, isNew }): void {
-        const product = formGroup.value;
-        if (isNew) {
-            this.subscribeToSaveResponse(this.operatingSystemService.create(product), isNew);
-        } else {
-            this.subscribeToSaveResponse(this.operatingSystemService.update(product));
-        }
+    ngOnDestroy() {
+        this.eventManager.destroy(this.eventSubscriber);
     }
 
-    public deleteItem(dataItem: any): void {
-        this.apsstrKendoDialogService.confirm().subscribe((result) => {
-            if (result['text'] === 'No') {
-                this.operatingSystems.push(dataItem);
-                this.operatingSystems = _.sortBy(this.operatingSystems, (item) => item.id);
-            } else if (result['text'] === 'Yes') {
-                this.operatingSystemService.delete(dataItem.id).subscribe(
-                    (response) => {
-                        console.log('DELETED');
-                    },
-                    (error: HttpErrorResponse) => {
-                        this.loadAllOperatingSystem();
-                        this.onError(error);
-                    }
-                );
-            }
-        });
+    trackId(index: number, item: OperatingSystem) {
+        return item.id;
     }
-
-    private subscribeToSaveResponse(result: Observable<HttpResponse<OperatingSystem>>, isNew?: boolean) {
-        result.subscribe((res: HttpResponse<OperatingSystem>) =>
-            this.onSaveSuccess(res.body, isNew), (res: HttpErrorResponse) => this.onSaveError());
-    }
-
-    private onSaveSuccess(result: OperatingSystem, isNew?: boolean) {
-        if (isNew && isNew === true) {
-            this.loadAllOperatingSystem();
-        }
-    }
-
-    private onSaveError() {
-        this.loadAllOperatingSystem();
+    registerChangeInOperatingSystems() {
+        this.eventSubscriber = this.eventManager.subscribe('operatingSystemListModification', (response) => this.loadAll());
     }
 
     private onError(error) {
-        console.log('ERROR');
+        this.jhiAlertService.error(error.message, null, null);
     }
 }

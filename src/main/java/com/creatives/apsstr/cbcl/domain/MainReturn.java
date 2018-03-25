@@ -6,9 +6,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -18,7 +15,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "main_return")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class MainReturn implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,7 +37,7 @@ public class MainReturn implements Serializable {
     private ReturnMode mode;
 
     @ManyToOne
-    private Card channel;
+    private Card cashbackChannel;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -104,17 +100,17 @@ public class MainReturn implements Serializable {
         this.mode = returnMode;
     }
 
-    public Card getChannel() {
-        return channel;
+    public Card getCashbackChannel() {
+        return cashbackChannel;
     }
 
-    public MainReturn channel(Card card) {
-        this.channel = card;
+    public MainReturn cashbackChannel(Card card) {
+        this.cashbackChannel = card;
         return this;
     }
 
-    public void setChannel(Card card) {
-        this.channel = card;
+    public void setCashbackChannel(Card card) {
+        this.cashbackChannel = card;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

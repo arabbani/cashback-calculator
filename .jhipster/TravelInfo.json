@@ -2,32 +2,32 @@
     "fluentMethods": true,
     "relationships": [
         {
+            "relationshipType": "one-to-one",
+            "relationshipName": "flightInfo",
+            "otherEntityName": "flightInfo",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "travelInfo"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "busInfo",
+            "otherEntityName": "busInfo",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "travelInfo"
+        },
+        {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "",
             "relationshipName": "type",
             "otherEntityName": "travelType",
             "otherEntityField": "name",
             "ownerSide": true
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "",
-            "relationshipName": "region",
-            "otherEntityName": "region",
-            "otherEntityField": "name",
-            "ownerSide": true
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "",
-            "relationshipName": "origin",
-            "otherEntityName": "region",
-            "otherEntityField": "name",
-            "ownerSide": true
         }
     ],
     "fields": [],
-    "changelogDate": "20180321120531",
+    "changelogDate": "20180325124635",
     "entityTableName": "travel_info",
     "dto": "no",
     "pagination": "no",

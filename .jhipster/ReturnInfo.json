@@ -18,14 +18,6 @@
             "otherEntityRelationshipName": "returnInfo"
         },
         {
-            "relationshipType": "one-to-one",
-            "relationshipName": "payment",
-            "otherEntityName": "offerPayment",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "returnInfo"
-        },
-        {
             "relationshipType": "many-to-one",
             "relationshipName": "type",
             "otherEntityName": "returnType",
@@ -45,7 +37,7 @@
         }
     ],
     "fields": [],
-    "changelogDate": "20180321120525",
+    "changelogDate": "20180325124626",
     "entityTableName": "return_info",
     "dto": "no",
     "pagination": "no",

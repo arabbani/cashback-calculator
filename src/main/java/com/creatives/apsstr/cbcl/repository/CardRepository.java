@@ -4,7 +4,8 @@ import com.creatives.apsstr.cbcl.domain.Card;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
-
+import org.springframework.data.repository.query.Param;
+import java.util.List;
 
 /**
  * Spring Data JPA repository for the Card entity.
@@ -12,5 +13,10 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
+    @Query("select distinct card from Card card left join fetch card.cardProviders")
+    List<Card> findAllWithEagerRelationships();
+
+    @Query("select card from Card card left join fetch card.cardProviders where card.id =:id")
+    Card findOneWithEagerRelationships(@Param("id") Long id);
 
 }

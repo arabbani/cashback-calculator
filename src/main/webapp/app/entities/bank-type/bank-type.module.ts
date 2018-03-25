@@ -1,32 +1,48 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DialogModule } from '@progress/kendo-angular-dialog';
-import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import { BankTypeComponent, bankTypeRoute, BankTypeService } from './';
+import {
+    BankTypeService,
+    BankTypePopupService,
+    BankTypeComponent,
+    BankTypeDetailComponent,
+    BankTypeDialogComponent,
+    BankTypePopupComponent,
+    BankTypeDeletePopupComponent,
+    BankTypeDeleteDialogComponent,
+    bankTypeRoute,
+    bankTypePopupRoute,
+} from './';
 
 const ENTITY_STATES = [
-    bankTypeRoute
+    ...bankTypeRoute,
+    ...bankTypePopupRoute,
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES),
-        ReactiveFormsModule,
-        GridModule,
-        DialogModule
+        RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
-        BankTypeComponent
+        BankTypeComponent,
+        BankTypeDetailComponent,
+        BankTypeDialogComponent,
+        BankTypeDeleteDialogComponent,
+        BankTypePopupComponent,
+        BankTypeDeletePopupComponent,
     ],
     entryComponents: [
-        BankTypeComponent
+        BankTypeComponent,
+        BankTypeDialogComponent,
+        BankTypePopupComponent,
+        BankTypeDeleteDialogComponent,
+        BankTypeDeletePopupComponent,
     ],
     providers: [
-        BankTypeService
+        BankTypeService,
+        BankTypePopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

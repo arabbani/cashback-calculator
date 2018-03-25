@@ -1,20 +1,19 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JsogService } from 'jsog-typescript';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-
 import { SERVER_API_URL } from '../../app.constants';
-import { createRequestOption } from '../../shared';
-import { AffiliateCredential } from './affiliate-credential.model';
 
-type EntityResponseType = HttpResponse<AffiliateCredential>;
+import { AffiliateCredential } from './affiliate-credential.model';
+import { createRequestOption } from '../../shared';
+
+export type EntityResponseType = HttpResponse<AffiliateCredential>;
 
 @Injectable()
 export class AffiliateCredentialService {
 
     private resourceUrl =  SERVER_API_URL + 'api/affiliate-credentials';
 
-    constructor(private http: HttpClient, private jsogService: JsogService) { }
+    constructor(private http: HttpClient) { }
 
     create(affiliateCredential: AffiliateCredential): Observable<EntityResponseType> {
         const copy = this.convert(affiliateCredential);
@@ -44,12 +43,12 @@ export class AffiliateCredentialService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: AffiliateCredential = this.convertItemFromServer(this.deserializeObject(res.body));
+        const body: AffiliateCredential = this.convertItemFromServer(res.body);
         return res.clone({body});
     }
 
     private convertArrayResponse(res: HttpResponse<AffiliateCredential[]>): HttpResponse<AffiliateCredential[]> {
-        const jsonResponse: AffiliateCredential[] = this.deserializeArray(res.body);
+        const jsonResponse: AffiliateCredential[] = res.body;
         const body: AffiliateCredential[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
@@ -71,13 +70,5 @@ export class AffiliateCredentialService {
     private convert(affiliateCredential: AffiliateCredential): AffiliateCredential {
         const copy: AffiliateCredential = Object.assign({}, affiliateCredential);
         return copy;
-    }
-
-    private deserializeArray(json: any): AffiliateCredential[] {
-        return this.jsogService.deserializeArray(json, AffiliateCredential);
-    }
-
-    private deserializeObject(json: any): AffiliateCredential {
-        return this.jsogService.deserializeObject(json, AffiliateCredential);
     }
 }

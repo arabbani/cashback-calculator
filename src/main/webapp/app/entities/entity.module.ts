@@ -32,6 +32,18 @@ import { CbclSubCategoryModule } from './sub-category/sub-category.module';
 import { CbclTravelTypeModule } from './travel-type/travel-type.module';
 import { CbclUserInfoModule } from './user-info/user-info.module';
 
+import { CbclReturnExtrasModule } from './return-extras/return-extras.module';
+import { CbclMainReturnModule } from './main-return/main-return.module';
+import { CbclReturnInfoModule } from './return-info/return-info.module';
+import { CbclOfferReturnModule } from './offer-return/offer-return.module';
+import { CbclFlightClassModule } from './flight-class/flight-class.module';
+import { CbclReechargeInfoModule } from './reecharge-info/reecharge-info.module';
+import { CbclFlightInfoModule } from './flight-info/flight-info.module';
+import { CbclBusInfoModule } from './bus-info/bus-info.module';
+import { CbclTravelInfoModule } from './travel-info/travel-info.module';
+import { CbclCardProviderModule } from './card-provider/card-provider.module';
+import { CbclOfferPaymentModule } from './offer-payment/offer-payment.module';
+import { CbclElectronicsInfoModule } from './electronics-info/electronics-info.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -75,6 +87,18 @@ import { CbclUserInfoModule } from './user-info/user-info.module';
             }
         ]),
         CommonModule
+        CbclReturnExtrasModule,
+        CbclMainReturnModule,
+        CbclReturnInfoModule,
+        CbclOfferReturnModule,
+        CbclFlightClassModule,
+        CbclReechargeInfoModule,
+        CbclFlightInfoModule,
+        CbclBusInfoModule,
+        CbclTravelInfoModule,
+        CbclCardProviderModule,
+        CbclOfferPaymentModule,
+        CbclElectronicsInfoModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [EntityComponent],

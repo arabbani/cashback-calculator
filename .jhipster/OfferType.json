@@ -16,10 +16,10 @@
                 "required",
                 "maxlength"
             ],
-            "fieldValidateRulesMaxlength": 50
+            "fieldValidateRulesMaxlength": 25
         }
     ],
-    "changelogDate": "20180321120515",
+    "changelogDate": "20180325124616",
     "entityTableName": "offer_type",
     "dto": "no",
     "pagination": "no",

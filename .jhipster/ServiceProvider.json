@@ -28,7 +28,7 @@
             "fieldValidateRulesMaxlength": 100
         }
     ],
-    "changelogDate": "20180321120518",
+    "changelogDate": "20180325124619",
     "entityTableName": "service_provider",
     "dto": "no",
     "pagination": "no",

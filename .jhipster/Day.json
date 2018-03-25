@@ -12,7 +12,7 @@
             "fieldValidateRulesMaxlength": 15
         }
     ],
-    "changelogDate": "20180321120520",
+    "changelogDate": "20180325124621",
     "entityTableName": "day",
     "dto": "no",
     "pagination": "no",

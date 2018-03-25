@@ -25,9 +25,6 @@ public class ReturnExtras implements Serializable {
     @Column(name = "minimum_expense")
     private Integer minimumExpense;
 
-    @Column(name = "exact")
-    private Boolean exact;
-
     @Column(name = "maximum_expense")
     private Integer maximumExpense;
 
@@ -39,9 +36,6 @@ public class ReturnExtras implements Serializable {
 
     @Column(name = "minimum_ticket_required")
     private Integer minimumTicketRequired;
-
-    @Column(name = "minimum_ride_required")
-    private Integer minimumRideRequired;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -63,19 +57,6 @@ public class ReturnExtras implements Serializable {
 
     public void setMinimumExpense(Integer minimumExpense) {
         this.minimumExpense = minimumExpense;
-    }
-
-    public Boolean isExact() {
-        return exact;
-    }
-
-    public ReturnExtras exact(Boolean exact) {
-        this.exact = exact;
-        return this;
-    }
-
-    public void setExact(Boolean exact) {
-        this.exact = exact;
     }
 
     public Integer getMaximumExpense() {
@@ -129,19 +110,6 @@ public class ReturnExtras implements Serializable {
     public void setMinimumTicketRequired(Integer minimumTicketRequired) {
         this.minimumTicketRequired = minimumTicketRequired;
     }
-
-    public Integer getMinimumRideRequired() {
-        return minimumRideRequired;
-    }
-
-    public ReturnExtras minimumRideRequired(Integer minimumRideRequired) {
-        this.minimumRideRequired = minimumRideRequired;
-        return this;
-    }
-
-    public void setMinimumRideRequired(Integer minimumRideRequired) {
-        this.minimumRideRequired = minimumRideRequired;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -169,12 +137,10 @@ public class ReturnExtras implements Serializable {
         return "ReturnExtras{" +
             "id=" + getId() +
             ", minimumExpense=" + getMinimumExpense() +
-            ", exact='" + isExact() + "'" +
             ", maximumExpense=" + getMaximumExpense() +
             ", minimumReturn=" + getMinimumReturn() +
             ", maximumReturn=" + getMaximumReturn() +
             ", minimumTicketRequired=" + getMinimumTicketRequired() +
-            ", minimumRideRequired=" + getMinimumRideRequired() +
             "}";
     }
 }

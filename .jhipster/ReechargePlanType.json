@@ -9,10 +9,10 @@
                 "required",
                 "maxlength"
             ],
-            "fieldValidateRulesMaxlength": 255
+            "fieldValidateRulesMaxlength": 150
         }
     ],
-    "changelogDate": "20180321120537",
+    "changelogDate": "20180325124642",
     "entityTableName": "reecharge_plan_type",
     "dto": "no",
     "pagination": "no",

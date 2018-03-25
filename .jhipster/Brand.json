@@ -21,7 +21,7 @@
             "fieldValidateRulesMaxlength": 255
         }
     ],
-    "changelogDate": "20180321120540",
+    "changelogDate": "20180325124645",
     "entityTableName": "brand",
     "dto": "no",
     "pagination": "no",

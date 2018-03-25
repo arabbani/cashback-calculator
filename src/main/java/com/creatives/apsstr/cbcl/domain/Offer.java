@@ -1,34 +1,17 @@
 package com.creatives.apsstr.cbcl.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import java.util.Objects;
 
 /**
  * A Offer.
@@ -36,7 +19,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "offer")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class Offer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -116,16 +98,20 @@ public class Offer implements Serializable {
     @Column(name = "url", length = 2000)
     private String url;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     @JoinColumn(unique = true)
     private TravelInfo travelInfo;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     @JoinColumn(unique = true)
     private ReechargeInfo reechargeInfo;
 
-    @OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @OneToOne
+    @JoinColumn(unique = true)
+    private ElectronicsInfo electronicsInfo;
+
+    @OneToMany(mappedBy = "offer")
+    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<OfferReturn> offerReturns = new HashSet<>();
 
@@ -463,6 +449,19 @@ public class Offer implements Serializable {
 
     public void setReechargeInfo(ReechargeInfo reechargeInfo) {
         this.reechargeInfo = reechargeInfo;
+    }
+
+    public ElectronicsInfo getElectronicsInfo() {
+        return electronicsInfo;
+    }
+
+    public Offer electronicsInfo(ElectronicsInfo electronicsInfo) {
+        this.electronicsInfo = electronicsInfo;
+        return this;
+    }
+
+    public void setElectronicsInfo(ElectronicsInfo electronicsInfo) {
+        this.electronicsInfo = electronicsInfo;
     }
 
     public Set<OfferReturn> getOfferReturns() {

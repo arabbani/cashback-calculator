@@ -13,10 +13,10 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface TravelInfoRepository extends JpaRepository<TravelInfo, Long> {
-    @Query("select distinct travel_info from TravelInfo travel_info left join fetch travel_info.types left join fetch travel_info.regions left join fetch travel_info.origins")
+    @Query("select distinct travel_info from TravelInfo travel_info left join fetch travel_info.types")
     List<TravelInfo> findAllWithEagerRelationships();
 
-    @Query("select travel_info from TravelInfo travel_info left join fetch travel_info.types left join fetch travel_info.regions left join fetch travel_info.origins where travel_info.id =:id")
+    @Query("select travel_info from TravelInfo travel_info left join fetch travel_info.types where travel_info.id =:id")
     TravelInfo findOneWithEagerRelationships(@Param("id") Long id);
 
 }

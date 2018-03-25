@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity ElectronicsInfo.
+    -->
+    <changeSet id="20180325124646-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="electronics_infos_id"
+                                 baseTableName="electronics_info_brand"
+                                 constraintName="fk_electronics_info_brand_electronics_infos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="electronics_info"/>
+        <addForeignKeyConstraint baseColumnNames="brands_id"
+                                 baseTableName="electronics_info_brand"
+                                 constraintName="fk_electronics_info_brand_brands_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="brand"/>
+        
+    </changeSet>
+</databaseChangeLog>

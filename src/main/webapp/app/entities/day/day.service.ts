@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { Day } from './day.model';
 import { createRequestOption } from '../../shared';
 
-type EntityResponseType = HttpResponse<Day>;
+export type EntityResponseType = HttpResponse<Day>;
 
 @Injectable()
 export class DayService {

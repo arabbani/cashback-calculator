@@ -6,9 +6,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -18,7 +15,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "affiliate_credential")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class AffiliateCredential implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,16 +23,16 @@ public class AffiliateCredential implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(max = 255)
-    @Column(name = "tracking_id", length = 255)
+    @Size(max = 100)
+    @Column(name = "tracking_id", length = 100)
     private String trackingId;
 
-    @Size(max = 255)
-    @Column(name = "token", length = 255)
+    @Size(max = 100)
+    @Column(name = "token", length = 100)
     private String token;
 
-    @Size(max = 255)
-    @Column(name = "api_key", length = 255)
+    @Size(max = 100)
+    @Column(name = "api_key", length = 100)
     private String apiKey;
 
     @NotNull

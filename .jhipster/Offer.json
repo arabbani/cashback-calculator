@@ -18,6 +18,14 @@
             "otherEntityRelationshipName": "offer"
         },
         {
+            "relationshipType": "one-to-one",
+            "relationshipName": "electronicsInfo",
+            "otherEntityName": "electronicsInfo",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "offer"
+        },
+        {
             "relationshipType": "one-to-many",
             "relationshipName": "offerReturn",
             "otherEntityName": "offerReturn",
@@ -34,14 +42,6 @@
             "otherEntityRelationshipName": "",
             "relationshipName": "operatingSystem",
             "otherEntityName": "operatingSystem",
-            "otherEntityField": "name",
-            "ownerSide": true
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "offer",
-            "relationshipName": "state",
-            "otherEntityName": "state",
             "otherEntityField": "name",
             "ownerSide": true
         },
@@ -227,7 +227,7 @@
             "fieldValidateRulesMaxlength": 2000
         }
     ],
-    "changelogDate": "20180321120538",
+    "changelogDate": "20180325124643",
     "entityTableName": "offer",
     "dto": "no",
     "pagination": "no",

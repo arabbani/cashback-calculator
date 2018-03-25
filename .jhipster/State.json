@@ -6,13 +6,6 @@
             "relationshipName": "city",
             "otherEntityName": "city",
             "otherEntityRelationshipName": "state"
-        },
-        {
-            "relationshipType": "many-to-many",
-            "relationshipName": "offer",
-            "otherEntityName": "offer",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "state"
         }
     ],
     "fields": [
@@ -26,7 +19,7 @@
             "fieldValidateRulesMaxlength": 100
         }
     ],
-    "changelogDate": "20180321120512",
+    "changelogDate": "20180325124613",
     "entityTableName": "state",
     "dto": "no",
     "pagination": "no",

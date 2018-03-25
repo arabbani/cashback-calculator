@@ -117,6 +117,17 @@ public class CacheConfiguration {
             cm.createCache(com.creatives.apsstr.cbcl.domain.Brand.class.getName() + ".subCategories", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.ElectronicsInfo.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.ElectronicsInfo.class.getName() + ".brands", jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.FlightClass.class.getName(), jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.ReechargeInfo.class.getName() + ".reechargePlanTypes", jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.FlightInfo.class.getName(), jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.FlightInfo.class.getName() + ".types", jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.FlightInfo.class.getName() + ".origins", jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.FlightInfo.class.getName() + ".travelClasses", jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.BusInfo.class.getName(), jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.BusInfo.class.getName() + ".froms", jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.BusInfo.class.getName() + ".tos", jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.CardProvider.class.getName(), jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.Card.class.getName() + ".cardProviders", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
