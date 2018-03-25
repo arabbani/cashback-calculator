@@ -11,7 +11,9 @@ import {
   ElectricityInput,
   GasInput,
   LandlineInput,
+  MetroInput,
   MobileInput,
+  WaterInput,
 } from '../../..';
 import { SERVER_API_URL } from '../../../../app.constants';
 
@@ -25,41 +27,43 @@ export class CalculateCashbackService {
   constructor(private http: HttpClient) { }
 
   calculateCashbackForMobile(mobileInput: MobileInput): Observable<EntityResponseType> {
-    mobileInput.dateTime = this.setDateTime();
     return this.calculate(`${this.restUrl}/mobile`, mobileInput);
   }
 
   calculateCashbackForDth(dthInput: DthInput): Observable<EntityResponseType> {
-    dthInput.dateTime = this.setDateTime();
     return this.calculate(`${this.restUrl}/dth`, dthInput);
   }
 
   calculateCashbackForDatacard(datacardInput: DatacardInput): Observable<EntityResponseType> {
-    datacardInput.dateTime = this.setDateTime();
     return this.calculate(`${this.restUrl}/datacard`, datacardInput);
   }
 
   calculateCashbackForLandline(landlineInput: LandlineInput): Observable<EntityResponseType> {
-    landlineInput.dateTime = this.setDateTime();
     return this.calculate(`${this.restUrl}/landline`, landlineInput);
   }
 
   calculateCashbackForBroadband(broadbandInput: BroadbandInput): Observable<EntityResponseType> {
-    broadbandInput.dateTime = this.setDateTime();
     return this.calculate(`${this.restUrl}/broadband`, broadbandInput);
   }
 
   calculateCashbackForElectricity(electricityInput: ElectricityInput): Observable<EntityResponseType> {
-    electricityInput.dateTime = this.setDateTime();
     return this.calculate(`${this.restUrl}/electricity`, electricityInput);
   }
 
   calculateCashbackForGas(gasInput: GasInput): Observable<EntityResponseType> {
-    gasInput.dateTime = this.setDateTime();
     return this.calculate(`${this.restUrl}/gas`, gasInput);
   }
 
+  calculateCashbackForMetro(metroInput: MetroInput): Observable<EntityResponseType> {
+    return this.calculate(`${this.restUrl}/metro`, metroInput);
+  }
+
+  calculateCashbackForWater(waterInput: WaterInput): Observable<EntityResponseType> {
+    return this.calculate(`${this.restUrl}/water`, waterInput);
+  }
+
   private calculate(restUrl: string, input: any): Observable<EntityResponseType> {
+    input.dateTime = this.setDateTime();
     return this.http.post<any>(restUrl, input, { observe: 'response' })
       .map((res: EntityResponseType) => this.convertArrayResponse(res));
   }

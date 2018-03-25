@@ -1,0 +1,17 @@
+package com.creatives.apsstr.cbcl.helper.model;
+
+/**
+ * @author Arif Rabbani
+ * 
+ *         Calculate cashback input model for Metro
+ */
+public class MetroInput extends CommonInput {
+
+    @Override
+    public String toString() {
+        return "MetroInput [getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()="
+                + getServiceProviderId() + ", getCityId()=" + getCityId() + ", getDateTime()=" + getDateTime()
+                + ", getExpense()=" + getExpense() + "]";
+    }
+
+}

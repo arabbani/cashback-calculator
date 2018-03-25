@@ -10,7 +10,9 @@ import com.creatives.apsstr.cbcl.helper.model.DthInput;
 import com.creatives.apsstr.cbcl.helper.model.ElectricityInput;
 import com.creatives.apsstr.cbcl.helper.model.GasInput;
 import com.creatives.apsstr.cbcl.helper.model.LandlineInput;
+import com.creatives.apsstr.cbcl.helper.model.MetroInput;
 import com.creatives.apsstr.cbcl.helper.model.MobileInput;
+import com.creatives.apsstr.cbcl.helper.model.WaterInput;
 import com.creatives.apsstr.cbcl.service.CalculateCashbackService;
 
 import org.slf4j.Logger;
@@ -135,6 +137,34 @@ public class CalculateCashbackResource {
 		log.debug("REST request to calculate cashback for gas : {} ", gasInput);
 		return calculateCashbackService.calculateCashbackReecharge(gasInput.getSubCategoryId(),
 				gasInput.getServiceProviderId(), gasInput.getDateTime(), gasInput.getExpense());
+	}
+
+	/**
+	 * POST /metro : calculate cashback for metro
+	 *
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         cashbackResults in body
+	 */
+	@PostMapping("/metro")
+	@Timed
+	public List<CashbackInfo> calculateCashbackForMetro(@RequestBody MetroInput metroInput) {
+		log.debug("REST request to calculate cashback for metro : {} ", metroInput);
+		return calculateCashbackService.calculateCashbackReecharge(metroInput.getSubCategoryId(),
+				metroInput.getServiceProviderId(), metroInput.getDateTime(), metroInput.getExpense());
+	}
+
+	/**
+	 * POST /water : calculate cashback for water
+	 *
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         cashbackResults in body
+	 */
+	@PostMapping("/water")
+	@Timed
+	public List<CashbackInfo> calculateCashbackForWater(@RequestBody WaterInput waterInput) {
+		log.debug("REST request to calculate cashback for water : {} ", waterInput);
+		return calculateCashbackService.calculateCashbackReecharge(waterInput.getSubCategoryId(),
+				waterInput.getServiceProviderId(), waterInput.getDateTime(), waterInput.getExpense());
 	}
 
 }

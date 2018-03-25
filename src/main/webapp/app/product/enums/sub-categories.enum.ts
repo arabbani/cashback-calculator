@@ -8,6 +8,8 @@ export enum SubCategories {
     Landline = 'LANDLINE',
     Electricity = 'ELECTRICITY',
     Gas = 'GAS',
+    Metro = 'Metro',
+    Water = 'Water',
     Cab = 'CAB',
     Bus = 'BUS',
     Flight = 'FLIGHT'

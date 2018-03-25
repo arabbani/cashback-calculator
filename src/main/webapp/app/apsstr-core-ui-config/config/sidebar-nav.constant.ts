@@ -24,6 +24,11 @@ export const SIDEBAR_NAV_ITEMS = [
         icon: 'icon-puzzle'
       },
       {
+        name: 'Broadband',
+        url: '/cashback/broadband',
+        icon: 'icon-puzzle'
+      },
+      {
         name: 'Landline',
         url: '/cashback/landline',
         icon: 'icon-puzzle'
@@ -36,6 +41,16 @@ export const SIDEBAR_NAV_ITEMS = [
       {
         name: 'Gas',
         url: '/cashback/gas',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'Metro',
+        url: '/cashback/metro',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'Water',
+        url: '/cashback/water',
         icon: 'icon-puzzle'
       }
     ]
