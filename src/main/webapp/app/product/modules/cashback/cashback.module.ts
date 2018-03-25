@@ -13,6 +13,7 @@ import { DatacardComponent } from './components/datacard/datacard.component';
 import { LandlineComponent } from './components/landline/landline.component';
 import { ElectricityComponent } from './components/electricity/electricity.component';
 import { GasComponent } from './components/gas/gas.component';
+import { BroadbandComponent } from './components/broadband/broadband.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,6 @@ import { GasComponent } from './components/gas/gas.component';
     BlockUIModule,
     NgSelectModule
   ],
-  declarations: [CashbackComponent, MobileComponent, DthComponent, DatacardComponent, LandlineComponent, ElectricityComponent, GasComponent]
+  declarations: [CashbackComponent, MobileComponent, DthComponent, DatacardComponent, LandlineComponent, ElectricityComponent, GasComponent, BroadbandComponent]
 })
 export class CashbackModule { }

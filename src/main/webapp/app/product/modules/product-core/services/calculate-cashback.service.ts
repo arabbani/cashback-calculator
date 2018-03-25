@@ -3,7 +3,16 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 
-import { CashbackInfo, DatacardInput, DthInput, ElectricityInput, GasInput, LandlineInput, MobileInput } from '../../..';
+import {
+  BroadbandInput,
+  CashbackInfo,
+  DatacardInput,
+  DthInput,
+  ElectricityInput,
+  GasInput,
+  LandlineInput,
+  MobileInput,
+} from '../../..';
 import { SERVER_API_URL } from '../../../../app.constants';
 
 type EntityResponseType = HttpResponse<CashbackInfo[]>;
@@ -33,6 +42,11 @@ export class CalculateCashbackService {
   calculateCashbackForLandline(landlineInput: LandlineInput): Observable<EntityResponseType> {
     landlineInput.dateTime = this.setDateTime();
     return this.calculate(`${this.restUrl}/landline`, landlineInput);
+  }
+
+  calculateCashbackForBroadband(broadbandInput: BroadbandInput): Observable<EntityResponseType> {
+    broadbandInput.dateTime = this.setDateTime();
+    return this.calculate(`${this.restUrl}/broadband`, broadbandInput);
   }
 
   calculateCashbackForElectricity(electricityInput: ElectricityInput): Observable<EntityResponseType> {

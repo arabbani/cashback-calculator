@@ -3,6 +3,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 import java.util.List;
 
 import com.codahale.metrics.annotation.Timed;
+import com.creatives.apsstr.cbcl.helper.model.BroadbandInput;
 import com.creatives.apsstr.cbcl.helper.model.CashbackInfo;
 import com.creatives.apsstr.cbcl.helper.model.DatacardInput;
 import com.creatives.apsstr.cbcl.helper.model.DthInput;
@@ -46,7 +47,9 @@ public class CalculateCashbackResource {
 	@Timed
 	public List<CashbackInfo> calculateCashbackForMobile(@RequestBody MobileInput mobileInput) {
 		log.debug("REST request to calculate cashback for mobile : {} ", mobileInput);
-		return calculateCashbackService.calculateCashbackForMobile(mobileInput);
+		return calculateCashbackService.calculateCashbackReechargeWithReechargeCondition(mobileInput.getSubCategoryId(),
+				mobileInput.getServiceProviderId(), mobileInput.getDateTime(), mobileInput.getCircleId(),
+				mobileInput.getReechargePlaneTypeId(), mobileInput.getExpense());
 	}
 
 	/**
@@ -59,7 +62,8 @@ public class CalculateCashbackResource {
 	@Timed
 	public List<CashbackInfo> calculateCashbackForDth(@RequestBody DthInput dthInput) {
 		log.debug("REST request to calculate cashback for dth : {} ", dthInput);
-		return calculateCashbackService.calculateCashbackForDth(dthInput);
+		return calculateCashbackService.calculateCashbackReecharge(dthInput.getSubCategoryId(),
+				dthInput.getServiceProviderId(), dthInput.getDateTime(), dthInput.getExpense());
 	}
 
 	/**
@@ -72,7 +76,9 @@ public class CalculateCashbackResource {
 	@Timed
 	public List<CashbackInfo> calculateCashbackForDatacard(@RequestBody DatacardInput datacardInput) {
 		log.debug("REST request to calculate cashback for datacard : {} ", datacardInput);
-		return calculateCashbackService.calculateCashbackForDatacard(datacardInput);
+		return calculateCashbackService.calculateCashbackReechargeWithReechargeCondition(
+				datacardInput.getSubCategoryId(), datacardInput.getServiceProviderId(), datacardInput.getDateTime(),
+				datacardInput.getCircleId(), datacardInput.getReechargePlaneTypeId(), datacardInput.getExpense());
 	}
 
 	/**
@@ -85,7 +91,22 @@ public class CalculateCashbackResource {
 	@Timed
 	public List<CashbackInfo> calculateCashbackForLandline(@RequestBody LandlineInput landlineInput) {
 		log.debug("REST request to calculate cashback for landline : {} ", landlineInput);
-		return calculateCashbackService.calculateCashbackForLandline(landlineInput);
+		return calculateCashbackService.calculateCashbackReecharge(landlineInput.getSubCategoryId(),
+				landlineInput.getServiceProviderId(), landlineInput.getDateTime(), landlineInput.getExpense());
+	}
+
+	/**
+	 * POST /broadband : calculate cashback for broadband
+	 *
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         cashbackResults in body
+	 */
+	@PostMapping("/broadband")
+	@Timed
+	public List<CashbackInfo> calculateCashbackForBroadband(@RequestBody BroadbandInput broadbandInput) {
+		log.debug("REST request to calculate cashback for broadband : {} ", broadbandInput);
+		return calculateCashbackService.calculateCashbackReecharge(broadbandInput.getSubCategoryId(),
+				broadbandInput.getServiceProviderId(), broadbandInput.getDateTime(), broadbandInput.getExpense());
 	}
 
 	/**
@@ -98,7 +119,8 @@ public class CalculateCashbackResource {
 	@Timed
 	public List<CashbackInfo> calculateCashbackForElectricity(@RequestBody ElectricityInput electricityInput) {
 		log.debug("REST request to calculate cashback for electricity : {} ", electricityInput);
-		return calculateCashbackService.calculateCashbackForElectricity(electricityInput);
+		return calculateCashbackService.calculateCashbackReecharge(electricityInput.getSubCategoryId(),
+				electricityInput.getServiceProviderId(), electricityInput.getDateTime(), electricityInput.getExpense());
 	}
 
 	/**
@@ -111,7 +133,8 @@ public class CalculateCashbackResource {
 	@Timed
 	public List<CashbackInfo> calculateCashbackForGas(@RequestBody GasInput gasInput) {
 		log.debug("REST request to calculate cashback for gas : {} ", gasInput);
-		return calculateCashbackService.calculateCashbackForGas(gasInput);
+		return calculateCashbackService.calculateCashbackReecharge(gasInput.getSubCategoryId(),
+				gasInput.getServiceProviderId(), gasInput.getDateTime(), gasInput.getExpense());
 	}
 
 }

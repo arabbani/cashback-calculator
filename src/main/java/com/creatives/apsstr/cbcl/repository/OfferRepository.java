@@ -22,35 +22,14 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 			+ OfferRepositoryConstants.WHERE_ID)
 	Offer findOneById(@Param("id") Long id);
 
-	@Query(OfferRepositoryConstants.CASHBACK_MOBILE)
-	List<Offer> findAllToCalculateCashbackForMobile(@Param("active") boolean active, @Param("dummy") boolean dummy,
+	@Query(OfferRepositoryConstants.CASHBACK_REECHARGE_WITH_REECHARGE_CONDITION)
+	List<Offer> findAllCashbackReechargeWithReechargeCondition(@Param("active") boolean active, @Param("dummy") boolean dummy,
 			@Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
 			@Param("dateTime") String dateTime, @Param("circleId") Long circleId,
 			@Param("reechargePlaneTypeId") Long reechargePlaneTypeId);
 
-	@Query(OfferRepositoryConstants.CASHBACK_SELECT_REECHARGE_COMMON_CONDITION)
-	List<Offer> findAllToCalculateCashbackForDth(@Param("active") boolean active, @Param("dummy") boolean dummy,
-			@Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
-			@Param("dateTime") String dateTime);
-
-	@Query(OfferRepositoryConstants.CASHBACK_DATACARD)
-	List<Offer> findAllToCalculateCashbackForDatacard(@Param("active") boolean active, @Param("dummy") boolean dummy,
-			@Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
-			@Param("dateTime") String dateTime, @Param("circleId") Long circleId,
-			@Param("reechargePlaneTypeId") Long reechargePlaneTypeId);
-
-	@Query(OfferRepositoryConstants.CASHBACK_SELECT_REECHARGE_COMMON_CONDITION)
-	List<Offer> findAllToCalculateCashbackForLandline(@Param("active") boolean active, @Param("dummy") boolean dummy,
-			@Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
-			@Param("dateTime") String dateTime);
-
-	@Query(OfferRepositoryConstants.CASHBACK_SELECT_REECHARGE_COMMON_CONDITION)
-	List<Offer> findAllToCalculateCashbackForElectricity(@Param("active") boolean active, @Param("dummy") boolean dummy,
-			@Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
-			@Param("dateTime") String dateTime);
-
-	@Query(OfferRepositoryConstants.CASHBACK_SELECT_REECHARGE_COMMON_CONDITION)
-	List<Offer> findAllToCalculateCashbackForGas(@Param("active") boolean active, @Param("dummy") boolean dummy,
+	@Query(OfferRepositoryConstants.CASHBACK_REECHARGE_COMMON)
+	List<Offer> findAllCashbackReechargeCommon(@Param("active") boolean active, @Param("dummy") boolean dummy,
 			@Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
 			@Param("dateTime") String dateTime);
 

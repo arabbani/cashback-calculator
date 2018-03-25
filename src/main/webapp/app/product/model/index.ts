@@ -12,3 +12,4 @@ export * from './stored-cashback';
 export * from './app-storage';
 export * from './electricity-input';
 export * from './gas-input';
+export * from './broadband-input';
