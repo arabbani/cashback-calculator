@@ -10,3 +10,5 @@ export * from './mobile-input';
 export * from './offer-benefit';
 export * from './stored-cashback';
 export * from './app-storage';
+export * from './electricity-input';
+export * from './gas-input';

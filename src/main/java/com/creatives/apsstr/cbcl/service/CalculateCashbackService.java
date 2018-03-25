@@ -7,6 +7,9 @@ import com.creatives.apsstr.cbcl.helper.CashbackCalculatorAlgoVersionTwo;
 import com.creatives.apsstr.cbcl.helper.model.CashbackInfo;
 import com.creatives.apsstr.cbcl.helper.model.DatacardInput;
 import com.creatives.apsstr.cbcl.helper.model.DthInput;
+import com.creatives.apsstr.cbcl.helper.model.ElectricityInput;
+import com.creatives.apsstr.cbcl.helper.model.GasInput;
+import com.creatives.apsstr.cbcl.helper.model.LandlineInput;
 import com.creatives.apsstr.cbcl.helper.model.MobileInput;
 import com.creatives.apsstr.cbcl.repository.OfferRepository;
 
@@ -71,6 +74,43 @@ public class CalculateCashbackService {
 				datacardInput.getSubCategoryId(), datacardInput.getServiceProviderId(), datacardInput.getDateTime(),
 				datacardInput.getCircleId(), datacardInput.getReechargePlaneTypeId());
 		return this.cashbackCalculatorAlgo.calculate(offers, datacardInput.getExpense());
+	}
+
+	/**
+	 * Calculate cashback for landline
+	 *
+	 * @return the list of cashbackInfos
+	 */
+	public List<CashbackInfo> calculateCashbackForLandline(LandlineInput landlineInput) {
+		log.debug("REST request to calculate cashback for landline : {} ", landlineInput);
+		List<Offer> offers = offerRepository.findAllToCalculateCashbackForLandline(true, false,
+				landlineInput.getSubCategoryId(), landlineInput.getServiceProviderId(), landlineInput.getDateTime());
+		return this.cashbackCalculatorAlgo.calculate(offers, landlineInput.getExpense());
+	}
+
+	/**
+	 * Calculate cashback for electricity
+	 *
+	 * @return the list of cashbackInfos
+	 */
+	public List<CashbackInfo> calculateCashbackForElectricity(ElectricityInput electricityInput) {
+		log.debug("REST request to calculate cashback for electricity : {} ", electricityInput);
+		List<Offer> offers = offerRepository.findAllToCalculateCashbackForElectricity(true, false,
+				electricityInput.getSubCategoryId(), electricityInput.getServiceProviderId(),
+				electricityInput.getDateTime());
+		return this.cashbackCalculatorAlgo.calculate(offers, electricityInput.getExpense());
+	}
+
+	/**
+	 * Calculate cashback for gas
+	 *
+	 * @return the list of cashbackInfos
+	 */
+	public List<CashbackInfo> calculateCashbackForGas(GasInput gasInput) {
+		log.debug("REST request to calculate cashback for gas : {} ", gasInput);
+		List<Offer> offers = offerRepository.findAllToCalculateCashbackForGas(true, false, gasInput.getSubCategoryId(),
+				gasInput.getServiceProviderId(), gasInput.getDateTime());
+		return this.cashbackCalculatorAlgo.calculate(offers, gasInput.getExpense());
 	}
 
 }

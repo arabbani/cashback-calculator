@@ -4,6 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { CashbackComponent, MobileComponent } from './components';
 import { DatacardComponent } from './components/datacard';
 import { DthComponent } from './components/dth';
+import { ElectricityComponent } from './components/electricity';
+import { GasComponent } from './components/gas';
+import { LandlineComponent } from './components/landline';
 
 const routes: Routes = [
   {
@@ -26,14 +29,18 @@ const routes: Routes = [
       //   path: 'broadband',
       //   component: BroadbandComponent
       // },
-      // {
-      //   path: 'landline',
-      //   component: LandlineComponent
-      // },
-      // {
-      //   path: 'electricity',
-      //   component: ElectricityComponent
-      // }
+      {
+        path: 'landline',
+        component: LandlineComponent
+      },
+      {
+        path: 'electricity',
+        component: ElectricityComponent
+      },
+      {
+        path: 'gas',
+        component: GasComponent
+      }
     ]
   }
 ];

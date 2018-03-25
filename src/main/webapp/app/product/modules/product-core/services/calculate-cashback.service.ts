@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 
-import { CashbackInfo, DthInput, MobileInput, DatacardInput } from '../../..';
+import { CashbackInfo, DatacardInput, DthInput, ElectricityInput, GasInput, LandlineInput, MobileInput } from '../../..';
 import { SERVER_API_URL } from '../../../../app.constants';
 
 type EntityResponseType = HttpResponse<CashbackInfo[]>;
@@ -28,6 +28,21 @@ export class CalculateCashbackService {
   calculateCashbackForDatacard(datacardInput: DatacardInput): Observable<EntityResponseType> {
     datacardInput.dateTime = this.setDateTime();
     return this.calculate(`${this.restUrl}/datacard`, datacardInput);
+  }
+
+  calculateCashbackForLandline(landlineInput: LandlineInput): Observable<EntityResponseType> {
+    landlineInput.dateTime = this.setDateTime();
+    return this.calculate(`${this.restUrl}/landline`, landlineInput);
+  }
+
+  calculateCashbackForElectricity(electricityInput: ElectricityInput): Observable<EntityResponseType> {
+    electricityInput.dateTime = this.setDateTime();
+    return this.calculate(`${this.restUrl}/electricity`, electricityInput);
+  }
+
+  calculateCashbackForGas(gasInput: GasInput): Observable<EntityResponseType> {
+    gasInput.dateTime = this.setDateTime();
+    return this.calculate(`${this.restUrl}/gas`, gasInput);
   }
 
   private calculate(restUrl: string, input: any): Observable<EntityResponseType> {

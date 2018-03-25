@@ -28,7 +28,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 			@Param("dateTime") String dateTime, @Param("circleId") Long circleId,
 			@Param("reechargePlaneTypeId") Long reechargePlaneTypeId);
 
-	@Query(OfferRepositoryConstants.CASHBACK_DTH)
+	@Query(OfferRepositoryConstants.CASHBACK_SELECT_REECHARGE_COMMON_CONDITION)
 	List<Offer> findAllToCalculateCashbackForDth(@Param("active") boolean active, @Param("dummy") boolean dummy,
 			@Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
 			@Param("dateTime") String dateTime);
@@ -38,5 +38,20 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 			@Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
 			@Param("dateTime") String dateTime, @Param("circleId") Long circleId,
 			@Param("reechargePlaneTypeId") Long reechargePlaneTypeId);
+
+	@Query(OfferRepositoryConstants.CASHBACK_SELECT_REECHARGE_COMMON_CONDITION)
+	List<Offer> findAllToCalculateCashbackForLandline(@Param("active") boolean active, @Param("dummy") boolean dummy,
+			@Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
+			@Param("dateTime") String dateTime);
+
+	@Query(OfferRepositoryConstants.CASHBACK_SELECT_REECHARGE_COMMON_CONDITION)
+	List<Offer> findAllToCalculateCashbackForElectricity(@Param("active") boolean active, @Param("dummy") boolean dummy,
+			@Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
+			@Param("dateTime") String dateTime);
+
+	@Query(OfferRepositoryConstants.CASHBACK_SELECT_REECHARGE_COMMON_CONDITION)
+	List<Offer> findAllToCalculateCashbackForGas(@Param("active") boolean active, @Param("dummy") boolean dummy,
+			@Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
+			@Param("dateTime") String dateTime);
 
 }

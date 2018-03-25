@@ -22,6 +22,21 @@ export const SIDEBAR_NAV_ITEMS = [
         name: 'Datacard',
         url: '/cashback/datacard',
         icon: 'icon-puzzle'
+      },
+      {
+        name: 'Landline',
+        url: '/cashback/landline',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'Electricity',
+        url: '/cashback/electricity',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'Gas',
+        url: '/cashback/gas',
+        icon: 'icon-puzzle'
       }
     ]
   },

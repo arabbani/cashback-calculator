@@ -6,6 +6,9 @@ import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.helper.model.CashbackInfo;
 import com.creatives.apsstr.cbcl.helper.model.DatacardInput;
 import com.creatives.apsstr.cbcl.helper.model.DthInput;
+import com.creatives.apsstr.cbcl.helper.model.ElectricityInput;
+import com.creatives.apsstr.cbcl.helper.model.GasInput;
+import com.creatives.apsstr.cbcl.helper.model.LandlineInput;
 import com.creatives.apsstr.cbcl.helper.model.MobileInput;
 import com.creatives.apsstr.cbcl.service.CalculateCashbackService;
 
@@ -70,6 +73,45 @@ public class CalculateCashbackResource {
 	public List<CashbackInfo> calculateCashbackForDatacard(@RequestBody DatacardInput datacardInput) {
 		log.debug("REST request to calculate cashback for datacard : {} ", datacardInput);
 		return calculateCashbackService.calculateCashbackForDatacard(datacardInput);
+	}
+
+	/**
+	 * POST /landline : calculate cashback for landline
+	 *
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         cashbackResults in body
+	 */
+	@PostMapping("/landline")
+	@Timed
+	public List<CashbackInfo> calculateCashbackForLandline(@RequestBody LandlineInput landlineInput) {
+		log.debug("REST request to calculate cashback for landline : {} ", landlineInput);
+		return calculateCashbackService.calculateCashbackForLandline(landlineInput);
+	}
+
+	/**
+	 * POST /electricity : calculate cashback for electricity
+	 *
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         cashbackResults in body
+	 */
+	@PostMapping("/electricity")
+	@Timed
+	public List<CashbackInfo> calculateCashbackForElectricity(@RequestBody ElectricityInput electricityInput) {
+		log.debug("REST request to calculate cashback for electricity : {} ", electricityInput);
+		return calculateCashbackService.calculateCashbackForElectricity(electricityInput);
+	}
+
+	/**
+	 * POST /gas : calculate cashback for gas
+	 *
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         cashbackResults in body
+	 */
+	@PostMapping("/gas")
+	@Timed
+	public List<CashbackInfo> calculateCashbackForGas(@RequestBody GasInput gasInput) {
+		log.debug("REST request to calculate cashback for gas : {} ", gasInput);
+		return calculateCashbackService.calculateCashbackForGas(gasInput);
 	}
 
 }

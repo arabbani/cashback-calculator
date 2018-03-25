@@ -10,6 +10,9 @@ import { CashbackComponent } from './components/cashback/cashback.component';
 import { MobileComponent } from './components/mobile/mobile.component';
 import { DthComponent } from './components/dth/dth.component';
 import { DatacardComponent } from './components/datacard/datacard.component';
+import { LandlineComponent } from './components/landline/landline.component';
+import { ElectricityComponent } from './components/electricity/electricity.component';
+import { GasComponent } from './components/gas/gas.component';
 
 @NgModule({
   imports: [
@@ -20,6 +23,6 @@ import { DatacardComponent } from './components/datacard/datacard.component';
     BlockUIModule,
     NgSelectModule
   ],
-  declarations: [CashbackComponent, MobileComponent, DthComponent, DatacardComponent]
+  declarations: [CashbackComponent, MobileComponent, DthComponent, DatacardComponent, LandlineComponent, ElectricityComponent, GasComponent]
 })
 export class CashbackModule { }

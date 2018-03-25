@@ -5,17 +5,17 @@ import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../..';
-import { CashbackInfo, DthInput, StoredCashback, SubCategories } from '../../../..';
+import { CashbackInfo, GasInput, StoredCashback, SubCategories } from '../../../..';
 import { ServiceProvider, ServiceProviderService } from '../../../../../entities';
 
 @Component({
-  selector: 'apsstr-dth',
-  templateUrl: './dth.component.html',
+  selector: 'apsstr-gas',
+  templateUrl: './gas.component.html',
   styles: []
 })
-export class DthComponent implements OnInit {
+export class GasComponent implements OnInit {
 
-  dthInput = new DthInput();
+  gasInput = new GasInput();
   serviceProviders: ServiceProvider[];
   calculating = false;
   subCategoryCode: string;
@@ -27,13 +27,13 @@ export class DthComponent implements OnInit {
   ngOnInit() {
     this.initializeSubCategory();
     this.getServiceProvidersBySubCategoryCode(this.subCategoryCode);
-    this.dthInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
+    this.gasInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
   }
 
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.calculateCashbackService.calculateCashbackForDth(this.dthInput).subscribe(
+    this.calculateCashbackService.calculateCashbackForGas(this.gasInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);
@@ -60,7 +60,7 @@ export class DthComponent implements OnInit {
   }
 
   private broadcastCashbackInfo(cashbackInfos: CashbackInfo[]): void {
-    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.dthInput, this.subCategoryCode));
+    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.gasInput, this.subCategoryCode));
   }
 
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {
@@ -73,7 +73,7 @@ export class DthComponent implements OnInit {
   }
 
   private initializeSubCategory(): void {
-    this.subCategoryCode = SubCategories.Dth;
+    this.subCategoryCode = SubCategories.Gas;
   }
 
   private onError(error): void {
