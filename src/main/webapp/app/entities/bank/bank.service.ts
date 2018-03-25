@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { JsogService } from 'jsog-typescript';
 import { Observable } from 'rxjs/Observable';
+
 import { SERVER_API_URL } from '../../app.constants';
-
-import { Bank } from './bank.model';
 import { createRequestOption } from '../../shared';
+import { Bank } from './bank.model';
 
-export type EntityResponseType = HttpResponse<Bank>;
+type EntityResponseType = HttpResponse<Bank>;
 
 @Injectable()
 export class BankService {
 
     private resourceUrl =  SERVER_API_URL + 'api/banks';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(bank: Bank): Observable<EntityResponseType> {
         const copy = this.convert(bank);
@@ -43,12 +44,12 @@ export class BankService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Bank = this.convertItemFromServer(res.body);
+        const body: Bank = this.convertItemFromServer(this.deserializeObject(res.body));
         return res.clone({body});
     }
 
     private convertArrayResponse(res: HttpResponse<Bank[]>): HttpResponse<Bank[]> {
-        const jsonResponse: Bank[] = res.body;
+        const jsonResponse: Bank[] = this.deserializeArray(res.body);
         const body: Bank[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
@@ -70,5 +71,13 @@ export class BankService {
     private convert(bank: Bank): Bank {
         const copy: Bank = Object.assign({}, bank);
         return copy;
+    }
+
+    private deserializeArray(json: any): Bank[] {
+        return this.jsogService.deserializeArray(json, Bank);
+    }
+
+    private deserializeObject(json: any): Bank {
+        return this.jsogService.deserializeObject(json, Bank);
     }
 }

@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { CardProvider } from './card-provider.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<CardProvider>;
+type EntityResponseType = HttpResponse<CardProvider>;
 
 @Injectable()
 export class CardProviderService {

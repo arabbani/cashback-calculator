@@ -8,6 +8,7 @@ import { CbclAffiliateModule } from './affiliate/affiliate.module';
 import { CbclBankTypeModule } from './bank-type/bank-type.module';
 import { CbclBankModule } from './bank/bank.module';
 import { CbclBrandModule } from './brand/brand.module';
+import { CbclCardProviderModule } from './card-provider/card-provider.module';
 import { CbclCardTypeModule } from './card-type/card-type.module';
 import { CbclCardModule } from './card/card.module';
 import { CbclCategoryModule } from './category/category.module';
@@ -16,6 +17,7 @@ import { CbclCityModule } from './city/city.module';
 import { CbclDateModule } from './date/date.module';
 import { CbclDayModule } from './day/day.module';
 import { EntityComponent } from './entity/entity.component';
+import { CbclFlightClassModule } from './flight-class/flight-class.module';
 import { CbclMerchantModule } from './merchant/merchant.module';
 import { CbclOfferPolicyModule } from './offer-policy/offer-policy.module';
 import { CbclOfferTypeModule } from './offer-type/offer-type.module';
@@ -32,18 +34,6 @@ import { CbclSubCategoryModule } from './sub-category/sub-category.module';
 import { CbclTravelTypeModule } from './travel-type/travel-type.module';
 import { CbclUserInfoModule } from './user-info/user-info.module';
 
-import { CbclReturnExtrasModule } from './return-extras/return-extras.module';
-import { CbclMainReturnModule } from './main-return/main-return.module';
-import { CbclReturnInfoModule } from './return-info/return-info.module';
-import { CbclOfferReturnModule } from './offer-return/offer-return.module';
-import { CbclFlightClassModule } from './flight-class/flight-class.module';
-import { CbclReechargeInfoModule } from './reecharge-info/reecharge-info.module';
-import { CbclFlightInfoModule } from './flight-info/flight-info.module';
-import { CbclBusInfoModule } from './bus-info/bus-info.module';
-import { CbclTravelInfoModule } from './travel-info/travel-info.module';
-import { CbclCardProviderModule } from './card-provider/card-provider.module';
-import { CbclOfferPaymentModule } from './offer-payment/offer-payment.module';
-import { CbclElectronicsInfoModule } from './electronics-info/electronics-info.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -86,19 +76,9 @@ import { CbclElectronicsInfoModule } from './electronics-info/electronics-info.m
                 canActivate: [UserRouteAccessService]
             }
         ]),
-        CommonModule
-        CbclReturnExtrasModule,
-        CbclMainReturnModule,
-        CbclReturnInfoModule,
-        CbclOfferReturnModule,
+        CommonModule,
         CbclFlightClassModule,
-        CbclReechargeInfoModule,
-        CbclFlightInfoModule,
-        CbclBusInfoModule,
-        CbclTravelInfoModule,
         CbclCardProviderModule,
-        CbclOfferPaymentModule,
-        CbclElectronicsInfoModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [EntityComponent],

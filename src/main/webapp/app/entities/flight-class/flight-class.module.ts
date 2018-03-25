@@ -1,48 +1,32 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    FlightClassService,
-    FlightClassPopupService,
-    FlightClassComponent,
-    FlightClassDetailComponent,
-    FlightClassDialogComponent,
-    FlightClassPopupComponent,
-    FlightClassDeletePopupComponent,
-    FlightClassDeleteDialogComponent,
-    flightClassRoute,
-    flightClassPopupRoute,
-} from './';
+import { FlightClassComponent, flightClassRoute, FlightClassService } from './';
 
 const ENTITY_STATES = [
-    ...flightClassRoute,
-    ...flightClassPopupRoute,
+    flightClassRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule
     ],
     declarations: [
         FlightClassComponent,
-        FlightClassDetailComponent,
-        FlightClassDialogComponent,
-        FlightClassDeleteDialogComponent,
-        FlightClassPopupComponent,
-        FlightClassDeletePopupComponent,
     ],
     entryComponents: [
         FlightClassComponent,
-        FlightClassDialogComponent,
-        FlightClassPopupComponent,
-        FlightClassDeleteDialogComponent,
-        FlightClassDeletePopupComponent,
     ],
     providers: [
         FlightClassService,
-        FlightClassPopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
