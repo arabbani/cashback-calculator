@@ -162,9 +162,10 @@ export class DatacardComponent implements OnInit {
   }
 
   private getReechargePlanTypes(): void {
-    this.reechargePlanTypeService.query().subscribe(
+    this.reechargePlanTypeService.getDataPlans().subscribe(
       (res: HttpResponse<ReechargePlanType[]>) => {
         this.reechargePlanTypes = res.body;
+        console.log(this.reechargePlanTypes);
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );

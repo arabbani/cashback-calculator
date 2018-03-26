@@ -1,10 +1,11 @@
 package com.creatives.apsstr.cbcl.repository;
 
+import java.util.List;
+
 import com.creatives.apsstr.cbcl.domain.ReechargePlanType;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import org.springframework.data.jpa.repository.*;
-
 
 /**
  * Spring Data JPA repository for the ReechargePlanType entity.
@@ -12,5 +13,7 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface ReechargePlanTypeRepository extends JpaRepository<ReechargePlanType, Long> {
+
+    List<ReechargePlanType> findByDataPlan(Boolean dataPlan);
 
 }

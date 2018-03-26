@@ -19,4 +19,7 @@ public interface ServiceProviderRepository extends JpaRepository<ServiceProvider
     @Query("select service_provider from ServiceProvider service_provider left join fetch service_provider.subCategories where service_provider.id =:id")
     ServiceProvider findOneWithEagerRelationships(@Param("id") Long id);
 
+    @Query("select service_provider from ServiceProvider service_provider left join fetch service_provider.subCategories subCategories where subCategories.code =:subCategoryCode")
+    List<ServiceProvider> findBySubCategoryCode(@Param("subCategoryCode") String subCategoryCode);
+
 }

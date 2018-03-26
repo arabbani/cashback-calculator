@@ -28,6 +28,10 @@ public class ReechargePlanType implements Serializable {
     @Column(name = "name", length = 150, nullable = false)
     private String name;
 
+    @NotNull
+    @Column(name = "dataPlan", nullable = false)
+    private Boolean dataPlan;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -49,6 +53,20 @@ public class ReechargePlanType implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Boolean isDataPlan() {
+        return dataPlan;
+    }
+
+    public ReechargePlanType dataPlan(Boolean dataPlan) {
+        this.dataPlan = dataPlan;
+        return this;
+    }
+
+    public void setDataPlan(Boolean dataPlan) {
+        this.dataPlan = dataPlan;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -73,9 +91,7 @@ public class ReechargePlanType implements Serializable {
 
     @Override
     public String toString() {
-        return "ReechargePlanType{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            "}";
+        return "ReechargePlanType{" + "id=" + getId() + ", name='" + getName() + "'" + ", dataPlan='" + isDataPlan()
+                + "'" + "}";
     }
 }

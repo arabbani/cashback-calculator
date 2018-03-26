@@ -11,7 +11,7 @@ type EntityResponseType = HttpResponse<ReechargePlanType>;
 @Injectable()
 export class ReechargePlanTypeService {
 
-    private resourceUrl =  SERVER_API_URL + 'api/reecharge-plan-types';
+    private resourceUrl = SERVER_API_URL + 'api/reecharge-plan-types';
 
     constructor(private http: HttpClient) { }
 
@@ -28,7 +28,7 @@ export class ReechargePlanTypeService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<ReechargePlanType>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+        return this.http.get<ReechargePlanType>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -38,13 +38,18 @@ export class ReechargePlanTypeService {
             .map((res: HttpResponse<ReechargePlanType[]>) => this.convertArrayResponse(res));
     }
 
+    getDataPlans(): Observable<HttpResponse<ReechargePlanType[]>> {
+        return this.http.get<ReechargePlanType[]>(`${this.resourceUrl}/data-plans`, { observe: 'response' })
+            .map((res: HttpResponse<ReechargePlanType[]>) => this.convertArrayResponse(res));
+    }
+
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: ReechargePlanType = this.convertItemFromServer(res.body);
-        return res.clone({body});
+        return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<ReechargePlanType[]>): HttpResponse<ReechargePlanType[]> {
@@ -53,7 +58,7 @@ export class ReechargePlanTypeService {
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({body});
+        return res.clone({ body });
     }
 
     /**

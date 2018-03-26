@@ -43,7 +43,8 @@ export class ReechargePlanTypeComponent implements OnInit {
         const item = args.isNew ? new ReechargePlanType() : args.dataItem;
         this.reechargePlanTypeFormGroup = this.formBuilder.group({
             'id': item.id,
-            'name': [item.name, Validators.required]
+            'name': [item.name, Validators.required],
+            'dataPlan': item.dataPlan
         });
         return this.reechargePlanTypeFormGroup;
     }

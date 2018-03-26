@@ -45,15 +45,16 @@ public class ServiceProviderResource {
      */
     @PostMapping("/service-providers")
     @Timed
-    public ResponseEntity<ServiceProvider> createServiceProvider(@Valid @RequestBody ServiceProvider serviceProvider) throws URISyntaxException {
+    public ResponseEntity<ServiceProvider> createServiceProvider(@Valid @RequestBody ServiceProvider serviceProvider)
+            throws URISyntaxException {
         log.debug("REST request to save ServiceProvider : {}", serviceProvider);
         if (serviceProvider.getId() != null) {
-            throw new BadRequestAlertException("A new serviceProvider cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new serviceProvider cannot already have an ID", ENTITY_NAME,
+                    "idexists");
         }
         ServiceProvider result = serviceProviderRepository.save(serviceProvider);
         return ResponseEntity.created(new URI("/api/service-providers/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -67,15 +68,16 @@ public class ServiceProviderResource {
      */
     @PutMapping("/service-providers")
     @Timed
-    public ResponseEntity<ServiceProvider> updateServiceProvider(@Valid @RequestBody ServiceProvider serviceProvider) throws URISyntaxException {
+    public ResponseEntity<ServiceProvider> updateServiceProvider(@Valid @RequestBody ServiceProvider serviceProvider)
+            throws URISyntaxException {
         log.debug("REST request to update ServiceProvider : {}", serviceProvider);
         if (serviceProvider.getId() == null) {
             return createServiceProvider(serviceProvider);
         }
         ServiceProvider result = serviceProviderRepository.save(serviceProvider);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, serviceProvider.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, serviceProvider.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -88,7 +90,7 @@ public class ServiceProviderResource {
     public List<ServiceProvider> getAllServiceProviders() {
         log.debug("REST request to get all ServiceProviders");
         return serviceProviderRepository.findAllWithEagerRelationships();
-        }
+    }
 
     /**
      * GET  /service-providers/:id : get the "id" serviceProvider.
@@ -117,4 +119,18 @@ public class ServiceProviderResource {
         serviceProviderRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * GET  /service-providers/by-sub-category-code/:subCategoryCode : get serviceProviders with subCategoryCode.
+     *
+     * @param subCategoryCode the subCategoryCode of the serviceProvider to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of serviceProviders in body
+     */
+    @GetMapping("/service-providers/by-sub-category-code/{subCategoryCode}")
+    @Timed
+    public List<ServiceProvider> bySubCategoryCode(@PathVariable String subCategoryCode) {
+        log.debug("REST request to get ServiceProviders bu subCategoryCode : {}", subCategoryCode);
+        return serviceProviderRepository.findBySubCategoryCode(subCategoryCode);
+    }
+
 }
