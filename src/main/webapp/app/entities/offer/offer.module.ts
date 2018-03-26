@@ -8,6 +8,7 @@ import { SwitchModule } from '@progress/kendo-angular-inputs';
 import { MomentModule } from 'angular2-moment';
 import { BsDatepickerModule, TabsModule, TimepickerModule } from 'ngx-bootstrap';
 
+import { ApsstrSharedModule } from '../../apsstr-core-ui';
 import { CbclSharedModule } from '../../shared';
 import { OfferComponent, OfferFilterService, offerRoute, OfferService } from './';
 import { CreateOfferComponent } from './create-offer/create-offer.component';
@@ -28,7 +29,8 @@ const ENTITY_STATES = offerRoute;
         MultiSelectModule,
         BsDatepickerModule.forRoot(),
         TimepickerModule.forRoot(),
-        NgSelectModule
+        NgSelectModule,
+        ApsstrSharedModule
     ],
     declarations: [
         OfferComponent,

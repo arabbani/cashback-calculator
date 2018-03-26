@@ -163,27 +163,27 @@
                         <div class="row">
                             <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerUser">Per User</label>
-                                <input type="number" class="form-control" id="maximumUsesPerUser" name="maximumUsesPerUser" [(ngModel)]="offer.maximumUsesPerUser"
+                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerUser" name="maximumUsesPerUser" [(ngModel)]="offer.maximumUsesPerUser"
                                     [readOnly]="!editMode" />
                             </div>
                             <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerDay">Per Day</label>
-                                <input type="number" class="form-control" id="maximumUsesPerDay" name="maximumUsesPerDay" [(ngModel)]="offer.maximumUsesPerDay"
+                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerDay" name="maximumUsesPerDay" [(ngModel)]="offer.maximumUsesPerDay"
                                     [readOnly]="!editMode" />
                             </div>
                             <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerWeek">Per Week</label>
-                                <input type="number" class="form-control" id="maximumUsesPerWeek" name="maximumUsesPerWeek" [(ngModel)]="offer.maximumUsesPerWeek"
+                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerWeek" name="maximumUsesPerWeek" [(ngModel)]="offer.maximumUsesPerWeek"
                                     [readOnly]="!editMode" />
                             </div>
                             <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerMonth">Per Month</label>
-                                <input type="number" class="form-control" id="maximumUsesPerMonth" name="maximumUsesPerMonth" [(ngModel)]="offer.maximumUsesPerMonth"
+                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerMonth" name="maximumUsesPerMonth" [(ngModel)]="offer.maximumUsesPerMonth"
                                     [readOnly]="!editMode" />
                             </div>
                             <div class="form-group col-sm-3 col-lg-2 mb-3">
                                 <label for="maximumUsesPerNumber">Per Number</label>
-                                <input type="number" class="form-control" id="maximumUsesPerNumber" name="maximumUsesPerNumber" [(ngModel)]="offer.maximumUsesPerNumber"
+                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerNumber" name="maximumUsesPerNumber" [(ngModel)]="offer.maximumUsesPerNumber"
                                     [readOnly]="!editMode" />
                             </div>
                         </div>
@@ -531,11 +531,11 @@
                             <button class="float-right" kendoGridAddCommand>Add new</button>
                         </ng-template>
                         <kendo-grid-column class="text-center" field="id" title="ID" width="50" [editable]="false"></kendo-grid-column>
-                        <kendo-grid-column class="text-center" field="extras.minimumExpense" title="Min Expense"></kendo-grid-column>
-                        <kendo-grid-column class="text-center" field="extras.maximumExpense" title="Max Expense"></kendo-grid-column>
-                        <kendo-grid-column class="text-center" field="extras.minimumReturn" title="Min Return"></kendo-grid-column>
-                        <kendo-grid-column class="text-center" field="extras.maximumReturn" title="Max Return"></kendo-grid-column>
-                        <kendo-grid-column class="text-center" field="extras.minimumTicketRequired" title="Min Ticket Required"></kendo-grid-column>
+                        <kendo-grid-column class="text-center" field="extras.minimumExpense" title="Min Expense" editor="numeric"></kendo-grid-column>
+                        <kendo-grid-column class="text-center" field="extras.maximumExpense" title="Max Expense" editor="numeric"></kendo-grid-column>
+                        <kendo-grid-column class="text-center" field="extras.minimumReturn" title="Min Return" editor="numeric"></kendo-grid-column>
+                        <kendo-grid-column class="text-center" field="extras.maximumReturn" title="Max Return" editor="numeric"></kendo-grid-column>
+                        <kendo-grid-column class="text-center" field="extras.minimumTicketRequired" title="Min Ticket Required" editor="numeric"></kendo-grid-column>
                         <kendo-grid-command-column title="Action" width="180">
                             <ng-template kendoGridCellTemplate let-isNew="isNew">
                                 <div class="text-center">
@@ -556,11 +556,11 @@
                                     </div>
                                 </ng-template>
                                 <kendo-grid-column class="text-center" field="id" title="ID" width="50" [editable]="false"></kendo-grid-column>
-                                <kendo-grid-column class="text-center" field="extras.minimumExpense" title="Min Expense"></kendo-grid-column>
-                                <kendo-grid-column class="text-center" field="extras.maximumExpense" title="Max Expense"></kendo-grid-column>
-                                <kendo-grid-column class="text-center" field="extras.minimumReturn" title="Min Return"></kendo-grid-column>
-                                <kendo-grid-column class="text-center" field="extras.maximumReturn" title="Max Return"></kendo-grid-column>
-                                <kendo-grid-column class="text-center" field="extras.minimumTicketRequired" title="Min Ticket Required"></kendo-grid-column>
+                                <kendo-grid-column class="text-center" field="extras.minimumExpense" title="Min Expense" editor="numeric"></kendo-grid-column>
+                                <kendo-grid-column class="text-center" field="extras.maximumExpense" title="Max Expense" editor="numeric"></kendo-grid-column>
+                                <kendo-grid-column class="text-center" field="extras.minimumReturn" title="Min Return" editor="numeric"></kendo-grid-column>
+                                <kendo-grid-column class="text-center" field="extras.maximumReturn" title="Max Return" editor="numeric"></kendo-grid-column>
+                                <kendo-grid-column class="text-center" field="extras.minimumTicketRequired" title="Min Ticket Required" editor="numeric"></kendo-grid-column>
                                 <kendo-grid-command-column title="Action" width="180">
                                     <ng-template kendoGridCellTemplate let-isNew="isNew">
                                         <div class="text-center">
@@ -603,12 +603,12 @@
                                                 <div class="row">
                                                     <div class="form-group col-sm-6 col-lg-4 mb-3">
                                                         <label for="amount">Amount</label>
-                                                        <input type="number" class="form-control" id="amount" name="amount
+                                                        <input type="text" apsstrNumberInput class="form-control" id="amount" name="amount
                                                           " [(ngModel)]="dataItem.mainReturn.amount" />
                                                     </div>
                                                     <div class="form-group col-sm-6 col-lg-4 mb-3">
                                                         <label for="defaultAmount">Default Amount</label>
-                                                        <input type="number" class="form-control" id="defaultAmount" name="defaultAmount" [(ngModel)]="dataItem.mainReturn.defaultAmount"
+                                                        <input type="text" apsstrNumberInput class="form-control" id="defaultAmount" name="defaultAmount" [(ngModel)]="dataItem.mainReturn.defaultAmount"
                                                         />
                                                     </div>
                                                     <div class="form-group col-sm-4 mb-3">

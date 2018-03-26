@@ -13,6 +13,7 @@ import { ApsstrDialogService, FilterEntitiesService } from '../../../apsstr-core
 import { Categories, OfferTypes, ReturnTypes, SubCategories } from '../../../product';
 import { GRID_STATE } from '../../../shared';
 import { Affiliate, AffiliateService } from '../../affiliate';
+import { BusInfo } from '../../bus-info';
 import { Card, CardService } from '../../card';
 import { CardType, CardTypeService } from '../../card-type';
 import { Category, CategoryService } from '../../category';
@@ -41,7 +42,6 @@ import { State, StateService } from '../../state';
 import { SubCategory, SubCategoryService } from '../../sub-category';
 import { TravelInfo } from '../../travel-info';
 import { TravelType, TravelTypeService } from '../../travel-type';
-import { BusInfo } from '../../bus-info';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -671,6 +671,12 @@ export class CreateOfferComponent implements OnInit {
     this.isSaving = true;
     this.offer.startDate.setSeconds(0);
     this.offer.endDate.setSeconds(59);
+    _.forEach(this.offer.offerReturns, (offerReturn) => {
+      _.forEach(offerReturn.returnInfos, (returnInfo) => {
+        delete returnInfo.payment.modes;
+      });
+    });
+    console.log(this.offer);
     if (this.offer.id !== undefined) {
       this.subscribeToSaveResponse(
         this.offerService.update(this.offer));
