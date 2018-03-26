@@ -1,0 +1,32 @@
+
+<div *ngIf="serviceProvider">
+    <h2><span>Service Provider</span> {{serviceProvider.id}}</h2>
+    <hr>
+    <apsstr-alert-error></apsstr-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{serviceProvider.name}}</span>
+        </dd>
+        <dt><span>Sub Category</span></dt>
+        <dd>
+            <span *ngFor="let subCategory of serviceProvider.subCategories; let last = last">
+                <a [routerLink]="['/sub-category', subCategory?.id ]">{{subCategory.code}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'service-provider/'+ serviceProvider.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

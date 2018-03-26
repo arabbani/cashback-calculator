@@ -20,7 +20,7 @@
             "fieldValidateRulesMaxlength": 2000
         }
     ],
-    "changelogDate": "20180325124615",
+    "changelogDate": "20180326062904",
     "entityTableName": "offer_policy",
     "dto": "no",
     "pagination": "no",

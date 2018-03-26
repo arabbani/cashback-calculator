@@ -227,7 +227,7 @@
             "fieldValidateRulesMaxlength": 2000
         }
     ],
-    "changelogDate": "20180325124643",
+    "changelogDate": "20180326062932",
     "entityTableName": "offer",
     "dto": "no",
     "pagination": "no",

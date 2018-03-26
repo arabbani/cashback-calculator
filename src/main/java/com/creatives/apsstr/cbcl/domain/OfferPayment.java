@@ -1,24 +1,14 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
  * A OfferPayment.
@@ -26,7 +16,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "offer_payment")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class OfferPayment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,12 +26,9 @@ public class OfferPayment implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_payment_mode", joinColumns = @JoinColumn(name = "offer_payments_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "modes_id", referencedColumnName = "id"))
-    private Set<CardType> modes = new HashSet<>();
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_payment_card", joinColumns = @JoinColumn(name = "offer_payments_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "cards_id", referencedColumnName = "id"))
+    @JoinTable(name = "offer_payment_card",
+               joinColumns = @JoinColumn(name="offer_payments_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="cards_id", referencedColumnName="id"))
     private Set<Card> cards = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -52,29 +38,6 @@ public class OfferPayment implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Set<CardType> getModes() {
-        return modes;
-    }
-
-    public OfferPayment modes(Set<CardType> cardTypes) {
-        this.modes = cardTypes;
-        return this;
-    }
-
-    public OfferPayment addMode(CardType cardType) {
-        this.modes.add(cardType);
-        return this;
-    }
-
-    public OfferPayment removeMode(CardType cardType) {
-        this.modes.remove(cardType);
-        return this;
-    }
-
-    public void setModes(Set<CardType> cardTypes) {
-        this.modes = cardTypes;
     }
 
     public Set<Card> getCards() {
@@ -123,6 +86,8 @@ public class OfferPayment implements Serializable {
 
     @Override
     public String toString() {
-        return "OfferPayment{" + "id=" + getId() + "}";
+        return "OfferPayment{" +
+            "id=" + getId() +
+            "}";
     }
 }

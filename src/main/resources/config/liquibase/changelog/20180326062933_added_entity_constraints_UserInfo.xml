@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity UserInfo.
+    -->
+    <changeSet id="20180326062933-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="city_id"
+                                 baseTableName="user_info"
+                                 constraintName="fk_user_info_city_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="city"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_infos_id"
+                                 baseTableName="user_info_merchant"
+                                 constraintName="fk_user_info_merchant_user_infos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_info"/>
+        <addForeignKeyConstraint baseColumnNames="merchants_id"
+                                 baseTableName="user_info_merchant"
+                                 constraintName="fk_user_info_merchant_merchants_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="merchant"/>
+        
+        <addForeignKeyConstraint baseColumnNames="user_infos_id"
+                                 baseTableName="user_info_card"
+                                 constraintName="fk_user_info_card_user_infos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_info"/>
+        <addForeignKeyConstraint baseColumnNames="cards_id"
+                                 baseTableName="user_info_card"
+                                 constraintName="fk_user_info_card_cards_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="card"/>
+        
+        <addForeignKeyConstraint baseColumnNames="user_infos_id"
+                                 baseTableName="user_info_operating_system"
+                                 constraintName="fk_user_info_operating_system_user_infos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_info"/>
+        <addForeignKeyConstraint baseColumnNames="operating_systems_id"
+                                 baseTableName="user_info_operating_system"
+                                 constraintName="fk_user_info_operating_system_operating_systems_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="operating_system"/>
+        
+    </changeSet>
+</databaseChangeLog>

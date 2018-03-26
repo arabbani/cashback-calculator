@@ -12,7 +12,7 @@
             "fieldValidateRulesMaxlength": 30
         }
     ],
-    "changelogDate": "20180325124638",
+    "changelogDate": "20180326062927",
     "entityTableName": "card_type",
     "dto": "no",
     "pagination": "no",

@@ -21,7 +21,7 @@
             "fieldValidateRulesMaxlength": 50
         }
     ],
-    "changelogDate": "20180325124628",
+    "changelogDate": "20180326062917",
     "entityTableName": "circle",
     "dto": "no",
     "pagination": "no",

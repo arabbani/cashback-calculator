@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity ReturnInfo.
+    -->
+    <changeSet id="20180326062915-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="main_return_id"
+                                 baseTableName="return_info"
+                                 constraintName="fk_return_info_main_return_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="main_return"/>
+
+        <addForeignKeyConstraint baseColumnNames="extras_id"
+                                 baseTableName="return_info"
+                                 constraintName="fk_return_info_extras_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="return_extras"/>
+
+        <addForeignKeyConstraint baseColumnNames="payment_id"
+                                 baseTableName="return_info"
+                                 constraintName="fk_return_info_payment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offer_payment"/>
+
+        <addForeignKeyConstraint baseColumnNames="type_id"
+                                 baseTableName="return_info"
+                                 constraintName="fk_return_info_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="return_type"/>
+
+        <addForeignKeyConstraint baseColumnNames="return_offer_id"
+                                 baseTableName="return_info"
+                                 constraintName="fk_return_info_return_offer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offer"/>
+
+        <addForeignKeyConstraint baseColumnNames="offer_return_id"
+                                 baseTableName="return_info"
+                                 constraintName="fk_return_info_offer_return_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="offer_return"/>
+
+    </changeSet>
+</databaseChangeLog>

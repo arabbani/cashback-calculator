@@ -1,36 +1,36 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JsogService } from 'jsog-typescript';
-import { JhiDateUtils } from 'ng-jhipster';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-
 import { SERVER_API_URL } from '../../app.constants';
-import { createRequestOption } from '../../shared';
-import { Offer } from './offer.model';
 
-type EntityResponseType = HttpResponse<Offer>;
+import { JhiDateUtils } from 'ng-jhipster';
+
+import { Offer } from './offer.model';
+import { createRequestOption } from '../../shared';
+
+export type EntityResponseType = HttpResponse<Offer>;
 
 @Injectable()
 export class OfferService {
 
-    private resourceUrl = SERVER_API_URL + 'api/offers';
+    private resourceUrl =  SERVER_API_URL + 'api/offers';
 
-    constructor(private http: HttpClient, private dateUtils: JhiDateUtils, private jsogService: JsogService) { }
+    constructor(private http: HttpClient, private dateUtils: JhiDateUtils) { }
 
     create(offer: Offer): Observable<EntityResponseType> {
-        // const copy = this.convert(offer);
-        return this.http.post<Offer>(this.resourceUrl, offer, { observe: 'response' })
+        const copy = this.convert(offer);
+        return this.http.post<Offer>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(offer: Offer): Observable<EntityResponseType> {
-        // const copy = this.convert(offer);
-        return this.http.put<Offer>(this.resourceUrl, offer, { observe: 'response' })
+        const copy = this.convert(offer);
+        return this.http.put<Offer>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<Offer>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+        return this.http.get<Offer>(`${this.resourceUrl}/${id}`, { observe: 'response'})
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -41,21 +41,21 @@ export class OfferService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Offer = this.convertItemFromServer(this.deserializeObject(res.body));
-        return res.clone({ body });
+        const body: Offer = this.convertItemFromServer(res.body);
+        return res.clone({body});
     }
 
     private convertArrayResponse(res: HttpResponse<Offer[]>): HttpResponse<Offer[]> {
-        const jsonResponse: Offer[] = this.deserializeArray(res.body);
+        const jsonResponse: Offer[] = res.body;
         const body: Offer[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({ body });
+        return res.clone({body});
     }
 
     /**
@@ -80,13 +80,5 @@ export class OfferService {
 
         copy.endDate = this.dateUtils.toDate(offer.endDate);
         return copy;
-    }
-
-    private deserializeArray(json: any): Offer[] {
-        return this.jsogService.deserializeArray(json, Offer);
-    }
-
-    private deserializeObject(json: any): Offer {
-        return this.jsogService.deserializeObject(json, Offer);
     }
 }

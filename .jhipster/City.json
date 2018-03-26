@@ -32,7 +32,7 @@
             "fieldValidateRulesMaxlength": 100
         }
     ],
-    "changelogDate": "20180325124614",
+    "changelogDate": "20180326062903",
     "entityTableName": "city",
     "dto": "no",
     "pagination": "no",

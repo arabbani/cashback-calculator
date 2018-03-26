@@ -13,10 +13,10 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface OfferPaymentRepository extends JpaRepository<OfferPayment, Long> {
-    @Query("select distinct offer_payment from OfferPayment offer_payment left join fetch offer_payment.modes left join fetch offer_payment.cards")
+    @Query("select distinct offer_payment from OfferPayment offer_payment left join fetch offer_payment.cards")
     List<OfferPayment> findAllWithEagerRelationships();
 
-    @Query("select offer_payment from OfferPayment offer_payment left join fetch offer_payment.modes left join fetch offer_payment.cards where offer_payment.id =:id")
+    @Query("select offer_payment from OfferPayment offer_payment left join fetch offer_payment.cards where offer_payment.id =:id")
     OfferPayment findOneWithEagerRelationships(@Param("id") Long id);
 
 }

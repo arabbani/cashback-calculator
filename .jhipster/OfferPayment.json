@@ -4,14 +4,6 @@
         {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "",
-            "relationshipName": "mode",
-            "otherEntityName": "cardType",
-            "otherEntityField": "name",
-            "ownerSide": true
-        },
-        {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "",
             "relationshipName": "card",
             "otherEntityName": "card",
             "otherEntityField": "name",
@@ -19,7 +11,7 @@
         }
     ],
     "fields": [],
-    "changelogDate": "20180325124641",
+    "changelogDate": "20180326062930",
     "entityTableName": "offer_payment",
     "dto": "no",
     "pagination": "no",

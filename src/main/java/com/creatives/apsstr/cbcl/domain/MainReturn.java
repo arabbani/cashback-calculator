@@ -1,22 +1,13 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A MainReturn.
@@ -24,7 +15,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "main_return")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class MainReturn implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -146,7 +136,11 @@ public class MainReturn implements Serializable {
 
     @Override
     public String toString() {
-        return "MainReturn{" + "id=" + getId() + ", amount=" + getAmount() + ", exact='" + isExact() + "'"
-                + ", defaultAmount=" + getDefaultAmount() + "}";
+        return "MainReturn{" +
+            "id=" + getId() +
+            ", amount=" + getAmount() +
+            ", exact='" + isExact() + "'" +
+            ", defaultAmount=" + getDefaultAmount() +
+            "}";
     }
 }

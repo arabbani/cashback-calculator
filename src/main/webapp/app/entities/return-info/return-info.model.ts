@@ -5,6 +5,7 @@ export class ReturnInfo implements BaseEntity {
         public id?: number,
         public mainReturn?: BaseEntity,
         public extras?: BaseEntity,
+        public payment?: BaseEntity,
         public type?: BaseEntity,
         public returnOffer?: BaseEntity,
         public offerReturn?: BaseEntity,

@@ -27,7 +27,7 @@
         }
     ],
     "fields": [],
-    "changelogDate": "20180325124633",
+    "changelogDate": "20180326062922",
     "entityTableName": "flight_info",
     "dto": "no",
     "pagination": "no",

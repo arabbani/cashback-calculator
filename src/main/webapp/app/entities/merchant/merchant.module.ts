@@ -1,34 +1,48 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { DialogModule } from '@progress/kendo-angular-dialog';
-import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import { MerchantComponent, merchantRoute, MerchantService } from './';
+import {
+    MerchantService,
+    MerchantPopupService,
+    MerchantComponent,
+    MerchantDetailComponent,
+    MerchantDialogComponent,
+    MerchantPopupComponent,
+    MerchantDeletePopupComponent,
+    MerchantDeleteDialogComponent,
+    merchantRoute,
+    merchantPopupRoute,
+} from './';
 
 const ENTITY_STATES = [
-    merchantRoute
+    ...merchantRoute,
+    ...merchantPopupRoute,
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES),
-        ReactiveFormsModule,
-        GridModule,
-        DialogModule,
-        NgSelectModule
+        RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
-        MerchantComponent
+        MerchantComponent,
+        MerchantDetailComponent,
+        MerchantDialogComponent,
+        MerchantDeleteDialogComponent,
+        MerchantPopupComponent,
+        MerchantDeletePopupComponent,
     ],
     entryComponents: [
-        MerchantComponent
+        MerchantComponent,
+        MerchantDialogComponent,
+        MerchantPopupComponent,
+        MerchantDeleteDialogComponent,
+        MerchantDeletePopupComponent,
     ],
     providers: [
-        MerchantService
+        MerchantService,
+        MerchantPopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

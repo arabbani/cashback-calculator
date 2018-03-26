@@ -12,7 +12,7 @@
             "fieldValidateRulesMaxlength": 30
         }
     ],
-    "changelogDate": "20180325124629",
+    "changelogDate": "20180326062918",
     "entityTableName": "flight_class",
     "dto": "no",
     "pagination": "no",

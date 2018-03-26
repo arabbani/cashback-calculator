@@ -1,20 +1,19 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JsogService } from 'jsog-typescript';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-
 import { SERVER_API_URL } from '../../app.constants';
-import { createRequestOption } from '../../shared';
-import { OperatingSystemType } from './operating-system-type.model';
 
-type EntityResponseType = HttpResponse<OperatingSystemType>;
+import { OperatingSystemType } from './operating-system-type.model';
+import { createRequestOption } from '../../shared';
+
+export type EntityResponseType = HttpResponse<OperatingSystemType>;
 
 @Injectable()
 export class OperatingSystemTypeService {
 
     private resourceUrl =  SERVER_API_URL + 'api/operating-system-types';
 
-    constructor(private http: HttpClient, private jsogService: JsogService) { }
+    constructor(private http: HttpClient) { }
 
     create(operatingSystemType: OperatingSystemType): Observable<EntityResponseType> {
         const copy = this.convert(operatingSystemType);
@@ -44,12 +43,12 @@ export class OperatingSystemTypeService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: OperatingSystemType = this.convertItemFromServer(this.deserializeObject(res.body));
+        const body: OperatingSystemType = this.convertItemFromServer(res.body);
         return res.clone({body});
     }
 
     private convertArrayResponse(res: HttpResponse<OperatingSystemType[]>): HttpResponse<OperatingSystemType[]> {
-        const jsonResponse: OperatingSystemType[] = this.deserializeArray(res.body);
+        const jsonResponse: OperatingSystemType[] = res.body;
         const body: OperatingSystemType[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
@@ -71,13 +70,5 @@ export class OperatingSystemTypeService {
     private convert(operatingSystemType: OperatingSystemType): OperatingSystemType {
         const copy: OperatingSystemType = Object.assign({}, operatingSystemType);
         return copy;
-    }
-
-    private deserializeArray(json: any): OperatingSystemType[] {
-        return this.jsogService.deserializeArray(json, OperatingSystemType);
-    }
-
-    private deserializeObject(json: any): OperatingSystemType {
-        return this.jsogService.deserializeObject(json, OperatingSystemType);
     }
 }

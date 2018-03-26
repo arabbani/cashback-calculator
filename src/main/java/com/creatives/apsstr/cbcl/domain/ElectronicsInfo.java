@@ -1,24 +1,14 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
  * A ElectronicsInfo.
@@ -26,7 +16,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "electronics_info")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class ElectronicsInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,7 +26,9 @@ public class ElectronicsInfo implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "electronics_info_brand", joinColumns = @JoinColumn(name = "electronics_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "brands_id", referencedColumnName = "id"))
+    @JoinTable(name = "electronics_info_brand",
+               joinColumns = @JoinColumn(name="electronics_infos_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="brands_id", referencedColumnName="id"))
     private Set<Brand> brands = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -95,6 +86,8 @@ public class ElectronicsInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "ElectronicsInfo{" + "id=" + getId() + "}";
+        return "ElectronicsInfo{" +
+            "id=" + getId() +
+            "}";
     }
 }

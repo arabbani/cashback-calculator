@@ -1,9 +1,6 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -21,7 +18,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "bank")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class Bank implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,7 +31,7 @@ public class Bank implements Serializable {
     @Column(name = "name", length = 70, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "bank", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "bank")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Card> cards = new HashSet<>();

@@ -25,7 +25,7 @@
             "fieldValidateRulesMaxlength": 70
         }
     ],
-    "changelogDate": "20180325124637",
+    "changelogDate": "20180326062926",
     "entityTableName": "bank",
     "dto": "no",
     "pagination": "no",
