@@ -4,15 +4,8 @@ import java.util.List;
 
 import com.creatives.apsstr.cbcl.domain.Offer;
 import com.creatives.apsstr.cbcl.helper.CashbackCalculatorAlgoVersionTwo;
-import com.creatives.apsstr.cbcl.helper.model.BroadbandInput;
 import com.creatives.apsstr.cbcl.helper.model.CashbackInfo;
-import com.creatives.apsstr.cbcl.helper.model.DatacardInput;
-import com.creatives.apsstr.cbcl.helper.model.DthInput;
-import com.creatives.apsstr.cbcl.helper.model.ElectricityInput;
 import com.creatives.apsstr.cbcl.helper.model.Expense;
-import com.creatives.apsstr.cbcl.helper.model.GasInput;
-import com.creatives.apsstr.cbcl.helper.model.LandlineInput;
-import com.creatives.apsstr.cbcl.helper.model.MobileInput;
 import com.creatives.apsstr.cbcl.repository.OfferRepository;
 
 import org.slf4j.Logger;
@@ -45,23 +38,23 @@ public class CalculateCashbackService {
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	// public List<CashbackInfo> calculateCashbackReechargeWithReechargeCondition(Long subCategoryId,
-	// 		Long serviceProviderId, String dateTime, Long circleId, Long reechargePlaneTypeId, Expense expense) {
-	// 	List<Offer> offers = offerRepository.findAllCashbackReechargeWithReechargeCondition(true, false, subCategoryId,
-	// 			serviceProviderId, dateTime, circleId, reechargePlaneTypeId);
-	// 	return this.cashbackCalculatorAlgo.calculate(offers, expense);
-	// }
+	public List<CashbackInfo> calculateCashbackReechargeWithReechargeCondition(Long subCategoryId,
+			Long serviceProviderId, String dateTime, Long circleId, Long reechargePlaneTypeId, Expense expense) {
+		List<Offer> offers = offerRepository.cashbackReechargeWithReechargeCondition(true, false, subCategoryId,
+				dateTime, serviceProviderId, circleId, reechargePlaneTypeId);
+		return this.cashbackCalculatorAlgo.calculate(offers, expense);
+	}
 
 	/**
-	 * Calculate cashback for dth, datacard, landline, broadband, electricity, gas
+	 * Calculate cashback for dth, landline, broadband, electricity, gas, metro, water
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	// public List<CashbackInfo> calculateCashbackReecharge(Long subCategoryId, Long serviceProviderId, String dateTime,
-	// 		Expense expense) {
-	// 	List<Offer> offers = offerRepository.findAllCashbackReechargeCommon(true, false, subCategoryId,
-	// 			serviceProviderId, dateTime);
-	// 	return this.cashbackCalculatorAlgo.calculate(offers, expense);
-	// }
+	public List<CashbackInfo> calculateCashbackReecharge(Long subCategoryId, Long serviceProviderId, String dateTime,
+			Expense expense) {
+		List<Offer> offers = offerRepository.cashbackReechargeCommon(true, false, subCategoryId, dateTime,
+				serviceProviderId);
+		return this.cashbackCalculatorAlgo.calculate(offers, expense);
+	}
 
 }
