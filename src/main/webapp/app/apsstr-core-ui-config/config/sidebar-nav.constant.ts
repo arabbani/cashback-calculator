@@ -55,6 +55,18 @@ export const SIDEBAR_NAV_ITEMS = [
       }
     ]
   },
+  {
+    name: 'Travel',
+    url: '/cashback',
+    icon: 'icon-screen-smartphone',
+    children: [
+      {
+        name: 'Flight',
+        url: '/cashback/flight',
+        icon: 'icon-puzzle'
+      }
+    ]
+  }
   // {
   //   name: 'Travel',
   //   url: '/',

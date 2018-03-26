@@ -7,6 +7,7 @@ import {
   DatacardComponent,
   DthComponent,
   ElectricityComponent,
+  FlightComponent,
   GasComponent,
   LandlineComponent,
   MetroComponent,
@@ -54,6 +55,10 @@ const routes: Routes = [
       {
         path: 'water',
         component: WaterComponent
+      },
+      {
+        path: 'flight',
+        component: FlightComponent
       }
     ]
   }

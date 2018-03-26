@@ -5,23 +5,23 @@
     </apsstr-card-header>
     <apsstr-card-body>
         <form role="form" #mobileInputForm="ngForm" novalidate>
-            <div class="form-group">
+            <div class="form-group mb-4">
                 <label class="radio-inline" for="{{ 'subCategory_' + subCategory.value }}" *ngFor="let subCategory of subCategories">
                     <input type="radio" id="{{ 'subCategory_' + subCategory.value }}" name="subCategory" [(ngModel)]="subCategoryCode" value="{{ subCategory.value }}"
                         (click)="onSelectSubCategory(subCategory.value)">
                     <span class="mr-2 ml-1">{{ subCategory.name | uppercase }}</span>
                 </label>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-4">
                 <ng-select name="circle" [items]="circles" bindLabel="name" bindValue="id" [(ngModel)]="mobileInput.circleId" placeholder="Circle"
                     required>
                 </ng-select>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-4">
                 <ng-select name="serviceProvider" [items]="serviceProviders" bindLabel="name" bindValue="id" [(ngModel)]="mobileInput.serviceProviderId"
                     placeholder="Operator" required></ng-select>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-4">
                 <ng-select name="reechargePlaneType" [items]="reechargePlanTypes" bindLabel="name" bindValue="id" [(ngModel)]="mobileInput.reechargePlaneTypeId"
                     placeholder="Reecharge Type" required></ng-select>
             </div>

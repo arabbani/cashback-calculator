@@ -5,7 +5,7 @@
   </apsstr-card-header>
   <apsstr-card-body>
     <form role="form" #flightInputForm="ngForm" novalidate>
-      <div class="form-group">
+      <div class="form-group mb-4">
         <label class="radio-inline" for="{{ 'travelType_' + travelType.name }}" *ngFor="let travelType of travelTypes">
           <input type="radio" id="{{ 'travelType_' + travelType.name }}" name="travelType" [(ngModel)]="flightInput.travelTypeId" value="{{ travelType.id }}">
           <span class="mr-2 ml-1">
@@ -13,7 +13,7 @@
           </span>
         </label>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-4">
         <label class="radio-inline" for="from" *ngFor="let region of regions">
           <input type="radio" id="from" name="from" [(ngModel)]="flightInput.originId" value="{{ region.id }}">
           <span class="mr-2 ml-1">
@@ -28,7 +28,7 @@
           </span>
         </label>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-4">
         <label class="radio-inline" for="to" *ngFor="let region of regions">
           <input type="radio" id="to" name="to" [(ngModel)]="flightInput.flightTypeId" value="{{ region.id }}">
           <span class="mr-2 ml-1">
@@ -43,7 +43,7 @@
           </span>
         </label>
       </div>
-      <div class="form-group">
+      <div class="form-group mb-4">
         <ng-select name="flightClass" [items]="flightClasses" bindLabel="name" bindValue="id" [(ngModel)]="flightInput.flightClassId"
           placeholder="Class" required>
         </ng-select>
