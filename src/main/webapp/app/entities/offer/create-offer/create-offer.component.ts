@@ -188,7 +188,7 @@ export class CreateOfferComponent implements OnInit {
     this.offer.offerReturns = [];
     _.forEach(this.createOfferTabs.tabs, (tab, index) => {
       if (index !== 0) {
-        tab.disabled = true;
+        // tab.disabled = true;
       }
     });
     this.enableTab(0);
