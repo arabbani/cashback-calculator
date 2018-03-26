@@ -1,49 +1,33 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    CardProviderService,
-    CardProviderPopupService,
-    CardProviderComponent,
-    CardProviderDetailComponent,
-    CardProviderDialogComponent,
-    CardProviderPopupComponent,
-    CardProviderDeletePopupComponent,
-    CardProviderDeleteDialogComponent,
-    cardProviderRoute,
-    cardProviderPopupRoute,
-} from './';
+import { CardProviderComponent, cardProviderRoute, CardProviderService } from './';
 
 const ENTITY_STATES = [
-    ...cardProviderRoute,
-    ...cardProviderPopupRoute,
+    cardProviderRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule
     ],
     declarations: [
         CardProviderComponent,
-        CardProviderDetailComponent,
-        CardProviderDialogComponent,
-        CardProviderDeleteDialogComponent,
-        CardProviderPopupComponent,
-        CardProviderDeletePopupComponent,
     ],
     entryComponents: [
         CardProviderComponent,
-        CardProviderDialogComponent,
-        CardProviderPopupComponent,
-        CardProviderDeleteDialogComponent,
-        CardProviderDeletePopupComponent,
     ],
     providers: [
         CardProviderService,
-        CardProviderPopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class CbclCardProviderModule {}
+export class CbclCardProviderModule { }

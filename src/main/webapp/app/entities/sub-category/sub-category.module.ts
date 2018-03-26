@@ -1,48 +1,34 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    SubCategoryService,
-    SubCategoryPopupService,
-    SubCategoryComponent,
-    SubCategoryDetailComponent,
-    SubCategoryDialogComponent,
-    SubCategoryPopupComponent,
-    SubCategoryDeletePopupComponent,
-    SubCategoryDeleteDialogComponent,
-    subCategoryRoute,
-    subCategoryPopupRoute,
-} from './';
+import { SubCategoryComponent, subCategoryRoute, SubCategoryService } from './';
 
 const ENTITY_STATES = [
-    ...subCategoryRoute,
-    ...subCategoryPopupRoute,
+    subCategoryRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule,
+        NgSelectModule
     ],
     declarations: [
-        SubCategoryComponent,
-        SubCategoryDetailComponent,
-        SubCategoryDialogComponent,
-        SubCategoryDeleteDialogComponent,
-        SubCategoryPopupComponent,
-        SubCategoryDeletePopupComponent,
+        SubCategoryComponent
     ],
     entryComponents: [
-        SubCategoryComponent,
-        SubCategoryDialogComponent,
-        SubCategoryPopupComponent,
-        SubCategoryDeleteDialogComponent,
-        SubCategoryDeletePopupComponent,
+        SubCategoryComponent
     ],
     providers: [
-        SubCategoryService,
-        SubCategoryPopupService,
+        SubCategoryService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
