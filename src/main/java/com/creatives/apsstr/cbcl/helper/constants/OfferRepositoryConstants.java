@@ -109,13 +109,13 @@ public class OfferRepositoryConstants {
 
 	public static final String WHERE_REECHARGE_INFO_REECHARGE_TYPE = " reechargeInfoReechargeTypes.id =:reechargePlaneTypeId";
 
-	public static final String WHERE_TRAVEL_INFO_TYPE = " travelInfoTypes.id =:travelInfoTypeId";
+	public static final String WHERE_TRAVEL_INFO_TYPE = " travelInfoTypes.id =:travelTypeId";
 
-	public static final String WHERE_FLIGHT_INFO_TYPE = " flightInfoTypes.id =:flightInfoTypeId";
+	public static final String WHERE_FLIGHT_INFO_TYPE = " flightInfoTypes.id =:flightTypeId";
 
-	public static final String WHERE_FLIGHT_INFO_CLASS = " flightInfoClass.id =:flightInfoClassId";
+	public static final String WHERE_FLIGHT_INFO_CLASS = " flightInfoClass.id =:flightClassId";
 
-	public static final String WHERE_FLIGHT_INFO_ORIGINS = " flightInfoOrigins.id =:flightInfoOriginId";
+	public static final String WHERE_FLIGHT_INFO_ORIGINS = " flightInfoOrigins.id =:flightOriginId";
 
 	/* ####################### CASHBACK CONDITIONS ####################### */
 
@@ -128,8 +128,10 @@ public class OfferRepositoryConstants {
 	public static final String CASHBACK_CONDITION_REECHARGE_CHILDS = WHERE_REECHARGE_INFO_CIRCLE
 			+ SharedRepositoryConstants.AND + WHERE_REECHARGE_INFO_REECHARGE_TYPE;
 
-	public static final String CASHBACK_CONDITION_FLIGHT = WHERE_TRAVEL_INFO_TYPE + SharedRepositoryConstants.AND
-			+ WHERE_FLIGHT_INFO_TYPE + SharedRepositoryConstants.AND + WHERE_FLIGHT_INFO_CLASS;
+	public static final String CASHBACK_CONDITION_FLIGHT = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
+			+ WHERE_TRAVEL_INFO_TYPE + SharedRepositoryConstants.AND + WHERE_FLIGHT_INFO_TYPE
+			+ SharedRepositoryConstants.AND + WHERE_FLIGHT_INFO_CLASS + SharedRepositoryConstants.AND
+			+ WHERE_FLIGHT_INFO_ORIGINS;
 
 	/*
 	 * ####################### CASHBACK SELECT WITH CONDITIONS #######################
@@ -143,7 +145,7 @@ public class OfferRepositoryConstants {
 			+ CASHBACK_CONDITION_REECHARGE_CHILDS;
 
 	public static final String CASHBACK_TRAVEL_DEFAULT = CASHBACK_SELECT_TRAVEL + SharedRepositoryConstants.WHERE
-			+ WHERE_TRAVEL_INFO_TYPE;
+			+ CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND + WHERE_TRAVEL_INFO_TYPE;
 
 	public static final String CASHBACK_TRAVEL_FLIGHT = CASHBACK_SELECT_FLIGHT + SharedRepositoryConstants.WHERE
 			+ CASHBACK_CONDITION_FLIGHT;

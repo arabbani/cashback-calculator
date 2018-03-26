@@ -17,7 +17,7 @@ import {
 
 const routes: Routes = [
   {
-    path: 'cashback',
+    path: 'reecharge',
     component: CashbackComponent,
     children: [
       {
@@ -55,7 +55,13 @@ const routes: Routes = [
       {
         path: 'water',
         component: WaterComponent
-      },
+      }
+    ]
+  },
+  {
+    path: 'travel',
+    component: CashbackComponent,
+    children: [
       {
         path: 'flight',
         component: FlightComponent

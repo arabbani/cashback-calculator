@@ -50,7 +50,7 @@ export class FlightComponent implements OnInit {
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.calculateCashbackService.calculateCashbackForBroadband(this.flightInput).subscribe(
+    this.calculateCashbackService.calculateCashbackForFlight(this.flightInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);

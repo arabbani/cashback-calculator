@@ -5,64 +5,64 @@ export const SIDEBAR_NAV_ITEMS = [
   },
   {
     name: 'Reecharge',
-    url: '/cashback',
+    url: '/reecharge',
     icon: 'icon-screen-smartphone',
     children: [
       {
         name: 'Mobile',
-        url: '/cashback/mobile',
+        url: '/reecharge/mobile',
         icon: 'icon-screen-smartphone'
       },
       {
         name: 'DTH',
-        url: '/cashback/dth',
+        url: '/reecharge/dth',
         icon: 'icon-puzzle'
       },
       {
         name: 'Datacard',
-        url: '/cashback/datacard',
+        url: '/reecharge/datacard',
         icon: 'icon-puzzle'
       },
       {
         name: 'Broadband',
-        url: '/cashback/broadband',
+        url: '/reecharge/broadband',
         icon: 'icon-puzzle'
       },
       {
         name: 'Landline',
-        url: '/cashback/landline',
+        url: '/reecharge/landline',
         icon: 'icon-puzzle'
       },
       {
         name: 'Electricity',
-        url: '/cashback/electricity',
+        url: '/reecharge/electricity',
         icon: 'icon-puzzle'
       },
       {
         name: 'Gas',
-        url: '/cashback/gas',
+        url: '/reecharge/gas',
         icon: 'icon-puzzle'
       },
       {
         name: 'Metro',
-        url: '/cashback/metro',
+        url: '/reecharge/metro',
         icon: 'icon-puzzle'
       },
       {
         name: 'Water',
-        url: '/cashback/water',
+        url: '/reecharge/water',
         icon: 'icon-puzzle'
       }
     ]
   },
   {
     name: 'Travel',
-    url: '/cashback',
+    url: '/travel',
     icon: 'icon-screen-smartphone',
     children: [
       {
         name: 'Flight',
-        url: '/cashback/flight',
+        url: '/travel/flight',
         icon: 'icon-puzzle'
       }
     ]

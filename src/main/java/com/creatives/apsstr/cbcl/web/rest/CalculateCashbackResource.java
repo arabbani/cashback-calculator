@@ -8,6 +8,7 @@ import com.creatives.apsstr.cbcl.helper.model.CashbackInfo;
 import com.creatives.apsstr.cbcl.helper.model.DatacardInput;
 import com.creatives.apsstr.cbcl.helper.model.DthInput;
 import com.creatives.apsstr.cbcl.helper.model.ElectricityInput;
+import com.creatives.apsstr.cbcl.helper.model.FlightInput;
 import com.creatives.apsstr.cbcl.helper.model.GasInput;
 import com.creatives.apsstr.cbcl.helper.model.LandlineInput;
 import com.creatives.apsstr.cbcl.helper.model.MetroInput;
@@ -165,6 +166,19 @@ public class CalculateCashbackResource {
 		log.debug("REST request to calculate cashback for water : {} ", waterInput);
 		return calculateCashbackService.calculateCashbackReecharge(waterInput.getSubCategoryId(),
 				waterInput.getServiceProviderId(), waterInput.getDateTime(), waterInput.getExpense());
+	}
+
+	/**
+	 * POST /flight : calculate cashback for flight
+	 *
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         cashbackResults in body
+	 */
+	@PostMapping("/flight")
+	@Timed
+	public List<CashbackInfo> calculateCashbackForWater(@RequestBody FlightInput flightInput) {
+		log.debug("REST request to calculate cashback for flight : {} ", flightInput);
+		return calculateCashbackService.calculateCashbackFlight(flightInput);
 	}
 
 }

@@ -9,6 +9,7 @@ import {
   DatacardInput,
   DthInput,
   ElectricityInput,
+  FlightInput,
   GasInput,
   LandlineInput,
   MetroInput,
@@ -60,6 +61,10 @@ export class CalculateCashbackService {
 
   calculateCashbackForWater(waterInput: WaterInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/water`, waterInput);
+  }
+
+  calculateCashbackForFlight(flightInput: FlightInput): Observable<EntityResponseType> {
+    return this.calculate(`${this.restUrl}/flight`, flightInput);
   }
 
   private calculate(restUrl: string, input: any): Observable<EntityResponseType> {
