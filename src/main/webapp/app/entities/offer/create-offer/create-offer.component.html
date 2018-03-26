@@ -422,10 +422,10 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="reecharge_info_reecharge_types">Reecharge Types</label>
-                                    <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let reechargeType of offer.reechargeInfo.reechargeTypes">
-                                        {{ reechargeType.name }}
+                                    <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let reechargePlanType of offer.reechargeInfo.reechargePlanTypes">
+                                        {{ reechargePlanType.name }}
                                     </span>
-                                    <ng-select *ngIf="editMode" id="reecharge_info_reecharge_types" name="reecharge_info_reecharge_types" [(ngModel)]="offer.reechargeInfo.reechargeTypes"
+                                    <ng-select *ngIf="editMode" id="reecharge_info_reecharge_types" name="reecharge_info_reecharge_types" [(ngModel)]="offer.reechargeInfo.reechargePlanTypes"
                                         [items]="reechargePlanTypes" bindLabel="name" [multiple]="true" [closeOnSelect]="false"
                                         placeholder="Reecharge Types" appendTo="body" required>
                                         <ng-template ng-header-tmp>
@@ -447,24 +447,72 @@
                                         bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Travel Types"
                                         appendTo="body" required></ng-select>
                                 </div>
-                                <div class="form-group mb-3">
-                                    <label class="mr-5" for="travel_info_regions">Regions</label>
-                                    <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let region of offer.travelInfo.regions">
-                                        {{ region.name }}
-                                    </span>
-                                    <ng-select *ngIf="editMode" id="travel_info_regions" name="travel_info_regions" [(ngModel)]="offer.travelInfo.regions" [items]="regions"
-                                        bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Regions" appendTo="body"
-                                        required></ng-select>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="mr-5" for="travel_info_origins">Origins</label>
-                                    <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let origin of offer.travelInfo.origins">
-                                        {{ origin.name }}
-                                    </span>
-                                    <ng-select *ngIf="editMode" id="travel_info_origins" name="travel_info_origins" [(ngModel)]="offer.travelInfo.origins" [items]="regions"
-                                        bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Origins" appendTo="body"
-                                        required></ng-select>
-                                </div>
+                                <ng-container *ngIf="isFlight()">
+                                    <fieldset class="fieldset-fix mx-3">
+                                        <legend class="legend-fix">
+                                            <strong>Flight Info</strong>
+                                        </legend>
+                                        <div class="form-group mb-3">
+                                            <label class="mr-5" for="flight_info_types">Types</label>
+                                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let flightType of offer.travelInfo.flightInfo.types">
+                                                {{ flightType.name }}
+                                            </span>
+                                            <ng-select *ngIf="editMode" id="flight_info_types" name="flight_info_types" [(ngModel)]="offer.travelInfo.flightInfo.types"
+                                                [items]="regions" bindLabel="name" [multiple]="true" [closeOnSelect]="false"
+                                                placeholder="Flight Types" appendTo="body" required></ng-select>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="mr-5" for="flight_info_origins">Origins</label>
+                                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let origin of offer.travelInfo.flightInfo.origins">
+                                                {{ origin.name }}
+                                            </span>
+                                            <ng-select *ngIf="editMode" id="flight_info_origins" name="flight_info_origins" [(ngModel)]="offer.travelInfo.flightInfo.origins"
+                                                [items]="regions" bindLabel="name" [multiple]="true" [closeOnSelect]="false"
+                                                placeholder="Origins" appendTo="body" required></ng-select>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="mr-5" for="flight_info_class">Travel Classes</label>
+                                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let travelClass of offer.travelInfo.flightInfo.travelClasses">
+                                                {{ travelClass.name }}
+                                            </span>
+                                            <ng-select *ngIf="editMode" id="flight_info_class" name="flight_info_class" [(ngModel)]="offer.travelInfo.flightInfo.travelClasses"
+                                                [items]="flightClasses" bindLabel="name" [multiple]="true" [closeOnSelect]="false"
+                                                placeholder="Travel Classes" appendTo="body" required></ng-select>
+                                        </div>
+                                    </fieldset>
+                                </ng-container>
+                                <ng-container *ngIf="isBus()">
+                                    <fieldset class="fieldset-fix mx-3">
+                                        <legend class="legend-fix">
+                                            <strong>Bus Info</strong>
+                                        </legend>
+                                        <div class="form-group mb-3">
+                                            <label class="mr-5" for="fromCity">From</label>
+                                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let fromCity of offer.travelInfo.busInfo.froms">
+                                                {{ fromCity.name }}
+                                            </span>
+                                            <ng-select *ngIf="editMode" id="fromCity" name="fromCity" [(ngModel)]="offer.travelInfo.busInfo.froms" [items]="cities" bindLabel="name"
+                                                [multiple]="true" [closeOnSelect]="false" placeholder="From" appendTo="body"
+                                                required>
+                                            </ng-select>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="mr-5" for="toCity">To</label>
+                                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let toCity of offer.travelInfo.busInfo.tos">
+                                                {{ toCity.name }}
+                                            </span>
+                                            <ng-select *ngIf="editMode" id="toCity" name="toCity" [(ngModel)]="offer.travelInfo.busInfo.tos" [items]="cities" bindLabel="name"
+                                                [multiple]="true" [closeOnSelect]="false" placeholder="To" appendTo="body" required>
+                                                <!-- <ng-template ng-header-tmp>
+                                                                <div class="my-2 ml-5">
+                                                                    <button (click)="selectAllCities()" class="btn btn-sm btn-secondary">Select all</button>
+                                                                    <button (click)="unselectAllCities()" class="btn btn-sm btn-danger">Unselect all</button>
+                                                                </div>
+                                                            </ng-template> -->
+                                            </ng-select>
+                                        </div>
+                                    </fieldset>
+                                </ng-container>
                             </ng-container>
                         </ng-container>
                     </fieldset>
@@ -483,13 +531,11 @@
                             <button class="float-right" kendoGridAddCommand>Add new</button>
                         </ng-template>
                         <kendo-grid-column class="text-center" field="id" title="ID" width="50" [editable]="false"></kendo-grid-column>
-                        <kendo-grid-column class="text-center" field="extras.exact" title="Exact" editor="boolean"></kendo-grid-column>
                         <kendo-grid-column class="text-center" field="extras.minimumExpense" title="Min Expense"></kendo-grid-column>
                         <kendo-grid-column class="text-center" field="extras.maximumExpense" title="Max Expense"></kendo-grid-column>
                         <kendo-grid-column class="text-center" field="extras.minimumReturn" title="Min Return"></kendo-grid-column>
                         <kendo-grid-column class="text-center" field="extras.maximumReturn" title="Max Return"></kendo-grid-column>
                         <kendo-grid-column class="text-center" field="extras.minimumTicketRequired" title="Min Ticket Required"></kendo-grid-column>
-                        <kendo-grid-column class="text-center" field="extras.minimumRideRequired" title="Min Ride Required"></kendo-grid-column>
                         <kendo-grid-command-column title="Action" width="180">
                             <ng-template kendoGridCellTemplate let-isNew="isNew">
                                 <div class="text-center">
@@ -510,13 +556,11 @@
                                     </div>
                                 </ng-template>
                                 <kendo-grid-column class="text-center" field="id" title="ID" width="50" [editable]="false"></kendo-grid-column>
-                                <kendo-grid-column class="text-center" field="extras.exact" title="Exact" editor="boolean"></kendo-grid-column>
                                 <kendo-grid-column class="text-center" field="extras.minimumExpense" title="Min Expense"></kendo-grid-column>
                                 <kendo-grid-column class="text-center" field="extras.maximumExpense" title="Max Expense"></kendo-grid-column>
                                 <kendo-grid-column class="text-center" field="extras.minimumReturn" title="Min Return"></kendo-grid-column>
                                 <kendo-grid-column class="text-center" field="extras.maximumReturn" title="Max Return"></kendo-grid-column>
                                 <kendo-grid-column class="text-center" field="extras.minimumTicketRequired" title="Min Ticket Required"></kendo-grid-column>
-                                <kendo-grid-column class="text-center" field="extras.minimumRideRequired" title="Min Ride Required"></kendo-grid-column>
                                 <kendo-grid-command-column title="Action" width="180">
                                     <ng-template kendoGridCellTemplate let-isNew="isNew">
                                         <div class="text-center">
@@ -583,7 +627,7 @@
                                                         <ng-select *ngIf="editMode" id="mode" name="mode" [(ngModel)]="dataItem.mainReturn.mode" [items]="returnModes" bindLabel="name"
                                                             placeholder="Mode" appendTo="body" required></ng-select>
                                                     </div>
-                                                    <div class="form-group col-sm-6 col-lg-4 mb-3">
+                                                    <div class="form-group col-sm-6 col-lg-4 mb-3" *ngIf="dataItem.type.name === returnTypesEnum.CASHBACK">
                                                         <label for="channel">Channel</label>
                                                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.mainReturn.channel && !editMode">
                                                             {{ dataItem.mainReturn.channel.name }}

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Offer, OfferService } from '..';
 import { ApsstrDialogService, FilterEntitiesService } from '../../../apsstr-core-ui/apsstr-core/services';
-import { Categories, OfferTypes, ReturnTypes } from '../../../product';
+import { Categories, OfferTypes, ReturnTypes, SubCategories } from '../../../product';
 import { GRID_STATE } from '../../../shared';
 import { Affiliate, AffiliateService } from '../../affiliate';
 import { Card, CardService } from '../../card';
@@ -20,6 +20,8 @@ import { Circle, CircleService } from '../../circle';
 import { City, CityService } from '../../city';
 import { Date as DateEntity, Date, DateService } from '../../date';
 import { Day, DayService } from '../../day';
+import { FlightClass, FlightClassService } from '../../flight-class';
+import { FlightInfo } from '../../flight-info';
 import { MainReturn } from '../../main-return';
 import { Merchant, MerchantService } from '../../merchant';
 import { OfferPayment } from '../../offer-payment';
@@ -39,6 +41,7 @@ import { State, StateService } from '../../state';
 import { SubCategory, SubCategoryService } from '../../sub-category';
 import { TravelInfo } from '../../travel-info';
 import { TravelType, TravelTypeService } from '../../travel-type';
+import { BusInfo } from '../../bus-info';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -74,6 +77,7 @@ export class CreateOfferComponent implements OnInit {
   filteredCards: Card[];
   offers: Offer[];
   cardTypes: CardType[];
+  flightClasses: FlightClass[];
 
   defaultDate;
   defaultDay;
@@ -88,8 +92,6 @@ export class CreateOfferComponent implements OnInit {
   defaultTravelType;
   defaultRegion;
   defaultOrigin;
-  defaultPaymentMode;
-  defaultCards;
 
   offerCategories: Category[];
   offerStates: State[];
@@ -111,7 +113,7 @@ export class CreateOfferComponent implements OnInit {
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
     private apsstrKendoDialogService: ApsstrDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
     private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService, private router: Router,
-    private route: ActivatedRoute, private location: Location, private filterEntitiesService: FilterEntitiesService) {
+    private route: ActivatedRoute, private location: Location, private filterEntitiesService: FilterEntitiesService, private flightClassService: FlightClassService) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
     this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
   }
@@ -133,8 +135,6 @@ export class CreateOfferComponent implements OnInit {
   private initializeToEdit(): void {
     this.editMode = true;
     this.loadEntities();
-    this.defaultPaymentMode = 'Select Payment Modes';
-    this.defaultCards = 'Select Cards';
   }
 
   private loadEntities() {
@@ -159,6 +159,7 @@ export class CreateOfferComponent implements OnInit {
     this.loadCards();
     this.loadOffersForReference();
     this.loadCardTypes();
+    this.loadFlightClasses();
   }
 
   private extractRouteParams(): void {
@@ -400,6 +401,15 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
+  private loadFlightClasses(): void {
+    this.flightClassService.query().subscribe(
+      (res: HttpResponse<FlightClass[]>) => {
+        this.flightClasses = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
   private loadOffersForReference(): void {
     this.offerService.query().subscribe(
       (res: HttpResponse<Offer[]>) => {
@@ -494,13 +504,11 @@ export class CreateOfferComponent implements OnInit {
     this.offerReturnFormGroup = this.formBuilder.group({
       'id': item.id,
       'extras': this.formBuilder.group({
-        'exact': item.extras.exact,
         'minimumExpense': item.extras.minimumExpense,
         'maximumExpense': item.extras.maximumExpense,
         'minimumReturn': item.extras.minimumReturn,
         'maximumReturn': item.extras.maximumReturn,
-        'minimumTicketRequired': item.extras.minimumTicketRequired,
-        'minimumRideRequired': item.extras.minimumRideRequired
+        'minimumTicketRequired': item.extras.minimumTicketRequired
       })
     });
     return this.offerReturnFormGroup;
@@ -518,13 +526,11 @@ export class CreateOfferComponent implements OnInit {
     this.returnInfoFormGroup = this.formBuilder.group({
       'id': item.id,
       'extras': this.formBuilder.group({
-        'exact': item.extras.exact,
         'minimumExpense': item.extras.minimumExpense,
         'maximumExpense': item.extras.maximumExpense,
         'minimumReturn': item.extras.minimumReturn,
         'maximumReturn': item.extras.maximumReturn,
-        'minimumTicketRequired': item.extras.minimumTicketRequired,
-        'minimumRideRequired': item.extras.minimumRideRequired
+        'minimumTicketRequired': item.extras.minimumTicketRequired
       })
     });
     return this.returnInfoFormGroup;
@@ -618,11 +624,11 @@ export class CreateOfferComponent implements OnInit {
   }
 
   selectAllReechargeTypes(): void {
-    this.offer.reechargeInfo['reechargeTypes'] = _.cloneDeep(this.circles);
+    this.offer.reechargeInfo['reechargePlanTypes'] = _.cloneDeep(this.circles);
   }
 
   unselectAllReechargeTypes(): void {
-    this.offer.reechargeInfo['reechargeTypes'] = [];
+    this.offer.reechargeInfo['reechargePlanTypes'] = [];
   }
 
   selectAllStates(): void {
@@ -633,6 +639,32 @@ export class CreateOfferComponent implements OnInit {
   unselectAllStates(): void {
     this.offerStates = [];
     this.onStateChange(this.offerStates);
+  }
+
+  isFlight(): boolean {
+    const found = _.find(this.offer.subCategories, (subCategory) => subCategory.code === SubCategories.Flight);
+    if (found) {
+      if (!this.offer.travelInfo['flightInfo']) {
+        this.offer.travelInfo['flightInfo'] = new FlightInfo();
+      }
+      return true;
+    } else {
+      this.offer.travelInfo['flightInfo'] = undefined;
+      return false;
+    }
+  }
+
+  isBus(): boolean {
+    const found = _.find(this.offer.subCategories, (subCategory) => subCategory.code === SubCategories.Bus);
+    if (found) {
+      if (!this.offer.travelInfo['busInfo']) {
+        this.offer.travelInfo['busInfo'] = new BusInfo();
+      }
+      return true;
+    } else {
+      this.offer.travelInfo['busInfo'] = undefined;
+      return false;
+    }
   }
 
   saveOffer(): void {
