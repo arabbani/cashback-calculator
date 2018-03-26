@@ -42,7 +42,7 @@ public class DatacardInput extends CommonInput {
 	public String toString() {
 		return "DatacardInput [circleId=" + circleId + ", reechargePlaneTypeId()=" + reechargePlaneTypeId
 				+ ", getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()=" + getServiceProviderId()
-				+ ", getCityId()=" + getCityId() + ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense()
+				+ ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense()
 				+ "]";
 	}
 

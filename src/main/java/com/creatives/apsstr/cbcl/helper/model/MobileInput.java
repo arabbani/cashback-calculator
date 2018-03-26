@@ -30,7 +30,7 @@ public class MobileInput extends CommonInput {
 	public String toString() {
 		return "MobileInput [circleId=" + circleId + ", reechargePlaneTypeId()=" + reechargePlaneTypeId
 				+ ", getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()=" + getServiceProviderId()
-				+ ", getCityId()=" + getCityId() + ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense()
+				+ ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense()
 				+ "]";
 	}
 

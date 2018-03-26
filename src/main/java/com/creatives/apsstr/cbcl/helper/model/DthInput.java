@@ -10,7 +10,7 @@ public class DthInput extends CommonInput {
 	@Override
 	public String toString() {
 		return "DthInput [getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()="
-				+ getServiceProviderId() + ", getCityId()=" + getCityId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
+				+ getServiceProviderId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
 				+ getExpense() + "]";
 	}
 

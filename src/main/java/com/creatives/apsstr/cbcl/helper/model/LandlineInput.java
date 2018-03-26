@@ -10,7 +10,7 @@ public class LandlineInput extends CommonInput {
 	@Override
 	public String toString() {
 		return "LandlineInput [getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()="
-				+ getServiceProviderId() + ", getCityId()=" + getCityId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
+				+ getServiceProviderId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
 				+ getExpense() + "]";
 	}
 

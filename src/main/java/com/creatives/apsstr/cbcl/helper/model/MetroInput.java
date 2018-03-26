@@ -10,7 +10,7 @@ public class MetroInput extends CommonInput {
     @Override
     public String toString() {
         return "MetroInput [getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()="
-                + getServiceProviderId() + ", getCityId()=" + getCityId() + ", getDateTime()=" + getDateTime()
+                + getServiceProviderId() + ", getDateTime()=" + getDateTime()
                 + ", getExpense()=" + getExpense() + "]";
     }
 

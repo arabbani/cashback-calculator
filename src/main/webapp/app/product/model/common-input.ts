@@ -4,7 +4,6 @@ export class CommonInput {
 
     public subCategoryId: number;
     public serviceProviderId: number;
-    public cityId?: number;
     public dateTime: any;
     public expense: Expense;
 

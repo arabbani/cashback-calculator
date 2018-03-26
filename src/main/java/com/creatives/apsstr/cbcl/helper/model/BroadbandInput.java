@@ -10,7 +10,7 @@ public class BroadbandInput extends CommonInput {
 	@Override
 	public String toString() {
 		return "BroadbandInput [getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()="
-				+ getServiceProviderId() + ", getCityId()=" + getCityId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
+				+ getServiceProviderId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
 				+ getExpense() + "]";
 	}
 

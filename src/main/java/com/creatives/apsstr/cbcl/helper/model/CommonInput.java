@@ -9,7 +9,6 @@ public class CommonInput {
 
 	private Long subCategoryId;
 	private Long serviceProviderId;
-	private Long cityId;
 	private String dateTime;
 	private Expense expense;
 
@@ -27,14 +26,6 @@ public class CommonInput {
 
 	public void setServiceProviderId(Long serviceProviderId) {
 		this.serviceProviderId = serviceProviderId;
-	}
-
-	public Long getCityId() {
-		return cityId;
-	}
-
-	public void setCityId(Long cityId) {
-		this.cityId = cityId;
 	}
 
 	public String getDateTime() {

@@ -10,7 +10,7 @@ public class WaterInput extends CommonInput {
     @Override
     public String toString() {
         return "WaterInput [getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()="
-                + getServiceProviderId() + ", getCityId()=" + getCityId() + ", getDateTime()=" + getDateTime()
+                + getServiceProviderId() + ", getDateTime()=" + getDateTime()
                 + ", getExpense()=" + getExpense() + "]";
     }
 

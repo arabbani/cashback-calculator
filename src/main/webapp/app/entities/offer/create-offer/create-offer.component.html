@@ -311,7 +311,7 @@
                             {{ city.name }}
                         </span>
                         <ng-select *ngIf="editMode" id="cities" name="cities" [(ngModel)]="offer.cities" [items]="filteredCities" bindLabel="name"
-                            [multiple]="true" [closeOnSelect]="false" placeholder="Cities" appendTo="body" required>
+                            [multiple]="true" [closeOnSelect]="false" placeholder="Cities" appendTo="body">
                             <ng-template ng-header-tmp>
                                 <div class="my-2 ml-5">
                                     <button (click)="selectAllCities()" class="btn btn-sm btn-secondary">Select all</button>
