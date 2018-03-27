@@ -88,7 +88,7 @@ export class MobileComponent implements OnInit {
           crawlFromServer = true;
         } else {
           crawlFromServer = false;
-          providers = this.prepaidProviders;
+          providers = _.cloneDeep(this.prepaidProviders);
         }
         break;
       case SubCategories.PostpaidMobile:
@@ -96,7 +96,7 @@ export class MobileComponent implements OnInit {
           crawlFromServer = true;
         } else {
           crawlFromServer = false;
-          providers = this.postpaidProviders;
+          providers = _.cloneDeep(this.postpaidProviders);
         }
         break;
       default:

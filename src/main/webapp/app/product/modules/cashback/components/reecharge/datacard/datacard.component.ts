@@ -89,7 +89,7 @@ export class DatacardComponent implements OnInit {
           crawlFromServer = true;
         } else {
           crawlFromServer = false;
-          providers = this.prepaidProviders;
+          providers = _.cloneDeep(this.prepaidProviders);
         }
         break;
       case SubCategories.PostpaidDatacard:
@@ -97,7 +97,7 @@ export class DatacardComponent implements OnInit {
           crawlFromServer = true;
         } else {
           crawlFromServer = false;
-          providers = this.postpaidProviders;
+          providers = _.cloneDeep(this.postpaidProviders);
         }
         break;
       default:
