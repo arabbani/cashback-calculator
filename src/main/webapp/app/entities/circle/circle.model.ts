@@ -1,6 +1,4 @@
-import { BaseEntity } from './../../shared';
-
-export class Circle implements BaseEntity {
+export class Circle {
     constructor(
         public id?: number,
         public name?: string,

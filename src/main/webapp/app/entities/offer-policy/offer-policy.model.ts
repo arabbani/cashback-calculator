@@ -1,6 +1,4 @@
-import { BaseEntity } from './../../shared';
-
-export class OfferPolicy implements BaseEntity {
+export class OfferPolicy {
     constructor(
         public id?: number,
         public name?: string,

@@ -1,6 +1,4 @@
-import { BaseEntity } from './../../shared';
-
-export class ReturnMode implements BaseEntity {
+export class ReturnMode {
     constructor(
         public id?: number,
         public name?: string,

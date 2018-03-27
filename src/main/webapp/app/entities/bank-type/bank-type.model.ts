@@ -1,6 +1,4 @@
-import { BaseEntity } from './../../shared';
-
-export class BankType implements BaseEntity {
+export class BankType {
     constructor(
         public id?: number,
         public name?: string,

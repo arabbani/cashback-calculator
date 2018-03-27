@@ -5,7 +5,7 @@ package com.creatives.apsstr.cbcl.helper.model;
  * 
  *         Calculate cashback input model for FLIGHT
  */
-public class FlightInput extends CommonInput {
+public class FlightInput extends CommonTravelInput {
 
     private Long travelTypeId;
     private Long flightClassId;

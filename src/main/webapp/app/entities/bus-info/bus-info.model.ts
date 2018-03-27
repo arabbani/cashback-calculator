@@ -1,10 +1,10 @@
-import { BaseEntity } from './../../shared';
+import { City } from '..';
 
-export class BusInfo implements BaseEntity {
+export class BusInfo {
     constructor(
         public id?: number,
-        public froms?: BaseEntity[],
-        public tos?: BaseEntity[],
+        public froms?: City[],
+        public tos?: City[],
     ) {
     }
 }

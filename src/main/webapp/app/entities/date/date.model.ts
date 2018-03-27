@@ -1,6 +1,4 @@
-import { BaseEntity } from './../../shared';
-
-export class Date implements BaseEntity {
+export class Date {
     constructor(
         public id?: number,
         public date?: number,

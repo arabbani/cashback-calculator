@@ -5,7 +5,7 @@ package com.creatives.apsstr.cbcl.helper.model;
  * 
  *         Calculate cashback input model for ELECTRICITY
  */
-public class ElectricityInput extends CommonInput {
+public class ElectricityInput extends CommonReechargeInput {
 
 	@Override
 	public String toString() {

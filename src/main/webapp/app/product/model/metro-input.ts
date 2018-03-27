@@ -1,6 +1,6 @@
-import { CommonInput } from '.';
+import { CommonReechargeInput } from './common-reecharge-input';
 
-export class MetroInput extends CommonInput {
+export class MetroInput extends CommonReechargeInput {
     constructor() {
         super();
     }

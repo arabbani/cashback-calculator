@@ -1,6 +1,4 @@
-import { BaseEntity } from './../../shared';
-
-export class ReechargePlanType implements BaseEntity {
+export class ReechargePlanType {
     constructor(
         public id?: number,
         public name?: string,

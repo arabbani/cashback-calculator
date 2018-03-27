@@ -1,13 +1,13 @@
-import { BaseEntity } from './../../shared';
+import { Affiliate } from '..';
 
-export class AffiliateCredential implements BaseEntity {
+export class AffiliateCredential {
     constructor(
         public id?: number,
         public trackingId?: string,
         public token?: string,
         public apiKey?: string,
         public active?: boolean,
-        public affiliate?: BaseEntity,
+        public affiliate?: Affiliate,
     ) {
         this.active = false;
     }

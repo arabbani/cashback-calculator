@@ -1,11 +1,11 @@
-import { BaseEntity } from './../../shared';
+import { Offer, ReturnExtras, ReturnInfo } from '..';
 
-export class OfferReturn implements BaseEntity {
+export class OfferReturn {
     constructor(
         public id?: number,
-        public extras?: BaseEntity,
-        public returnInfos?: BaseEntity[],
-        public offer?: BaseEntity,
+        public extras?: ReturnExtras,
+        public returnInfos?: ReturnInfo[],
+        public offer?: Offer,
     ) {
     }
 }

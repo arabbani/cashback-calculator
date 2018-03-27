@@ -1,6 +1,6 @@
-import { CommonInput } from '.';
+import { CommonTravelInput } from './common-travel-input';
 
-export class FlightInput extends CommonInput {
+export class FlightInput extends CommonTravelInput {
 
     public travelTypeId: number;
     public flightClassId: number;

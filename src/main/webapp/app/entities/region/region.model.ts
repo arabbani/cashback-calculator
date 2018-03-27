@@ -1,6 +1,4 @@
-import { BaseEntity } from './../../shared';
-
-export class Region implements BaseEntity {
+export class Region {
     constructor(
         public id?: number,
         public name?: string,

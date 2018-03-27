@@ -1,9 +1,9 @@
-import { BaseEntity } from './../../shared';
+import { Brand } from '..';
 
-export class ElectronicsInfo implements BaseEntity {
+export class ElectronicsInfo {
     constructor(
         public id?: number,
-        public brands?: BaseEntity[],
+        public brands?: Brand[],
     ) {
     }
 }

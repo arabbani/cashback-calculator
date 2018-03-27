@@ -1,9 +1,9 @@
-import { BaseEntity } from './../../shared';
+import { Card } from '..';
 
-export class OfferPayment implements BaseEntity {
+export class OfferPayment {
     constructor(
         public id?: number,
-        public cards?: BaseEntity[],
+        public cards?: Card[],
     ) {
     }
 }

@@ -1,12 +1,13 @@
-import { BaseEntity } from './../../shared';
+import { Offer, State } from '..';
+import { UserInfo } from '../user-info';
 
-export class City implements BaseEntity {
+export class City {
     constructor(
         public id?: number,
         public name?: string,
-        public users?: BaseEntity[],
-        public state?: BaseEntity,
-        public offers?: BaseEntity[],
+        public users?: UserInfo[],
+        public state?: State,
+        public offers?: Offer[],
     ) {
     }
 }

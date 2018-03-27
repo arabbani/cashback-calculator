@@ -5,7 +5,7 @@ package com.creatives.apsstr.cbcl.helper.model;
  * 
  *         Calculate cashback input model for MOBILE
  */
-public class MobileInput extends CommonInput {
+public class MobileInput extends CommonReechargeInput {
 
 	private Long circleId;
 	private Long reechargePlaneTypeId;

@@ -5,7 +5,7 @@ package com.creatives.apsstr.cbcl.helper.model;
  * 
  *         Calculate cashback input model for water
  */
-public class WaterInput extends CommonInput {
+public class WaterInput extends CommonReechargeInput {
 
     @Override
     public String toString() {

@@ -1,6 +1,4 @@
-import { BaseEntity } from './../../shared';
-
-export class ReturnExtras implements BaseEntity {
+export class ReturnExtras {
     constructor(
         public id?: number,
         public minimumExpense?: number,

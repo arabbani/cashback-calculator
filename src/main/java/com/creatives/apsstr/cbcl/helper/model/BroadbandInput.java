@@ -5,7 +5,7 @@ package com.creatives.apsstr.cbcl.helper.model;
  * 
  *         Calculate cashback input model for BROADBAND
  */
-public class BroadbandInput extends CommonInput {
+public class BroadbandInput extends CommonReechargeInput {
 
 	@Override
 	public String toString() {

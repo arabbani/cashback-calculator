@@ -5,6 +5,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { BlockUIModule } from 'ng-block-ui';
 import { TooltipModule } from 'ngx-bootstrap';
 
+import { ComponentsModule } from '../components';
 import { ApsstrSharedModule } from '../../../apsstr-core-ui';
 import { CashbackRoutingModule } from './cashback-routing.module';
 import {
@@ -30,7 +31,8 @@ import {
     ApsstrSharedModule,
     BlockUIModule,
     NgSelectModule,
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    ComponentsModule
   ],
   declarations: [
     CashbackComponent, MobileComponent, DthComponent, DatacardComponent,

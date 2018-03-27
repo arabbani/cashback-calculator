@@ -1,11 +1,12 @@
-import { BaseEntity } from './../../shared';
+import { Region } from '..';
+import { FlightClass } from '../flight-class';
 
-export class FlightInfo implements BaseEntity {
+export class FlightInfo {
     constructor(
         public id?: number,
-        public types?: BaseEntity[],
-        public origins?: BaseEntity[],
-        public travelClasses?: BaseEntity[],
+        public types?: Region[],
+        public origins?: Region[],
+        public travelClasses?: FlightClass[],
     ) {
     }
 }

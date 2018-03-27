@@ -232,7 +232,6 @@ public class CashbackCalculatorAlgoVersionTwo {
 	public List<CashbackInfo> calculate(List<Offer> offers, Expense expense) {
 		cashbackInfos = new ArrayList<>();
 		offers.forEach(offer -> {
-			log.debug("####### ", offer);
 			if (!alreadyCalculated(offer.getId(), true)) {
 				OfferBenefit ob = processOffer(offer, expense);
 				if (ob.getCompoundBenefits().size() > 0) {

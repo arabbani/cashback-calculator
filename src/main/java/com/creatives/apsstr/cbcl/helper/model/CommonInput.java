@@ -8,7 +8,6 @@ package com.creatives.apsstr.cbcl.helper.model;
 public class CommonInput {
 
 	private Long subCategoryId;
-	private Long serviceProviderId;
 	private String dateTime;
 	private Expense expense;
 
@@ -18,14 +17,6 @@ public class CommonInput {
 
 	public void setSubCategoryId(Long subCategoryId) {
 		this.subCategoryId = subCategoryId;
-	}
-
-	public Long getServiceProviderId() {
-		return serviceProviderId;
-	}
-
-	public void setServiceProviderId(Long serviceProviderId) {
-		this.serviceProviderId = serviceProviderId;
 	}
 
 	public String getDateTime() {

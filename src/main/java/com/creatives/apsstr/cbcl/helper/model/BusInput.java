@@ -5,7 +5,7 @@ package com.creatives.apsstr.cbcl.helper.model;
  * 
  *         Calculate cashback input model for BUS
  */
-public class BusInput extends CommonInput {
+public class BusInput extends CommonTravelInput {
 
     private Long from;
     private Long to;

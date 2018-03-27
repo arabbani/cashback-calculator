@@ -1,4 +1,5 @@
 import { BaseEntity } from './../../shared';
+import { SubCategory, Offer } from '..';
 
 export class Merchant implements BaseEntity {
     constructor(
@@ -6,8 +7,8 @@ export class Merchant implements BaseEntity {
         public name?: string,
         public url?: string,
         public active?: boolean,
-        public offers?: BaseEntity[],
-        public subCategories?: BaseEntity[],
+        public offers?: Offer[],
+        public subCategories?: SubCategory[],
     ) {
         this.active = false;
     }

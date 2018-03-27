@@ -5,7 +5,7 @@ package com.creatives.apsstr.cbcl.helper.model;
  * 
  *         Calculate cashback input model for DATACARD
  */
-public class DatacardInput extends CommonInput {
+public class DatacardInput extends CommonReechargeInput {
 
 	private Long circleId;
 	private Long reechargePlaneTypeId;

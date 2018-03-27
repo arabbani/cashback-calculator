@@ -1,0 +1,58 @@
+<apsstr-card accent="primary">
+    <apsstr-card-body>
+        <div class="cashback-info-card">
+            <div [hidden]="showDescription">
+                <div class="image">
+                    <a [href]="cashbackInfo.offer.merchant.url" target="_blank">
+                        <img [src]="constructImageUrl(cashbackInfo.offer.merchant.name)" [alt]="cashbackInfo.offer.merchant.name" [title]="cashbackInfo.offer.merchant.name">
+                    </a>
+                </div>
+                <div>
+                    <h6>{{ cashbackInfo.offer.name }}</h6>
+                    <p class="m-0">100% money back guarantee.</p>
+                </div>
+            </div>
+            <div [hidden]="!showDescription">
+                <ul class="m-0">
+                    <li *ngFor="let description of descriponList">
+                        {{ description }}
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <button *ngIf="!showDescription" type="button" class="btn btn-link py-0" (click)="toggleDescription()">
+                    <i class="fa fa-angle-right"></i>&nbsp;Show Description</button>
+                <button *ngIf="showDescription" type="button" class="btn btn-link py-0" (click)="toggleDescription()">
+                    <i class="fa fa-angle-right"></i>&nbsp;Hide Description</button>
+            </div>
+        </div>
+    </apsstr-card-body>
+    <apsstr-card-footer class="p-0 border-0">
+        <ng-container *ngIf="isCoupon(); else deal">
+            <div class="row m-0">
+                <div class="coupon-code col-12 col-sm-8 pt-1 text-center">
+                    <span class="font-weight-bold" *ngIf="!showCouponCode; else couponCode">
+                        REAVEAL CODE
+                    </span>
+                    <ng-template #couponCode>
+                        {{ cashbackInfo.offer.code }}
+                    </ng-template>
+                </div>
+                <div class="col-12 col-sm-4 p-0">
+                    <a [href]="cashbackInfo.offer.url || cashbackInfo.offer.merchant.url" target="_blank" rel="noopener noreferrer">
+                        <button type="button" class="btn btn-primary w-100" (click)="toggleCouponCode()" ngxClipboard [cbContent]="cashbackInfo.offer.code"
+                            (cbOnSuccess)="onCodeCopy()">
+                            <i class="fa fa-{{ copyCodeButtonIcon }}"></i>&nbsp; {{ copyCodeButtonText }}
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #deal>
+            <a [href]="cashbackInfo.offer.merchant.url" target="_blank">
+                <button type="button" class="btn btn-primary w-100">
+                    Get Deal</button>
+            </a>
+        </ng-template>
+    </apsstr-card-footer>
+</apsstr-card>

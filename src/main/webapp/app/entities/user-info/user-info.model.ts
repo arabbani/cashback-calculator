@@ -1,12 +1,12 @@
-import { BaseEntity } from './../../shared';
+import { Card, City, Merchant, OperatingSystem } from '..';
 
-export class UserInfo implements BaseEntity {
+export class UserInfo {
     constructor(
         public id?: number,
-        public city?: BaseEntity,
-        public merchants?: BaseEntity[],
-        public cards?: BaseEntity[],
-        public operatingSystems?: BaseEntity[],
+        public city?: City,
+        public merchants?: Merchant[],
+        public cards?: Card[],
+        public operatingSystems?: OperatingSystem[],
     ) {
     }
 }

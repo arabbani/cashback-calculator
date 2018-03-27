@@ -1,0 +1,7 @@
+<div class="mb-4">
+  <!-- <apsstr-offer-filter [cashbackInfos]="cashbackInfos"></apsstr-offer-filter> -->
+  <apsstr-cashback-info-tabs *ngIf="filteredCashbackInfos.size > 0; else offerNotFound" [cashbackInfos]="filteredCashbackInfos"></apsstr-cashback-info-tabs>
+  <ng-template #offerNotFound>
+      <apsstr-offer-not-found></apsstr-offer-not-found>
+  </ng-template>
+</div>

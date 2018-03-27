@@ -1,6 +1,4 @@
-import { BaseEntity } from './../../shared';
-
-export class FlightClass implements BaseEntity {
+export class FlightClass {
     constructor(
         public id?: number,
         public name?: string,

@@ -1,6 +1,21 @@
-import { BaseEntity } from './../../shared';
+import {
+    Affiliate,
+    City,
+    Date,
+    Day,
+    Merchant,
+    OfferPolicy,
+    OfferReturn,
+    OfferType,
+    OperatingSystem,
+    ReechargeInfo,
+    ServiceProvider,
+    SubCategory,
+    TravelInfo,
+} from '..';
+import { ElectronicsInfo } from '../electronics-info';
 
-export class Offer implements BaseEntity {
+export class Offer {
     constructor(
         public id?: number,
         public name?: string,
@@ -22,20 +37,20 @@ export class Offer implements BaseEntity {
         public dummy?: boolean,
         public apsstrExclusive?: boolean,
         public url?: string,
-        public travelInfo?: BaseEntity,
-        public reechargeInfo?: BaseEntity,
-        public electronicsInfo?: BaseEntity,
-        public offerReturns?: BaseEntity[],
-        public policy?: BaseEntity,
-        public operatingSystems?: BaseEntity[],
-        public cities?: BaseEntity[],
-        public subCategories?: BaseEntity[],
-        public serviceProviders?: BaseEntity[],
-        public activeDates?: BaseEntity[],
-        public activeDays?: BaseEntity[],
-        public affiliate?: BaseEntity,
-        public merchant?: BaseEntity,
-        public type?: BaseEntity,
+        public travelInfo?: TravelInfo,
+        public reechargeInfo?: ReechargeInfo,
+        public electronicsInfo?: ElectronicsInfo,
+        public offerReturns?: OfferReturn[],
+        public policy?: OfferPolicy,
+        public operatingSystems?: OperatingSystem[],
+        public cities?: City[],
+        public subCategories?: SubCategory[],
+        public serviceProviders?: ServiceProvider[],
+        public activeDates?: Date[],
+        public activeDays?: Day[],
+        public affiliate?: Affiliate,
+        public merchant?: Merchant,
+        public type?: OfferType,
     ) {
         this.newUserOnly = false;
         this.appOnly = false;
