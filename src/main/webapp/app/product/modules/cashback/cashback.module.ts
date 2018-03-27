@@ -19,6 +19,7 @@ import {
   MobileComponent,
   WaterComponent,
 } from './components';
+import { TooltipModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import {
     FormsModule,
     ApsstrSharedModule,
     BlockUIModule,
-    NgSelectModule
+    NgSelectModule,
+    TooltipModule.forRoot()
   ],
   declarations: [
     CashbackComponent, MobileComponent, DthComponent, DatacardComponent,

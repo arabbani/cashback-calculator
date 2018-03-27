@@ -49,7 +49,6 @@ export class MobileComponent implements OnInit {
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.mobileInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
     this.calculateCashbackService.calculateCashbackForMobile(this.mobileInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
@@ -61,16 +60,7 @@ export class MobileComponent implements OnInit {
 
   private getSubCategoryIdFromServiceProvider(): number {
     let sId: number = undefined;
-    let providers = undefined;
-    switch (this.subCategoryCode) {
-      case SubCategories.PrepaidMobile:
-        providers = _.cloneDeep(this.prepaidProviders);
-        break;
-      case SubCategories.PostpaidMobile:
-        providers = _.cloneDeep(this.postpaidProviders);
-        break;
-    }
-    _.forEach(providers, (serviceProvider) => {
+    _.forEach(this.serviceProviders, (serviceProvider) => {
       let cc = undefined;
       cc = _.forEach(serviceProvider.subCategories, (subCategory) => {
         if (subCategory.code === this.subCategoryCode) {
@@ -125,11 +115,13 @@ export class MobileComponent implements OnInit {
               break;
           }
           this.serviceProviders = providers;
+          this.mobileInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
     } else {
       this.serviceProviders = providers;
+      this.mobileInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
     }
   }
 

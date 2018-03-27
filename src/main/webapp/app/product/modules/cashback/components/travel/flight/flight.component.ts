@@ -44,7 +44,6 @@ export class FlightComponent implements OnInit {
     this.getFlightClasses();
     this.getRegions();
     this.regionsEnum = Regions;
-    this.flightInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
   }
 
   calculate(): void {
@@ -84,6 +83,7 @@ export class FlightComponent implements OnInit {
     this.serviceProviderService.bySubCategoryCode(subCategoryCode).subscribe(
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
+        this.flightInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );

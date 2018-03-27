@@ -27,7 +27,6 @@ export class GasComponent implements OnInit {
   ngOnInit() {
     this.initializeSubCategory();
     this.getServiceProvidersBySubCategoryCode(this.subCategoryCode);
-    this.gasInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
   }
 
   calculate(): void {
@@ -67,6 +66,7 @@ export class GasComponent implements OnInit {
     this.serviceProviderService.bySubCategoryCode(subCategoryCode).subscribe(
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
+        this.gasInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );

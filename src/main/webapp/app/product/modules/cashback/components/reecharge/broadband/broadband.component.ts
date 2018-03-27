@@ -27,7 +27,6 @@ export class BroadbandComponent implements OnInit {
   ngOnInit() {
     this.initializeSubCategory();
     this.getServiceProvidersBySubCategoryCode(this.subCategoryCode);
-    this.broadbandInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
   }
 
   calculate(): void {
@@ -67,6 +66,7 @@ export class BroadbandComponent implements OnInit {
     this.serviceProviderService.bySubCategoryCode(subCategoryCode).subscribe(
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
+        this.broadbandInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );

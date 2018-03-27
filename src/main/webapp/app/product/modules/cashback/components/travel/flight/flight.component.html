@@ -5,43 +5,60 @@
   </apsstr-card-header>
   <apsstr-card-body>
     <form role="form" #flightInputForm="ngForm" novalidate>
-      <div class="form-group mb-4">
-        <label class="radio-inline" for="{{ 'travelType_' + travelType.name }}" *ngFor="let travelType of travelTypes">
-          <input type="radio" id="{{ 'travelType_' + travelType.name }}" name="travelType" [(ngModel)]="flightInput.travelTypeId" value="{{ travelType.id }}">
-          <span class="mr-2 ml-1">
-            {{ travelType.name | uppercase }}
-          </span>
-        </label>
+      <div class="form-group row mb-4">
+        <div class="col-md-12 col-form-label text-center">
+          <div class="form-check form-check-inline mr-3" id="travelType" *ngFor="let travelType of travelTypes">
+            <input class="form-check-input" type="radio" name="travelType" id="{{ 'travelType_' + travelType.name }}" [(ngModel)]="flightInput.travelTypeId"
+              value="{{ travelType.id }}" required>
+            <label class="form-check-label" for="{{ 'travelType_' + travelType.name }}">
+              {{ travelType.name | uppercase }}
+            </label>
+          </div>
+        </div>
       </div>
-      <div class="form-group mb-4">
-        <label class="radio-inline" for="from" *ngFor="let region of regions">
-          <input type="radio" id="from" name="from" [(ngModel)]="flightInput.flightOriginId" value="{{ region.id }}">
-          <span class="mr-2 ml-1">
-            <ng-container [ngSwitch]="region.name">
-              <ng-container *ngSwitchCase="regionsEnum.Domestic">
-                India
-              </ng-container>
-              <ng-container *ngSwitchCase="regionsEnum.International">
-                Outside India
-              </ng-container>
-            </ng-container>
-          </span>
+      <div class="form-group row mb-4">
+        <label class="col-12 col-form-label" for="from">From :
+          <i class="fa fa-info-circle ml-3" aria-hidden="true" tooltip="If your departure city is inside India, then select India. Otherwise select International"
+            placement="auto"></i>
         </label>
+        <div class="col-12 col-form-label text-center">
+          <div class="form-check form-check-inline mr-3" id="from" *ngFor="let region of regions">
+            <input class="form-check-input" type="radio" name="from" id="{{ 'from_' + region.name }}" [(ngModel)]="flightInput.flightOriginId"
+              value="{{ region.id }}" required>
+            <label class="form-check-label" for="{{ 'from_' + region.name }}">
+              <ng-container [ngSwitch]="region.name">
+                <ng-container *ngSwitchCase="regionsEnum.Domestic">
+                  India
+                </ng-container>
+                <ng-container *ngSwitchCase="regionsEnum.International">
+                  Outside India
+                </ng-container>
+              </ng-container>
+            </label>
+          </div>
+        </div>
       </div>
-      <div class="form-group mb-4">
-        <label class="radio-inline" for="to" *ngFor="let region of regions">
-          <input type="radio" id="to" name="to" [(ngModel)]="flightInput.flightTypeId" value="{{ region.id }}">
-          <span class="mr-2 ml-1">
-            <ng-container [ngSwitch]="region.name">
-              <ng-container *ngSwitchCase="regionsEnum.Domestic">
-                India
-              </ng-container>
-              <ng-container *ngSwitchCase="regionsEnum.International">
-                Outside India
-              </ng-container>
-            </ng-container>
-          </span>
+      <div class="form-group row mb-4">
+        <label class="col-12 col-form-label" for="to">To :
+          <i class="fa fa-info-circle ml-3" aria-hidden="true" tooltip="If your destination city is inside India, then select India. Otherwise select International"
+            placement="auto"></i>
         </label>
+        <div class="col-12 col-form-label text-center">
+          <div class="form-check form-check-inline mr-3" id="to" *ngFor="let region of regions">
+            <input class="form-check-input" type="radio" name="to" id="{{ 'to_' + region.name }}" [(ngModel)]="flightInput.flightTypeId"
+              value="{{ region.id }}" required>
+            <label class="form-check-label" for="{{ 'to_' + region.name }}">
+              <ng-container [ngSwitch]="region.name">
+                <ng-container *ngSwitchCase="regionsEnum.Domestic">
+                  India
+                </ng-container>
+                <ng-container *ngSwitchCase="regionsEnum.International">
+                  Outside India
+                </ng-container>
+              </ng-container>
+            </label>
+          </div>
+        </div>
       </div>
       <div class="form-group mb-4">
         <ng-select name="flightClass" [items]="flightClasses" bindLabel="name" bindValue="id" [(ngModel)]="flightInput.flightClassId"

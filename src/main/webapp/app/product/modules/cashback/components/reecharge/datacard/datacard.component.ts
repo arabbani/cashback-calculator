@@ -50,7 +50,6 @@ export class DatacardComponent implements OnInit {
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.datacardInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
     this.calculateCashbackService.calculateCashbackForDatacard(this.datacardInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
@@ -62,16 +61,7 @@ export class DatacardComponent implements OnInit {
 
   private getSubCategoryIdFromServiceProvider(): number {
     let sId: number = undefined;
-    let providers = undefined;
-    switch (this.subCategoryCode) {
-      case SubCategories.PrepaidDatacard:
-        providers = _.cloneDeep(this.prepaidProviders);
-        break;
-      case SubCategories.PostpaidDatacard:
-        providers = _.cloneDeep(this.postpaidProviders);
-        break;
-    }
-    _.forEach(providers, (serviceProvider) => {
+    _.forEach(this.serviceProviders, (serviceProvider) => {
       let cc = undefined;
       cc = _.forEach(serviceProvider.subCategories, (subCategory) => {
         if (subCategory.code === this.subCategoryCode) {
@@ -126,11 +116,13 @@ export class DatacardComponent implements OnInit {
               break;
           }
           this.serviceProviders = providers;
+          this.datacardInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
     } else {
       this.serviceProviders = providers;
+      this.datacardInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
     }
   }
 
@@ -165,7 +157,6 @@ export class DatacardComponent implements OnInit {
     this.reechargePlanTypeService.getDataPlans().subscribe(
       (res: HttpResponse<ReechargePlanType[]>) => {
         this.reechargePlanTypes = res.body;
-        console.log(this.reechargePlanTypes);
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
