@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import {
   BroadbandComponent,
+  BusComponent,
   CashbackComponent,
   DatacardComponent,
   DthComponent,
@@ -65,6 +66,10 @@ const routes: Routes = [
       {
         path: 'flight',
         component: FlightComponent
+      },
+      {
+        path: 'bus',
+        component: BusComponent
       }
     ]
   }

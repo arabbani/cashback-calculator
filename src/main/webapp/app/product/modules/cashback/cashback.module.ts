@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BlockUIModule } from 'ng-block-ui';
+import { TooltipModule } from 'ngx-bootstrap';
 
 import { ApsstrSharedModule } from '../../../apsstr-core-ui';
 import { CashbackRoutingModule } from './cashback-routing.module';
 import {
   BroadbandComponent,
+  BusComponent,
   CashbackComponent,
   DatacardComponent,
   DthComponent,
@@ -19,7 +21,6 @@ import {
   MobileComponent,
   WaterComponent,
 } from './components';
-import { TooltipModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -34,7 +35,7 @@ import { TooltipModule } from 'ngx-bootstrap';
   declarations: [
     CashbackComponent, MobileComponent, DthComponent, DatacardComponent,
     LandlineComponent, ElectricityComponent, GasComponent, BroadbandComponent,
-    WaterComponent, MetroComponent, FlightComponent
+    WaterComponent, MetroComponent, FlightComponent, BusComponent
   ]
 })
 export class CashbackModule { }

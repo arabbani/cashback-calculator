@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import {
   BroadbandInput,
+  BusInput,
   CashbackInfo,
   DatacardInput,
   DthInput,
@@ -65,6 +66,10 @@ export class CalculateCashbackService {
 
   calculateCashbackForFlight(flightInput: FlightInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/flight`, flightInput);
+  }
+
+  calculateCashbackForBus(busInput: BusInput): Observable<EntityResponseType> {
+    return this.calculate(`${this.restUrl}/bus`, busInput);
   }
 
   private calculate(restUrl: string, input: any): Observable<EntityResponseType> {

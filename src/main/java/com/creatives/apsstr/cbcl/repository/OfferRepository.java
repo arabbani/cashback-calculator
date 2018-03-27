@@ -40,4 +40,9 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
                         @Param("flightClassId") Long flightClassId, @Param("flightTypeId") Long flightTypeId,
                         @Param("flightOriginId") Long flightOriginId, @Param("travelTypeId") Long travelTypeId);
 
+        @Query(OfferRepositoryConstants.CASHBACK_TRAVEL_BUS)
+        List<Offer> cashbackBus(@Param("active") boolean active, @Param("dummy") boolean dummy,
+                        @Param("subCategoryId") Long subCategoryId, @Param("dateTime") String dateTime,
+                        @Param("from") Long from, @Param("to") Long to);
+
 }

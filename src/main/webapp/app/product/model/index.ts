@@ -16,3 +16,4 @@ export * from './broadband-input';
 export * from './water-input';
 export * from './metro-input';
 export * from './flight-input';
+export * from './bus-input';

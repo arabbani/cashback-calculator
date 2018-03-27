@@ -64,24 +64,12 @@ export const SIDEBAR_NAV_ITEMS = [
         name: 'Flight',
         url: '/travel/flight',
         icon: 'icon-puzzle'
+      },
+      {
+        name: 'Bus',
+        url: '/travel/bus',
+        icon: 'icon-puzzle'
       }
     ]
   }
-  // {
-  //   name: 'Travel',
-  //   url: '/',
-  //   icon: 'icon-cursor',
-  //   children: [
-  //     {
-  //       name: 'Flight',
-  //       url: '/',
-  //       icon: 'icon-cursor'
-  //     },
-  //     {
-  //       name: 'Hotel',
-  //       url: '/',
-  //       icon: 'icon-cursor'
-  //     }
-  //   ]
-  // }
 ];

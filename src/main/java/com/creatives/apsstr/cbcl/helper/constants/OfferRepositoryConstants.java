@@ -44,7 +44,11 @@ public class OfferRepositoryConstants {
 
 	public static final String FLIGHT_INFO_ORIGINS = " left join fetch flightInfo.origins flightInfoOrigins";
 
-	public static final String FLIGHT_INFO_CLASS = " left join fetch flightInfo.travelClasses flightInfoClass";
+	public static final String FLIGHT_INFO_CLASS = " left join fetch flightInfo.travelClasses flightInfoClasses";
+
+	public static final String BUS_INFO_FROMS = " left join fetch busInfo.froms busInfoFroms";
+
+	public static final String BUS_INFO_TOS = " left join fetch busInfo.tos busInfoTos";
 
 	/*
 	 * ####################### CHILD RELATIONNS BY CATEGORY #######################
@@ -53,12 +57,14 @@ public class OfferRepositoryConstants {
 	public static final String REECHERGE_INFO_CHILDS = REECHERGE_INFO + REECHERGE_INFO_CIRCLES
 			+ REECHERGE_INFO_REECHARGE_TYPES;
 
+	public static final String TRAVEL_INFO_CHILDS = TRAVEL_INFO + TRAVEL_INFO_TYPES;
+
 	public static final String FLIGHT_INFO_CHILDS = TRAVEL_INFO_FLIGHT + FLIGHT_INFO_TYPES + FLIGHT_INFO_ORIGINS
 			+ FLIGHT_INFO_CLASS;
 
-	public static final String TRAVEL_INFO_CHILDS = TRAVEL_INFO + TRAVEL_INFO_TYPES;
+	public static final String BUS_INFO_CHILDS = TRAVEL_INFO_BUS + BUS_INFO_FROMS + BUS_INFO_TOS;
 
-	public static final String TRAVEL_INFO_NESTED_CHILDS = TRAVEL_INFO_CHILDS + FLIGHT_INFO_CHILDS + TRAVEL_INFO_BUS;
+	public static final String TRAVEL_INFO_NESTED_CHILDS = TRAVEL_INFO_CHILDS + FLIGHT_INFO_CHILDS + BUS_INFO_CHILDS;
 
 	/* ####################### SELECT ####################### */
 
@@ -78,7 +84,7 @@ public class OfferRepositoryConstants {
 
 	public static final String CASHBACK_SELECT_FLIGHT = CASHBACK_SELECT_TRAVEL + FLIGHT_INFO_CHILDS;
 
-	public static final String CASHBACK_SELECT_BUS = CASHBACK_SELECT_TRAVEL + TRAVEL_INFO_BUS;
+	public static final String CASHBACK_SELECT_BUS = CASHBACK_SELECT_TRAVEL + BUS_INFO_CHILDS;
 
 	/* ####################### CONDITIONS ####################### */
 
@@ -113,9 +119,13 @@ public class OfferRepositoryConstants {
 
 	public static final String WHERE_FLIGHT_INFO_TYPE = " flightInfoTypes.id =:flightTypeId";
 
-	public static final String WHERE_FLIGHT_INFO_CLASS = " flightInfoClass.id =:flightClassId";
+	public static final String WHERE_FLIGHT_INFO_CLASS = " flightInfoClasses.id =:flightClassId";
 
 	public static final String WHERE_FLIGHT_INFO_ORIGINS = " flightInfoOrigins.id =:flightOriginId";
+
+	public static final String WHERE_BUS_INFO_FROM = " busInfoFroms.id =:from";
+
+	public static final String WHERE_BUS_INFO_TO = " busInfoTos.id =:to";
 
 	/* ####################### CASHBACK CONDITIONS ####################### */
 
@@ -133,6 +143,9 @@ public class OfferRepositoryConstants {
 			+ SharedRepositoryConstants.AND + WHERE_FLIGHT_INFO_CLASS + SharedRepositoryConstants.AND
 			+ WHERE_FLIGHT_INFO_ORIGINS;
 
+	public static final String CASHBACK_CONDITION_BUS = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
+			+ WHERE_BUS_INFO_FROM + SharedRepositoryConstants.AND + WHERE_BUS_INFO_TO;
+
 	/*
 	 * ####################### CASHBACK SELECT WITH CONDITIONS #######################
 	 */
@@ -149,5 +162,8 @@ public class OfferRepositoryConstants {
 
 	public static final String CASHBACK_TRAVEL_FLIGHT = CASHBACK_SELECT_FLIGHT + SharedRepositoryConstants.WHERE
 			+ CASHBACK_CONDITION_FLIGHT;
+
+	public static final String CASHBACK_TRAVEL_BUS = CASHBACK_SELECT_BUS + SharedRepositoryConstants.WHERE
+			+ CASHBACK_CONDITION_BUS;
 
 }

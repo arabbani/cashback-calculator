@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.creatives.apsstr.cbcl.domain.Offer;
 import com.creatives.apsstr.cbcl.helper.CashbackCalculatorAlgoVersionTwo;
+import com.creatives.apsstr.cbcl.helper.model.BusInput;
 import com.creatives.apsstr.cbcl.helper.model.CashbackInfo;
 import com.creatives.apsstr.cbcl.helper.model.Expense;
 import com.creatives.apsstr.cbcl.helper.model.FlightInput;
@@ -59,7 +60,7 @@ public class CalculateCashbackService {
 	}
 
 	/**
-	 * Calculate cashback for dth, landline, broadband, electricity, gas, metro, water
+	 * Calculate cashback for flight
 	 *
 	 * @return the list of cashbackInfos
 	 */
@@ -68,6 +69,17 @@ public class CalculateCashbackService {
 				flightInput.getDateTime(), flightInput.getFlightClassId(), flightInput.getFlightTypeId(),
 				flightInput.getFlightOriginId(), flightInput.getTravelTypeId());
 		return this.cashbackCalculatorAlgo.calculate(offers, flightInput.getExpense());
+	}
+
+	/**
+	 * Calculate cashback for bus
+	 *
+	 * @return the list of cashbackInfos
+	 */
+	public List<CashbackInfo> calculateCashbackBus(BusInput busInput) {
+		List<Offer> offers = offerRepository.cashbackBus(true, false, busInput.getSubCategoryId(),
+				busInput.getDateTime(), busInput.getFrom(), busInput.getTo());
+		return this.cashbackCalculatorAlgo.calculate(offers, busInput.getExpense());
 	}
 
 }
