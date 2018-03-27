@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {
   BroadbandComponent,
   BusComponent,
+  CabComponent,
   CashbackComponent,
   DatacardComponent,
   DthComponent,
@@ -70,6 +71,10 @@ const routes: Routes = [
       {
         path: 'bus',
         component: BusComponent
+      },
+      {
+        path: 'cab',
+        component: CabComponent
       }
     ]
   }

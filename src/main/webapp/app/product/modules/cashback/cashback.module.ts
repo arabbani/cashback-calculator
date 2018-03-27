@@ -5,12 +5,13 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { BlockUIModule } from 'ng-block-ui';
 import { TooltipModule } from 'ngx-bootstrap';
 
-import { ComponentsModule } from '../components';
 import { ApsstrSharedModule } from '../../../apsstr-core-ui';
+import { ComponentsModule } from '../components';
 import { CashbackRoutingModule } from './cashback-routing.module';
 import {
   BroadbandComponent,
   BusComponent,
+  CabComponent,
   CashbackComponent,
   DatacardComponent,
   DthComponent,
@@ -37,7 +38,7 @@ import {
   declarations: [
     CashbackComponent, MobileComponent, DthComponent, DatacardComponent,
     LandlineComponent, ElectricityComponent, GasComponent, BroadbandComponent,
-    WaterComponent, MetroComponent, FlightComponent, BusComponent
+    WaterComponent, MetroComponent, FlightComponent, BusComponent, CabComponent
   ]
 })
 export class CashbackModule { }

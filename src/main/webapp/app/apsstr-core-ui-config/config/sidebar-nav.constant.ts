@@ -69,6 +69,11 @@ export const SIDEBAR_NAV_ITEMS = [
         name: 'Bus',
         url: '/travel/bus',
         icon: 'icon-puzzle'
+      },
+      {
+        name: 'Cab',
+        url: '/travel/cab',
+        icon: 'icon-puzzle'
       }
     ]
   }

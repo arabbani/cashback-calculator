@@ -5,6 +5,7 @@ import java.util.List;
 import com.creatives.apsstr.cbcl.domain.Offer;
 import com.creatives.apsstr.cbcl.helper.CashbackCalculatorAlgoVersionTwo;
 import com.creatives.apsstr.cbcl.helper.model.BusInput;
+import com.creatives.apsstr.cbcl.helper.model.CabInput;
 import com.creatives.apsstr.cbcl.helper.model.CashbackInfo;
 import com.creatives.apsstr.cbcl.helper.model.Expense;
 import com.creatives.apsstr.cbcl.helper.model.FlightInput;
@@ -80,6 +81,17 @@ public class CalculateCashbackService {
 		List<Offer> offers = offerRepository.cashbackBus(true, false, busInput.getSubCategoryId(),
 				busInput.getDateTime(), busInput.getFrom(), busInput.getTo());
 		return this.cashbackCalculatorAlgo.calculate(offers, busInput.getExpense());
+	}
+
+	/**
+	 * Calculate cashback for cab
+	 *
+	 * @return the list of cashbackInfos
+	 */
+	public List<CashbackInfo> calculateCashbackCab(CabInput cabInput) {
+		List<Offer> offers = offerRepository.cashbackCab(true, false, cabInput.getSubCategoryId(),
+				cabInput.getDateTime(), cabInput.getServiceProviderId(), cabInput.getCityId());
+		return this.cashbackCalculatorAlgo.calculate(offers, cabInput.getExpense());
 	}
 
 }

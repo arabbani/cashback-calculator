@@ -5,6 +5,7 @@ import java.util.List;
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.helper.model.BroadbandInput;
 import com.creatives.apsstr.cbcl.helper.model.BusInput;
+import com.creatives.apsstr.cbcl.helper.model.CabInput;
 import com.creatives.apsstr.cbcl.helper.model.CashbackInfo;
 import com.creatives.apsstr.cbcl.helper.model.DatacardInput;
 import com.creatives.apsstr.cbcl.helper.model.DthInput;
@@ -193,6 +194,19 @@ public class CalculateCashbackResource {
 	public List<CashbackInfo> calculateCashbackForBus(@RequestBody BusInput busInput) {
 		log.debug("REST request to calculate cashback for bus : {} ", busInput);
 		return calculateCashbackService.calculateCashbackBus(busInput);
+	}
+
+	/**
+	 * POST /cab : calculate cashback for cab
+	 *
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         cashbackResults in body
+	 */
+	@PostMapping("/cab")
+	@Timed
+	public List<CashbackInfo> calculateCashbackForCab(@RequestBody CabInput cabInput) {
+		log.debug("REST request to calculate cashback for cab : {} ", cabInput);
+		return calculateCashbackService.calculateCashbackCab(cabInput);
 	}
 
 }

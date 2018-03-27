@@ -71,20 +71,18 @@ public class OfferRepositoryConstants {
 	public static final String DEFAULT = SELF + OPERATING_SYSTEMS + CITIES + SUB_CATEGORIES + SERVICE_PROVIDERS
 			+ ACTIVE_DATES + ACTIVE_DAYS;
 
-	// public static final String INFO = REECHERGE_INFO + TRAVEL_INFO;
-
 	public static final String CHILD_RELATIONS = REECHERGE_INFO_CHILDS + TRAVEL_INFO_NESTED_CHILDS
 			+ SERVICE_PROVIDER_SUB_CATEGORIES;
 
 	/* ####################### CASHBACK SELECT ####################### */
 
-	public static final String CASHBACK_SELECT_REECHARGE = DEFAULT + REECHERGE_INFO_CHILDS;
+	public static final String SELECT_REECHARGE = DEFAULT + REECHERGE_INFO_CHILDS;
 
-	public static final String CASHBACK_SELECT_TRAVEL = DEFAULT + TRAVEL_INFO_CHILDS;
+	public static final String SELECT_TRAVEL = DEFAULT + TRAVEL_INFO_CHILDS;
 
-	public static final String CASHBACK_SELECT_FLIGHT = CASHBACK_SELECT_TRAVEL + FLIGHT_INFO_CHILDS;
+	public static final String SELECT_FLIGHT = SELECT_TRAVEL + FLIGHT_INFO_CHILDS;
 
-	public static final String CASHBACK_SELECT_BUS = CASHBACK_SELECT_TRAVEL + BUS_INFO_CHILDS;
+	public static final String SELECT_BUS = SELECT_TRAVEL + BUS_INFO_CHILDS;
 
 	/* ####################### CONDITIONS ####################### */
 
@@ -132,38 +130,40 @@ public class OfferRepositoryConstants {
 	public static final String CASHBACK_CONDITION_COMMON = WHERE_ACTIVE + SharedRepositoryConstants.AND
 			+ WHERE_SUBCATEGORY + SharedRepositoryConstants.AND + WHERE_DATE_BOUND;
 
-	public static final String CASHBACK_CONDITION_REECHARGE_COMMON = CASHBACK_CONDITION_COMMON
-			+ SharedRepositoryConstants.AND + WHERE_SERVICE_PROVIDER;
+	public static final String CONDITION_REECHARGE_COMMON = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
+			+ WHERE_SERVICE_PROVIDER;
 
-	public static final String CASHBACK_CONDITION_REECHARGE_CHILDS = WHERE_REECHARGE_INFO_CIRCLE
-			+ SharedRepositoryConstants.AND + WHERE_REECHARGE_INFO_REECHARGE_TYPE;
+	public static final String CONDITION_REECHARGE_CHILDS = WHERE_REECHARGE_INFO_CIRCLE + SharedRepositoryConstants.AND
+			+ WHERE_REECHARGE_INFO_REECHARGE_TYPE;
 
-	public static final String CASHBACK_CONDITION_FLIGHT = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
+	public static final String CONDITION_FLIGHT = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
 			+ WHERE_TRAVEL_INFO_TYPE + SharedRepositoryConstants.AND + WHERE_FLIGHT_INFO_TYPE
 			+ SharedRepositoryConstants.AND + WHERE_FLIGHT_INFO_CLASS + SharedRepositoryConstants.AND
 			+ WHERE_FLIGHT_INFO_ORIGINS;
 
-	public static final String CASHBACK_CONDITION_BUS = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
+	public static final String CONDITION_BUS = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
 			+ WHERE_BUS_INFO_FROM + SharedRepositoryConstants.AND + WHERE_BUS_INFO_TO;
+
+	public static final String CONDITION_CAB = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
+			+ WHERE_SERVICE_PROVIDER + SharedRepositoryConstants.AND + WHERE_CITY;
 
 	/*
 	 * ####################### CASHBACK SELECT WITH CONDITIONS #######################
 	 */
 
 	public static final String CASHBACK_REECHARGE_COMMON = DEFAULT + SharedRepositoryConstants.WHERE
-			+ CASHBACK_CONDITION_REECHARGE_COMMON;
+			+ CONDITION_REECHARGE_COMMON;
 
-	public static final String CASHBACK_REECHARGE_WITH_CHILDS = CASHBACK_SELECT_REECHARGE
-			+ SharedRepositoryConstants.WHERE + CASHBACK_CONDITION_REECHARGE_COMMON + SharedRepositoryConstants.AND
-			+ CASHBACK_CONDITION_REECHARGE_CHILDS;
+	public static final String CASHBACK_REECHARGE_WITH_CHILDS = SELECT_REECHARGE + SharedRepositoryConstants.WHERE
+			+ CONDITION_REECHARGE_COMMON + SharedRepositoryConstants.AND + CONDITION_REECHARGE_CHILDS;
 
-	public static final String CASHBACK_TRAVEL_DEFAULT = CASHBACK_SELECT_TRAVEL + SharedRepositoryConstants.WHERE
+	public static final String CASHBACK_TRAVEL_DEFAULT = SELECT_TRAVEL + SharedRepositoryConstants.WHERE
 			+ CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND + WHERE_TRAVEL_INFO_TYPE;
 
-	public static final String CASHBACK_TRAVEL_FLIGHT = CASHBACK_SELECT_FLIGHT + SharedRepositoryConstants.WHERE
-			+ CASHBACK_CONDITION_FLIGHT;
+	public static final String CASHBACK_FLIGHT = SELECT_FLIGHT + SharedRepositoryConstants.WHERE + CONDITION_FLIGHT;
 
-	public static final String CASHBACK_TRAVEL_BUS = CASHBACK_SELECT_BUS + SharedRepositoryConstants.WHERE
-			+ CASHBACK_CONDITION_BUS;
+	public static final String CASHBACK_BUS = SELECT_BUS + SharedRepositoryConstants.WHERE + CONDITION_BUS;
+
+	public static final String CASHBACK_CAB = DEFAULT + SharedRepositoryConstants.WHERE + CONDITION_CAB;
 
 }

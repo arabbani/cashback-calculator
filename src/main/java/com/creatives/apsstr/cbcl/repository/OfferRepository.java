@@ -34,15 +34,20 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
                         @Param("subCategoryId") Long subCategoryId, @Param("dateTime") String dateTime,
                         @Param("serviceProviderId") Long serviceProviderId);
 
-        @Query(OfferRepositoryConstants.CASHBACK_TRAVEL_FLIGHT)
+        @Query(OfferRepositoryConstants.CASHBACK_FLIGHT)
         List<Offer> cashbackFlight(@Param("active") boolean active, @Param("dummy") boolean dummy,
                         @Param("subCategoryId") Long subCategoryId, @Param("dateTime") String dateTime,
                         @Param("flightClassId") Long flightClassId, @Param("flightTypeId") Long flightTypeId,
                         @Param("flightOriginId") Long flightOriginId, @Param("travelTypeId") Long travelTypeId);
 
-        @Query(OfferRepositoryConstants.CASHBACK_TRAVEL_BUS)
+        @Query(OfferRepositoryConstants.CASHBACK_BUS)
         List<Offer> cashbackBus(@Param("active") boolean active, @Param("dummy") boolean dummy,
                         @Param("subCategoryId") Long subCategoryId, @Param("dateTime") String dateTime,
                         @Param("from") Long from, @Param("to") Long to);
+
+        @Query(OfferRepositoryConstants.CASHBACK_CAB)
+        List<Offer> cashbackCab(@Param("active") boolean active, @Param("dummy") boolean dummy,
+                        @Param("subCategoryId") Long subCategoryId, @Param("dateTime") String dateTime,
+                        @Param("serviceProviderId") Long serviceProviderId, @Param("cityId") Long cityId);
 
 }
