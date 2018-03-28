@@ -90,7 +90,7 @@ public class CalculateCashbackService {
 	 */
 	public List<CashbackInfo> calculateCashbackCab(CabInput cabInput) {
 		List<Offer> offers = offerRepository.cashbackCab(true, false, cabInput.getSubCategoryId(),
-				cabInput.getDateTime(), cabInput.getServiceProviderId(), cabInput.getCityId());
+				cabInput.getDateTime(), cabInput.getServiceProvidersId(), cabInput.getCityId());
 		return this.cashbackCalculatorAlgo.calculate(offers, cabInput.getExpense());
 	}
 

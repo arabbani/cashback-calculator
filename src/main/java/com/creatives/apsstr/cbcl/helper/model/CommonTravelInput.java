@@ -7,14 +7,4 @@ package com.creatives.apsstr.cbcl.helper.model;
  */
 public class CommonTravelInput extends CommonInput {
 
-    private Long serviceProviderId;
-
-    public Long getServiceProviderId() {
-        return serviceProviderId;
-    }
-
-    public void setServiceProviderId(Long serviceProviderId) {
-        this.serviceProviderId = serviceProviderId;
-    }
-
 }

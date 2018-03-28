@@ -8,6 +8,7 @@ package com.creatives.apsstr.cbcl.helper.model;
 public class CabInput extends CommonTravelInput {
 
     private Long cityId;
+    private Long serviceProvidersId[];
 
     public Long getCityId() {
         return cityId;
@@ -17,9 +18,17 @@ public class CabInput extends CommonTravelInput {
         this.cityId = cityId;
     }
 
+    public Long[] getServiceProvidersId() {
+        return serviceProvidersId;
+    }
+
+    public void setServiceProvidersId(Long[] serviceProvidersId) {
+        this.serviceProvidersId = serviceProvidersId;
+    }
+
     @Override
     public String toString() {
-        return "CabInput [cityId()=" + cityId + ", getServiceProviderId()=" + getServiceProviderId()
+        return "CabInput [cityId()=" + cityId + ", getServiceProvidersId()=" + serviceProvidersId
                 + ", getSubCategoryId()=" + getSubCategoryId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
                 + getExpense() + "]";
     }

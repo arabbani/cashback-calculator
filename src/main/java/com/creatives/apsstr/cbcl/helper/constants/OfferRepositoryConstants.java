@@ -98,6 +98,8 @@ public class OfferRepositoryConstants {
 
 	public static final String WHERE_SERVICE_PROVIDER = " serviceProviders.id =:serviceProviderId";
 
+	public static final String WHERE_SERVICE_PROVIDERS = " serviceProviders.id IN (:serviceProvidersId)";
+
 	public static final String WHERE_CITY = " cities.id =:cityId";
 
 	/*
@@ -145,7 +147,7 @@ public class OfferRepositoryConstants {
 			+ WHERE_BUS_INFO_FROM + SharedRepositoryConstants.AND + WHERE_BUS_INFO_TO;
 
 	public static final String CONDITION_CAB = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
-			+ WHERE_SERVICE_PROVIDER + SharedRepositoryConstants.AND + WHERE_CITY;
+			+ WHERE_SERVICE_PROVIDERS + SharedRepositoryConstants.AND + WHERE_CITY;
 
 	/*
 	 * ####################### CASHBACK SELECT WITH CONDITIONS #######################

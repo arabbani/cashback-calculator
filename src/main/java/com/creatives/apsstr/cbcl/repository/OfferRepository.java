@@ -48,6 +48,6 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
         @Query(OfferRepositoryConstants.CASHBACK_CAB)
         List<Offer> cashbackCab(@Param("active") boolean active, @Param("dummy") boolean dummy,
                         @Param("subCategoryId") Long subCategoryId, @Param("dateTime") String dateTime,
-                        @Param("serviceProviderId") Long serviceProviderId, @Param("cityId") Long cityId);
+                        @Param("serviceProvidersId") Long[] serviceProvidersId, @Param("cityId") Long cityId);
 
 }
