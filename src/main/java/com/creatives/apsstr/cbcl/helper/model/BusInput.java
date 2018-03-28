@@ -26,10 +26,13 @@ public class BusInput extends CommonTravelInput {
         this.to = to;
     }
 
-    @Override
-    public String toString() {
-        return "BusInput [from()=" + from + ", to()=" + to + ", getSubCategoryId()=" + getSubCategoryId()
-                + ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense() + "]";
-    }
+	@Override
+	public String toString() {
+		return "BusInput [from=" + from + ", to=" + to + ", getSubCategoryId()=" + getSubCategoryId()
+				+ ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense() + ", getActiveDate()="
+				+ getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";
+	}
+
+    
 
 }

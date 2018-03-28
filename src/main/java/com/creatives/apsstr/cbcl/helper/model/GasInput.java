@@ -9,9 +9,9 @@ public class GasInput extends CommonReechargeInput {
 
 	@Override
 	public String toString() {
-		return "GasInput [getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()="
-				+ getServiceProviderId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
-				+ getExpense() + "]";
+		return "GasInput [getServiceProviderId()=" + getServiceProviderId() + ", getSubCategoryId()="
+				+ getSubCategoryId() + ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense()
+				+ ", getActiveDate()=" + getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";
 	}
 
 }

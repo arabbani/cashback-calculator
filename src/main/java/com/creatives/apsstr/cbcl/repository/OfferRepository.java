@@ -26,28 +26,33 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
         @Query(OfferRepositoryConstants.CASHBACK_REECHARGE_WITH_CHILDS)
         List<Offer> cashbackReechargeWithReechargeCondition(@Param("active") boolean active,
                         @Param("dummy") boolean dummy, @Param("subCategoryId") Long subCategoryId,
-                        @Param("dateTime") String dateTime, @Param("serviceProviderId") Long serviceProviderId,
+                        @Param("dateTime") String dateTime, @Param("activeDate") Integer activeDate,
+                        @Param("activeDay") String activeDay, @Param("serviceProviderId") Long serviceProviderId,
                         @Param("circleId") Long circleId, @Param("reechargePlaneTypeId") Long reechargePlaneTypeId);
 
         @Query(OfferRepositoryConstants.CASHBACK_REECHARGE_COMMON)
         List<Offer> cashbackReechargeCommon(@Param("active") boolean active, @Param("dummy") boolean dummy,
                         @Param("subCategoryId") Long subCategoryId, @Param("dateTime") String dateTime,
+                        @Param("activeDate") Integer activeDate, @Param("activeDay") String activeDay,
                         @Param("serviceProviderId") Long serviceProviderId);
 
         @Query(OfferRepositoryConstants.CASHBACK_FLIGHT)
         List<Offer> cashbackFlight(@Param("active") boolean active, @Param("dummy") boolean dummy,
                         @Param("subCategoryId") Long subCategoryId, @Param("dateTime") String dateTime,
+                        @Param("activeDate") Integer activeDate, @Param("activeDay") String activeDay,
                         @Param("flightClassId") Long flightClassId, @Param("flightTypeId") Long flightTypeId,
                         @Param("flightOriginId") Long flightOriginId, @Param("travelTypeId") Long travelTypeId);
 
         @Query(OfferRepositoryConstants.CASHBACK_BUS)
         List<Offer> cashbackBus(@Param("active") boolean active, @Param("dummy") boolean dummy,
                         @Param("subCategoryId") Long subCategoryId, @Param("dateTime") String dateTime,
+                        @Param("activeDate") Integer activeDate, @Param("activeDay") String activeDay,
                         @Param("from") Long from, @Param("to") Long to);
 
         @Query(OfferRepositoryConstants.CASHBACK_CAB)
         List<Offer> cashbackCab(@Param("active") boolean active, @Param("dummy") boolean dummy,
                         @Param("subCategoryId") Long subCategoryId, @Param("dateTime") String dateTime,
+                        @Param("activeDate") Integer activeDate, @Param("activeDay") String activeDay,
                         @Param("serviceProvidersId") Long[] serviceProvidersId, @Param("cityId") Long cityId);
 
 }

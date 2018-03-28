@@ -78,13 +78,19 @@ export class CalculateCashbackService {
   }
 
   private calculate(restUrl: string, input: any): Observable<EntityResponseType> {
-    input.dateTime = this.setDateTime();
+    input = this.setDateTime(input);
+    console.log(input);
     return this.http.post<any>(restUrl, input, { observe: 'response' })
       .map((res: EntityResponseType) => this.convertArrayResponse(res));
   }
 
-  private setDateTime(): any {
-    return moment().seconds(0).format('YYYY-MM-DDTHH:mm');
+  private setDateTime(input): any {
+    const copiedInput = Object.assign({}, input);
+    const dateTime = moment();
+    copiedInput.activeDate = dateTime.date();
+    copiedInput.activeDay = moment(dateTime).format('dddd');
+    copiedInput.dateTime = dateTime.seconds(0).format('YYYY-MM-DDTHH:mm');
+    return copiedInput;
   }
 
   private convertArrayResponse(res: EntityResponseType): EntityResponseType {

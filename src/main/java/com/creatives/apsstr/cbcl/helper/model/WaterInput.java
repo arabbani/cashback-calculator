@@ -7,11 +7,11 @@ package com.creatives.apsstr.cbcl.helper.model;
  */
 public class WaterInput extends CommonReechargeInput {
 
-    @Override
-    public String toString() {
-        return "WaterInput [getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()="
-                + getServiceProviderId() + ", getDateTime()=" + getDateTime()
-                + ", getExpense()=" + getExpense() + "]";
-    }
+	@Override
+	public String toString() {
+		return "WaterInput [getServiceProviderId()=" + getServiceProviderId() + ", getSubCategoryId()="
+				+ getSubCategoryId() + ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense()
+				+ ", getActiveDate()=" + getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";
+	}
 
 }

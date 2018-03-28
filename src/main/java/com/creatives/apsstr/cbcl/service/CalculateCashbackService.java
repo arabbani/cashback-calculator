@@ -42,9 +42,10 @@ public class CalculateCashbackService {
 	 * @return the list of cashbackInfos
 	 */
 	public List<CashbackInfo> calculateCashbackReechargeWithReechargeCondition(Long subCategoryId,
-			Long serviceProviderId, String dateTime, Long circleId, Long reechargePlaneTypeId, Expense expense) {
+			Long serviceProviderId, String dateTime, Integer activeDate, String activeDay, Long circleId,
+			Long reechargePlaneTypeId, Expense expense) {
 		List<Offer> offers = offerRepository.cashbackReechargeWithReechargeCondition(true, false, subCategoryId,
-				dateTime, serviceProviderId, circleId, reechargePlaneTypeId);
+				dateTime, activeDate, activeDay, serviceProviderId, circleId, reechargePlaneTypeId);
 		return this.cashbackCalculatorAlgo.calculate(offers, expense);
 	}
 
@@ -54,9 +55,9 @@ public class CalculateCashbackService {
 	 * @return the list of cashbackInfos
 	 */
 	public List<CashbackInfo> calculateCashbackReecharge(Long subCategoryId, Long serviceProviderId, String dateTime,
-			Expense expense) {
-		List<Offer> offers = offerRepository.cashbackReechargeCommon(true, false, subCategoryId, dateTime,
-				serviceProviderId);
+			Integer activeDate, String activeDay, Expense expense) {
+		List<Offer> offers = offerRepository.cashbackReechargeCommon(true, false, subCategoryId, dateTime, activeDate,
+				activeDay, serviceProviderId);
 		return this.cashbackCalculatorAlgo.calculate(offers, expense);
 	}
 
@@ -67,8 +68,9 @@ public class CalculateCashbackService {
 	 */
 	public List<CashbackInfo> calculateCashbackFlight(FlightInput flightInput) {
 		List<Offer> offers = offerRepository.cashbackFlight(true, false, flightInput.getSubCategoryId(),
-				flightInput.getDateTime(), flightInput.getFlightClassId(), flightInput.getFlightTypeId(),
-				flightInput.getFlightOriginId(), flightInput.getTravelTypeId());
+				flightInput.getDateTime(), flightInput.getActiveDate(), flightInput.getActiveDay(),
+				flightInput.getFlightClassId(), flightInput.getFlightTypeId(), flightInput.getFlightOriginId(),
+				flightInput.getTravelTypeId());
 		return this.cashbackCalculatorAlgo.calculate(offers, flightInput.getExpense());
 	}
 
@@ -79,7 +81,8 @@ public class CalculateCashbackService {
 	 */
 	public List<CashbackInfo> calculateCashbackBus(BusInput busInput) {
 		List<Offer> offers = offerRepository.cashbackBus(true, false, busInput.getSubCategoryId(),
-				busInput.getDateTime(), busInput.getFrom(), busInput.getTo());
+				busInput.getDateTime(), busInput.getActiveDate(), busInput.getActiveDay(), busInput.getFrom(),
+				busInput.getTo());
 		return this.cashbackCalculatorAlgo.calculate(offers, busInput.getExpense());
 	}
 
@@ -90,7 +93,8 @@ public class CalculateCashbackService {
 	 */
 	public List<CashbackInfo> calculateCashbackCab(CabInput cabInput) {
 		List<Offer> offers = offerRepository.cashbackCab(true, false, cabInput.getSubCategoryId(),
-				cabInput.getDateTime(), cabInput.getServiceProvidersId(), cabInput.getCityId());
+				cabInput.getDateTime(), cabInput.getActiveDate(), cabInput.getActiveDay(),
+				cabInput.getServiceProvidersId(), cabInput.getCityId());
 		return this.cashbackCalculatorAlgo.calculate(offers, cabInput.getExpense());
 	}
 

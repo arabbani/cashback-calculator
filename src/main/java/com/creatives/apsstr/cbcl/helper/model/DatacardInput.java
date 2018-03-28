@@ -18,7 +18,8 @@ public class DatacardInput extends CommonReechargeInput {
 	}
 
 	/**
-	 * @param circleId the circleId to set
+	 * @param circleId
+	 *            the circleId to set
 	 */
 	public void setCircleId(Long circleId) {
 		this.circleId = circleId;
@@ -32,7 +33,8 @@ public class DatacardInput extends CommonReechargeInput {
 	}
 
 	/**
-	 * @param reechargePlaneTypeId the reechargePlaneTypeId to set
+	 * @param reechargePlaneTypeId
+	 *            the reechargePlaneTypeId to set
 	 */
 	public void setReechargePlaneTypeId(Long reechargePlaneTypeId) {
 		this.reechargePlaneTypeId = reechargePlaneTypeId;
@@ -40,10 +42,10 @@ public class DatacardInput extends CommonReechargeInput {
 
 	@Override
 	public String toString() {
-		return "DatacardInput [circleId()=" + circleId + ", reechargePlaneTypeId()=" + reechargePlaneTypeId
-				+ ", getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()=" + getServiceProviderId()
-				+ ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense()
-				+ "]";
+		return "DatacardInput [circleId=" + circleId + ", reechargePlaneTypeId=" + reechargePlaneTypeId
+				+ ", getServiceProviderId()=" + getServiceProviderId() + ", getSubCategoryId()=" + getSubCategoryId()
+				+ ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense() + ", getActiveDate()="
+				+ getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";
 	}
 
 }

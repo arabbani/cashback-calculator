@@ -9,9 +9,9 @@ public class ElectricityInput extends CommonReechargeInput {
 
 	@Override
 	public String toString() {
-		return "ElectricityInput [getSubCategoryId()=" + getSubCategoryId() + ", getServiceProviderId()="
-				+ getServiceProviderId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
-				+ getExpense() + "]";
+		return "ElectricityInput [getServiceProviderId()=" + getServiceProviderId() + ", getSubCategoryId()="
+				+ getSubCategoryId() + ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense()
+				+ ", getActiveDate()=" + getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";
 	}
 
 }
