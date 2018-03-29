@@ -1,13 +1,13 @@
-import { Card, ReturnMode } from '..';
+import { BaseEntity } from './../../shared';
 
-export class MainReturn {
+export class MainReturn implements BaseEntity {
     constructor(
         public id?: number,
         public amount?: number,
         public exact?: boolean,
         public defaultAmount?: number,
-        public mode?: ReturnMode,
-        public cashbackChannel?: Card,
+        public mode?: BaseEntity,
+        public cashbackChannel?: BaseEntity,
     ) {
         this.exact = false;
     }

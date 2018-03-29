@@ -1,13 +1,12 @@
-import { Bank, CardType } from '..';
-import { CardProvider } from '../card-provider';
+import { BaseEntity } from './../../shared';
 
-export class Card {
+export class Card implements BaseEntity {
     constructor(
         public id?: number,
         public name?: string,
-        public type?: CardType,
-        public cardProviders?: CardProvider[],
-        public bank?: Bank,
+        public type?: BaseEntity,
+        public cardProviders?: BaseEntity[],
+        public bank?: BaseEntity,
     ) {
     }
 }

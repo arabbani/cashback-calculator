@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.BankType;
-
-import com.creatives.apsstr.cbcl.repository.BankTypeRepository;
+import com.creatives.apsstr.cbcl.service.BankTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class BankTypeResource {
 
     private static final String ENTITY_NAME = "bankType";
 
-    private final BankTypeRepository bankTypeRepository;
+    private final BankTypeService bankTypeService;
 
-    public BankTypeResource(BankTypeRepository bankTypeRepository) {
-        this.bankTypeRepository = bankTypeRepository;
+    public BankTypeResource(BankTypeService bankTypeService) {
+        this.bankTypeService = bankTypeService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class BankTypeResource {
         if (bankType.getId() != null) {
             throw new BadRequestAlertException("A new bankType cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        BankType result = bankTypeRepository.save(bankType);
+        BankType result = bankTypeService.save(bankType);
         return ResponseEntity.created(new URI("/api/bank-types/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class BankTypeResource {
         if (bankType.getId() == null) {
             return createBankType(bankType);
         }
-        BankType result = bankTypeRepository.save(bankType);
+        BankType result = bankTypeService.save(bankType);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, bankType.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class BankTypeResource {
     @Timed
     public List<BankType> getAllBankTypes() {
         log.debug("REST request to get all BankTypes");
-        return bankTypeRepository.findAll();
+        return bankTypeService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class BankTypeResource {
     @Timed
     public ResponseEntity<BankType> getBankType(@PathVariable Long id) {
         log.debug("REST request to get BankType : {}", id);
-        BankType bankType = bankTypeRepository.findOne(id);
+        BankType bankType = bankTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(bankType));
     }
 
@@ -114,7 +113,7 @@ public class BankTypeResource {
     @Timed
     public ResponseEntity<Void> deleteBankType(@PathVariable Long id) {
         log.debug("REST request to delete BankType : {}", id);
-        bankTypeRepository.delete(id);
+        bankTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

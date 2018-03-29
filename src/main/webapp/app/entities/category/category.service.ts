@@ -1,20 +1,19 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JsogService } from 'jsog-typescript';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-
 import { SERVER_API_URL } from '../../app.constants';
-import { createRequestOption } from '../../shared';
-import { Category } from './category.model';
 
-type EntityResponseType = HttpResponse<Category>;
+import { Category } from './category.model';
+import { createRequestOption } from '../../shared';
+
+export type EntityResponseType = HttpResponse<Category>;
 
 @Injectable()
 export class CategoryService {
 
-    private resourceUrl = SERVER_API_URL + 'api/categories';
+    private resourceUrl =  SERVER_API_URL + 'api/categories';
 
-    constructor(private http: HttpClient, private jsogService: JsogService) { }
+    constructor(private http: HttpClient) { }
 
     create(category: Category): Observable<EntityResponseType> {
         const copy = this.convert(category);
@@ -29,7 +28,7 @@ export class CategoryService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<Category>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+        return this.http.get<Category>(`${this.resourceUrl}/${id}`, { observe: 'response'})
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -40,21 +39,21 @@ export class CategoryService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Category = this.convertItemFromServer(this.deserializeObject(res.body));
-        return res.clone({ body });
+        const body: Category = this.convertItemFromServer(res.body);
+        return res.clone({body});
     }
 
     private convertArrayResponse(res: HttpResponse<Category[]>): HttpResponse<Category[]> {
-        const jsonResponse: Category[] = this.deserializeArray(res.body);
+        const jsonResponse: Category[] = res.body;
         const body: Category[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({ body });
+        return res.clone({body});
     }
 
     /**
@@ -71,13 +70,5 @@ export class CategoryService {
     private convert(category: Category): Category {
         const copy: Category = Object.assign({}, category);
         return copy;
-    }
-
-    private deserializeArray(json: any): Category[] {
-        return this.jsogService.deserializeArray(json, Category);
-    }
-
-    private deserializeObject(json: any): Category {
-        return this.jsogService.deserializeObject(json, Category);
     }
 }

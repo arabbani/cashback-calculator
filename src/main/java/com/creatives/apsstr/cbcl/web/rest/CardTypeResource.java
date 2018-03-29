@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.CardType;
-
-import com.creatives.apsstr.cbcl.repository.CardTypeRepository;
+import com.creatives.apsstr.cbcl.service.CardTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class CardTypeResource {
 
     private static final String ENTITY_NAME = "cardType";
 
-    private final CardTypeRepository cardTypeRepository;
+    private final CardTypeService cardTypeService;
 
-    public CardTypeResource(CardTypeRepository cardTypeRepository) {
-        this.cardTypeRepository = cardTypeRepository;
+    public CardTypeResource(CardTypeService cardTypeService) {
+        this.cardTypeService = cardTypeService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class CardTypeResource {
         if (cardType.getId() != null) {
             throw new BadRequestAlertException("A new cardType cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        CardType result = cardTypeRepository.save(cardType);
+        CardType result = cardTypeService.save(cardType);
         return ResponseEntity.created(new URI("/api/card-types/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class CardTypeResource {
         if (cardType.getId() == null) {
             return createCardType(cardType);
         }
-        CardType result = cardTypeRepository.save(cardType);
+        CardType result = cardTypeService.save(cardType);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cardType.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class CardTypeResource {
     @Timed
     public List<CardType> getAllCardTypes() {
         log.debug("REST request to get all CardTypes");
-        return cardTypeRepository.findAll();
+        return cardTypeService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class CardTypeResource {
     @Timed
     public ResponseEntity<CardType> getCardType(@PathVariable Long id) {
         log.debug("REST request to get CardType : {}", id);
-        CardType cardType = cardTypeRepository.findOne(id);
+        CardType cardType = cardTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(cardType));
     }
 
@@ -114,7 +113,7 @@ public class CardTypeResource {
     @Timed
     public ResponseEntity<Void> deleteCardType(@PathVariable Long id) {
         log.debug("REST request to delete CardType : {}", id);
-        cardTypeRepository.delete(id);
+        cardTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

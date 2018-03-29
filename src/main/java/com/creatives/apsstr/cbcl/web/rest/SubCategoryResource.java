@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.SubCategory;
-
-import com.creatives.apsstr.cbcl.repository.SubCategoryRepository;
+import com.creatives.apsstr.cbcl.service.SubCategoryService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class SubCategoryResource {
 
     private static final String ENTITY_NAME = "subCategory";
 
-    private final SubCategoryRepository subCategoryRepository;
+    private final SubCategoryService subCategoryService;
 
-    public SubCategoryResource(SubCategoryRepository subCategoryRepository) {
-        this.subCategoryRepository = subCategoryRepository;
+    public SubCategoryResource(SubCategoryService subCategoryService) {
+        this.subCategoryService = subCategoryService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class SubCategoryResource {
         if (subCategory.getId() != null) {
             throw new BadRequestAlertException("A new subCategory cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        SubCategory result = subCategoryRepository.save(subCategory);
+        SubCategory result = subCategoryService.save(subCategory);
         return ResponseEntity.created(new URI("/api/sub-categories/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class SubCategoryResource {
         if (subCategory.getId() == null) {
             return createSubCategory(subCategory);
         }
-        SubCategory result = subCategoryRepository.save(subCategory);
+        SubCategory result = subCategoryService.save(subCategory);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, subCategory.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class SubCategoryResource {
     @Timed
     public List<SubCategory> getAllSubCategories() {
         log.debug("REST request to get all SubCategories");
-        return subCategoryRepository.findAll();
+        return subCategoryService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class SubCategoryResource {
     @Timed
     public ResponseEntity<SubCategory> getSubCategory(@PathVariable Long id) {
         log.debug("REST request to get SubCategory : {}", id);
-        SubCategory subCategory = subCategoryRepository.findOne(id);
+        SubCategory subCategory = subCategoryService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(subCategory));
     }
 
@@ -114,7 +113,7 @@ public class SubCategoryResource {
     @Timed
     public ResponseEntity<Void> deleteSubCategory(@PathVariable Long id) {
         log.debug("REST request to delete SubCategory : {}", id);
-        subCategoryRepository.delete(id);
+        subCategoryService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

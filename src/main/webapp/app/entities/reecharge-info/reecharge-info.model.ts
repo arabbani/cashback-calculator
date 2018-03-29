@@ -1,10 +1,10 @@
-import { Circle, ReechargePlanType } from '..';
+import { BaseEntity } from './../../shared';
 
-export class ReechargeInfo {
+export class ReechargeInfo implements BaseEntity {
     constructor(
         public id?: number,
-        public circles?: Circle[],
-        public reechargePlanTypes?: ReechargePlanType[],
+        public circles?: BaseEntity[],
+        public reechargePlanTypes?: BaseEntity[],
     ) {
     }
 }

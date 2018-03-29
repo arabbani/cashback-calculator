@@ -19,7 +19,7 @@
         }
     ],
     "fields": [],
-    "changelogDate": "20180326062923",
+    "changelogDate": "20180329045926",
     "entityTableName": "bus_info",
     "dto": "no",
     "pagination": "no",

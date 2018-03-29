@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.City;
-
-import com.creatives.apsstr.cbcl.repository.CityRepository;
+import com.creatives.apsstr.cbcl.service.CityService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class CityResource {
 
     private static final String ENTITY_NAME = "city";
 
-    private final CityRepository cityRepository;
+    private final CityService cityService;
 
-    public CityResource(CityRepository cityRepository) {
-        this.cityRepository = cityRepository;
+    public CityResource(CityService cityService) {
+        this.cityService = cityService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class CityResource {
         if (city.getId() != null) {
             throw new BadRequestAlertException("A new city cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        City result = cityRepository.save(city);
+        City result = cityService.save(city);
         return ResponseEntity.created(new URI("/api/cities/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class CityResource {
         if (city.getId() == null) {
             return createCity(city);
         }
-        City result = cityRepository.save(city);
+        City result = cityService.save(city);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, city.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class CityResource {
     @Timed
     public List<City> getAllCities() {
         log.debug("REST request to get all Cities");
-        return cityRepository.findAll();
+        return cityService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class CityResource {
     @Timed
     public ResponseEntity<City> getCity(@PathVariable Long id) {
         log.debug("REST request to get City : {}", id);
-        City city = cityRepository.findOne(id);
+        City city = cityService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(city));
     }
 
@@ -114,7 +113,7 @@ public class CityResource {
     @Timed
     public ResponseEntity<Void> deleteCity(@PathVariable Long id) {
         log.debug("REST request to delete City : {}", id);
-        cityRepository.delete(id);
+        cityService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

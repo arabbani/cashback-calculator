@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.OfferType;
-
-import com.creatives.apsstr.cbcl.repository.OfferTypeRepository;
+import com.creatives.apsstr.cbcl.service.OfferTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class OfferTypeResource {
 
     private static final String ENTITY_NAME = "offerType";
 
-    private final OfferTypeRepository offerTypeRepository;
+    private final OfferTypeService offerTypeService;
 
-    public OfferTypeResource(OfferTypeRepository offerTypeRepository) {
-        this.offerTypeRepository = offerTypeRepository;
+    public OfferTypeResource(OfferTypeService offerTypeService) {
+        this.offerTypeService = offerTypeService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class OfferTypeResource {
         if (offerType.getId() != null) {
             throw new BadRequestAlertException("A new offerType cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        OfferType result = offerTypeRepository.save(offerType);
+        OfferType result = offerTypeService.save(offerType);
         return ResponseEntity.created(new URI("/api/offer-types/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class OfferTypeResource {
         if (offerType.getId() == null) {
             return createOfferType(offerType);
         }
-        OfferType result = offerTypeRepository.save(offerType);
+        OfferType result = offerTypeService.save(offerType);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, offerType.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class OfferTypeResource {
     @Timed
     public List<OfferType> getAllOfferTypes() {
         log.debug("REST request to get all OfferTypes");
-        return offerTypeRepository.findAll();
+        return offerTypeService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class OfferTypeResource {
     @Timed
     public ResponseEntity<OfferType> getOfferType(@PathVariable Long id) {
         log.debug("REST request to get OfferType : {}", id);
-        OfferType offerType = offerTypeRepository.findOne(id);
+        OfferType offerType = offerTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offerType));
     }
 
@@ -114,7 +113,7 @@ public class OfferTypeResource {
     @Timed
     public ResponseEntity<Void> deleteOfferType(@PathVariable Long id) {
         log.debug("REST request to delete OfferType : {}", id);
-        offerTypeRepository.delete(id);
+        offerTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

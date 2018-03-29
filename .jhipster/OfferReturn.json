@@ -23,7 +23,7 @@
         }
     ],
     "fields": [],
-    "changelogDate": "20180326062916",
+    "changelogDate": "20180329045919",
     "entityTableName": "offer_return",
     "dto": "no",
     "pagination": "no",

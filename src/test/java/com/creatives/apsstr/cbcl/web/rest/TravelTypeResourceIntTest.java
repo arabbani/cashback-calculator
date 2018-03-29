@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.TravelType;
 import com.creatives.apsstr.cbcl.repository.TravelTypeRepository;
+import com.creatives.apsstr.cbcl.service.TravelTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class TravelTypeResourceIntTest {
     private TravelTypeRepository travelTypeRepository;
 
     @Autowired
+    private TravelTypeService travelTypeService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class TravelTypeResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TravelTypeResource travelTypeResource = new TravelTypeResource(travelTypeRepository);
+        final TravelTypeResource travelTypeResource = new TravelTypeResource(travelTypeService);
         this.restTravelTypeMockMvc = MockMvcBuilders.standaloneSetup(travelTypeResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class TravelTypeResourceIntTest {
     @Transactional
     public void updateTravelType() throws Exception {
         // Initialize the database
-        travelTypeRepository.saveAndFlush(travelType);
+        travelTypeService.save(travelType);
+
         int databaseSizeBeforeUpdate = travelTypeRepository.findAll().size();
 
         // Update the travelType
@@ -227,7 +232,8 @@ public class TravelTypeResourceIntTest {
     @Transactional
     public void deleteTravelType() throws Exception {
         // Initialize the database
-        travelTypeRepository.saveAndFlush(travelType);
+        travelTypeService.save(travelType);
+
         int databaseSizeBeforeDelete = travelTypeRepository.findAll().size();
 
         // Get the travelType

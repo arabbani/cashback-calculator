@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.ReechargePlanType;
 import com.creatives.apsstr.cbcl.repository.ReechargePlanTypeRepository;
+import com.creatives.apsstr.cbcl.service.ReechargePlanTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -41,8 +42,14 @@ public class ReechargePlanTypeResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_DATA_PLAN = false;
+    private static final Boolean UPDATED_DATA_PLAN = true;
+
     @Autowired
     private ReechargePlanTypeRepository reechargePlanTypeRepository;
+
+    @Autowired
+    private ReechargePlanTypeService reechargePlanTypeService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -63,7 +70,7 @@ public class ReechargePlanTypeResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ReechargePlanTypeResource reechargePlanTypeResource = new ReechargePlanTypeResource(reechargePlanTypeRepository);
+        final ReechargePlanTypeResource reechargePlanTypeResource = new ReechargePlanTypeResource(reechargePlanTypeService);
         this.restReechargePlanTypeMockMvc = MockMvcBuilders.standaloneSetup(reechargePlanTypeResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -79,7 +86,8 @@ public class ReechargePlanTypeResourceIntTest {
      */
     public static ReechargePlanType createEntity(EntityManager em) {
         ReechargePlanType reechargePlanType = new ReechargePlanType()
-            .name(DEFAULT_NAME);
+            .name(DEFAULT_NAME)
+            .dataPlan(DEFAULT_DATA_PLAN);
         return reechargePlanType;
     }
 
@@ -104,6 +112,7 @@ public class ReechargePlanTypeResourceIntTest {
         assertThat(reechargePlanTypeList).hasSize(databaseSizeBeforeCreate + 1);
         ReechargePlanType testReechargePlanType = reechargePlanTypeList.get(reechargePlanTypeList.size() - 1);
         assertThat(testReechargePlanType.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testReechargePlanType.isDataPlan()).isEqualTo(DEFAULT_DATA_PLAN);
     }
 
     @Test
@@ -145,6 +154,24 @@ public class ReechargePlanTypeResourceIntTest {
 
     @Test
     @Transactional
+    public void checkDataPlanIsRequired() throws Exception {
+        int databaseSizeBeforeTest = reechargePlanTypeRepository.findAll().size();
+        // set the field null
+        reechargePlanType.setDataPlan(null);
+
+        // Create the ReechargePlanType, which fails.
+
+        restReechargePlanTypeMockMvc.perform(post("/api/reecharge-plan-types")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(reechargePlanType)))
+            .andExpect(status().isBadRequest());
+
+        List<ReechargePlanType> reechargePlanTypeList = reechargePlanTypeRepository.findAll();
+        assertThat(reechargePlanTypeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllReechargePlanTypes() throws Exception {
         // Initialize the database
         reechargePlanTypeRepository.saveAndFlush(reechargePlanType);
@@ -154,7 +181,8 @@ public class ReechargePlanTypeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(reechargePlanType.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].dataPlan").value(hasItem(DEFAULT_DATA_PLAN.booleanValue())));
     }
 
     @Test
@@ -168,7 +196,8 @@ public class ReechargePlanTypeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(reechargePlanType.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.dataPlan").value(DEFAULT_DATA_PLAN.booleanValue()));
     }
 
     @Test
@@ -183,7 +212,8 @@ public class ReechargePlanTypeResourceIntTest {
     @Transactional
     public void updateReechargePlanType() throws Exception {
         // Initialize the database
-        reechargePlanTypeRepository.saveAndFlush(reechargePlanType);
+        reechargePlanTypeService.save(reechargePlanType);
+
         int databaseSizeBeforeUpdate = reechargePlanTypeRepository.findAll().size();
 
         // Update the reechargePlanType
@@ -191,7 +221,8 @@ public class ReechargePlanTypeResourceIntTest {
         // Disconnect from session so that the updates on updatedReechargePlanType are not directly saved in db
         em.detach(updatedReechargePlanType);
         updatedReechargePlanType
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .dataPlan(UPDATED_DATA_PLAN);
 
         restReechargePlanTypeMockMvc.perform(put("/api/reecharge-plan-types")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -203,6 +234,7 @@ public class ReechargePlanTypeResourceIntTest {
         assertThat(reechargePlanTypeList).hasSize(databaseSizeBeforeUpdate);
         ReechargePlanType testReechargePlanType = reechargePlanTypeList.get(reechargePlanTypeList.size() - 1);
         assertThat(testReechargePlanType.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testReechargePlanType.isDataPlan()).isEqualTo(UPDATED_DATA_PLAN);
     }
 
     @Test
@@ -227,7 +259,8 @@ public class ReechargePlanTypeResourceIntTest {
     @Transactional
     public void deleteReechargePlanType() throws Exception {
         // Initialize the database
-        reechargePlanTypeRepository.saveAndFlush(reechargePlanType);
+        reechargePlanTypeService.save(reechargePlanType);
+
         int databaseSizeBeforeDelete = reechargePlanTypeRepository.findAll().size();
 
         // Get the reechargePlanType

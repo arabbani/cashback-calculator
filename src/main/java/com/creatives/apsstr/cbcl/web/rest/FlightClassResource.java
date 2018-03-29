@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.FlightClass;
-
-import com.creatives.apsstr.cbcl.repository.FlightClassRepository;
+import com.creatives.apsstr.cbcl.service.FlightClassService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class FlightClassResource {
 
     private static final String ENTITY_NAME = "flightClass";
 
-    private final FlightClassRepository flightClassRepository;
+    private final FlightClassService flightClassService;
 
-    public FlightClassResource(FlightClassRepository flightClassRepository) {
-        this.flightClassRepository = flightClassRepository;
+    public FlightClassResource(FlightClassService flightClassService) {
+        this.flightClassService = flightClassService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class FlightClassResource {
         if (flightClass.getId() != null) {
             throw new BadRequestAlertException("A new flightClass cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        FlightClass result = flightClassRepository.save(flightClass);
+        FlightClass result = flightClassService.save(flightClass);
         return ResponseEntity.created(new URI("/api/flight-classes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class FlightClassResource {
         if (flightClass.getId() == null) {
             return createFlightClass(flightClass);
         }
-        FlightClass result = flightClassRepository.save(flightClass);
+        FlightClass result = flightClassService.save(flightClass);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, flightClass.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class FlightClassResource {
     @Timed
     public List<FlightClass> getAllFlightClasses() {
         log.debug("REST request to get all FlightClasses");
-        return flightClassRepository.findAll();
+        return flightClassService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class FlightClassResource {
     @Timed
     public ResponseEntity<FlightClass> getFlightClass(@PathVariable Long id) {
         log.debug("REST request to get FlightClass : {}", id);
-        FlightClass flightClass = flightClassRepository.findOne(id);
+        FlightClass flightClass = flightClassService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(flightClass));
     }
 
@@ -114,7 +113,7 @@ public class FlightClassResource {
     @Timed
     public ResponseEntity<Void> deleteFlightClass(@PathVariable Long id) {
         log.debug("REST request to delete FlightClass : {}", id);
-        flightClassRepository.delete(id);
+        flightClassService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

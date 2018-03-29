@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.OperatingSystem;
-
-import com.creatives.apsstr.cbcl.repository.OperatingSystemRepository;
+import com.creatives.apsstr.cbcl.service.OperatingSystemService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class OperatingSystemResource {
 
     private static final String ENTITY_NAME = "operatingSystem";
 
-    private final OperatingSystemRepository operatingSystemRepository;
+    private final OperatingSystemService operatingSystemService;
 
-    public OperatingSystemResource(OperatingSystemRepository operatingSystemRepository) {
-        this.operatingSystemRepository = operatingSystemRepository;
+    public OperatingSystemResource(OperatingSystemService operatingSystemService) {
+        this.operatingSystemService = operatingSystemService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class OperatingSystemResource {
         if (operatingSystem.getId() != null) {
             throw new BadRequestAlertException("A new operatingSystem cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        OperatingSystem result = operatingSystemRepository.save(operatingSystem);
+        OperatingSystem result = operatingSystemService.save(operatingSystem);
         return ResponseEntity.created(new URI("/api/operating-systems/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class OperatingSystemResource {
         if (operatingSystem.getId() == null) {
             return createOperatingSystem(operatingSystem);
         }
-        OperatingSystem result = operatingSystemRepository.save(operatingSystem);
+        OperatingSystem result = operatingSystemService.save(operatingSystem);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, operatingSystem.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class OperatingSystemResource {
     @Timed
     public List<OperatingSystem> getAllOperatingSystems() {
         log.debug("REST request to get all OperatingSystems");
-        return operatingSystemRepository.findAll();
+        return operatingSystemService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class OperatingSystemResource {
     @Timed
     public ResponseEntity<OperatingSystem> getOperatingSystem(@PathVariable Long id) {
         log.debug("REST request to get OperatingSystem : {}", id);
-        OperatingSystem operatingSystem = operatingSystemRepository.findOne(id);
+        OperatingSystem operatingSystem = operatingSystemService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(operatingSystem));
     }
 
@@ -114,7 +113,7 @@ public class OperatingSystemResource {
     @Timed
     public ResponseEntity<Void> deleteOperatingSystem(@PathVariable Long id) {
         log.debug("REST request to delete OperatingSystem : {}", id);
-        operatingSystemRepository.delete(id);
+        operatingSystemService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

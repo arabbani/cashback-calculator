@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.OperatingSystemType;
-
-import com.creatives.apsstr.cbcl.repository.OperatingSystemTypeRepository;
+import com.creatives.apsstr.cbcl.service.OperatingSystemTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class OperatingSystemTypeResource {
 
     private static final String ENTITY_NAME = "operatingSystemType";
 
-    private final OperatingSystemTypeRepository operatingSystemTypeRepository;
+    private final OperatingSystemTypeService operatingSystemTypeService;
 
-    public OperatingSystemTypeResource(OperatingSystemTypeRepository operatingSystemTypeRepository) {
-        this.operatingSystemTypeRepository = operatingSystemTypeRepository;
+    public OperatingSystemTypeResource(OperatingSystemTypeService operatingSystemTypeService) {
+        this.operatingSystemTypeService = operatingSystemTypeService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class OperatingSystemTypeResource {
         if (operatingSystemType.getId() != null) {
             throw new BadRequestAlertException("A new operatingSystemType cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        OperatingSystemType result = operatingSystemTypeRepository.save(operatingSystemType);
+        OperatingSystemType result = operatingSystemTypeService.save(operatingSystemType);
         return ResponseEntity.created(new URI("/api/operating-system-types/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class OperatingSystemTypeResource {
         if (operatingSystemType.getId() == null) {
             return createOperatingSystemType(operatingSystemType);
         }
-        OperatingSystemType result = operatingSystemTypeRepository.save(operatingSystemType);
+        OperatingSystemType result = operatingSystemTypeService.save(operatingSystemType);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, operatingSystemType.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class OperatingSystemTypeResource {
     @Timed
     public List<OperatingSystemType> getAllOperatingSystemTypes() {
         log.debug("REST request to get all OperatingSystemTypes");
-        return operatingSystemTypeRepository.findAll();
+        return operatingSystemTypeService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class OperatingSystemTypeResource {
     @Timed
     public ResponseEntity<OperatingSystemType> getOperatingSystemType(@PathVariable Long id) {
         log.debug("REST request to get OperatingSystemType : {}", id);
-        OperatingSystemType operatingSystemType = operatingSystemTypeRepository.findOne(id);
+        OperatingSystemType operatingSystemType = operatingSystemTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(operatingSystemType));
     }
 
@@ -114,7 +113,7 @@ public class OperatingSystemTypeResource {
     @Timed
     public ResponseEntity<Void> deleteOperatingSystemType(@PathVariable Long id) {
         log.debug("REST request to delete OperatingSystemType : {}", id);
-        operatingSystemTypeRepository.delete(id);
+        operatingSystemTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Day;
-
-import com.creatives.apsstr.cbcl.repository.DayRepository;
+import com.creatives.apsstr.cbcl.service.DayService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class DayResource {
 
     private static final String ENTITY_NAME = "day";
 
-    private final DayRepository dayRepository;
+    private final DayService dayService;
 
-    public DayResource(DayRepository dayRepository) {
-        this.dayRepository = dayRepository;
+    public DayResource(DayService dayService) {
+        this.dayService = dayService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class DayResource {
         if (day.getId() != null) {
             throw new BadRequestAlertException("A new day cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Day result = dayRepository.save(day);
+        Day result = dayService.save(day);
         return ResponseEntity.created(new URI("/api/days/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class DayResource {
         if (day.getId() == null) {
             return createDay(day);
         }
-        Day result = dayRepository.save(day);
+        Day result = dayService.save(day);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, day.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class DayResource {
     @Timed
     public List<Day> getAllDays() {
         log.debug("REST request to get all Days");
-        return dayRepository.findAll();
+        return dayService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class DayResource {
     @Timed
     public ResponseEntity<Day> getDay(@PathVariable Long id) {
         log.debug("REST request to get Day : {}", id);
-        Day day = dayRepository.findOne(id);
+        Day day = dayService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(day));
     }
 
@@ -114,7 +113,7 @@ public class DayResource {
     @Timed
     public ResponseEntity<Void> deleteDay(@PathVariable Long id) {
         log.debug("REST request to delete Day : {}", id);
-        dayRepository.delete(id);
+        dayService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

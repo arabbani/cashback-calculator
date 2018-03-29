@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.State;
 import com.creatives.apsstr.cbcl.repository.StateRepository;
+import com.creatives.apsstr.cbcl.service.StateService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class StateResourceIntTest {
     private StateRepository stateRepository;
 
     @Autowired
+    private StateService stateService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class StateResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final StateResource stateResource = new StateResource(stateRepository);
+        final StateResource stateResource = new StateResource(stateService);
         this.restStateMockMvc = MockMvcBuilders.standaloneSetup(stateResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class StateResourceIntTest {
     @Transactional
     public void updateState() throws Exception {
         // Initialize the database
-        stateRepository.saveAndFlush(state);
+        stateService.save(state);
+
         int databaseSizeBeforeUpdate = stateRepository.findAll().size();
 
         // Update the state
@@ -227,7 +232,8 @@ public class StateResourceIntTest {
     @Transactional
     public void deleteState() throws Exception {
         // Initialize the database
-        stateRepository.saveAndFlush(state);
+        stateService.save(state);
+
         int databaseSizeBeforeDelete = stateRepository.findAll().size();
 
         // Get the state

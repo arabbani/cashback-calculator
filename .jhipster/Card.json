@@ -33,10 +33,10 @@
             "fieldValidateRulesMaxlength": 255
         }
     ],
-    "changelogDate": "20180326062929",
+    "changelogDate": "20180329045932",
     "entityTableName": "card",
     "dto": "no",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false
 }

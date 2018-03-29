@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Merchant;
-
-import com.creatives.apsstr.cbcl.repository.MerchantRepository;
+import com.creatives.apsstr.cbcl.service.MerchantService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class MerchantResource {
 
     private static final String ENTITY_NAME = "merchant";
 
-    private final MerchantRepository merchantRepository;
+    private final MerchantService merchantService;
 
-    public MerchantResource(MerchantRepository merchantRepository) {
-        this.merchantRepository = merchantRepository;
+    public MerchantResource(MerchantService merchantService) {
+        this.merchantService = merchantService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class MerchantResource {
         if (merchant.getId() != null) {
             throw new BadRequestAlertException("A new merchant cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Merchant result = merchantRepository.save(merchant);
+        Merchant result = merchantService.save(merchant);
         return ResponseEntity.created(new URI("/api/merchants/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class MerchantResource {
         if (merchant.getId() == null) {
             return createMerchant(merchant);
         }
-        Merchant result = merchantRepository.save(merchant);
+        Merchant result = merchantService.save(merchant);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, merchant.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class MerchantResource {
     @Timed
     public List<Merchant> getAllMerchants() {
         log.debug("REST request to get all Merchants");
-        return merchantRepository.findAllWithEagerRelationships();
+        return merchantService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class MerchantResource {
     @Timed
     public ResponseEntity<Merchant> getMerchant(@PathVariable Long id) {
         log.debug("REST request to get Merchant : {}", id);
-        Merchant merchant = merchantRepository.findOneWithEagerRelationships(id);
+        Merchant merchant = merchantService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(merchant));
     }
 
@@ -114,7 +113,7 @@ public class MerchantResource {
     @Timed
     public ResponseEntity<Void> deleteMerchant(@PathVariable Long id) {
         log.debug("REST request to delete Merchant : {}", id);
-        merchantRepository.delete(id);
+        merchantService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

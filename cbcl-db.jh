@@ -153,7 +153,8 @@ entity OfferPayment {
 }
 
 entity ReechargePlanType {
-	name String required maxlength(150)
+	name String required maxlength(150),
+    dataPlan Boolean required
 }
 
 entity Offer {
@@ -173,6 +174,7 @@ entity Offer {
     websiteOnly Boolean required,
     numberOfUses Long,
    	active Boolean required,
+    verified Boolean required,
     dummy Boolean required,
     apsstrExclusive Boolean required,
     url String maxlength(DEFAULT_URL_LENGTH)
@@ -252,4 +254,6 @@ relationship ManyToMany {
     ReechargeInfo{reechargePlanType(name)} to ReechargePlanType
 }
 
-service Offer with serviceClass
+service all with serviceClass except ReturnExtras, MainReturn, OfferReturn,
+ReturnInfo, ReechargeInfo, FlightInfo, TravelInfo, BusInfo, OfferPayment,
+ElectronicsInfo

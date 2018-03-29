@@ -1,32 +1,48 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DialogModule } from '@progress/kendo-angular-dialog';
-import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import { OperatingSystemTypeComponent, operatingSystemTypeRoute, OperatingSystemTypeService } from './';
+import {
+    OperatingSystemTypeService,
+    OperatingSystemTypePopupService,
+    OperatingSystemTypeComponent,
+    OperatingSystemTypeDetailComponent,
+    OperatingSystemTypeDialogComponent,
+    OperatingSystemTypePopupComponent,
+    OperatingSystemTypeDeletePopupComponent,
+    OperatingSystemTypeDeleteDialogComponent,
+    operatingSystemTypeRoute,
+    operatingSystemTypePopupRoute,
+} from './';
 
 const ENTITY_STATES = [
-    operatingSystemTypeRoute
+    ...operatingSystemTypeRoute,
+    ...operatingSystemTypePopupRoute,
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES),
-        ReactiveFormsModule,
-        GridModule,
-        DialogModule
+        RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
-        OperatingSystemTypeComponent
+        OperatingSystemTypeComponent,
+        OperatingSystemTypeDetailComponent,
+        OperatingSystemTypeDialogComponent,
+        OperatingSystemTypeDeleteDialogComponent,
+        OperatingSystemTypePopupComponent,
+        OperatingSystemTypeDeletePopupComponent,
     ],
     entryComponents: [
-        OperatingSystemTypeComponent
+        OperatingSystemTypeComponent,
+        OperatingSystemTypeDialogComponent,
+        OperatingSystemTypePopupComponent,
+        OperatingSystemTypeDeleteDialogComponent,
+        OperatingSystemTypeDeletePopupComponent,
     ],
     providers: [
-        OperatingSystemTypeService
+        OperatingSystemTypeService,
+        OperatingSystemTypePopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

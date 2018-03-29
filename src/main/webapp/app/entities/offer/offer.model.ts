@@ -1,21 +1,6 @@
-import {
-    Affiliate,
-    City,
-    Date,
-    Day,
-    Merchant,
-    OfferPolicy,
-    OfferReturn,
-    OfferType,
-    OperatingSystem,
-    ReechargeInfo,
-    ServiceProvider,
-    SubCategory,
-    TravelInfo,
-} from '..';
-import { ElectronicsInfo } from '../electronics-info';
+import { BaseEntity } from './../../shared';
 
-export class Offer {
+export class Offer implements BaseEntity {
     constructor(
         public id?: number,
         public name?: string,
@@ -34,28 +19,30 @@ export class Offer {
         public websiteOnly?: boolean,
         public numberOfUses?: number,
         public active?: boolean,
+        public verified?: boolean,
         public dummy?: boolean,
         public apsstrExclusive?: boolean,
         public url?: string,
-        public travelInfo?: TravelInfo,
-        public reechargeInfo?: ReechargeInfo,
-        public electronicsInfo?: ElectronicsInfo,
-        public offerReturns?: OfferReturn[],
-        public policy?: OfferPolicy,
-        public operatingSystems?: OperatingSystem[],
-        public cities?: City[],
-        public subCategories?: SubCategory[],
-        public serviceProviders?: ServiceProvider[],
-        public activeDates?: Date[],
-        public activeDays?: Day[],
-        public affiliate?: Affiliate,
-        public merchant?: Merchant,
-        public type?: OfferType,
+        public travelInfo?: BaseEntity,
+        public reechargeInfo?: BaseEntity,
+        public electronicsInfo?: BaseEntity,
+        public offerReturns?: BaseEntity[],
+        public policy?: BaseEntity,
+        public operatingSystems?: BaseEntity[],
+        public cities?: BaseEntity[],
+        public subCategories?: BaseEntity[],
+        public serviceProviders?: BaseEntity[],
+        public activeDates?: BaseEntity[],
+        public activeDays?: BaseEntity[],
+        public affiliate?: BaseEntity,
+        public merchant?: BaseEntity,
+        public type?: BaseEntity,
     ) {
         this.newUserOnly = false;
         this.appOnly = false;
         this.websiteOnly = false;
         this.active = false;
+        this.verified = false;
         this.dummy = false;
         this.apsstrExclusive = false;
     }

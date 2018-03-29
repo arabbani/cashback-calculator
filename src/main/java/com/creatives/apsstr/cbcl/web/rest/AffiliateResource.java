@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Affiliate;
-
-import com.creatives.apsstr.cbcl.repository.AffiliateRepository;
+import com.creatives.apsstr.cbcl.service.AffiliateService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class AffiliateResource {
 
     private static final String ENTITY_NAME = "affiliate";
 
-    private final AffiliateRepository affiliateRepository;
+    private final AffiliateService affiliateService;
 
-    public AffiliateResource(AffiliateRepository affiliateRepository) {
-        this.affiliateRepository = affiliateRepository;
+    public AffiliateResource(AffiliateService affiliateService) {
+        this.affiliateService = affiliateService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class AffiliateResource {
         if (affiliate.getId() != null) {
             throw new BadRequestAlertException("A new affiliate cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Affiliate result = affiliateRepository.save(affiliate);
+        Affiliate result = affiliateService.save(affiliate);
         return ResponseEntity.created(new URI("/api/affiliates/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class AffiliateResource {
         if (affiliate.getId() == null) {
             return createAffiliate(affiliate);
         }
-        Affiliate result = affiliateRepository.save(affiliate);
+        Affiliate result = affiliateService.save(affiliate);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, affiliate.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class AffiliateResource {
     @Timed
     public List<Affiliate> getAllAffiliates() {
         log.debug("REST request to get all Affiliates");
-        return affiliateRepository.findAll();
+        return affiliateService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class AffiliateResource {
     @Timed
     public ResponseEntity<Affiliate> getAffiliate(@PathVariable Long id) {
         log.debug("REST request to get Affiliate : {}", id);
-        Affiliate affiliate = affiliateRepository.findOne(id);
+        Affiliate affiliate = affiliateService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(affiliate));
     }
 
@@ -114,7 +113,7 @@ public class AffiliateResource {
     @Timed
     public ResponseEntity<Void> deleteAffiliate(@PathVariable Long id) {
         log.debug("REST request to delete Affiliate : {}", id);
-        affiliateRepository.delete(id);
+        affiliateService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

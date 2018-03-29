@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.OperatingSystemType;
 import com.creatives.apsstr.cbcl.repository.OperatingSystemTypeRepository;
+import com.creatives.apsstr.cbcl.service.OperatingSystemTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class OperatingSystemTypeResourceIntTest {
     private OperatingSystemTypeRepository operatingSystemTypeRepository;
 
     @Autowired
+    private OperatingSystemTypeService operatingSystemTypeService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class OperatingSystemTypeResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final OperatingSystemTypeResource operatingSystemTypeResource = new OperatingSystemTypeResource(operatingSystemTypeRepository);
+        final OperatingSystemTypeResource operatingSystemTypeResource = new OperatingSystemTypeResource(operatingSystemTypeService);
         this.restOperatingSystemTypeMockMvc = MockMvcBuilders.standaloneSetup(operatingSystemTypeResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class OperatingSystemTypeResourceIntTest {
     @Transactional
     public void updateOperatingSystemType() throws Exception {
         // Initialize the database
-        operatingSystemTypeRepository.saveAndFlush(operatingSystemType);
+        operatingSystemTypeService.save(operatingSystemType);
+
         int databaseSizeBeforeUpdate = operatingSystemTypeRepository.findAll().size();
 
         // Update the operatingSystemType
@@ -227,7 +232,8 @@ public class OperatingSystemTypeResourceIntTest {
     @Transactional
     public void deleteOperatingSystemType() throws Exception {
         // Initialize the database
-        operatingSystemTypeRepository.saveAndFlush(operatingSystemType);
+        operatingSystemTypeService.save(operatingSystemType);
+
         int databaseSizeBeforeDelete = operatingSystemTypeRepository.findAll().size();
 
         // Get the operatingSystemType

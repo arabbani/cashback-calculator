@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.Bank;
 import com.creatives.apsstr.cbcl.repository.BankRepository;
+import com.creatives.apsstr.cbcl.service.BankService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class BankResourceIntTest {
     private BankRepository bankRepository;
 
     @Autowired
+    private BankService bankService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class BankResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final BankResource bankResource = new BankResource(bankRepository);
+        final BankResource bankResource = new BankResource(bankService);
         this.restBankMockMvc = MockMvcBuilders.standaloneSetup(bankResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class BankResourceIntTest {
     @Transactional
     public void updateBank() throws Exception {
         // Initialize the database
-        bankRepository.saveAndFlush(bank);
+        bankService.save(bank);
+
         int databaseSizeBeforeUpdate = bankRepository.findAll().size();
 
         // Update the bank
@@ -227,7 +232,8 @@ public class BankResourceIntTest {
     @Transactional
     public void deleteBank() throws Exception {
         // Initialize the database
-        bankRepository.saveAndFlush(bank);
+        bankService.save(bank);
+
         int databaseSizeBeforeDelete = bankRepository.findAll().size();
 
         // Get the bank

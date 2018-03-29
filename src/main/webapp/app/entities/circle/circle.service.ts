@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { Circle } from './circle.model';
 import { createRequestOption } from '../../shared';
 
-type EntityResponseType = HttpResponse<Circle>;
+export type EntityResponseType = HttpResponse<Circle>;
 
 @Injectable()
 export class CircleService {

@@ -205,6 +205,13 @@
             ]
         },
         {
+            "fieldName": "verified",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
             "fieldName": "dummy",
             "fieldType": "Boolean",
             "fieldValidateRules": [
@@ -227,7 +234,7 @@
             "fieldValidateRulesMaxlength": 2000
         }
     ],
-    "changelogDate": "20180326062932",
+    "changelogDate": "20180329045935",
     "entityTableName": "offer",
     "dto": "no",
     "pagination": "no",

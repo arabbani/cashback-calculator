@@ -1,36 +1,30 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { State } from '@progress/kendo-data-query';
-import * as _ from 'lodash';
-import { Observable } from 'rxjs/Observable';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs/Subscription';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
-import { GRID_STATE } from '../../shared';
 import { TravelType } from './travel-type.model';
 import { TravelTypeService } from './travel-type.service';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'apsstr-travel-type',
     templateUrl: './travel-type.component.html'
 })
-export class TravelTypeComponent implements OnInit {
+export class TravelTypeComponent implements OnInit, OnDestroy {
+travelTypes: TravelType[];
+    currentAccount: any;
+    eventSubscriber: Subscription;
 
-    public travelTypes: TravelType[];
-    public gridState: State;
-    travelTypeFormGroup: FormGroup;
-
-    constructor(private travelTypeService: TravelTypeService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrDialogService) {
-        this.createTravelTypeFormGroup = this.createTravelTypeFormGroup.bind(this);
+    constructor(
+        private travelTypeService: TravelTypeService,
+        private jhiAlertService: JhiAlertService,
+        private eventManager: JhiEventManager,
+        private principal: Principal
+    ) {
     }
 
-    ngOnInit() {
-        this.gridState = GRID_STATE;
-        this.loadAllTravelType();
-    }
-
-    private loadAllTravelType() {
+    loadAll() {
         this.travelTypeService.query().subscribe(
             (res: HttpResponse<TravelType[]>) => {
                 this.travelTypes = res.body;
@@ -38,60 +32,26 @@ export class TravelTypeComponent implements OnInit {
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
-
-    public createTravelTypeFormGroup(args: any): FormGroup {
-        const item = args.isNew ? new TravelType() : args.dataItem;
-        this.travelTypeFormGroup = this.formBuilder.group({
-            'id': item.id,
-            'name': [item.name, Validators.required]
+    ngOnInit() {
+        this.loadAll();
+        this.principal.identity().then((account) => {
+            this.currentAccount = account;
         });
-        return this.travelTypeFormGroup;
+        this.registerChangeInTravelTypes();
     }
 
-    public saveItem({ formGroup, isNew }): void {
-        const product = formGroup.value;
-        if (isNew) {
-            this.subscribeToSaveResponse(this.travelTypeService.create(product), isNew);
-        } else {
-            this.subscribeToSaveResponse(this.travelTypeService.update(product));
-        }
+    ngOnDestroy() {
+        this.eventManager.destroy(this.eventSubscriber);
     }
 
-    public deleteItem(dataItem: any): void {
-        this.apsstrKendoDialogService.confirm().subscribe((result) => {
-            if (result['text'] === 'No') {
-                this.travelTypes.push(dataItem);
-                this.travelTypes = _.sortBy(this.travelTypes, (item) => item.id);
-            } else if (result['text'] === 'Yes') {
-                this.travelTypeService.delete(dataItem.id).subscribe(
-                    (response) => {
-                        console.log('DELETED');
-                    },
-                    (error: HttpErrorResponse) => {
-                        this.loadAllTravelType();
-                        this.onError(error);
-                    }
-                );
-            }
-        });
+    trackId(index: number, item: TravelType) {
+        return item.id;
     }
-
-    private subscribeToSaveResponse(result: Observable<HttpResponse<TravelType>>, isNew?: boolean) {
-        result.subscribe((res: HttpResponse<TravelType>) =>
-            this.onSaveSuccess(res.body, isNew), (res: HttpErrorResponse) => this.onSaveError());
-    }
-
-    private onSaveSuccess(result: TravelType, isNew?: boolean) {
-        if (isNew && isNew === true) {
-            this.loadAllTravelType();
-        }
-    }
-
-    private onSaveError() {
-        this.loadAllTravelType();
+    registerChangeInTravelTypes() {
+        this.eventSubscriber = this.eventManager.subscribe('travelTypeListModification', (response) => this.loadAll());
     }
 
     private onError(error) {
-        console.log('ERROR');
+        this.jhiAlertService.error(error.message, null, null);
     }
 }

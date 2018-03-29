@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.Category;
 import com.creatives.apsstr.cbcl.repository.CategoryRepository;
+import com.creatives.apsstr.cbcl.service.CategoryService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class CategoryResourceIntTest {
     private CategoryRepository categoryRepository;
 
     @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class CategoryResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CategoryResource categoryResource = new CategoryResource(categoryRepository);
+        final CategoryResource categoryResource = new CategoryResource(categoryService);
         this.restCategoryMockMvc = MockMvcBuilders.standaloneSetup(categoryResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class CategoryResourceIntTest {
     @Transactional
     public void updateCategory() throws Exception {
         // Initialize the database
-        categoryRepository.saveAndFlush(category);
+        categoryService.save(category);
+
         int databaseSizeBeforeUpdate = categoryRepository.findAll().size();
 
         // Update the category
@@ -227,7 +232,8 @@ public class CategoryResourceIntTest {
     @Transactional
     public void deleteCategory() throws Exception {
         // Initialize the database
-        categoryRepository.saveAndFlush(category);
+        categoryService.save(category);
+
         int databaseSizeBeforeDelete = categoryRepository.findAll().size();
 
         // Get the category

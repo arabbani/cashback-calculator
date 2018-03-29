@@ -1,12 +1,11 @@
 import { BaseEntity } from './../../shared';
-import { SubCategory, Offer } from '..';
 
-export class ServiceProvider {
+export class ServiceProvider implements BaseEntity {
     constructor(
         public id?: number,
         public name?: string,
-        public subCategories?: SubCategory[],
-        public offers?: Offer[],
+        public subCategories?: BaseEntity[],
+        public offers?: BaseEntity[],
     ) {
     }
 }

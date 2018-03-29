@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.State;
-
-import com.creatives.apsstr.cbcl.repository.StateRepository;
+import com.creatives.apsstr.cbcl.service.StateService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class StateResource {
 
     private static final String ENTITY_NAME = "state";
 
-    private final StateRepository stateRepository;
+    private final StateService stateService;
 
-    public StateResource(StateRepository stateRepository) {
-        this.stateRepository = stateRepository;
+    public StateResource(StateService stateService) {
+        this.stateService = stateService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class StateResource {
         if (state.getId() != null) {
             throw new BadRequestAlertException("A new state cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        State result = stateRepository.save(state);
+        State result = stateService.save(state);
         return ResponseEntity.created(new URI("/api/states/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class StateResource {
         if (state.getId() == null) {
             return createState(state);
         }
-        State result = stateRepository.save(state);
+        State result = stateService.save(state);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, state.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class StateResource {
     @Timed
     public List<State> getAllStates() {
         log.debug("REST request to get all States");
-        return stateRepository.findAll();
+        return stateService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class StateResource {
     @Timed
     public ResponseEntity<State> getState(@PathVariable Long id) {
         log.debug("REST request to get State : {}", id);
-        State state = stateRepository.findOne(id);
+        State state = stateService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(state));
     }
 
@@ -114,7 +113,7 @@ public class StateResource {
     @Timed
     public ResponseEntity<Void> deleteState(@PathVariable Long id) {
         log.debug("REST request to delete State : {}", id);
-        stateRepository.delete(id);
+        stateService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

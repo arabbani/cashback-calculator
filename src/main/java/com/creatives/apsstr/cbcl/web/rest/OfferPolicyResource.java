@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.OfferPolicy;
-
-import com.creatives.apsstr.cbcl.repository.OfferPolicyRepository;
+import com.creatives.apsstr.cbcl.service.OfferPolicyService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class OfferPolicyResource {
 
     private static final String ENTITY_NAME = "offerPolicy";
 
-    private final OfferPolicyRepository offerPolicyRepository;
+    private final OfferPolicyService offerPolicyService;
 
-    public OfferPolicyResource(OfferPolicyRepository offerPolicyRepository) {
-        this.offerPolicyRepository = offerPolicyRepository;
+    public OfferPolicyResource(OfferPolicyService offerPolicyService) {
+        this.offerPolicyService = offerPolicyService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class OfferPolicyResource {
         if (offerPolicy.getId() != null) {
             throw new BadRequestAlertException("A new offerPolicy cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        OfferPolicy result = offerPolicyRepository.save(offerPolicy);
+        OfferPolicy result = offerPolicyService.save(offerPolicy);
         return ResponseEntity.created(new URI("/api/offer-policies/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class OfferPolicyResource {
         if (offerPolicy.getId() == null) {
             return createOfferPolicy(offerPolicy);
         }
-        OfferPolicy result = offerPolicyRepository.save(offerPolicy);
+        OfferPolicy result = offerPolicyService.save(offerPolicy);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, offerPolicy.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class OfferPolicyResource {
     @Timed
     public List<OfferPolicy> getAllOfferPolicies() {
         log.debug("REST request to get all OfferPolicies");
-        return offerPolicyRepository.findAll();
+        return offerPolicyService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class OfferPolicyResource {
     @Timed
     public ResponseEntity<OfferPolicy> getOfferPolicy(@PathVariable Long id) {
         log.debug("REST request to get OfferPolicy : {}", id);
-        OfferPolicy offerPolicy = offerPolicyRepository.findOne(id);
+        OfferPolicy offerPolicy = offerPolicyService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offerPolicy));
     }
 
@@ -114,7 +113,7 @@ public class OfferPolicyResource {
     @Timed
     public ResponseEntity<Void> deleteOfferPolicy(@PathVariable Long id) {
         log.debug("REST request to delete OfferPolicy : {}", id);
-        offerPolicyRepository.delete(id);
+        offerPolicyService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

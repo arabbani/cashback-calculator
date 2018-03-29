@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Circle;
-
-import com.creatives.apsstr.cbcl.repository.CircleRepository;
+import com.creatives.apsstr.cbcl.service.CircleService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class CircleResource {
 
     private static final String ENTITY_NAME = "circle";
 
-    private final CircleRepository circleRepository;
+    private final CircleService circleService;
 
-    public CircleResource(CircleRepository circleRepository) {
-        this.circleRepository = circleRepository;
+    public CircleResource(CircleService circleService) {
+        this.circleService = circleService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class CircleResource {
         if (circle.getId() != null) {
             throw new BadRequestAlertException("A new circle cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Circle result = circleRepository.save(circle);
+        Circle result = circleService.save(circle);
         return ResponseEntity.created(new URI("/api/circles/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class CircleResource {
         if (circle.getId() == null) {
             return createCircle(circle);
         }
-        Circle result = circleRepository.save(circle);
+        Circle result = circleService.save(circle);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, circle.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class CircleResource {
     @Timed
     public List<Circle> getAllCircles() {
         log.debug("REST request to get all Circles");
-        return circleRepository.findAll();
+        return circleService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class CircleResource {
     @Timed
     public ResponseEntity<Circle> getCircle(@PathVariable Long id) {
         log.debug("REST request to get Circle : {}", id);
-        Circle circle = circleRepository.findOne(id);
+        Circle circle = circleService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(circle));
     }
 
@@ -114,7 +113,7 @@ public class CircleResource {
     @Timed
     public ResponseEntity<Void> deleteCircle(@PathVariable Long id) {
         log.debug("REST request to delete Circle : {}", id);
-        circleRepository.delete(id);
+        circleService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

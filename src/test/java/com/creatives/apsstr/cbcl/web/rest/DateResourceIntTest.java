@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.Date;
 import com.creatives.apsstr.cbcl.repository.DateRepository;
+import com.creatives.apsstr.cbcl.service.DateService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class DateResourceIntTest {
     private DateRepository dateRepository;
 
     @Autowired
+    private DateService dateService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class DateResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final DateResource dateResource = new DateResource(dateRepository);
+        final DateResource dateResource = new DateResource(dateService);
         this.restDateMockMvc = MockMvcBuilders.standaloneSetup(dateResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class DateResourceIntTest {
     @Transactional
     public void updateDate() throws Exception {
         // Initialize the database
-        dateRepository.saveAndFlush(date);
+        dateService.save(date);
+
         int databaseSizeBeforeUpdate = dateRepository.findAll().size();
 
         // Update the date
@@ -227,7 +232,8 @@ public class DateResourceIntTest {
     @Transactional
     public void deleteDate() throws Exception {
         // Initialize the database
-        dateRepository.saveAndFlush(date);
+        dateService.save(date);
+
         int databaseSizeBeforeDelete = dateRepository.findAll().size();
 
         // Get the date

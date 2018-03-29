@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.Day;
 import com.creatives.apsstr.cbcl.repository.DayRepository;
+import com.creatives.apsstr.cbcl.service.DayService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class DayResourceIntTest {
     private DayRepository dayRepository;
 
     @Autowired
+    private DayService dayService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class DayResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final DayResource dayResource = new DayResource(dayRepository);
+        final DayResource dayResource = new DayResource(dayService);
         this.restDayMockMvc = MockMvcBuilders.standaloneSetup(dayResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class DayResourceIntTest {
     @Transactional
     public void updateDay() throws Exception {
         // Initialize the database
-        dayRepository.saveAndFlush(day);
+        dayService.save(day);
+
         int databaseSizeBeforeUpdate = dayRepository.findAll().size();
 
         // Update the day
@@ -227,7 +232,8 @@ public class DayResourceIntTest {
     @Transactional
     public void deleteDay() throws Exception {
         // Initialize the database
-        dayRepository.saveAndFlush(day);
+        dayService.save(day);
+
         int databaseSizeBeforeDelete = dayRepository.findAll().size();
 
         // Get the day

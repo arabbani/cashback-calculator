@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.ReturnMode;
-
-import com.creatives.apsstr.cbcl.repository.ReturnModeRepository;
+import com.creatives.apsstr.cbcl.service.ReturnModeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class ReturnModeResource {
 
     private static final String ENTITY_NAME = "returnMode";
 
-    private final ReturnModeRepository returnModeRepository;
+    private final ReturnModeService returnModeService;
 
-    public ReturnModeResource(ReturnModeRepository returnModeRepository) {
-        this.returnModeRepository = returnModeRepository;
+    public ReturnModeResource(ReturnModeService returnModeService) {
+        this.returnModeService = returnModeService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class ReturnModeResource {
         if (returnMode.getId() != null) {
             throw new BadRequestAlertException("A new returnMode cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ReturnMode result = returnModeRepository.save(returnMode);
+        ReturnMode result = returnModeService.save(returnMode);
         return ResponseEntity.created(new URI("/api/return-modes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class ReturnModeResource {
         if (returnMode.getId() == null) {
             return createReturnMode(returnMode);
         }
-        ReturnMode result = returnModeRepository.save(returnMode);
+        ReturnMode result = returnModeService.save(returnMode);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, returnMode.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class ReturnModeResource {
     @Timed
     public List<ReturnMode> getAllReturnModes() {
         log.debug("REST request to get all ReturnModes");
-        return returnModeRepository.findAll();
+        return returnModeService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class ReturnModeResource {
     @Timed
     public ResponseEntity<ReturnMode> getReturnMode(@PathVariable Long id) {
         log.debug("REST request to get ReturnMode : {}", id);
-        ReturnMode returnMode = returnModeRepository.findOne(id);
+        ReturnMode returnMode = returnModeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(returnMode));
     }
 
@@ -114,7 +113,7 @@ public class ReturnModeResource {
     @Timed
     public ResponseEntity<Void> deleteReturnMode(@PathVariable Long id) {
         log.debug("REST request to delete ReturnMode : {}", id);
-        returnModeRepository.delete(id);
+        returnModeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

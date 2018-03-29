@@ -1,36 +1,30 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { State } from '@progress/kendo-data-query';
-import * as _ from 'lodash';
-import { Observable } from 'rxjs/Observable';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs/Subscription';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
-import { GRID_STATE } from '../../shared';
 import { BankType } from './bank-type.model';
 import { BankTypeService } from './bank-type.service';
+import { Principal } from '../../shared';
 
 @Component({
     selector: 'apsstr-bank-type',
     templateUrl: './bank-type.component.html'
 })
-export class BankTypeComponent implements OnInit {
+export class BankTypeComponent implements OnInit, OnDestroy {
+bankTypes: BankType[];
+    currentAccount: any;
+    eventSubscriber: Subscription;
 
-    public bankTypes: BankType[];
-    public gridState: State;
-    bankTypeFormGroup: FormGroup;
-
-    constructor(private bankTypeService: BankTypeService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrDialogService) {
-        this.createBankTypeFormGroup = this.createBankTypeFormGroup.bind(this);
+    constructor(
+        private bankTypeService: BankTypeService,
+        private jhiAlertService: JhiAlertService,
+        private eventManager: JhiEventManager,
+        private principal: Principal
+    ) {
     }
 
-    ngOnInit() {
-        this.gridState = GRID_STATE;
-        this.loadAllBankType();
-    }
-
-    private loadAllBankType() {
+    loadAll() {
         this.bankTypeService.query().subscribe(
             (res: HttpResponse<BankType[]>) => {
                 this.bankTypes = res.body;
@@ -38,61 +32,26 @@ export class BankTypeComponent implements OnInit {
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
-
-    public createBankTypeFormGroup(args: any): FormGroup {
-        const item = args.isNew ? new BankType() : args.dataItem;
-        this.bankTypeFormGroup = this.formBuilder.group({
-            'id': item.id,
-            'name': [item.name, Validators.required]
+    ngOnInit() {
+        this.loadAll();
+        this.principal.identity().then((account) => {
+            this.currentAccount = account;
         });
-        return this.bankTypeFormGroup;
+        this.registerChangeInBankTypes();
     }
 
-    public saveItem({ formGroup, isNew }): void {
-        const product = formGroup.value;
-        if (isNew) {
-            this.subscribeToSaveResponse(this.bankTypeService.create(product), isNew);
-        } else {
-            this.subscribeToSaveResponse(this.bankTypeService.update(product));
-        }
+    ngOnDestroy() {
+        this.eventManager.destroy(this.eventSubscriber);
     }
 
-    public deleteItem(dataItem: any): void {
-        this.apsstrKendoDialogService.confirm().subscribe((result) => {
-            if (result['text'] === 'No') {
-                this.bankTypes.push(dataItem);
-                this.bankTypes = _.sortBy(this.bankTypes, (item) => item.id);
-            } else if (result['text'] === 'Yes') {
-                this.bankTypeService.delete(dataItem.id).subscribe(
-                    (response) => {
-                        console.log('DELETED');
-                    },
-                    (error: HttpErrorResponse) => {
-                        this.loadAllBankType();
-                        this.onError(error);
-                    }
-                );
-            }
-        });
+    trackId(index: number, item: BankType) {
+        return item.id;
     }
-
-    private subscribeToSaveResponse(result: Observable<HttpResponse<BankType>>, isNew?: boolean) {
-        result.subscribe((res: HttpResponse<BankType>) =>
-            this.onSaveSuccess(res.body, isNew), (res: HttpErrorResponse) => this.onSaveError());
-    }
-
-    private onSaveSuccess(result: BankType, isNew?: boolean) {
-        if (isNew && isNew === true) {
-            this.loadAllBankType();
-        }
-    }
-
-    private onSaveError() {
-        this.loadAllBankType();
+    registerChangeInBankTypes() {
+        this.eventSubscriber = this.eventManager.subscribe('bankTypeListModification', (response) => this.loadAll());
     }
 
     private onError(error) {
-        console.log('ERROR');
+        this.jhiAlertService.error(error.message, null, null);
     }
-
 }

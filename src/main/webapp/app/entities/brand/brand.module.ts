@@ -1,34 +1,48 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { DialogModule } from '@progress/kendo-angular-dialog';
-import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import { BrandComponent, brandRoute, BrandService } from './';
+import {
+    BrandService,
+    BrandPopupService,
+    BrandComponent,
+    BrandDetailComponent,
+    BrandDialogComponent,
+    BrandPopupComponent,
+    BrandDeletePopupComponent,
+    BrandDeleteDialogComponent,
+    brandRoute,
+    brandPopupRoute,
+} from './';
 
 const ENTITY_STATES = [
-    brandRoute
+    ...brandRoute,
+    ...brandPopupRoute,
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES),
-        ReactiveFormsModule,
-        GridModule,
-        DialogModule,
-        NgSelectModule
+        RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
-        BrandComponent
+        BrandComponent,
+        BrandDetailComponent,
+        BrandDialogComponent,
+        BrandDeleteDialogComponent,
+        BrandPopupComponent,
+        BrandDeletePopupComponent,
     ],
     entryComponents: [
-        BrandComponent
+        BrandComponent,
+        BrandDialogComponent,
+        BrandPopupComponent,
+        BrandDeleteDialogComponent,
+        BrandDeletePopupComponent,
     ],
     providers: [
-        BrandService
+        BrandService,
+        BrandPopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

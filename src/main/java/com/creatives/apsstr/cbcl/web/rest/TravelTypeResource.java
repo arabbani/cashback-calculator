@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.TravelType;
-
-import com.creatives.apsstr.cbcl.repository.TravelTypeRepository;
+import com.creatives.apsstr.cbcl.service.TravelTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class TravelTypeResource {
 
     private static final String ENTITY_NAME = "travelType";
 
-    private final TravelTypeRepository travelTypeRepository;
+    private final TravelTypeService travelTypeService;
 
-    public TravelTypeResource(TravelTypeRepository travelTypeRepository) {
-        this.travelTypeRepository = travelTypeRepository;
+    public TravelTypeResource(TravelTypeService travelTypeService) {
+        this.travelTypeService = travelTypeService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class TravelTypeResource {
         if (travelType.getId() != null) {
             throw new BadRequestAlertException("A new travelType cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        TravelType result = travelTypeRepository.save(travelType);
+        TravelType result = travelTypeService.save(travelType);
         return ResponseEntity.created(new URI("/api/travel-types/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class TravelTypeResource {
         if (travelType.getId() == null) {
             return createTravelType(travelType);
         }
-        TravelType result = travelTypeRepository.save(travelType);
+        TravelType result = travelTypeService.save(travelType);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, travelType.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class TravelTypeResource {
     @Timed
     public List<TravelType> getAllTravelTypes() {
         log.debug("REST request to get all TravelTypes");
-        return travelTypeRepository.findAll();
+        return travelTypeService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class TravelTypeResource {
     @Timed
     public ResponseEntity<TravelType> getTravelType(@PathVariable Long id) {
         log.debug("REST request to get TravelType : {}", id);
-        TravelType travelType = travelTypeRepository.findOne(id);
+        TravelType travelType = travelTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(travelType));
     }
 
@@ -114,7 +113,7 @@ public class TravelTypeResource {
     @Timed
     public ResponseEntity<Void> deleteTravelType(@PathVariable Long id) {
         log.debug("REST request to delete TravelType : {}", id);
-        travelTypeRepository.delete(id);
+        travelTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

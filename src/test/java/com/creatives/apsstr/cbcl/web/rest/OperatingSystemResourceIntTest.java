@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.OperatingSystem;
 import com.creatives.apsstr.cbcl.repository.OperatingSystemRepository;
+import com.creatives.apsstr.cbcl.service.OperatingSystemService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class OperatingSystemResourceIntTest {
     private OperatingSystemRepository operatingSystemRepository;
 
     @Autowired
+    private OperatingSystemService operatingSystemService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class OperatingSystemResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final OperatingSystemResource operatingSystemResource = new OperatingSystemResource(operatingSystemRepository);
+        final OperatingSystemResource operatingSystemResource = new OperatingSystemResource(operatingSystemService);
         this.restOperatingSystemMockMvc = MockMvcBuilders.standaloneSetup(operatingSystemResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class OperatingSystemResourceIntTest {
     @Transactional
     public void updateOperatingSystem() throws Exception {
         // Initialize the database
-        operatingSystemRepository.saveAndFlush(operatingSystem);
+        operatingSystemService.save(operatingSystem);
+
         int databaseSizeBeforeUpdate = operatingSystemRepository.findAll().size();
 
         // Update the operatingSystem
@@ -227,7 +232,8 @@ public class OperatingSystemResourceIntTest {
     @Transactional
     public void deleteOperatingSystem() throws Exception {
         // Initialize the database
-        operatingSystemRepository.saveAndFlush(operatingSystem);
+        operatingSystemService.save(operatingSystem);
+
         int databaseSizeBeforeDelete = operatingSystemRepository.findAll().size();
 
         // Get the operatingSystem

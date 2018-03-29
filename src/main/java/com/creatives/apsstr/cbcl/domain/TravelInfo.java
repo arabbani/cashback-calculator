@@ -1,27 +1,14 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
  * A TravelInfo.
@@ -29,7 +16,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "travel_info")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class TravelInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,17 +24,19 @@ public class TravelInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     @JoinColumn(unique = true)
     private FlightInfo flightInfo;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     @JoinColumn(unique = true)
     private BusInfo busInfo;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "travel_info_type", joinColumns = @JoinColumn(name = "travel_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "types_id", referencedColumnName = "id"))
+    @JoinTable(name = "travel_info_type",
+               joinColumns = @JoinColumn(name="travel_infos_id", referencedColumnName="id"),
+               inverseJoinColumns = @JoinColumn(name="types_id", referencedColumnName="id"))
     private Set<TravelType> types = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -132,6 +120,8 @@ public class TravelInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "TravelInfo{" + "id=" + getId() + "}";
+        return "TravelInfo{" +
+            "id=" + getId() +
+            "}";
     }
 }

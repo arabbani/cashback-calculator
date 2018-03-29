@@ -1,0 +1,67 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myReturnInfoLabel">Create or edit a Return Info</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <apsstr-alert-error></apsstr-alert-error>
+        <div class="form-group" [hidden]="!returnInfo.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="returnInfo.id" readonly />
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" for="field_mainReturn">Main Return</label>
+            <select class="form-control" id="field_mainReturn" name="mainReturn" [(ngModel)]="returnInfo.mainReturn">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="mainReturnOption.id === returnInfo.mainReturn?.id ? returnInfo.mainReturn : mainReturnOption" *ngFor="let mainReturnOption of mainreturns; trackBy: trackMainReturnById">{{mainReturnOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_extras">Extras</label>
+            <select class="form-control" id="field_extras" name="extras" [(ngModel)]="returnInfo.extras">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="returnExtrasOption.id === returnInfo.extras?.id ? returnInfo.extras : returnExtrasOption" *ngFor="let returnExtrasOption of extras; trackBy: trackReturnExtrasById">{{returnExtrasOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_payment">Payment</label>
+            <select class="form-control" id="field_payment" name="payment" [(ngModel)]="returnInfo.payment">
+                <option [ngValue]="null"></option>
+                <option [ngValue]="offerPaymentOption.id === returnInfo.payment?.id ? returnInfo.payment : offerPaymentOption" *ngFor="let offerPaymentOption of payments; trackBy: trackOfferPaymentById">{{offerPaymentOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_type">Type</label>
+            <select class="form-control" id="field_type" name="type" [(ngModel)]="returnInfo.type" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="returnTypeOption.id === returnInfo.type?.id ? returnInfo.type : returnTypeOption" *ngFor="let returnTypeOption of returntypes; trackBy: trackReturnTypeById">{{returnTypeOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_returnOffer">Return Offer</label>
+            <select class="form-control" id="field_returnOffer" name="returnOffer" [(ngModel)]="returnInfo.returnOffer" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="offerOption.id === returnInfo.returnOffer?.id ? returnInfo.returnOffer : offerOption" *ngFor="let offerOption of offers; trackBy: trackOfferById">{{offerOption.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_offerReturn">Offer Return</label>
+            <select class="form-control" id="field_offerReturn" name="offerReturn" [(ngModel)]="returnInfo.offerReturn" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="offerReturnOption.id === returnInfo.offerReturn?.id ? returnInfo.offerReturn : offerReturnOption" *ngFor="let offerReturnOption of offerreturns; trackBy: trackOfferReturnById">{{offerReturnOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

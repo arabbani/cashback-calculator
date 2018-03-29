@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.BankType;
 import com.creatives.apsstr.cbcl.repository.BankTypeRepository;
+import com.creatives.apsstr.cbcl.service.BankTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class BankTypeResourceIntTest {
     private BankTypeRepository bankTypeRepository;
 
     @Autowired
+    private BankTypeService bankTypeService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class BankTypeResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final BankTypeResource bankTypeResource = new BankTypeResource(bankTypeRepository);
+        final BankTypeResource bankTypeResource = new BankTypeResource(bankTypeService);
         this.restBankTypeMockMvc = MockMvcBuilders.standaloneSetup(bankTypeResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class BankTypeResourceIntTest {
     @Transactional
     public void updateBankType() throws Exception {
         // Initialize the database
-        bankTypeRepository.saveAndFlush(bankType);
+        bankTypeService.save(bankType);
+
         int databaseSizeBeforeUpdate = bankTypeRepository.findAll().size();
 
         // Update the bankType
@@ -227,7 +232,8 @@ public class BankTypeResourceIntTest {
     @Transactional
     public void deleteBankType() throws Exception {
         // Initialize the database
-        bankTypeRepository.saveAndFlush(bankType);
+        bankTypeService.save(bankType);
+
         int databaseSizeBeforeDelete = bankTypeRepository.findAll().size();
 
         // Get the bankType

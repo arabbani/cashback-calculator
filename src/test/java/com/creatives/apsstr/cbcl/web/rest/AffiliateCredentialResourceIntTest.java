@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.AffiliateCredential;
 import com.creatives.apsstr.cbcl.repository.AffiliateCredentialRepository;
+import com.creatives.apsstr.cbcl.service.AffiliateCredentialService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -54,6 +55,9 @@ public class AffiliateCredentialResourceIntTest {
     private AffiliateCredentialRepository affiliateCredentialRepository;
 
     @Autowired
+    private AffiliateCredentialService affiliateCredentialService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -72,7 +76,7 @@ public class AffiliateCredentialResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AffiliateCredentialResource affiliateCredentialResource = new AffiliateCredentialResource(affiliateCredentialRepository);
+        final AffiliateCredentialResource affiliateCredentialResource = new AffiliateCredentialResource(affiliateCredentialService);
         this.restAffiliateCredentialMockMvc = MockMvcBuilders.standaloneSetup(affiliateCredentialResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -204,7 +208,8 @@ public class AffiliateCredentialResourceIntTest {
     @Transactional
     public void updateAffiliateCredential() throws Exception {
         // Initialize the database
-        affiliateCredentialRepository.saveAndFlush(affiliateCredential);
+        affiliateCredentialService.save(affiliateCredential);
+
         int databaseSizeBeforeUpdate = affiliateCredentialRepository.findAll().size();
 
         // Update the affiliateCredential
@@ -254,7 +259,8 @@ public class AffiliateCredentialResourceIntTest {
     @Transactional
     public void deleteAffiliateCredential() throws Exception {
         // Initialize the database
-        affiliateCredentialRepository.saveAndFlush(affiliateCredential);
+        affiliateCredentialService.save(affiliateCredential);
+
         int databaseSizeBeforeDelete = affiliateCredentialRepository.findAll().size();
 
         // Get the affiliateCredential

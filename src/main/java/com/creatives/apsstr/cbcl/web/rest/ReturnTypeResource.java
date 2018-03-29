@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.ReturnType;
-
-import com.creatives.apsstr.cbcl.repository.ReturnTypeRepository;
+import com.creatives.apsstr.cbcl.service.ReturnTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class ReturnTypeResource {
 
     private static final String ENTITY_NAME = "returnType";
 
-    private final ReturnTypeRepository returnTypeRepository;
+    private final ReturnTypeService returnTypeService;
 
-    public ReturnTypeResource(ReturnTypeRepository returnTypeRepository) {
-        this.returnTypeRepository = returnTypeRepository;
+    public ReturnTypeResource(ReturnTypeService returnTypeService) {
+        this.returnTypeService = returnTypeService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class ReturnTypeResource {
         if (returnType.getId() != null) {
             throw new BadRequestAlertException("A new returnType cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ReturnType result = returnTypeRepository.save(returnType);
+        ReturnType result = returnTypeService.save(returnType);
         return ResponseEntity.created(new URI("/api/return-types/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class ReturnTypeResource {
         if (returnType.getId() == null) {
             return createReturnType(returnType);
         }
-        ReturnType result = returnTypeRepository.save(returnType);
+        ReturnType result = returnTypeService.save(returnType);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, returnType.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class ReturnTypeResource {
     @Timed
     public List<ReturnType> getAllReturnTypes() {
         log.debug("REST request to get all ReturnTypes");
-        return returnTypeRepository.findAll();
+        return returnTypeService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class ReturnTypeResource {
     @Timed
     public ResponseEntity<ReturnType> getReturnType(@PathVariable Long id) {
         log.debug("REST request to get ReturnType : {}", id);
-        ReturnType returnType = returnTypeRepository.findOne(id);
+        ReturnType returnType = returnTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(returnType));
     }
 
@@ -114,7 +113,7 @@ public class ReturnTypeResource {
     @Timed
     public ResponseEntity<Void> deleteReturnType(@PathVariable Long id) {
         log.debug("REST request to delete ReturnType : {}", id);
-        returnTypeRepository.delete(id);
+        returnTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

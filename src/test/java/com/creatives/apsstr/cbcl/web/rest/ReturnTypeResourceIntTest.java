@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.ReturnType;
 import com.creatives.apsstr.cbcl.repository.ReturnTypeRepository;
+import com.creatives.apsstr.cbcl.service.ReturnTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class ReturnTypeResourceIntTest {
     private ReturnTypeRepository returnTypeRepository;
 
     @Autowired
+    private ReturnTypeService returnTypeService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class ReturnTypeResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ReturnTypeResource returnTypeResource = new ReturnTypeResource(returnTypeRepository);
+        final ReturnTypeResource returnTypeResource = new ReturnTypeResource(returnTypeService);
         this.restReturnTypeMockMvc = MockMvcBuilders.standaloneSetup(returnTypeResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class ReturnTypeResourceIntTest {
     @Transactional
     public void updateReturnType() throws Exception {
         // Initialize the database
-        returnTypeRepository.saveAndFlush(returnType);
+        returnTypeService.save(returnType);
+
         int databaseSizeBeforeUpdate = returnTypeRepository.findAll().size();
 
         // Update the returnType
@@ -227,7 +232,8 @@ public class ReturnTypeResourceIntTest {
     @Transactional
     public void deleteReturnType() throws Exception {
         // Initialize the database
-        returnTypeRepository.saveAndFlush(returnType);
+        returnTypeService.save(returnType);
+
         int databaseSizeBeforeDelete = returnTypeRepository.findAll().size();
 
         // Get the returnType

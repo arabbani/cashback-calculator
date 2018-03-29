@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.AffiliateCredential;
-
-import com.creatives.apsstr.cbcl.repository.AffiliateCredentialRepository;
+import com.creatives.apsstr.cbcl.service.AffiliateCredentialService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class AffiliateCredentialResource {
 
     private static final String ENTITY_NAME = "affiliateCredential";
 
-    private final AffiliateCredentialRepository affiliateCredentialRepository;
+    private final AffiliateCredentialService affiliateCredentialService;
 
-    public AffiliateCredentialResource(AffiliateCredentialRepository affiliateCredentialRepository) {
-        this.affiliateCredentialRepository = affiliateCredentialRepository;
+    public AffiliateCredentialResource(AffiliateCredentialService affiliateCredentialService) {
+        this.affiliateCredentialService = affiliateCredentialService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class AffiliateCredentialResource {
         if (affiliateCredential.getId() != null) {
             throw new BadRequestAlertException("A new affiliateCredential cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        AffiliateCredential result = affiliateCredentialRepository.save(affiliateCredential);
+        AffiliateCredential result = affiliateCredentialService.save(affiliateCredential);
         return ResponseEntity.created(new URI("/api/affiliate-credentials/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class AffiliateCredentialResource {
         if (affiliateCredential.getId() == null) {
             return createAffiliateCredential(affiliateCredential);
         }
-        AffiliateCredential result = affiliateCredentialRepository.save(affiliateCredential);
+        AffiliateCredential result = affiliateCredentialService.save(affiliateCredential);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, affiliateCredential.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class AffiliateCredentialResource {
     @Timed
     public List<AffiliateCredential> getAllAffiliateCredentials() {
         log.debug("REST request to get all AffiliateCredentials");
-        return affiliateCredentialRepository.findAll();
+        return affiliateCredentialService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class AffiliateCredentialResource {
     @Timed
     public ResponseEntity<AffiliateCredential> getAffiliateCredential(@PathVariable Long id) {
         log.debug("REST request to get AffiliateCredential : {}", id);
-        AffiliateCredential affiliateCredential = affiliateCredentialRepository.findOne(id);
+        AffiliateCredential affiliateCredential = affiliateCredentialService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(affiliateCredential));
     }
 
@@ -114,7 +113,7 @@ public class AffiliateCredentialResource {
     @Timed
     public ResponseEntity<Void> deleteAffiliateCredential(@PathVariable Long id) {
         log.debug("REST request to delete AffiliateCredential : {}", id);
-        affiliateCredentialRepository.delete(id);
+        affiliateCredentialService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

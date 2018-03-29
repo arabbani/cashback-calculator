@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.OfferType;
 import com.creatives.apsstr.cbcl.repository.OfferTypeRepository;
+import com.creatives.apsstr.cbcl.service.OfferTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class OfferTypeResourceIntTest {
     private OfferTypeRepository offerTypeRepository;
 
     @Autowired
+    private OfferTypeService offerTypeService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class OfferTypeResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final OfferTypeResource offerTypeResource = new OfferTypeResource(offerTypeRepository);
+        final OfferTypeResource offerTypeResource = new OfferTypeResource(offerTypeService);
         this.restOfferTypeMockMvc = MockMvcBuilders.standaloneSetup(offerTypeResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class OfferTypeResourceIntTest {
     @Transactional
     public void updateOfferType() throws Exception {
         // Initialize the database
-        offerTypeRepository.saveAndFlush(offerType);
+        offerTypeService.save(offerType);
+
         int databaseSizeBeforeUpdate = offerTypeRepository.findAll().size();
 
         // Update the offerType
@@ -227,7 +232,8 @@ public class OfferTypeResourceIntTest {
     @Transactional
     public void deleteOfferType() throws Exception {
         // Initialize the database
-        offerTypeRepository.saveAndFlush(offerType);
+        offerTypeService.save(offerType);
+
         int databaseSizeBeforeDelete = offerTypeRepository.findAll().size();
 
         // Get the offerType

@@ -1,27 +1,16 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
  * A State.
@@ -29,7 +18,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "state")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class State implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,7 +31,7 @@ public class State implements Serializable {
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "state", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "state")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<City> cities = new HashSet<>();
@@ -118,6 +106,9 @@ public class State implements Serializable {
 
     @Override
     public String toString() {
-        return "State{" + "id=" + getId() + ", name='" + getName() + "'" + "}";
+        return "State{" +
+            "id=" + getId() +
+            ", name='" + getName() + "'" +
+            "}";
     }
 }

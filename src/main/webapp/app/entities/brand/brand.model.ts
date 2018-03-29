@@ -1,10 +1,10 @@
-import { SubCategory } from '..';
+import { BaseEntity } from './../../shared';
 
-export class Brand {
+export class Brand implements BaseEntity {
     constructor(
         public id?: number,
         public name?: string,
-        public subCategories?: SubCategory[],
+        public subCategories?: BaseEntity[],
     ) {
     }
 }

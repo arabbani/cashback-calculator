@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Brand;
-
-import com.creatives.apsstr.cbcl.repository.BrandRepository;
+import com.creatives.apsstr.cbcl.service.BrandService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class BrandResource {
 
     private static final String ENTITY_NAME = "brand";
 
-    private final BrandRepository brandRepository;
+    private final BrandService brandService;
 
-    public BrandResource(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
+    public BrandResource(BrandService brandService) {
+        this.brandService = brandService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class BrandResource {
         if (brand.getId() != null) {
             throw new BadRequestAlertException("A new brand cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Brand result = brandRepository.save(brand);
+        Brand result = brandService.save(brand);
         return ResponseEntity.created(new URI("/api/brands/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class BrandResource {
         if (brand.getId() == null) {
             return createBrand(brand);
         }
-        Brand result = brandRepository.save(brand);
+        Brand result = brandService.save(brand);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, brand.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class BrandResource {
     @Timed
     public List<Brand> getAllBrands() {
         log.debug("REST request to get all Brands");
-        return brandRepository.findAllWithEagerRelationships();
+        return brandService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class BrandResource {
     @Timed
     public ResponseEntity<Brand> getBrand(@PathVariable Long id) {
         log.debug("REST request to get Brand : {}", id);
-        Brand brand = brandRepository.findOneWithEagerRelationships(id);
+        Brand brand = brandService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(brand));
     }
 
@@ -114,7 +113,7 @@ public class BrandResource {
     @Timed
     public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
         log.debug("REST request to delete Brand : {}", id);
-        brandRepository.delete(id);
+        brandService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

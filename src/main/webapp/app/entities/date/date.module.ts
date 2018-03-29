@@ -1,32 +1,48 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DialogModule } from '@progress/kendo-angular-dialog';
-import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import { DateComponent, dateRoute, DateService } from './';
+import {
+    DateService,
+    DatePopupService,
+    DateComponent,
+    DateDetailComponent,
+    DateDialogComponent,
+    DatePopupComponent,
+    DateDeletePopupComponent,
+    DateDeleteDialogComponent,
+    dateRoute,
+    datePopupRoute,
+} from './';
 
 const ENTITY_STATES = [
-    dateRoute
+    ...dateRoute,
+    ...datePopupRoute,
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES),
-        ReactiveFormsModule,
-        GridModule,
-        DialogModule
+        RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
-        DateComponent
+        DateComponent,
+        DateDetailComponent,
+        DateDialogComponent,
+        DateDeleteDialogComponent,
+        DatePopupComponent,
+        DateDeletePopupComponent,
     ],
     entryComponents: [
-        DateComponent
+        DateComponent,
+        DateDialogComponent,
+        DatePopupComponent,
+        DateDeleteDialogComponent,
+        DateDeletePopupComponent,
     ],
     providers: [
-        DateService
+        DateService,
+        DatePopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.CardProvider;
 import com.creatives.apsstr.cbcl.repository.CardProviderRepository;
+import com.creatives.apsstr.cbcl.service.CardProviderService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class CardProviderResourceIntTest {
     private CardProviderRepository cardProviderRepository;
 
     @Autowired
+    private CardProviderService cardProviderService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class CardProviderResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CardProviderResource cardProviderResource = new CardProviderResource(cardProviderRepository);
+        final CardProviderResource cardProviderResource = new CardProviderResource(cardProviderService);
         this.restCardProviderMockMvc = MockMvcBuilders.standaloneSetup(cardProviderResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class CardProviderResourceIntTest {
     @Transactional
     public void updateCardProvider() throws Exception {
         // Initialize the database
-        cardProviderRepository.saveAndFlush(cardProvider);
+        cardProviderService.save(cardProvider);
+
         int databaseSizeBeforeUpdate = cardProviderRepository.findAll().size();
 
         // Update the cardProvider
@@ -227,7 +232,8 @@ public class CardProviderResourceIntTest {
     @Transactional
     public void deleteCardProvider() throws Exception {
         // Initialize the database
-        cardProviderRepository.saveAndFlush(cardProvider);
+        cardProviderService.save(cardProvider);
+
         int databaseSizeBeforeDelete = cardProviderRepository.findAll().size();
 
         // Get the cardProvider

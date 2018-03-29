@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.Region;
 import com.creatives.apsstr.cbcl.repository.RegionRepository;
+import com.creatives.apsstr.cbcl.service.RegionService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class RegionResourceIntTest {
     private RegionRepository regionRepository;
 
     @Autowired
+    private RegionService regionService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class RegionResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final RegionResource regionResource = new RegionResource(regionRepository);
+        final RegionResource regionResource = new RegionResource(regionService);
         this.restRegionMockMvc = MockMvcBuilders.standaloneSetup(regionResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class RegionResourceIntTest {
     @Transactional
     public void updateRegion() throws Exception {
         // Initialize the database
-        regionRepository.saveAndFlush(region);
+        regionService.save(region);
+
         int databaseSizeBeforeUpdate = regionRepository.findAll().size();
 
         // Update the region
@@ -227,7 +232,8 @@ public class RegionResourceIntTest {
     @Transactional
     public void deleteRegion() throws Exception {
         // Initialize the database
-        regionRepository.saveAndFlush(region);
+        regionService.save(region);
+
         int databaseSizeBeforeDelete = regionRepository.findAll().size();
 
         // Get the region

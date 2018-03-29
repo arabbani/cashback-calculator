@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Region;
-
-import com.creatives.apsstr.cbcl.repository.RegionRepository;
+import com.creatives.apsstr.cbcl.service.RegionService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class RegionResource {
 
     private static final String ENTITY_NAME = "region";
 
-    private final RegionRepository regionRepository;
+    private final RegionService regionService;
 
-    public RegionResource(RegionRepository regionRepository) {
-        this.regionRepository = regionRepository;
+    public RegionResource(RegionService regionService) {
+        this.regionService = regionService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class RegionResource {
         if (region.getId() != null) {
             throw new BadRequestAlertException("A new region cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Region result = regionRepository.save(region);
+        Region result = regionService.save(region);
         return ResponseEntity.created(new URI("/api/regions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class RegionResource {
         if (region.getId() == null) {
             return createRegion(region);
         }
-        Region result = regionRepository.save(region);
+        Region result = regionService.save(region);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, region.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class RegionResource {
     @Timed
     public List<Region> getAllRegions() {
         log.debug("REST request to get all Regions");
-        return regionRepository.findAll();
+        return regionService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class RegionResource {
     @Timed
     public ResponseEntity<Region> getRegion(@PathVariable Long id) {
         log.debug("REST request to get Region : {}", id);
-        Region region = regionRepository.findOne(id);
+        Region region = regionService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(region));
     }
 
@@ -114,7 +113,7 @@ public class RegionResource {
     @Timed
     public ResponseEntity<Void> deleteRegion(@PathVariable Long id) {
         log.debug("REST request to delete Region : {}", id);
-        regionRepository.delete(id);
+        regionService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

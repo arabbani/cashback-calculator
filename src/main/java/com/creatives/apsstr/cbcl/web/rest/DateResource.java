@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Date;
-
-import com.creatives.apsstr.cbcl.repository.DateRepository;
+import com.creatives.apsstr.cbcl.service.DateService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class DateResource {
 
     private static final String ENTITY_NAME = "date";
 
-    private final DateRepository dateRepository;
+    private final DateService dateService;
 
-    public DateResource(DateRepository dateRepository) {
-        this.dateRepository = dateRepository;
+    public DateResource(DateService dateService) {
+        this.dateService = dateService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class DateResource {
         if (date.getId() != null) {
             throw new BadRequestAlertException("A new date cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Date result = dateRepository.save(date);
+        Date result = dateService.save(date);
         return ResponseEntity.created(new URI("/api/dates/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class DateResource {
         if (date.getId() == null) {
             return createDate(date);
         }
-        Date result = dateRepository.save(date);
+        Date result = dateService.save(date);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, date.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class DateResource {
     @Timed
     public List<Date> getAllDates() {
         log.debug("REST request to get all Dates");
-        return dateRepository.findAll();
+        return dateService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class DateResource {
     @Timed
     public ResponseEntity<Date> getDate(@PathVariable Long id) {
         log.debug("REST request to get Date : {}", id);
-        Date date = dateRepository.findOne(id);
+        Date date = dateService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(date));
     }
 
@@ -114,7 +113,7 @@ public class DateResource {
     @Timed
     public ResponseEntity<Void> deleteDate(@PathVariable Long id) {
         log.debug("REST request to delete Date : {}", id);
-        dateRepository.delete(id);
+        dateService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

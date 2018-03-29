@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.ReturnMode;
 import com.creatives.apsstr.cbcl.repository.ReturnModeRepository;
+import com.creatives.apsstr.cbcl.service.ReturnModeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class ReturnModeResourceIntTest {
     private ReturnModeRepository returnModeRepository;
 
     @Autowired
+    private ReturnModeService returnModeService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class ReturnModeResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ReturnModeResource returnModeResource = new ReturnModeResource(returnModeRepository);
+        final ReturnModeResource returnModeResource = new ReturnModeResource(returnModeService);
         this.restReturnModeMockMvc = MockMvcBuilders.standaloneSetup(returnModeResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class ReturnModeResourceIntTest {
     @Transactional
     public void updateReturnMode() throws Exception {
         // Initialize the database
-        returnModeRepository.saveAndFlush(returnMode);
+        returnModeService.save(returnMode);
+
         int databaseSizeBeforeUpdate = returnModeRepository.findAll().size();
 
         // Update the returnMode
@@ -227,7 +232,8 @@ public class ReturnModeResourceIntTest {
     @Transactional
     public void deleteReturnMode() throws Exception {
         // Initialize the database
-        returnModeRepository.saveAndFlush(returnMode);
+        returnModeService.save(returnMode);
+
         int databaseSizeBeforeDelete = returnModeRepository.findAll().size();
 
         // Get the returnMode

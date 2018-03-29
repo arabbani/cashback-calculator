@@ -1,10 +1,10 @@
-import { Offer } from '..';
+import { BaseEntity } from './../../shared';
 
-export class OfferType {
+export class OfferType implements BaseEntity {
     constructor(
         public id?: number,
         public name?: string,
-        public offers?: Offer[],
+        public offers?: BaseEntity[],
     ) {
     }
 }

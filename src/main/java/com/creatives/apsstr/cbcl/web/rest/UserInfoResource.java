@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.UserInfo;
-
-import com.creatives.apsstr.cbcl.repository.UserInfoRepository;
+import com.creatives.apsstr.cbcl.service.UserInfoService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -29,10 +28,10 @@ public class UserInfoResource {
 
     private static final String ENTITY_NAME = "userInfo";
 
-    private final UserInfoRepository userInfoRepository;
+    private final UserInfoService userInfoService;
 
-    public UserInfoResource(UserInfoRepository userInfoRepository) {
-        this.userInfoRepository = userInfoRepository;
+    public UserInfoResource(UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
     }
 
     /**
@@ -49,7 +48,7 @@ public class UserInfoResource {
         if (userInfo.getId() != null) {
             throw new BadRequestAlertException("A new userInfo cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        UserInfo result = userInfoRepository.save(userInfo);
+        UserInfo result = userInfoService.save(userInfo);
         return ResponseEntity.created(new URI("/api/user-infos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -71,7 +70,7 @@ public class UserInfoResource {
         if (userInfo.getId() == null) {
             return createUserInfo(userInfo);
         }
-        UserInfo result = userInfoRepository.save(userInfo);
+        UserInfo result = userInfoService.save(userInfo);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userInfo.getId().toString()))
             .body(result);
@@ -86,7 +85,7 @@ public class UserInfoResource {
     @Timed
     public List<UserInfo> getAllUserInfos() {
         log.debug("REST request to get all UserInfos");
-        return userInfoRepository.findAllWithEagerRelationships();
+        return userInfoService.findAll();
         }
 
     /**
@@ -99,7 +98,7 @@ public class UserInfoResource {
     @Timed
     public ResponseEntity<UserInfo> getUserInfo(@PathVariable Long id) {
         log.debug("REST request to get UserInfo : {}", id);
-        UserInfo userInfo = userInfoRepository.findOneWithEagerRelationships(id);
+        UserInfo userInfo = userInfoService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userInfo));
     }
 
@@ -113,7 +112,7 @@ public class UserInfoResource {
     @Timed
     public ResponseEntity<Void> deleteUserInfo(@PathVariable Long id) {
         log.debug("REST request to delete UserInfo : {}", id);
-        userInfoRepository.delete(id);
+        userInfoService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

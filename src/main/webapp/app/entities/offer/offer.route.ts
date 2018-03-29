@@ -1,30 +1,60 @@
 import { Routes } from '@angular/router';
 
 import { UserRouteAccessService } from '../../shared';
-import { CreateOfferComponent } from './create-offer/create-offer.component';
-import { OfferResolver } from './offer-resolver.service';
 import { OfferComponent } from './offer.component';
+import { OfferDetailComponent } from './offer-detail.component';
+import { OfferPopupComponent } from './offer-dialog.component';
+import { OfferDeletePopupComponent } from './offer-delete-dialog.component';
 
 export const offerRoute: Routes = [
     {
-        path: 'offers',
+        path: 'offer',
         component: OfferComponent,
         data: {
-            authorities: ['ROLE_ADMIN'],
+            authorities: ['ROLE_USER'],
             pageTitle: 'Offers'
         },
         canActivate: [UserRouteAccessService]
-    },
-    {
-        path: 'offer',
-        component: CreateOfferComponent,
+    }, {
+        path: 'offer/:id',
+        component: OfferDetailComponent,
         data: {
-            authorities: ['ROLE_ADMIN'],
-            pageTitle: 'Offer'
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Offers'
+        },
+        canActivate: [UserRouteAccessService]
+    }
+];
+
+export const offerPopupRoute: Routes = [
+    {
+        path: 'offer-new',
+        component: OfferPopupComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Offers'
         },
         canActivate: [UserRouteAccessService],
-        resolve: {
-            offer: OfferResolver
-        }
+        outlet: 'popup'
+    },
+    {
+        path: 'offer/:id/edit',
+        component: OfferPopupComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Offers'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
+    },
+    {
+        path: 'offer/:id/delete',
+        component: OfferDeletePopupComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Offers'
+        },
+        canActivate: [UserRouteAccessService],
+        outlet: 'popup'
     }
 ];

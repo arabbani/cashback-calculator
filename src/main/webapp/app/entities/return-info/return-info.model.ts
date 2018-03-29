@@ -1,15 +1,14 @@
-import { Offer, OfferPayment, OfferReturn, ReturnExtras, ReturnType } from '..';
-import { MainReturn } from '../main-return';
+import { BaseEntity } from './../../shared';
 
-export class ReturnInfo {
+export class ReturnInfo implements BaseEntity {
     constructor(
         public id?: number,
-        public mainReturn?: MainReturn,
-        public extras?: ReturnExtras,
-        public payment?: OfferPayment,
-        public type?: ReturnType,
-        public returnOffer?: Offer,
-        public offerReturn?: OfferReturn,
+        public mainReturn?: BaseEntity,
+        public extras?: BaseEntity,
+        public payment?: BaseEntity,
+        public type?: BaseEntity,
+        public returnOffer?: BaseEntity,
+        public offerReturn?: BaseEntity,
     ) {
     }
 }

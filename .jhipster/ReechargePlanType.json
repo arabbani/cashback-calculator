@@ -10,12 +10,19 @@
                 "maxlength"
             ],
             "fieldValidateRulesMaxlength": 150
+        },
+        {
+            "fieldName": "dataPlan",
+            "fieldType": "Boolean",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
-    "changelogDate": "20180326062931",
+    "changelogDate": "20180329045934",
     "entityTableName": "reecharge_plan_type",
     "dto": "no",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false
 }

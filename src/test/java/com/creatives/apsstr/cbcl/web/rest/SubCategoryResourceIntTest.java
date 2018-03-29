@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.SubCategory;
 import com.creatives.apsstr.cbcl.repository.SubCategoryRepository;
+import com.creatives.apsstr.cbcl.service.SubCategoryService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -48,6 +49,9 @@ public class SubCategoryResourceIntTest {
     private SubCategoryRepository subCategoryRepository;
 
     @Autowired
+    private SubCategoryService subCategoryService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -66,7 +70,7 @@ public class SubCategoryResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SubCategoryResource subCategoryResource = new SubCategoryResource(subCategoryRepository);
+        final SubCategoryResource subCategoryResource = new SubCategoryResource(subCategoryService);
         this.restSubCategoryMockMvc = MockMvcBuilders.standaloneSetup(subCategoryResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -208,7 +212,8 @@ public class SubCategoryResourceIntTest {
     @Transactional
     public void updateSubCategory() throws Exception {
         // Initialize the database
-        subCategoryRepository.saveAndFlush(subCategory);
+        subCategoryService.save(subCategory);
+
         int databaseSizeBeforeUpdate = subCategoryRepository.findAll().size();
 
         // Update the subCategory
@@ -254,7 +259,8 @@ public class SubCategoryResourceIntTest {
     @Transactional
     public void deleteSubCategory() throws Exception {
         // Initialize the database
-        subCategoryRepository.saveAndFlush(subCategory);
+        subCategoryService.save(subCategory);
+
         int databaseSizeBeforeDelete = subCategoryRepository.findAll().size();
 
         // Get the subCategory

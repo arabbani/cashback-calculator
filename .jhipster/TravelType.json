@@ -12,10 +12,10 @@
             "fieldValidateRulesMaxlength": 25
         }
     ],
-    "changelogDate": "20180326062919",
+    "changelogDate": "20180329045922",
     "entityTableName": "travel_type",
     "dto": "no",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false
 }

@@ -1,31 +1,22 @@
 package com.creatives.apsstr.cbcl.web.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.ReechargePlanType;
-import com.creatives.apsstr.cbcl.repository.ReechargePlanTypeRepository;
+import com.creatives.apsstr.cbcl.service.ReechargePlanTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
-
+import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import io.github.jhipster.web.util.ResponseUtil;
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing ReechargePlanType.
@@ -38,10 +29,10 @@ public class ReechargePlanTypeResource {
 
     private static final String ENTITY_NAME = "reechargePlanType";
 
-    private final ReechargePlanTypeRepository reechargePlanTypeRepository;
+    private final ReechargePlanTypeService reechargePlanTypeService;
 
-    public ReechargePlanTypeResource(ReechargePlanTypeRepository reechargePlanTypeRepository) {
-        this.reechargePlanTypeRepository = reechargePlanTypeRepository;
+    public ReechargePlanTypeResource(ReechargePlanTypeService reechargePlanTypeService) {
+        this.reechargePlanTypeService = reechargePlanTypeService;
     }
 
     /**
@@ -53,16 +44,15 @@ public class ReechargePlanTypeResource {
      */
     @PostMapping("/reecharge-plan-types")
     @Timed
-    public ResponseEntity<ReechargePlanType> createReechargePlanType(
-            @Valid @RequestBody ReechargePlanType reechargePlanType) throws URISyntaxException {
+    public ResponseEntity<ReechargePlanType> createReechargePlanType(@Valid @RequestBody ReechargePlanType reechargePlanType) throws URISyntaxException {
         log.debug("REST request to save ReechargePlanType : {}", reechargePlanType);
         if (reechargePlanType.getId() != null) {
-            throw new BadRequestAlertException("A new reechargePlanType cannot already have an ID", ENTITY_NAME,
-                    "idexists");
+            throw new BadRequestAlertException("A new reechargePlanType cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        ReechargePlanType result = reechargePlanTypeRepository.save(reechargePlanType);
+        ReechargePlanType result = reechargePlanTypeService.save(reechargePlanType);
         return ResponseEntity.created(new URI("/api/reecharge-plan-types/" + result.getId()))
-                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
     }
 
     /**
@@ -76,16 +66,15 @@ public class ReechargePlanTypeResource {
      */
     @PutMapping("/reecharge-plan-types")
     @Timed
-    public ResponseEntity<ReechargePlanType> updateReechargePlanType(
-            @Valid @RequestBody ReechargePlanType reechargePlanType) throws URISyntaxException {
+    public ResponseEntity<ReechargePlanType> updateReechargePlanType(@Valid @RequestBody ReechargePlanType reechargePlanType) throws URISyntaxException {
         log.debug("REST request to update ReechargePlanType : {}", reechargePlanType);
         if (reechargePlanType.getId() == null) {
             return createReechargePlanType(reechargePlanType);
         }
-        ReechargePlanType result = reechargePlanTypeRepository.save(reechargePlanType);
+        ReechargePlanType result = reechargePlanTypeService.save(reechargePlanType);
         return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, reechargePlanType.getId().toString()))
-                .body(result);
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, reechargePlanType.getId().toString()))
+            .body(result);
     }
 
     /**
@@ -97,8 +86,8 @@ public class ReechargePlanTypeResource {
     @Timed
     public List<ReechargePlanType> getAllReechargePlanTypes() {
         log.debug("REST request to get all ReechargePlanTypes");
-        return reechargePlanTypeRepository.findAll();
-    }
+        return reechargePlanTypeService.findAll();
+        }
 
     /**
      * GET  /reecharge-plan-types/:id : get the "id" reechargePlanType.
@@ -110,7 +99,7 @@ public class ReechargePlanTypeResource {
     @Timed
     public ResponseEntity<ReechargePlanType> getReechargePlanType(@PathVariable Long id) {
         log.debug("REST request to get ReechargePlanType : {}", id);
-        ReechargePlanType reechargePlanType = reechargePlanTypeRepository.findOne(id);
+        ReechargePlanType reechargePlanType = reechargePlanTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(reechargePlanType));
     }
 
@@ -124,19 +113,7 @@ public class ReechargePlanTypeResource {
     @Timed
     public ResponseEntity<Void> deleteReechargePlanType(@PathVariable Long id) {
         log.debug("REST request to delete ReechargePlanType : {}", id);
-        reechargePlanTypeRepository.delete(id);
+        reechargePlanTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
-
-    /**
-    * GET  /reecharge-plan-types/data-plans : get all the dataPlans.
-    *
-    * @return the ResponseEntity with status 200 (OK) and the list of dataPlans in body
-    */
-    @GetMapping("/reecharge-plan-types/data-plans")
-    @Timed
-    public List<ReechargePlanType> getAllDataPlans() {
-        log.debug("REST request to get all dataPlans");
-        return reechargePlanTypeRepository.findByDataPlan(true);
     }
 }

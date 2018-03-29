@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Bank;
-
-import com.creatives.apsstr.cbcl.repository.BankRepository;
+import com.creatives.apsstr.cbcl.service.BankService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class BankResource {
 
     private static final String ENTITY_NAME = "bank";
 
-    private final BankRepository bankRepository;
+    private final BankService bankService;
 
-    public BankResource(BankRepository bankRepository) {
-        this.bankRepository = bankRepository;
+    public BankResource(BankService bankService) {
+        this.bankService = bankService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class BankResource {
         if (bank.getId() != null) {
             throw new BadRequestAlertException("A new bank cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Bank result = bankRepository.save(bank);
+        Bank result = bankService.save(bank);
         return ResponseEntity.created(new URI("/api/banks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class BankResource {
         if (bank.getId() == null) {
             return createBank(bank);
         }
-        Bank result = bankRepository.save(bank);
+        Bank result = bankService.save(bank);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, bank.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class BankResource {
     @Timed
     public List<Bank> getAllBanks() {
         log.debug("REST request to get all Banks");
-        return bankRepository.findAll();
+        return bankService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class BankResource {
     @Timed
     public ResponseEntity<Bank> getBank(@PathVariable Long id) {
         log.debug("REST request to get Bank : {}", id);
-        Bank bank = bankRepository.findOne(id);
+        Bank bank = bankService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(bank));
     }
 
@@ -114,7 +113,7 @@ public class BankResource {
     @Timed
     public ResponseEntity<Void> deleteBank(@PathVariable Long id) {
         log.debug("REST request to delete Bank : {}", id);
-        bankRepository.delete(id);
+        bankService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

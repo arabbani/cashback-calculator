@@ -32,10 +32,10 @@
             "fieldValidateRulesMaxlength": 100
         }
     ],
-    "changelogDate": "20180326062903",
+    "changelogDate": "20180329045906",
     "entityTableName": "city",
     "dto": "no",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false
 }

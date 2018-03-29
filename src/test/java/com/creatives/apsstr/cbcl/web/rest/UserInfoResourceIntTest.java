@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.UserInfo;
 import com.creatives.apsstr.cbcl.repository.UserInfoRepository;
+import com.creatives.apsstr.cbcl.service.UserInfoService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -42,6 +43,9 @@ public class UserInfoResourceIntTest {
     private UserInfoRepository userInfoRepository;
 
     @Autowired
+    private UserInfoService userInfoService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -60,7 +64,7 @@ public class UserInfoResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final UserInfoResource userInfoResource = new UserInfoResource(userInfoRepository);
+        final UserInfoResource userInfoResource = new UserInfoResource(userInfoService);
         this.restUserInfoMockMvc = MockMvcBuilders.standaloneSetup(userInfoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -158,7 +162,8 @@ public class UserInfoResourceIntTest {
     @Transactional
     public void updateUserInfo() throws Exception {
         // Initialize the database
-        userInfoRepository.saveAndFlush(userInfo);
+        userInfoService.save(userInfo);
+
         int databaseSizeBeforeUpdate = userInfoRepository.findAll().size();
 
         // Update the userInfo
@@ -199,7 +204,8 @@ public class UserInfoResourceIntTest {
     @Transactional
     public void deleteUserInfo() throws Exception {
         // Initialize the database
-        userInfoRepository.saveAndFlush(userInfo);
+        userInfoService.save(userInfo);
+
         int databaseSizeBeforeDelete = userInfoRepository.findAll().size();
 
         // Get the userInfo

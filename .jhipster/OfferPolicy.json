@@ -20,10 +20,10 @@
             "fieldValidateRulesMaxlength": 2000
         }
     ],
-    "changelogDate": "20180326062904",
+    "changelogDate": "20180329045907",
     "entityTableName": "offer_policy",
     "dto": "no",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false
 }

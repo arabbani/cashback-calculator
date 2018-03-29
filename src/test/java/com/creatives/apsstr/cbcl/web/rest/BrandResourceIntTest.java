@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.Brand;
 import com.creatives.apsstr.cbcl.repository.BrandRepository;
+import com.creatives.apsstr.cbcl.service.BrandService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class BrandResourceIntTest {
     private BrandRepository brandRepository;
 
     @Autowired
+    private BrandService brandService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class BrandResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final BrandResource brandResource = new BrandResource(brandRepository);
+        final BrandResource brandResource = new BrandResource(brandService);
         this.restBrandMockMvc = MockMvcBuilders.standaloneSetup(brandResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class BrandResourceIntTest {
     @Transactional
     public void updateBrand() throws Exception {
         // Initialize the database
-        brandRepository.saveAndFlush(brand);
+        brandService.save(brand);
+
         int databaseSizeBeforeUpdate = brandRepository.findAll().size();
 
         // Update the brand
@@ -227,7 +232,8 @@ public class BrandResourceIntTest {
     @Transactional
     public void deleteBrand() throws Exception {
         // Initialize the database
-        brandRepository.saveAndFlush(brand);
+        brandService.save(brand);
+
         int databaseSizeBeforeDelete = brandRepository.findAll().size();
 
         // Get the brand

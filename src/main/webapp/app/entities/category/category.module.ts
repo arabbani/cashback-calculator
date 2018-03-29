@@ -1,32 +1,48 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DialogModule } from '@progress/kendo-angular-dialog';
-import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import { CategoryComponent, categoryRoute, CategoryService } from './';
+import {
+    CategoryService,
+    CategoryPopupService,
+    CategoryComponent,
+    CategoryDetailComponent,
+    CategoryDialogComponent,
+    CategoryPopupComponent,
+    CategoryDeletePopupComponent,
+    CategoryDeleteDialogComponent,
+    categoryRoute,
+    categoryPopupRoute,
+} from './';
 
 const ENTITY_STATES = [
-    categoryRoute
+    ...categoryRoute,
+    ...categoryPopupRoute,
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES),
-        ReactiveFormsModule,
-        GridModule,
-        DialogModule
+        RouterModule.forChild(ENTITY_STATES)
     ],
     declarations: [
-        CategoryComponent
+        CategoryComponent,
+        CategoryDetailComponent,
+        CategoryDialogComponent,
+        CategoryDeleteDialogComponent,
+        CategoryPopupComponent,
+        CategoryDeletePopupComponent,
     ],
     entryComponents: [
-        CategoryComponent
+        CategoryComponent,
+        CategoryDialogComponent,
+        CategoryPopupComponent,
+        CategoryDeleteDialogComponent,
+        CategoryDeletePopupComponent,
     ],
     providers: [
-        CategoryService
+        CategoryService,
+        CategoryPopupService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

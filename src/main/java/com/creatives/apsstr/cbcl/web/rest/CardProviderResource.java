@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.CardProvider;
-
-import com.creatives.apsstr.cbcl.repository.CardProviderRepository;
+import com.creatives.apsstr.cbcl.service.CardProviderService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class CardProviderResource {
 
     private static final String ENTITY_NAME = "cardProvider";
 
-    private final CardProviderRepository cardProviderRepository;
+    private final CardProviderService cardProviderService;
 
-    public CardProviderResource(CardProviderRepository cardProviderRepository) {
-        this.cardProviderRepository = cardProviderRepository;
+    public CardProviderResource(CardProviderService cardProviderService) {
+        this.cardProviderService = cardProviderService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class CardProviderResource {
         if (cardProvider.getId() != null) {
             throw new BadRequestAlertException("A new cardProvider cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        CardProvider result = cardProviderRepository.save(cardProvider);
+        CardProvider result = cardProviderService.save(cardProvider);
         return ResponseEntity.created(new URI("/api/card-providers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class CardProviderResource {
         if (cardProvider.getId() == null) {
             return createCardProvider(cardProvider);
         }
-        CardProvider result = cardProviderRepository.save(cardProvider);
+        CardProvider result = cardProviderService.save(cardProvider);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cardProvider.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class CardProviderResource {
     @Timed
     public List<CardProvider> getAllCardProviders() {
         log.debug("REST request to get all CardProviders");
-        return cardProviderRepository.findAll();
+        return cardProviderService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class CardProviderResource {
     @Timed
     public ResponseEntity<CardProvider> getCardProvider(@PathVariable Long id) {
         log.debug("REST request to get CardProvider : {}", id);
-        CardProvider cardProvider = cardProviderRepository.findOne(id);
+        CardProvider cardProvider = cardProviderService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(cardProvider));
     }
 
@@ -114,7 +113,7 @@ public class CardProviderResource {
     @Timed
     public ResponseEntity<Void> deleteCardProvider(@PathVariable Long id) {
         log.debug("REST request to delete CardProvider : {}", id);
-        cardProviderRepository.delete(id);
+        cardProviderService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

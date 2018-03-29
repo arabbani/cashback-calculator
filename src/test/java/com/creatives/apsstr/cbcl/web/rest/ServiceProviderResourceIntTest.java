@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.ServiceProvider;
 import com.creatives.apsstr.cbcl.repository.ServiceProviderRepository;
+import com.creatives.apsstr.cbcl.service.ServiceProviderService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class ServiceProviderResourceIntTest {
     private ServiceProviderRepository serviceProviderRepository;
 
     @Autowired
+    private ServiceProviderService serviceProviderService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class ServiceProviderResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ServiceProviderResource serviceProviderResource = new ServiceProviderResource(serviceProviderRepository);
+        final ServiceProviderResource serviceProviderResource = new ServiceProviderResource(serviceProviderService);
         this.restServiceProviderMockMvc = MockMvcBuilders.standaloneSetup(serviceProviderResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class ServiceProviderResourceIntTest {
     @Transactional
     public void updateServiceProvider() throws Exception {
         // Initialize the database
-        serviceProviderRepository.saveAndFlush(serviceProvider);
+        serviceProviderService.save(serviceProvider);
+
         int databaseSizeBeforeUpdate = serviceProviderRepository.findAll().size();
 
         // Update the serviceProvider
@@ -227,7 +232,8 @@ public class ServiceProviderResourceIntTest {
     @Transactional
     public void deleteServiceProvider() throws Exception {
         // Initialize the database
-        serviceProviderRepository.saveAndFlush(serviceProvider);
+        serviceProviderService.save(serviceProvider);
+
         int databaseSizeBeforeDelete = serviceProviderRepository.findAll().size();
 
         // Get the serviceProvider

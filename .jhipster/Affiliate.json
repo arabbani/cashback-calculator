@@ -40,10 +40,10 @@
             ]
         }
     ],
-    "changelogDate": "20180326062859",
+    "changelogDate": "20180329045902",
     "entityTableName": "affiliate",
     "dto": "no",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false
 }

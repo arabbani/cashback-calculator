@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.Circle;
 import com.creatives.apsstr.cbcl.repository.CircleRepository;
+import com.creatives.apsstr.cbcl.service.CircleService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -48,6 +49,9 @@ public class CircleResourceIntTest {
     private CircleRepository circleRepository;
 
     @Autowired
+    private CircleService circleService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -66,7 +70,7 @@ public class CircleResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CircleResource circleResource = new CircleResource(circleRepository);
+        final CircleResource circleResource = new CircleResource(circleService);
         this.restCircleMockMvc = MockMvcBuilders.standaloneSetup(circleResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -208,7 +212,8 @@ public class CircleResourceIntTest {
     @Transactional
     public void updateCircle() throws Exception {
         // Initialize the database
-        circleRepository.saveAndFlush(circle);
+        circleService.save(circle);
+
         int databaseSizeBeforeUpdate = circleRepository.findAll().size();
 
         // Update the circle
@@ -254,7 +259,8 @@ public class CircleResourceIntTest {
     @Transactional
     public void deleteCircle() throws Exception {
         // Initialize the database
-        circleRepository.saveAndFlush(circle);
+        circleService.save(circle);
+
         int databaseSizeBeforeDelete = circleRepository.findAll().size();
 
         // Get the circle

@@ -2,8 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Card;
-
-import com.creatives.apsstr.cbcl.repository.CardRepository;
+import com.creatives.apsstr.cbcl.service.CardService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,10 +29,10 @@ public class CardResource {
 
     private static final String ENTITY_NAME = "card";
 
-    private final CardRepository cardRepository;
+    private final CardService cardService;
 
-    public CardResource(CardRepository cardRepository) {
-        this.cardRepository = cardRepository;
+    public CardResource(CardService cardService) {
+        this.cardService = cardService;
     }
 
     /**
@@ -50,7 +49,7 @@ public class CardResource {
         if (card.getId() != null) {
             throw new BadRequestAlertException("A new card cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Card result = cardRepository.save(card);
+        Card result = cardService.save(card);
         return ResponseEntity.created(new URI("/api/cards/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -72,7 +71,7 @@ public class CardResource {
         if (card.getId() == null) {
             return createCard(card);
         }
-        Card result = cardRepository.save(card);
+        Card result = cardService.save(card);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, card.getId().toString()))
             .body(result);
@@ -87,7 +86,7 @@ public class CardResource {
     @Timed
     public List<Card> getAllCards() {
         log.debug("REST request to get all Cards");
-        return cardRepository.findAllWithEagerRelationships();
+        return cardService.findAll();
         }
 
     /**
@@ -100,7 +99,7 @@ public class CardResource {
     @Timed
     public ResponseEntity<Card> getCard(@PathVariable Long id) {
         log.debug("REST request to get Card : {}", id);
-        Card card = cardRepository.findOneWithEagerRelationships(id);
+        Card card = cardService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(card));
     }
 
@@ -114,7 +113,7 @@ public class CardResource {
     @Timed
     public ResponseEntity<Void> deleteCard(@PathVariable Long id) {
         log.debug("REST request to delete Card : {}", id);
-        cardRepository.delete(id);
+        cardService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

@@ -1,10 +1,10 @@
-import { OperatingSystemType } from '..';
+import { BaseEntity } from './../../shared';
 
-export class OperatingSystem {
+export class OperatingSystem implements BaseEntity {
     constructor(
         public id?: number,
         public name?: string,
-        public type?: OperatingSystemType,
+        public type?: BaseEntity,
     ) {
     }
 }

@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.City;
 import com.creatives.apsstr.cbcl.repository.CityRepository;
+import com.creatives.apsstr.cbcl.service.CityService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class CityResourceIntTest {
     private CityRepository cityRepository;
 
     @Autowired
+    private CityService cityService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class CityResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CityResource cityResource = new CityResource(cityRepository);
+        final CityResource cityResource = new CityResource(cityService);
         this.restCityMockMvc = MockMvcBuilders.standaloneSetup(cityResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class CityResourceIntTest {
     @Transactional
     public void updateCity() throws Exception {
         // Initialize the database
-        cityRepository.saveAndFlush(city);
+        cityService.save(city);
+
         int databaseSizeBeforeUpdate = cityRepository.findAll().size();
 
         // Update the city
@@ -227,7 +232,8 @@ public class CityResourceIntTest {
     @Transactional
     public void deleteCity() throws Exception {
         // Initialize the database
-        cityRepository.saveAndFlush(city);
+        cityService.save(city);
+
         int databaseSizeBeforeDelete = cityRepository.findAll().size();
 
         // Get the city

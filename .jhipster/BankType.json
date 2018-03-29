@@ -12,10 +12,10 @@
             "fieldValidateRulesMaxlength": 20
         }
     ],
-    "changelogDate": "20180326062925",
+    "changelogDate": "20180329045928",
     "entityTableName": "bank_type",
     "dto": "no",
     "pagination": "no",
-    "service": "no",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false
 }

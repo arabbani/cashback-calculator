@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.FlightClass;
 import com.creatives.apsstr.cbcl.repository.FlightClassRepository;
+import com.creatives.apsstr.cbcl.service.FlightClassService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -45,6 +46,9 @@ public class FlightClassResourceIntTest {
     private FlightClassRepository flightClassRepository;
 
     @Autowired
+    private FlightClassService flightClassService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -63,7 +67,7 @@ public class FlightClassResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final FlightClassResource flightClassResource = new FlightClassResource(flightClassRepository);
+        final FlightClassResource flightClassResource = new FlightClassResource(flightClassService);
         this.restFlightClassMockMvc = MockMvcBuilders.standaloneSetup(flightClassResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -183,7 +187,8 @@ public class FlightClassResourceIntTest {
     @Transactional
     public void updateFlightClass() throws Exception {
         // Initialize the database
-        flightClassRepository.saveAndFlush(flightClass);
+        flightClassService.save(flightClass);
+
         int databaseSizeBeforeUpdate = flightClassRepository.findAll().size();
 
         // Update the flightClass
@@ -227,7 +232,8 @@ public class FlightClassResourceIntTest {
     @Transactional
     public void deleteFlightClass() throws Exception {
         // Initialize the database
-        flightClassRepository.saveAndFlush(flightClass);
+        flightClassService.save(flightClass);
+
         int databaseSizeBeforeDelete = flightClassRepository.findAll().size();
 
         // Get the flightClass

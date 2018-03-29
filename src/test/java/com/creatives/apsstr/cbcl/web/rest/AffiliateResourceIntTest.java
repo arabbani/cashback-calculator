@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.Affiliate;
 import com.creatives.apsstr.cbcl.repository.AffiliateRepository;
+import com.creatives.apsstr.cbcl.service.AffiliateService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -51,6 +52,9 @@ public class AffiliateResourceIntTest {
     private AffiliateRepository affiliateRepository;
 
     @Autowired
+    private AffiliateService affiliateService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -69,7 +73,7 @@ public class AffiliateResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AffiliateResource affiliateResource = new AffiliateResource(affiliateRepository);
+        final AffiliateResource affiliateResource = new AffiliateResource(affiliateService);
         this.restAffiliateMockMvc = MockMvcBuilders.standaloneSetup(affiliateResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -215,7 +219,8 @@ public class AffiliateResourceIntTest {
     @Transactional
     public void updateAffiliate() throws Exception {
         // Initialize the database
-        affiliateRepository.saveAndFlush(affiliate);
+        affiliateService.save(affiliate);
+
         int databaseSizeBeforeUpdate = affiliateRepository.findAll().size();
 
         // Update the affiliate
@@ -263,7 +268,8 @@ public class AffiliateResourceIntTest {
     @Transactional
     public void deleteAffiliate() throws Exception {
         // Initialize the database
-        affiliateRepository.saveAndFlush(affiliate);
+        affiliateService.save(affiliate);
+
         int databaseSizeBeforeDelete = affiliateRepository.findAll().size();
 
         // Get the affiliate

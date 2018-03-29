@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.Merchant;
 import com.creatives.apsstr.cbcl.repository.MerchantRepository;
+import com.creatives.apsstr.cbcl.service.MerchantService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -51,6 +52,9 @@ public class MerchantResourceIntTest {
     private MerchantRepository merchantRepository;
 
     @Autowired
+    private MerchantService merchantService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -69,7 +73,7 @@ public class MerchantResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final MerchantResource merchantResource = new MerchantResource(merchantRepository);
+        final MerchantResource merchantResource = new MerchantResource(merchantService);
         this.restMerchantMockMvc = MockMvcBuilders.standaloneSetup(merchantResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -215,7 +219,8 @@ public class MerchantResourceIntTest {
     @Transactional
     public void updateMerchant() throws Exception {
         // Initialize the database
-        merchantRepository.saveAndFlush(merchant);
+        merchantService.save(merchant);
+
         int databaseSizeBeforeUpdate = merchantRepository.findAll().size();
 
         // Update the merchant
@@ -263,7 +268,8 @@ public class MerchantResourceIntTest {
     @Transactional
     public void deleteMerchant() throws Exception {
         // Initialize the database
-        merchantRepository.saveAndFlush(merchant);
+        merchantService.save(merchant);
+
         int databaseSizeBeforeDelete = merchantRepository.findAll().size();
 
         // Get the merchant

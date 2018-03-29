@@ -4,6 +4,7 @@ import com.creatives.apsstr.cbcl.CbclApp;
 
 import com.creatives.apsstr.cbcl.domain.OfferPolicy;
 import com.creatives.apsstr.cbcl.repository.OfferPolicyRepository;
+import com.creatives.apsstr.cbcl.service.OfferPolicyService;
 import com.creatives.apsstr.cbcl.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -48,6 +49,9 @@ public class OfferPolicyResourceIntTest {
     private OfferPolicyRepository offerPolicyRepository;
 
     @Autowired
+    private OfferPolicyService offerPolicyService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -66,7 +70,7 @@ public class OfferPolicyResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final OfferPolicyResource offerPolicyResource = new OfferPolicyResource(offerPolicyRepository);
+        final OfferPolicyResource offerPolicyResource = new OfferPolicyResource(offerPolicyService);
         this.restOfferPolicyMockMvc = MockMvcBuilders.standaloneSetup(offerPolicyResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -190,7 +194,8 @@ public class OfferPolicyResourceIntTest {
     @Transactional
     public void updateOfferPolicy() throws Exception {
         // Initialize the database
-        offerPolicyRepository.saveAndFlush(offerPolicy);
+        offerPolicyService.save(offerPolicy);
+
         int databaseSizeBeforeUpdate = offerPolicyRepository.findAll().size();
 
         // Update the offerPolicy
@@ -236,7 +241,8 @@ public class OfferPolicyResourceIntTest {
     @Transactional
     public void deleteOfferPolicy() throws Exception {
         // Initialize the database
-        offerPolicyRepository.saveAndFlush(offerPolicy);
+        offerPolicyService.save(offerPolicy);
+
         int databaseSizeBeforeDelete = offerPolicyRepository.findAll().size();
 
         // Get the offerPolicy
