@@ -41,61 +41,61 @@ public class CalculateCashbackService {
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	public List<CashbackInfo> calculateCashbackReechargeWithReechargeCondition(Long subCategoryId,
-			Long serviceProviderId, String dateTime, Integer activeDate, String activeDay, Long circleId,
-			Long reechargePlaneTypeId, Expense expense) {
-		List<Offer> offers = offerRepository.cashbackReechargeWithReechargeCondition(true, false, subCategoryId,
-				dateTime, activeDate, activeDay, serviceProviderId, circleId, reechargePlaneTypeId);
-		return this.cashbackCalculatorAlgo.calculate(offers, expense);
-	}
+	// public List<CashbackInfo> calculateCashbackReechargeWithReechargeCondition(Long subCategoryId,
+	// 		Long serviceProviderId, String dateTime, Integer activeDate, String activeDay, Long circleId,
+	// 		Long reechargePlaneTypeId, Expense expense) {
+	// 	List<Offer> offers = offerRepository.cashbackReechargeWithReechargeCondition(true, false, subCategoryId,
+	// 			dateTime, activeDate, activeDay, serviceProviderId, circleId, reechargePlaneTypeId);
+	// 	return this.cashbackCalculatorAlgo.calculate(offers, expense);
+	// }
 
 	/**
 	 * Calculate cashback for dth, landline, broadband, electricity, gas, metro, water
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	public List<CashbackInfo> calculateCashbackReecharge(Long subCategoryId, Long serviceProviderId, String dateTime,
-			Integer activeDate, String activeDay, Expense expense) {
-		List<Offer> offers = offerRepository.cashbackReechargeCommon(true, false, subCategoryId, dateTime, activeDate,
-				activeDay, serviceProviderId);
-		return this.cashbackCalculatorAlgo.calculate(offers, expense);
-	}
+	// public List<CashbackInfo> calculateCashbackReecharge(Long subCategoryId, Long serviceProviderId, String dateTime,
+	// 		Integer activeDate, String activeDay, Expense expense) {
+	// 	List<Offer> offers = offerRepository.cashbackReechargeCommon(true, false, subCategoryId, dateTime, activeDate,
+	// 			activeDay, serviceProviderId);
+	// 	return this.cashbackCalculatorAlgo.calculate(offers, expense);
+	// }
 
 	/**
 	 * Calculate cashback for flight
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	public List<CashbackInfo> calculateCashbackFlight(FlightInput flightInput) {
-		List<Offer> offers = offerRepository.cashbackFlight(true, false, flightInput.getSubCategoryId(),
-				flightInput.getDateTime(), flightInput.getActiveDate(), flightInput.getActiveDay(),
-				flightInput.getFlightClassId(), flightInput.getFlightTypeId(), flightInput.getFlightOriginId(),
-				flightInput.getTravelTypeId());
-		return this.cashbackCalculatorAlgo.calculate(offers, flightInput.getExpense());
-	}
+	// public List<CashbackInfo> calculateCashbackFlight(FlightInput flightInput) {
+	// 	List<Offer> offers = offerRepository.cashbackFlight(true, false, flightInput.getSubCategoryId(),
+	// 			flightInput.getDateTime(), flightInput.getActiveDate(), flightInput.getActiveDay(),
+	// 			flightInput.getFlightClassId(), flightInput.getFlightTypeId(), flightInput.getFlightOriginId(),
+	// 			flightInput.getTravelTypeId());
+	// 	return this.cashbackCalculatorAlgo.calculate(offers, flightInput.getExpense());
+	// }
 
 	/**
 	 * Calculate cashback for bus
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	public List<CashbackInfo> calculateCashbackBus(BusInput busInput) {
-		List<Offer> offers = offerRepository.cashbackBus(true, false, busInput.getSubCategoryId(),
-				busInput.getDateTime(), busInput.getActiveDate(), busInput.getActiveDay(), busInput.getFrom(),
-				busInput.getTo());
-		return this.cashbackCalculatorAlgo.calculate(offers, busInput.getExpense());
-	}
+	// public List<CashbackInfo> calculateCashbackBus(BusInput busInput) {
+	// 	List<Offer> offers = offerRepository.cashbackBus(true, false, busInput.getSubCategoryId(),
+	// 			busInput.getDateTime(), busInput.getActiveDate(), busInput.getActiveDay(), busInput.getFrom(),
+	// 			busInput.getTo());
+	// 	return this.cashbackCalculatorAlgo.calculate(offers, busInput.getExpense());
+	// }
 
 	/**
 	 * Calculate cashback for cab
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	public List<CashbackInfo> calculateCashbackCab(CabInput cabInput) {
-		List<Offer> offers = offerRepository.cashbackCab(true, false, cabInput.getSubCategoryId(),
-				cabInput.getDateTime(), cabInput.getActiveDate(), cabInput.getActiveDay(),
-				cabInput.getServiceProvidersId(), cabInput.getCityId());
-		return this.cashbackCalculatorAlgo.calculate(offers, cabInput.getExpense());
-	}
+	// public List<CashbackInfo> calculateCashbackCab(CabInput cabInput) {
+	// 	List<Offer> offers = offerRepository.cashbackCab(true, false, cabInput.getSubCategoryId(),
+	// 			cabInput.getDateTime(), cabInput.getActiveDate(), cabInput.getActiveDay(),
+	// 			cabInput.getServiceProvidersId(), cabInput.getCityId());
+	// 	return this.cashbackCalculatorAlgo.calculate(offers, cabInput.getExpense());
+	// }
 
 }

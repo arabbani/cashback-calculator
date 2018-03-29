@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { ElectronicsInfo } from './electronics-info.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<ElectronicsInfo>;
+type EntityResponseType = HttpResponse<ElectronicsInfo>;
 
 @Injectable()
 export class ElectronicsInfoService {

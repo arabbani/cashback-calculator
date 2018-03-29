@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { MainReturn } from './main-return.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<MainReturn>;
+type EntityResponseType = HttpResponse<MainReturn>;
 
 @Injectable()
 export class MainReturnService {

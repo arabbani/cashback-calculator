@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { ServiceProvider } from './service-provider.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<ServiceProvider>;
+type EntityResponseType = HttpResponse<ServiceProvider>;
 
 @Injectable()
 export class ServiceProviderService {
@@ -40,6 +40,11 @@ export class ServiceProviderService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+    }
+
+    bySubCategoryCode(subCategoryCode: string): Observable<HttpResponse<ServiceProvider[]>> {
+        return this.http.get<ServiceProvider[]>(`${this.resourceUrl}/by-sub-category-code/${subCategoryCode}`, { observe: 'response' })
+            .map((res: HttpResponse<ServiceProvider[]>) => this.convertArrayResponse(res));
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {

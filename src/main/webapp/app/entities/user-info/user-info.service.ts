@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { UserInfo } from './user-info.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<UserInfo>;
+type EntityResponseType = HttpResponse<UserInfo>;
 
 @Injectable()
 export class UserInfoService {

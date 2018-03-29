@@ -8,7 +8,7 @@ import { JhiDateUtils } from 'ng-jhipster';
 import { Offer } from './offer.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<Offer>;
+type EntityResponseType = HttpResponse<Offer>;
 
 @Injectable()
 export class OfferService {

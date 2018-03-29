@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { Bank } from './bank.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<Bank>;
+type EntityResponseType = HttpResponse<Bank>;
 
 @Injectable()
 export class BankService {

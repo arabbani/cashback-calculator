@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { State } from './state.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<State>;
+type EntityResponseType = HttpResponse<State>;
 
 @Injectable()
 export class StateService {

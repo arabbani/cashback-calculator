@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { BusInfo } from './bus-info.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<BusInfo>;
+type EntityResponseType = HttpResponse<BusInfo>;
 
 @Injectable()
 export class BusInfoService {

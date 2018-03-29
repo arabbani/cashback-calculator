@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { ReechargeInfo } from './reecharge-info.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<ReechargeInfo>;
+type EntityResponseType = HttpResponse<ReechargeInfo>;
 
 @Injectable()
 export class ReechargeInfoService {

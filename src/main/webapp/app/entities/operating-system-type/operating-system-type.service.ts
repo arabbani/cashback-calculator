@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { OperatingSystemType } from './operating-system-type.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<OperatingSystemType>;
+type EntityResponseType = HttpResponse<OperatingSystemType>;
 
 @Injectable()
 export class OperatingSystemTypeService {

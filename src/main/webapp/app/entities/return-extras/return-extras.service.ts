@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { ReturnExtras } from './return-extras.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<ReturnExtras>;
+type EntityResponseType = HttpResponse<ReturnExtras>;
 
 @Injectable()
 export class ReturnExtrasService {

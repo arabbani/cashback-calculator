@@ -6,7 +6,7 @@ import { SERVER_API_URL } from '../../app.constants';
 import { TravelInfo } from './travel-info.model';
 import { createRequestOption } from '../../shared';
 
-export type EntityResponseType = HttpResponse<TravelInfo>;
+type EntityResponseType = HttpResponse<TravelInfo>;
 
 @Injectable()
 export class TravelInfoService {
