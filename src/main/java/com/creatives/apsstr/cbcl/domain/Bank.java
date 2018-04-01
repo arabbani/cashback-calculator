@@ -1,19 +1,28 @@
 package com.creatives.apsstr.cbcl.domain;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.voodoodyne.jackson.jsog.JSOGGenerator;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
 
 /**
  * A Bank.
@@ -36,11 +45,10 @@ public class Bank implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "bank", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Card> cards = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private BankType type;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -126,9 +134,6 @@ public class Bank implements Serializable {
 
     @Override
     public String toString() {
-        return "Bank{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            "}";
+        return "Bank{" + "id=" + getId() + ", name='" + getName() + "'" + "}";
     }
 }

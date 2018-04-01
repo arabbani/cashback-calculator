@@ -47,6 +47,39 @@ public class BankService {
     }
 
     /**
+     * Get all the banks with type.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Bank> findAllWithType() {
+        log.debug("Request to get all Banks with type");
+        return bankRepository.findAllWithType();
+    }
+
+    /**
+     * Get all the banks with cards.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Bank> findAllWithCards() {
+        log.debug("Request to get all Banks with cards");
+        return bankRepository.findAllWithCards();
+    }
+    
+    /**
+     * Get all the banks with type and cards.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Bank> findAllWithTypeAndCards() {
+        log.debug("Request to get all Banks with type and cards");
+        return bankRepository.findAllWithTypeAndCards();
+    }
+
+    /**
      * Get one bank by id.
      *
      * @param id the id of the entity
@@ -67,4 +100,5 @@ public class BankService {
         log.debug("Request to delete Bank : {}", id);
         bankRepository.delete(id);
     }
+
 }

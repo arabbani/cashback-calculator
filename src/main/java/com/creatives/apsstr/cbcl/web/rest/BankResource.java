@@ -51,8 +51,7 @@ public class BankResource {
         }
         Bank result = bankService.save(bank);
         return ResponseEntity.created(new URI("/api/banks/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -72,9 +71,8 @@ public class BankResource {
             return createBank(bank);
         }
         Bank result = bankService.save(bank);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, bank.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, bank.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,7 +85,43 @@ public class BankResource {
     public List<Bank> getAllBanks() {
         log.debug("REST request to get all Banks");
         return bankService.findAll();
-        }
+    }
+
+    /**
+     * GET  /banks-with-type : get all the banks with type.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of banks in body
+     */
+    @GetMapping("/banks-with-type")
+    @Timed
+    public List<Bank> getAllBanksWithType() {
+        log.debug("REST request to get all Banks with type");
+        return bankService.findAllWithType();
+    }
+
+    /**
+     * GET  /banks-with-cards : get all the banks with cards.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of banks in body
+     */
+    @GetMapping("/banks-with-cards")
+    @Timed
+    public List<Bank> getAllBanksWithCards() {
+        log.debug("REST request to get all Banks with cards");
+        return bankService.findAllWithCards();
+    }
+
+    /**
+     * GET  /banks-with-type-cards : get all the banks with type and cards.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of banks in body
+     */
+    @GetMapping("/banks-with-type-cards")
+    @Timed
+    public List<Bank> getAllBanksWithTypeAndCards() {
+        log.debug("REST request to get all Banks with type and cards");
+        return bankService.findAllWithTypeAndCards();
+    }
 
     /**
      * GET  /banks/:id : get the "id" bank.

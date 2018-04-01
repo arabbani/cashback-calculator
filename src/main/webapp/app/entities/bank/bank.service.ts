@@ -35,7 +35,7 @@ export class BankService {
 
     query(req?: any): Observable<HttpResponse<Bank[]>> {
         const options = createRequestOption(req);
-        return this.http.get<Bank[]>(this.resourceUrl, { params: options, observe: 'response' })
+        return this.http.get<Bank[]>(`${this.resourceUrl}-with-type`, { params: options, observe: 'response' })
             .map((res: HttpResponse<Bank[]>) => this.convertArrayResponse(res));
     }
 

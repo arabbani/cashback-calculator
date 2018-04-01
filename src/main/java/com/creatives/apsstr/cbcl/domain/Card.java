@@ -34,17 +34,15 @@ public class Card implements Serializable {
     @Column(name = "name", length = 255, nullable = false)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CardType type;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "card_card_provider",
-               joinColumns = @JoinColumn(name="cards_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="card_providers_id", referencedColumnName="id"))
+    @JoinTable(name = "card_card_provider", joinColumns = @JoinColumn(name = "cards_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "card_providers_id", referencedColumnName = "id"))
     private Set<CardProvider> cardProviders = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Bank bank;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -141,9 +139,6 @@ public class Card implements Serializable {
 
     @Override
     public String toString() {
-        return "Card{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            "}";
+        return "Card{" + "id=" + getId() + ", name='" + getName() + "'" + "}";
     }
 }
