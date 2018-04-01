@@ -1,48 +1,32 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    AffiliateService,
-    AffiliatePopupService,
-    AffiliateComponent,
-    AffiliateDetailComponent,
-    AffiliateDialogComponent,
-    AffiliatePopupComponent,
-    AffiliateDeletePopupComponent,
-    AffiliateDeleteDialogComponent,
-    affiliateRoute,
-    affiliatePopupRoute,
-} from './';
+import { AffiliateComponent, affiliateRoute, AffiliateService } from './';
 
 const ENTITY_STATES = [
-    ...affiliateRoute,
-    ...affiliatePopupRoute,
+    affiliateRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule
     ],
     declarations: [
-        AffiliateComponent,
-        AffiliateDetailComponent,
-        AffiliateDialogComponent,
-        AffiliateDeleteDialogComponent,
-        AffiliatePopupComponent,
-        AffiliateDeletePopupComponent,
+        AffiliateComponent
     ],
     entryComponents: [
-        AffiliateComponent,
-        AffiliateDialogComponent,
-        AffiliatePopupComponent,
-        AffiliateDeleteDialogComponent,
-        AffiliateDeletePopupComponent,
+        AffiliateComponent
     ],
     providers: [
-        AffiliateService,
-        AffiliatePopupService,
+        AffiliateService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

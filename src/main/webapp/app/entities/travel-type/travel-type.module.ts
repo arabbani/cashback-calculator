@@ -1,48 +1,32 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 import { CbclSharedModule } from '../../shared';
-import {
-    TravelTypeService,
-    TravelTypePopupService,
-    TravelTypeComponent,
-    TravelTypeDetailComponent,
-    TravelTypeDialogComponent,
-    TravelTypePopupComponent,
-    TravelTypeDeletePopupComponent,
-    TravelTypeDeleteDialogComponent,
-    travelTypeRoute,
-    travelTypePopupRoute,
-} from './';
+import { TravelTypeComponent, travelTypeRoute, TravelTypeService } from './';
 
 const ENTITY_STATES = [
-    ...travelTypeRoute,
-    ...travelTypePopupRoute,
+    travelTypeRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule
     ],
     declarations: [
-        TravelTypeComponent,
-        TravelTypeDetailComponent,
-        TravelTypeDialogComponent,
-        TravelTypeDeleteDialogComponent,
-        TravelTypePopupComponent,
-        TravelTypeDeletePopupComponent,
+        TravelTypeComponent
     ],
     entryComponents: [
-        TravelTypeComponent,
-        TravelTypeDialogComponent,
-        TravelTypePopupComponent,
-        TravelTypeDeleteDialogComponent,
-        TravelTypeDeletePopupComponent,
+        TravelTypeComponent
     ],
     providers: [
-        TravelTypeService,
-        TravelTypePopupService,
+        TravelTypeService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

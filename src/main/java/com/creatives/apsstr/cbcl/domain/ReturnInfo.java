@@ -1,5 +1,9 @@
 package com.creatives.apsstr.cbcl.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -14,6 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "return_info")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class ReturnInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,15 +27,15 @@ public class ReturnInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true)
     private MainReturn mainReturn;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true)
     private ReturnExtras extras;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true)
     private OfferPayment payment;
 
@@ -41,6 +46,7 @@ public class ReturnInfo implements Serializable {
     private Offer returnOffer;
 
     @ManyToOne
+    @JsonBackReference
     private OfferReturn offerReturn;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

@@ -1,30 +1,36 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs/Subscription';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { State } from '@progress/kendo-data-query';
+import * as _ from 'lodash';
+import { Observable } from 'rxjs/Observable';
 
+import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { GRID_STATE } from '../../shared';
 import { Affiliate } from './affiliate.model';
 import { AffiliateService } from './affiliate.service';
-import { Principal } from '../../shared';
 
 @Component({
     selector: 'apsstr-affiliate',
     templateUrl: './affiliate.component.html'
 })
-export class AffiliateComponent implements OnInit, OnDestroy {
-affiliates: Affiliate[];
-    currentAccount: any;
-    eventSubscriber: Subscription;
+export class AffiliateComponent implements OnInit {
 
-    constructor(
-        private affiliateService: AffiliateService,
-        private jhiAlertService: JhiAlertService,
-        private eventManager: JhiEventManager,
-        private principal: Principal
-    ) {
+    public affiliates: Affiliate[];
+    public gridState: State;
+    affiliateFormGroup: FormGroup;
+
+    constructor(private affiliateService: AffiliateService, private formBuilder: FormBuilder,
+        private apsstrKendoDialogService: ApsstrDialogService) {
+        this.createAffiliateFormGroup = this.createAffiliateFormGroup.bind(this);
     }
 
-    loadAll() {
+    ngOnInit() {
+        this.gridState = GRID_STATE;
+        this.loadAllAffiliate();
+    }
+
+    private loadAllAffiliate() {
         this.affiliateService.query().subscribe(
             (res: HttpResponse<Affiliate[]>) => {
                 this.affiliates = res.body;
@@ -32,26 +38,63 @@ affiliates: Affiliate[];
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
-    ngOnInit() {
-        this.loadAll();
-        this.principal.identity().then((account) => {
-            this.currentAccount = account;
+
+    public createAffiliateFormGroup(args: any): FormGroup {
+        const item = args.isNew ? new Affiliate() : args.dataItem;
+        this.affiliateFormGroup = this.formBuilder.group({
+            'id': item.id,
+            'name': [item.name, Validators.required],
+            'active': item.active,
+            'url': item.url
         });
-        this.registerChangeInAffiliates();
+        return this.affiliateFormGroup;
     }
 
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
+    public saveItem({ formGroup, isNew }): void {
+        const product = formGroup.value;
+        if (isNew) {
+            this.subscribeToSaveResponse(this.affiliateService.create(product), isNew);
+        } else {
+            this.subscribeToSaveResponse(this.affiliateService.update(product));
+        }
     }
 
-    trackId(index: number, item: Affiliate) {
-        return item.id;
+    public deleteItem(dataItem: any): void {
+        this.apsstrKendoDialogService.confirm().subscribe((result) => {
+            if (result['text'] === 'No') {
+                this.affiliates.push(dataItem);
+                this.affiliates = _.sortBy(this.affiliates, (item) => item.id);
+            } else if (result['text'] === 'Yes') {
+                this.affiliateService.delete(dataItem.id).subscribe(
+                    (response) => {
+                        console.log('DELETED');
+                    },
+                    (error: HttpErrorResponse) => {
+                        this.loadAllAffiliate();
+                        this.onError(error);
+                    }
+                );
+            }
+        });
     }
-    registerChangeInAffiliates() {
-        this.eventSubscriber = this.eventManager.subscribe('affiliateListModification', (response) => this.loadAll());
+
+    private subscribeToSaveResponse(result: Observable<HttpResponse<Affiliate>>, isNew?: boolean) {
+        result.subscribe((res: HttpResponse<Affiliate>) =>
+            this.onSaveSuccess(res.body, isNew), (res: HttpErrorResponse) => this.onSaveError());
+    }
+
+    private onSaveSuccess(result: Affiliate, isNew?: boolean) {
+        if (isNew && isNew === true) {
+            this.loadAllAffiliate();
+        }
+    }
+
+    private onSaveError() {
+        this.loadAllAffiliate();
     }
 
     private onError(error) {
-        this.jhiAlertService.error(error.message, null, null);
+        console.log('ERROR');
     }
+
 }

@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { JsogService } from 'jsog-typescript';
 import { Observable } from 'rxjs/Observable';
-import { SERVER_API_URL } from '../../app.constants';
 
-import { SubCategory } from './sub-category.model';
+import { SERVER_API_URL } from '../../app.constants';
 import { createRequestOption } from '../../shared';
+import { SubCategory } from './sub-category.model';
 
 type EntityResponseType = HttpResponse<SubCategory>;
 
 @Injectable()
 export class SubCategoryService {
 
-    private resourceUrl =  SERVER_API_URL + 'api/sub-categories';
+    private resourceUrl = SERVER_API_URL + 'api/sub-categories';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(subCategory: SubCategory): Observable<EntityResponseType> {
         const copy = this.convert(subCategory);
@@ -28,7 +29,7 @@ export class SubCategoryService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<SubCategory>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+        return this.http.get<SubCategory>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -39,21 +40,21 @@ export class SubCategoryService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: SubCategory = this.convertItemFromServer(res.body);
-        return res.clone({body});
+        return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<SubCategory[]>): HttpResponse<SubCategory[]> {
-        const jsonResponse: SubCategory[] = res.body;
+        const jsonResponse: SubCategory[] = this.deserializeArray(this.deserializeObject(res.body));
         const body: SubCategory[] = [];
         for (let i = 0; i < jsonResponse.length; i++) {
             body.push(this.convertItemFromServer(jsonResponse[i]));
         }
-        return res.clone({body});
+        return res.clone({ body });
     }
 
     /**
@@ -70,5 +71,13 @@ export class SubCategoryService {
     private convert(subCategory: SubCategory): SubCategory {
         const copy: SubCategory = Object.assign({}, subCategory);
         return copy;
+    }
+
+    private deserializeArray(json: any): SubCategory[] {
+        return this.jsogService.deserializeArray(json, SubCategory);
+    }
+
+    private deserializeObject(json: any): SubCategory {
+        return this.jsogService.deserializeObject(json, SubCategory);
     }
 }

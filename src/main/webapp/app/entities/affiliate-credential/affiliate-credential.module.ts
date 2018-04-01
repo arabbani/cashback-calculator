@@ -1,49 +1,37 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { GridModule } from '@progress/kendo-angular-grid';
 
+import { ApsstrSharedModule } from '../../apsstr-core-ui';
 import { CbclSharedModule } from '../../shared';
-import {
-    AffiliateCredentialService,
-    AffiliateCredentialPopupService,
-    AffiliateCredentialComponent,
-    AffiliateCredentialDetailComponent,
-    AffiliateCredentialDialogComponent,
-    AffiliateCredentialPopupComponent,
-    AffiliateCredentialDeletePopupComponent,
-    AffiliateCredentialDeleteDialogComponent,
-    affiliateCredentialRoute,
-    affiliateCredentialPopupRoute,
-} from './';
+import { AffiliateCredentialComponent, affiliateCredentialRoute, AffiliateCredentialService } from './';
 
 const ENTITY_STATES = [
-    ...affiliateCredentialRoute,
-    ...affiliateCredentialPopupRoute,
+    affiliateCredentialRoute
 ];
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(ENTITY_STATES)
+        RouterModule.forChild(ENTITY_STATES),
+        ReactiveFormsModule,
+        GridModule,
+        DialogModule,
+        ApsstrSharedModule,
+        NgSelectModule
     ],
     declarations: [
-        AffiliateCredentialComponent,
-        AffiliateCredentialDetailComponent,
-        AffiliateCredentialDialogComponent,
-        AffiliateCredentialDeleteDialogComponent,
-        AffiliateCredentialPopupComponent,
-        AffiliateCredentialDeletePopupComponent,
+        AffiliateCredentialComponent
     ],
     entryComponents: [
-        AffiliateCredentialComponent,
-        AffiliateCredentialDialogComponent,
-        AffiliateCredentialPopupComponent,
-        AffiliateCredentialDeleteDialogComponent,
-        AffiliateCredentialDeletePopupComponent,
+        AffiliateCredentialComponent
     ],
     providers: [
-        AffiliateCredentialService,
-        AffiliateCredentialPopupService,
+        AffiliateCredentialService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class CbclAffiliateCredentialModule {}
+export class CbclAffiliateCredentialModule { }

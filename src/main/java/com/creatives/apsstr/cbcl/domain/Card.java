@@ -1,5 +1,8 @@
 package com.creatives.apsstr.cbcl.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -17,6 +20,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "card")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class Card implements Serializable {
 
     private static final long serialVersionUID = 1L;
