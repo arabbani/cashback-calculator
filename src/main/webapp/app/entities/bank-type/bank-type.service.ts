@@ -5,6 +5,7 @@ import { SERVER_API_URL } from '../../app.constants';
 
 import { BankType } from './bank-type.model';
 import { createRequestOption } from '../../shared';
+import { JsogService } from 'jsog-typescript';
 
 type EntityResponseType = HttpResponse<BankType>;
 
@@ -13,7 +14,7 @@ export class BankTypeService {
 
     private resourceUrl =  SERVER_API_URL + 'api/bank-types';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(bankType: BankType): Observable<EntityResponseType> {
         const copy = this.convert(bankType);
@@ -70,5 +71,13 @@ export class BankTypeService {
     private convert(bankType: BankType): BankType {
         const copy: BankType = Object.assign({}, bankType);
         return copy;
+    }
+
+    private deserializeArray(json: any): BankType[] {
+        return this.jsogService.deserializeArray(json, BankType);
+    }
+
+    private deserializeObject(json: any): BankType {
+        return this.jsogService.deserializeObject(json, BankType);
     }
 }

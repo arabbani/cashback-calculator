@@ -43,7 +43,62 @@ public class CardService {
     @Transactional(readOnly = true)
     public List<Card> findAll() {
         log.debug("Request to get all Cards");
-        return cardRepository.findAllWithEagerRelationships();
+        return cardRepository.findAll();
+    }
+
+    /**
+     * Get all the cards with type.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Card> findAllWithType() {
+        log.debug("Request to get all Cards with type");
+        return cardRepository.findAllWithType();
+    }
+
+    /**
+     * Get all the cards with bank.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Card> findAllWithBank() {
+        log.debug("Request to get all Cards with bank");
+        return cardRepository.findAllWithBank();
+    }
+
+    /**
+     * Get all the cards with providers.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Card> findAllWithProviders() {
+        log.debug("Request to get all Cards with providers");
+        return cardRepository.findAllWithProviders();
+    }
+
+    /**
+     * Get all the cards with type and providers.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Card> findAllWithTypeAndProviders() {
+        log.debug("Request to get all Cards with type and providers");
+        return cardRepository.findAllWithTypeAndProviders();
+    }
+
+    /**
+     * Get all the cards with type, bank and providers.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Card> findAllWithTypeBankAndProviders() {
+        log.debug("Request to get all Cards with type, bank and providers");
+        return cardRepository.findAllWithTypeBankAndProviders();
     }
 
     /**

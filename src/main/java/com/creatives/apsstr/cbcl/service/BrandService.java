@@ -43,7 +43,18 @@ public class BrandService {
     @Transactional(readOnly = true)
     public List<Brand> findAll() {
         log.debug("Request to get all Brands");
-        return brandRepository.findAllWithEagerRelationships();
+        return brandRepository.findAll();
+    }
+    
+    /**
+     * Get all the brands with subCategories.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Brand> findAllWithSubCategories() {
+        log.debug("Request to get all Brands with subCategories");
+        return brandRepository.findAllWithSubCategories();
     }
 
     /**
@@ -55,7 +66,7 @@ public class BrandService {
     @Transactional(readOnly = true)
     public Brand findOne(Long id) {
         log.debug("Request to get Brand : {}", id);
-        return brandRepository.findOneWithEagerRelationships(id);
+        return brandRepository.findOne(id);
     }
 
     /**

@@ -1,22 +1,31 @@
 package com.creatives.apsstr.cbcl.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Brand;
 import com.creatives.apsstr.cbcl.service.BrandService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import java.util.List;
-import java.util.Optional;
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing Brand.
@@ -51,8 +60,7 @@ public class BrandResource {
         }
         Brand result = brandService.save(brand);
         return ResponseEntity.created(new URI("/api/brands/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -72,9 +80,8 @@ public class BrandResource {
             return createBrand(brand);
         }
         Brand result = brandService.save(brand);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, brand.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, brand.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,7 +94,19 @@ public class BrandResource {
     public List<Brand> getAllBrands() {
         log.debug("REST request to get all Brands");
         return brandService.findAll();
-        }
+    }
+
+    /**
+     * GET  /brands/with-subCategories : get all the brands with subCategories.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of brands in body
+     */
+    @GetMapping("/brands/with-subCategories")
+    @Timed
+    public List<Brand> getAllBrandsWithSubCategories() {
+        log.debug("REST request to get all Brands with subCategories");
+        return brandService.findAllWithSubCategories();
+    }
 
     /**
      * GET  /brands/:id : get the "id" brand.

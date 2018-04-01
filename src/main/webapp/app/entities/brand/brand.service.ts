@@ -17,14 +17,12 @@ export class BrandService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(brand: Brand): Observable<EntityResponseType> {
-        const copy = this.convert(brand);
-        return this.http.post<Brand>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.post<Brand>(this.resourceUrl, brand, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(brand: Brand): Observable<EntityResponseType> {
-        const copy = this.convert(brand);
-        return this.http.put<Brand>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.put<Brand>(this.resourceUrl, brand, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -33,9 +31,15 @@ export class BrandService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<HttpResponse<Brand[]>> {
+    findAll(req?: any): Observable<HttpResponse<Brand[]>> {
         const options = createRequestOption(req);
         return this.http.get<Brand[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .map((res: HttpResponse<Brand[]>) => this.convertArrayResponse(res));
+    }
+
+    findAllWithSubCategories(req?: any): Observable<HttpResponse<Brand[]>> {
+        const options = createRequestOption(req);
+        return this.http.get<Brand[]>(`${this.resourceUrl}/with-subCategories`, { params: options, observe: 'response' })
             .map((res: HttpResponse<Brand[]>) => this.convertArrayResponse(res));
     }
 
@@ -44,33 +48,13 @@ export class BrandService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Brand = this.convertItemFromServer(this.deserializeObject(res.body));
+        const body: Brand = this.deserializeObject(res.body);
         return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<Brand[]>): HttpResponse<Brand[]> {
-        const jsonResponse: Brand[] = this.deserializeArray(res.body);
-        const body: Brand[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
-        }
+        const body: Brand[] = this.deserializeArray(res.body);
         return res.clone({ body });
-    }
-
-    /**
-     * Convert a returned JSON object to Brand.
-     */
-    private convertItemFromServer(brand: Brand): Brand {
-        const copy: Brand = Object.assign({}, brand);
-        return copy;
-    }
-
-    /**
-     * Convert a Brand to a JSON which can be sent to the server.
-     */
-    private convert(brand: Brand): Brand {
-        const copy: Brand = Object.assign({}, brand);
-        return copy;
     }
 
     private deserializeArray(json: any): Brand[] {

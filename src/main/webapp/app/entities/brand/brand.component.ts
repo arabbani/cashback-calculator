@@ -43,7 +43,7 @@ export class BrandComponent implements OnInit {
     }
 
     private loadAllBrand() {
-        this.brandService.query().subscribe(
+        this.brandService.findAllWithSubCategories().subscribe(
             (res: HttpResponse<Brand[]>) => {
                 this.brands = res.body;
             },
