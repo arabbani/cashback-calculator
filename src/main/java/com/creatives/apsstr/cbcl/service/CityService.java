@@ -47,6 +47,17 @@ public class CityService {
     }
 
     /**
+     * Get all the cities with state.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<City> findAllWithState() {
+        log.debug("Request to get all Cities with state");
+        return cityRepository.findAllWithState();
+    }
+
+    /**
      * Get one city by id.
      *
      * @param id the id of the entity

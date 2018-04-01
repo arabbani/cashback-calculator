@@ -31,7 +31,7 @@ export class CircleComponent implements OnInit {
     }
 
     private loadAllCircle() {
-        this.circleService.query().subscribe(
+        this.circleService.findAll().subscribe(
             (res: HttpResponse<Circle[]>) => {
                 this.circles = res.body;
             },

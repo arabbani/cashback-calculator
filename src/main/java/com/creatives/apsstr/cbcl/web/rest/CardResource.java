@@ -97,11 +97,11 @@ public class CardResource {
     }
 
     /**
-     * GET  /cards/with-type : get all the cards with type.
+     * GET  /cards/with/type : get all the cards with type.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of cards in body
      */
-    @GetMapping("/cards/with-type")
+    @GetMapping("/cards/with/type")
     @Timed
     public List<Card> getAllCardsWithType() {
         log.debug("REST request to get all Cards with type");
@@ -109,11 +109,11 @@ public class CardResource {
     }
 
     /**
-    * GET  /cards/with-bank : get all the cards with bank.
+    * GET  /cards/with/bank : get all the cards with bank.
     *
     * @return the ResponseEntity with status 200 (OK) and the list of cards in body
     */
-    @GetMapping("/cards/with-bank")
+    @GetMapping("/cards/with/bank")
     @Timed
     public List<Card> findAllWithBank() {
         log.debug("REST request to get all Cards with bank");
@@ -121,11 +121,11 @@ public class CardResource {
     }
 
     /**
-    * GET  /cards/with-providers : get all the cards with providers.
+    * GET  /cards/with/providers : get all the cards with providers.
     *
     * @return the ResponseEntity with status 200 (OK) and the list of cards in body
     */
-    @GetMapping("/cards/with-providers")
+    @GetMapping("/cards/with/providers")
     @Timed
     public List<Card> findAllWithProviders() {
         log.debug("REST request to get all Cards with providers");
@@ -133,11 +133,11 @@ public class CardResource {
     }
 
     /**
-    * GET  /cards/with-type-providers : get all the cards with type and providers.
+    * GET  /cards/with/type-providers : get all the cards with type and providers.
     *
     * @return the ResponseEntity with status 200 (OK) and the list of cards in body
     */
-    @GetMapping("/cards/with-type-providers")
+    @GetMapping("/cards/with/type-providers")
     @Timed
     public List<Card> findAllWithTypeAndProviders() {
         log.debug("REST request to get all Cards with type and providers");
@@ -145,15 +145,15 @@ public class CardResource {
     }
 
     /**
-    * GET  /cards/with-type-bank-providers : get all the cards with type, bank and providers.
+    * GET  /cards/with/type-bank-providers : get all the cards with type, bank and providers.
     *
     * @return the ResponseEntity with status 200 (OK) and the list of cards in body
     */
-    @GetMapping("/cards/with-type-bank-providers")
+    @GetMapping("/cards/with/type-bank-providers")
     @Timed
-    public List<Card> findAllWithTypeBankAndProviders() {
+    public List<Card> findAllWithTypeAndBankAndProviders() {
         log.debug("REST request to get all Cards with type, bank and providers");
-        return cardService.findAllWithTypeBankAndProviders();
+        return cardService.findAllWithTypeAndBankAndProviders();
     }
 
     /**

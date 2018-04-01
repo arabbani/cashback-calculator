@@ -31,7 +31,7 @@ export class DateComponent implements OnInit {
     }
 
     private loadAllDate() {
-        this.dateService.query().subscribe(
+        this.dateService.findAll().subscribe(
             (res: HttpResponse<Date[]>) => {
                 this.dates = res.body;
             },

@@ -31,7 +31,7 @@ export class CardTypeComponent implements OnInit {
     }
 
     private loadAllCardType() {
-        this.cardTypeService.query().subscribe(
+        this.cardTypeService.findAll().subscribe(
             (res: HttpResponse<CardType[]>) => {
                 this.cardTypes = res.body;
             },

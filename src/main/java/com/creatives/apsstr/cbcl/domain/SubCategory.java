@@ -40,7 +40,7 @@ public class SubCategory implements Serializable {
     @Column(name = "code", length = 50, nullable = false)
     private String code;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
 
     @ManyToMany(mappedBy = "subCategories")

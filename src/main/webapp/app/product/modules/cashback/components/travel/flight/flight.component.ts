@@ -99,7 +99,7 @@ export class FlightComponent implements OnInit {
   }
 
   private getFlightClasses(): void {
-    this.flightClassService.query().subscribe(
+    this.flightClassService.findAll().subscribe(
       (res: HttpResponse<FlightClass[]>) => {
         this.flightClasses = res.body;
       },

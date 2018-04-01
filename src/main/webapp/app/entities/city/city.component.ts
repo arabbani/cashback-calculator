@@ -43,7 +43,7 @@ export class CityComponent implements OnInit {
     }
 
     private loadAllCity() {
-        this.cityService.query().subscribe(
+        this.cityService.findAllWithState().subscribe(
             (res: HttpResponse<City[]>) => {
                 this.cities = res.body;
             },

@@ -6,6 +6,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.voodoodyne.jackson.jsog.JSOGGenerator;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -15,6 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "flight_class")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class FlightClass implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -73,9 +77,6 @@ public class FlightClass implements Serializable {
 
     @Override
     public String toString() {
-        return "FlightClass{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            "}";
+        return "FlightClass{" + "id=" + getId() + ", name='" + getName() + "'" + "}";
     }
 }

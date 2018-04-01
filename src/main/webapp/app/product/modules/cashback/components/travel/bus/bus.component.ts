@@ -75,7 +75,7 @@ export class BusComponent implements OnInit {
   }
 
   getCities(): void {
-    this.cityService.query().subscribe(
+    this.cityService.findAll().subscribe(
       (res: HttpResponse<City[]>) => {
         this.cities = res.body;
       },

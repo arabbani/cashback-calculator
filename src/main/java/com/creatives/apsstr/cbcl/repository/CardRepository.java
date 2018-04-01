@@ -35,6 +35,6 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
     @EntityGraph(attributePaths = { "type", "bank", "cardProviders" })
     @Query("select distinct card from Card card")
-	List<Card> findAllWithTypeBankAndProviders();
+	List<Card> findAllWithTypeAndBankAndProviders();
 
 }

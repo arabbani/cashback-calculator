@@ -17,14 +17,12 @@ export class CityService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(city: City): Observable<EntityResponseType> {
-        const copy = this.convert(city);
-        return this.http.post<City>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.post<City>(this.resourceUrl, city, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(city: City): Observable<EntityResponseType> {
-        const copy = this.convert(city);
-        return this.http.put<City>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.put<City>(this.resourceUrl, city, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -33,9 +31,15 @@ export class CityService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<HttpResponse<City[]>> {
+    findAll(req?: any): Observable<HttpResponse<City[]>> {
         const options = createRequestOption(req);
         return this.http.get<City[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .map((res: HttpResponse<City[]>) => this.convertArrayResponse(res));
+    }
+
+    findAllWithState(req?: any): Observable<HttpResponse<City[]>> {
+        const options = createRequestOption(req);
+        return this.http.get<City[]>(`${this.resourceUrl}/with/state`, { params: options, observe: 'response' })
             .map((res: HttpResponse<City[]>) => this.convertArrayResponse(res));
     }
 
@@ -44,33 +48,13 @@ export class CityService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: City = this.convertItemFromServer(this.deserializeObject(res.body));
+        const body: City = this.deserializeObject(res.body);
         return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<City[]>): HttpResponse<City[]> {
-        const jsonResponse: City[] = this.deserializeArray(res.body);
-        const body: City[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
-        }
+        const body: City[] = this.deserializeArray(res.body);
         return res.clone({ body });
-    }
-
-    /**
-     * Convert a returned JSON object to City.
-     */
-    private convertItemFromServer(city: City): City {
-        const copy: City = Object.assign({}, city);
-        return copy;
-    }
-
-    /**
-     * Convert a City to a JSON which can be sent to the server.
-     */
-    private convert(city: City): City {
-        const copy: City = Object.assign({}, city);
-        return copy;
     }
 
     private deserializeArray(json: any): City[] {

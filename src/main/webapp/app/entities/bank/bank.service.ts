@@ -31,15 +31,15 @@ export class BankService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<HttpResponse<Bank[]>> {
+    findAll(req?: any): Observable<HttpResponse<Bank[]>> {
         const options = createRequestOption(req);
-        return this.http.get<Bank[]>(`${this.resourceUrl}`, { params: options, observe: 'response' })
+        return this.http.get<Bank[]>(this.resourceUrl, { params: options, observe: 'response' })
             .map((res: HttpResponse<Bank[]>) => this.convertArrayResponse(res));
     }
 
     findAllWithType(req?: any): Observable<HttpResponse<Bank[]>> {
         const options = createRequestOption(req);
-        return this.http.get<Bank[]>(`${this.resourceUrl}-with-type`, { params: options, observe: 'response' })
+        return this.http.get<Bank[]>(`${this.resourceUrl}/with/type`, { params: options, observe: 'response' })
             .map((res: HttpResponse<Bank[]>) => this.convertArrayResponse(res));
     }
 

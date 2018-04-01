@@ -97,11 +97,11 @@ public class BrandResource {
     }
 
     /**
-     * GET  /brands/with-subCategories : get all the brands with subCategories.
+     * GET  /brands/with/subCategories : get all the brands with subCategories.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of brands in body
      */
-    @GetMapping("/brands/with-subCategories")
+    @GetMapping("/brands/with/subCategories")
     @Timed
     public List<Brand> getAllBrandsWithSubCategories() {
         log.debug("REST request to get all Brands with subCategories");

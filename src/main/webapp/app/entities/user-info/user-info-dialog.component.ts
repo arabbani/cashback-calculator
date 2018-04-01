@@ -45,11 +45,11 @@ export class UserInfoDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.cityService.query()
+        this.cityService.findAllWithState()
             .subscribe((res: HttpResponse<City[]>) => { this.cities = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
-        this.merchantService.query()
+        this.merchantService.findAll()
             .subscribe((res: HttpResponse<Merchant[]>) => { this.merchants = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
-        this.cardService.query()
+        this.cardService.findAll()
             .subscribe((res: HttpResponse<Card[]>) => { this.cards = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.operatingSystemService.query()
             .subscribe((res: HttpResponse<OperatingSystem[]>) => { this.operatingsystems = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));

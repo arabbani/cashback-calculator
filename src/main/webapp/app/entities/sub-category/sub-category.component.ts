@@ -34,7 +34,7 @@ export class SubCategoryComponent implements OnInit {
     }
 
     private loadAllCategorys() {
-        this.categoryService.query().subscribe(
+        this.categoryService.findAll().subscribe(
             (res: HttpResponse<Category[]>) => {
                 this.categories = res.body;
             },

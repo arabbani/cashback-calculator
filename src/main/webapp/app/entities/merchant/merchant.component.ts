@@ -43,7 +43,7 @@ export class MerchantComponent implements OnInit {
     }
 
     private loadAllMerchant() {
-        this.merchantService.query().subscribe(
+        this.merchantService.findAllWithSubCategories().subscribe(
             (res: HttpResponse<Merchant[]>) => {
                 this.merchants = res.body;
             },

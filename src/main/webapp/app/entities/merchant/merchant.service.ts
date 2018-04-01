@@ -17,14 +17,12 @@ export class MerchantService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(merchant: Merchant): Observable<EntityResponseType> {
-        const copy = this.convert(merchant);
-        return this.http.post<Merchant>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.post<Merchant>(this.resourceUrl, merchant, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(merchant: Merchant): Observable<EntityResponseType> {
-        const copy = this.convert(merchant);
-        return this.http.put<Merchant>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.put<Merchant>(this.resourceUrl, merchant, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -33,9 +31,15 @@ export class MerchantService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<HttpResponse<Merchant[]>> {
+    findAll(req?: any): Observable<HttpResponse<Merchant[]>> {
         const options = createRequestOption(req);
         return this.http.get<Merchant[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .map((res: HttpResponse<Merchant[]>) => this.convertArrayResponse(res));
+    }
+
+    findAllWithSubCategories(req?: any): Observable<HttpResponse<Merchant[]>> {
+        const options = createRequestOption(req);
+        return this.http.get<Merchant[]>(`${this.resourceUrl}/with/subCategories`, { params: options, observe: 'response' })
             .map((res: HttpResponse<Merchant[]>) => this.convertArrayResponse(res));
     }
 
@@ -44,33 +48,13 @@ export class MerchantService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Merchant = this.convertItemFromServer(this.deserializeObject(res.body));
+        const body: Merchant = this.deserializeObject(res.body);
         return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<Merchant[]>): HttpResponse<Merchant[]> {
-        const jsonResponse: Merchant[] = this.deserializeArray(res.body);
-        const body: Merchant[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
-        }
+        const body: Merchant[] = this.deserializeArray(res.body);
         return res.clone({ body });
-    }
-
-    /**
-     * Convert a returned JSON object to Merchant.
-     */
-    private convertItemFromServer(merchant: Merchant): Merchant {
-        const copy: Merchant = Object.assign({}, merchant);
-        return copy;
-    }
-
-    /**
-     * Convert a Merchant to a JSON which can be sent to the server.
-     */
-    private convert(merchant: Merchant): Merchant {
-        const copy: Merchant = Object.assign({}, merchant);
-        return copy;
     }
 
     private deserializeArray(json: any): Merchant[] {

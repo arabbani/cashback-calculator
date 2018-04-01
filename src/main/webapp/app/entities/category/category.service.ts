@@ -17,14 +17,12 @@ export class CategoryService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(category: Category): Observable<EntityResponseType> {
-        const copy = this.convert(category);
-        return this.http.post<Category>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.post<Category>(this.resourceUrl, category, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(category: Category): Observable<EntityResponseType> {
-        const copy = this.convert(category);
-        return this.http.put<Category>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.put<Category>(this.resourceUrl, category, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -33,7 +31,7 @@ export class CategoryService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<HttpResponse<Category[]>> {
+    findAll(req?: any): Observable<HttpResponse<Category[]>> {
         const options = createRequestOption(req);
         return this.http.get<Category[]>(this.resourceUrl, { params: options, observe: 'response' })
             .map((res: HttpResponse<Category[]>) => this.convertArrayResponse(res));
@@ -44,33 +42,13 @@ export class CategoryService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Category = this.convertItemFromServer(this.deserializeObject(res.body));
+        const body: Category = this.deserializeObject(res.body);
         return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<Category[]>): HttpResponse<Category[]> {
-        const jsonResponse: Category[] = this.deserializeArray(res.body);
-        const body: Category[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
-        }
+        const body: Category[] = this.deserializeArray(res.body);
         return res.clone({ body });
-    }
-
-    /**
-     * Convert a returned JSON object to Category.
-     */
-    private convertItemFromServer(category: Category): Category {
-        const copy: Category = Object.assign({}, category);
-        return copy;
-    }
-
-    /**
-     * Convert a Category to a JSON which can be sent to the server.
-     */
-    private convert(category: Category): Category {
-        const copy: Category = Object.assign({}, category);
-        return copy;
     }
 
     private deserializeArray(json: any): Category[] {

@@ -1,22 +1,31 @@
 package com.creatives.apsstr.cbcl.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.CardProvider;
 import com.creatives.apsstr.cbcl.service.CardProviderService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import java.util.List;
-import java.util.Optional;
+import io.github.jhipster.web.util.ResponseUtil;
 
 /**
  * REST controller for managing CardProvider.
@@ -44,15 +53,15 @@ public class CardProviderResource {
      */
     @PostMapping("/card-providers")
     @Timed
-    public ResponseEntity<CardProvider> createCardProvider(@Valid @RequestBody CardProvider cardProvider) throws URISyntaxException {
+    public ResponseEntity<CardProvider> createCardProvider(@Valid @RequestBody CardProvider cardProvider)
+            throws URISyntaxException {
         log.debug("REST request to save CardProvider : {}", cardProvider);
         if (cardProvider.getId() != null) {
             throw new BadRequestAlertException("A new cardProvider cannot already have an ID", ENTITY_NAME, "idexists");
         }
         CardProvider result = cardProviderService.save(cardProvider);
         return ResponseEntity.created(new URI("/api/card-providers/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +75,15 @@ public class CardProviderResource {
      */
     @PutMapping("/card-providers")
     @Timed
-    public ResponseEntity<CardProvider> updateCardProvider(@Valid @RequestBody CardProvider cardProvider) throws URISyntaxException {
+    public ResponseEntity<CardProvider> updateCardProvider(@Valid @RequestBody CardProvider cardProvider)
+            throws URISyntaxException {
         log.debug("REST request to update CardProvider : {}", cardProvider);
         if (cardProvider.getId() == null) {
             return createCardProvider(cardProvider);
         }
         CardProvider result = cardProviderService.save(cardProvider);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cardProvider.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cardProvider.getId().toString())).body(result);
     }
 
     /**
@@ -87,7 +96,7 @@ public class CardProviderResource {
     public List<CardProvider> getAllCardProviders() {
         log.debug("REST request to get all CardProviders");
         return cardProviderService.findAll();
-        }
+    }
 
     /**
      * GET  /card-providers/:id : get the "id" cardProvider.

@@ -41,7 +41,7 @@ export class CardComponent implements OnInit {
     }
 
     private loadAllCardsTypes() {
-        this.cardTypeService.query().subscribe(
+        this.cardTypeService.findAll().subscribe(
             (res: HttpResponse<CardType[]>) => {
                 this.cardTypes = res.body;
             },
@@ -50,7 +50,7 @@ export class CardComponent implements OnInit {
     }
 
     private loadAllBanks() {
-        this.bankService.query().subscribe(
+        this.bankService.findAll().subscribe(
             (res: HttpResponse<Bank[]>) => {
                 this.banks = res.body;
             },
@@ -59,7 +59,7 @@ export class CardComponent implements OnInit {
     }
 
     private loadAllCards() {
-        this.cardService.findAllWithTypeBankAndProviders().subscribe(
+        this.cardService.findAllWithTypeAndBankAndProviders().subscribe(
             (res: HttpResponse<Card[]>) => {
                 this.cards = res.body;
             },
@@ -68,7 +68,7 @@ export class CardComponent implements OnInit {
     }
 
     private loadAllCardsProviders() {
-        this.cardProviderService.query().subscribe(
+        this.cardProviderService.findAll().subscribe(
             (res: HttpResponse<CardProvider[]>) => {
                 this.cardProviders = res.body;
             },

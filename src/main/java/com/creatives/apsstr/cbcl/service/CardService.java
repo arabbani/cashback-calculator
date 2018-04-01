@@ -96,9 +96,9 @@ public class CardService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Card> findAllWithTypeBankAndProviders() {
+    public List<Card> findAllWithTypeAndBankAndProviders() {
         log.debug("Request to get all Cards with type, bank and providers");
-        return cardRepository.findAllWithTypeBankAndProviders();
+        return cardRepository.findAllWithTypeAndBankAndProviders();
     }
 
     /**

@@ -43,7 +43,18 @@ public class MerchantService {
     @Transactional(readOnly = true)
     public List<Merchant> findAll() {
         log.debug("Request to get all Merchants");
-        return merchantRepository.findAllWithEagerRelationships();
+        return merchantRepository.findAll();
+    }
+
+    /**
+     * Get all the merchants with subCategories.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Merchant> findAllWithSubCategories() {
+        log.debug("Request to get all Merchants with subCategories");
+        return merchantRepository.findAllWithSubCategories();
     }
 
     /**

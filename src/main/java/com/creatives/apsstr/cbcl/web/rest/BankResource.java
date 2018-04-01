@@ -88,11 +88,11 @@ public class BankResource {
     }
 
     /**
-     * GET  /banks-with-type : get all the banks with type.
+     * GET  /banks/with/type : get all the banks with type.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of banks in body
      */
-    @GetMapping("/banks-with-type")
+    @GetMapping("/banks/with/type")
     @Timed
     public List<Bank> getAllBanksWithType() {
         log.debug("REST request to get all Banks with type");
@@ -100,11 +100,11 @@ public class BankResource {
     }
 
     /**
-     * GET  /banks-with-cards : get all the banks with cards.
+     * GET  /banks/with/cards : get all the banks with cards.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of banks in body
      */
-    @GetMapping("/banks-with-cards")
+    @GetMapping("/banks/with/cards")
     @Timed
     public List<Bank> getAllBanksWithCards() {
         log.debug("REST request to get all Banks with cards");
@@ -112,11 +112,11 @@ public class BankResource {
     }
 
     /**
-     * GET  /banks-with-type-cards : get all the banks with type and cards.
+     * GET  /banks/with/type-cards : get all the banks with type and cards.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of banks in body
      */
-    @GetMapping("/banks-with-type-cards")
+    @GetMapping("/banks/with/type-cards")
     @Timed
     public List<Bank> getAllBanksWithTypeAndCards() {
         log.debug("REST request to get all Banks with type and cards");

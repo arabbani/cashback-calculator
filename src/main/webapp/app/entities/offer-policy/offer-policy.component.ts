@@ -31,7 +31,7 @@ export class OfferPolicyComponent implements OnInit {
     }
 
     private loadAllOfferPolicy() {
-        this.offerPolicyService.query().subscribe(
+        this.offerPolicyService.findAll().subscribe(
             (res: HttpResponse<OfferPolicy[]>) => {
                 this.offerPolicies = res.body;
             },

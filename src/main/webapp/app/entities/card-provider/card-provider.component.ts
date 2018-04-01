@@ -31,7 +31,7 @@ export class CardProviderComponent implements OnInit {
     }
 
     private loadAllCardProviders() {
-        this.cardProviderService.query().subscribe(
+        this.cardProviderService.findAll().subscribe(
             (res: HttpResponse<CardProvider[]>) => {
                 this.cardProviders = res.body;
             },

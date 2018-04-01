@@ -235,7 +235,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadOfferPolicies(): void {
-    this.offerPolicyService.query().subscribe(
+    this.offerPolicyService.findAll().subscribe(
       (res: HttpResponse<OfferPolicy[]>) => {
         this.offerPolicies = res.body;
       },
@@ -244,7 +244,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadDates(): void {
-    this.dateService.query().subscribe(
+    this.dateService.findAll().subscribe(
       (res: HttpResponse<DateEntity[]>) => {
         this.dates = res.body;
       },
@@ -253,7 +253,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadDays(): void {
-    this.dayService.query().subscribe(
+    this.dayService.findAll().subscribe(
       (res: HttpResponse<Day[]>) => {
         this.days = res.body;
       },
@@ -271,7 +271,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadCities(): void {
-    this.cityService.query().subscribe(
+    this.cityService.findAllWithState().subscribe(
       (res: HttpResponse<City[]>) => {
         this.cities = res.body;
         this.filteredCities = [];
@@ -299,7 +299,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadMerchants(): void {
-    this.merchantService.query().subscribe(
+    this.merchantService.findAllWithSubCategories().subscribe(
       (res: HttpResponse<Merchant[]>) => {
         this.merchants = res.body;
       },
@@ -308,7 +308,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadCategories(): void {
-    this.categoryService.query().subscribe(
+    this.categoryService.findAll().subscribe(
       (res: HttpResponse<Category[]>) => {
         this.categories = res.body;
       },
@@ -337,7 +337,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadCircles(): void {
-    this.circleService.query().subscribe(
+    this.circleService.findAll().subscribe(
       (res: HttpResponse<Circle[]>) => {
         this.circles = res.body;
       },
@@ -391,7 +391,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadCards(): void {
-    this.cardService.query().subscribe(
+    this.cardService.findAll().subscribe(
       (res: HttpResponse<Card[]>) => {
         this.cards = res.body;
         this.filteredCards = [];
@@ -401,7 +401,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadFlightClasses(): void {
-    this.flightClassService.query().subscribe(
+    this.flightClassService.findAll().subscribe(
       (res: HttpResponse<FlightClass[]>) => {
         this.flightClasses = res.body;
       },
@@ -419,7 +419,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadCardTypes(): void {
-    this.cardTypeService.query().subscribe(
+    this.cardTypeService.findAll().subscribe(
       (res: HttpResponse<CardType[]>) => {
         this.cardTypes = res.body;
       },

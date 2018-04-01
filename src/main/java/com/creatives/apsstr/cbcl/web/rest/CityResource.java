@@ -51,8 +51,7 @@ public class CityResource {
         }
         City result = cityService.save(city);
         return ResponseEntity.created(new URI("/api/cities/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -72,9 +71,8 @@ public class CityResource {
             return createCity(city);
         }
         City result = cityService.save(city);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, city.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, city.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,7 +85,19 @@ public class CityResource {
     public List<City> getAllCities() {
         log.debug("REST request to get all Cities");
         return cityService.findAll();
-        }
+    }
+
+    /**
+    * GET  /cities/with/state : get all the cities with state.
+    *
+    * @return the ResponseEntity with status 200 (OK) and the list of cities in body
+    */
+    @GetMapping("/cities/with/state")
+    @Timed
+    public List<City> getAllCitiesWithState() {
+        log.debug("REST request to get all Cities with state");
+        return cityService.findAllWithState();
+    }
 
     /**
      * GET  /cities/:id : get the "id" city.

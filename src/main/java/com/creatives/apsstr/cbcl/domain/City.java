@@ -40,7 +40,7 @@ public class City implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<UserInfo> users = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private State state;
 
     @ManyToMany(mappedBy = "cities")

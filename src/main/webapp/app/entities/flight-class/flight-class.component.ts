@@ -31,7 +31,7 @@ export class FlightClassComponent implements OnInit {
     }
 
     private loadAllFlightClass() {
-        this.flightClassService.query().subscribe(
+        this.flightClassService.findAll().subscribe(
             (res: HttpResponse<FlightClass[]>) => {
                 this.flightClasses = res.body;
             },

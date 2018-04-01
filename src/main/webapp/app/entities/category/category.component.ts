@@ -31,7 +31,7 @@ export class CategoryComponent implements OnInit {
     }
 
     private loadAllCategory() {
-        this.categoryService.query().subscribe(
+        this.categoryService.findAll().subscribe(
             (res: HttpResponse<Category[]>) => {
                 this.categories = res.body;
             },

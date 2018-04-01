@@ -144,7 +144,7 @@ export class MobileComponent implements OnInit {
   }
 
   private getCircles(): void {
-    this.circleService.query().subscribe(
+    this.circleService.findAll().subscribe(
       (res: HttpResponse<Circle[]>) => {
         this.circles = res.body;
       },

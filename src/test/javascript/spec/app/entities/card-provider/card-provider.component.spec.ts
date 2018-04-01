@@ -37,7 +37,7 @@ describe('Component Tests', () => {
             it('Should call load all on init', () => {
                 // GIVEN
                 const headers = new HttpHeaders().append('link', 'link;link');
-                spyOn(service, 'query').and.returnValue(Observable.of(new HttpResponse({
+                spyOn(service, 'findAll').and.returnValue(Observable.of(new HttpResponse({
                     body: [new CardProvider(123)],
                     headers
                 })));
@@ -46,7 +46,7 @@ describe('Component Tests', () => {
                 comp.ngOnInit();
 
                 // THEN
-                expect(service.query).toHaveBeenCalled();
+                expect(service.findAll).toHaveBeenCalled();
                 expect(comp.cardProviders[0]).toEqual(jasmine.objectContaining({id: 123}));
             });
         });

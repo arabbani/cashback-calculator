@@ -51,8 +51,7 @@ public class MerchantResource {
         }
         Merchant result = merchantService.save(merchant);
         return ResponseEntity.created(new URI("/api/merchants/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -72,9 +71,8 @@ public class MerchantResource {
             return createMerchant(merchant);
         }
         Merchant result = merchantService.save(merchant);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, merchant.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, merchant.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,7 +85,19 @@ public class MerchantResource {
     public List<Merchant> getAllMerchants() {
         log.debug("REST request to get all Merchants");
         return merchantService.findAll();
-        }
+    }
+
+    /**
+    * GET  /merchants/with/subCategories : get all the merchants with subCategories.
+    *
+    * @return the ResponseEntity with status 200 (OK) and the list of merchants in body
+    */
+    @GetMapping("/merchants/with/subCategories")
+    @Timed
+    public List<Merchant> getAllMerchantsWithSubCategories() {
+        log.debug("REST request to get all Merchants with subCategories");
+        return merchantService.findAllWithSubCategories();
+    }
 
     /**
      * GET  /merchants/:id : get the "id" merchant.

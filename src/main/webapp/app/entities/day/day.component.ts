@@ -35,7 +35,7 @@ export class DayComponent implements OnInit {
     }
 
     private loadAllDay() {
-        this.dayService.query().subscribe(
+        this.dayService.findAll().subscribe(
             (res: HttpResponse<Day[]>) => {
                 this.days = res.body;
             },
