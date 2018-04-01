@@ -88,6 +88,18 @@ public class OperatingSystemResource {
         log.debug("REST request to get all OperatingSystems");
         return operatingSystemService.findAll();
         }
+    
+        /**
+     * GET  /operating-systems/with/type : get all the operatingSystems with type.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of operatingSystems in body
+     */
+    @GetMapping("/operating-systems/with/type")
+    @Timed
+    public List<OperatingSystem> getAllOperatingSystemsWithType() {
+        log.debug("REST request to get all OperatingSystems with type");
+        return operatingSystemService.findAllWithType();
+        }
 
     /**
      * GET  /operating-systems/:id : get the "id" operatingSystem.

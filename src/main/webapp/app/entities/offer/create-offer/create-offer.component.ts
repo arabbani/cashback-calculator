@@ -226,7 +226,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadOfferTypes(): void {
-    this.offerTypeService.query().subscribe(
+    this.offerTypeService.findAll().subscribe(
       (res: HttpResponse<OfferType[]>) => {
         this.offerTypes = res.body;
       },
@@ -281,7 +281,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadOperatingSystems(): void {
-    this.operatingSystemService.query().subscribe(
+    this.operatingSystemService.findAll().subscribe(
       (res: HttpResponse<OperatingSystem[]>) => {
         this.operatingSystems = res.body;
       },
@@ -327,7 +327,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadServiceProviders(): void {
-    this.serviceProviderService.query().subscribe(
+    this.serviceProviderService.finAllWithSubCategories().subscribe(
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
         this.filteredServiceProviders = [];
@@ -346,7 +346,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadReechargePlanTypes(): void {
-    this.reechargePlanTypeService.query().subscribe(
+    this.reechargePlanTypeService.findAll().subscribe(
       (res: HttpResponse<ReechargePlanType[]>) => {
         this.reechargePlanTypes = res.body;
       },
@@ -364,7 +364,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadRegions(): void {
-    this.regionService.query().subscribe(
+    this.regionService.findAll().subscribe(
       (res: HttpResponse<Region[]>) => {
         this.regions = res.body;
       },
@@ -373,7 +373,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadReturnTypes(): void {
-    this.returnTypeService.query().subscribe(
+    this.returnTypeService.findAll().subscribe(
       (res: HttpResponse<ReturnType[]>) => {
         this.returnTypes = res.body;
       },
@@ -382,7 +382,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadReturnModes(): void {
-    this.returnModeService.query().subscribe(
+    this.returnModeService.findAll().subscribe(
       (res: HttpResponse<ReturnMode[]>) => {
         this.returnModes = res.body;
       },

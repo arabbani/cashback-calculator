@@ -13,10 +13,15 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface ServiceProviderRepository extends JpaRepository<ServiceProvider, Long> {
-    @Query("select distinct service_provider from ServiceProvider service_provider left join fetch service_provider.subCategories")
-    List<ServiceProvider> findAllWithEagerRelationships();
 
     @Query("select service_provider from ServiceProvider service_provider left join fetch service_provider.subCategories where service_provider.id =:id")
     ServiceProvider findOneWithEagerRelationships(@Param("id") Long id);
+
+    @EntityGraph(attributePaths = { "subCategories" })
+    @Query("select distinct serviceProvider from ServiceProvider serviceProvider")
+    List<ServiceProvider> findAllWithSubCategories();
+
+    @EntityGraph(attributePaths = { "subCategories" })
+    List<ServiceProvider> findBySubCategories_Code(String code);
 
 }

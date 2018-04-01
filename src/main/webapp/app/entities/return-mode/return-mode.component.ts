@@ -31,7 +31,7 @@ export class ReturnModeComponent implements OnInit {
     }
 
     private loadAllReturnMode() {
-        this.returnModeService.query().subscribe(
+        this.returnModeService.findAll().subscribe(
             (res: HttpResponse<ReturnMode[]>) => {
                 this.returnModes = res.body;
             },

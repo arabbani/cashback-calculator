@@ -34,7 +34,7 @@ export class OperatingSystemComponent implements OnInit {
     }
 
     private loadAllOperatingSystemTypes() {
-        this.operatingSystemTypeService.query().subscribe(
+        this.operatingSystemTypeService.findAll().subscribe(
             (res: HttpResponse<OperatingSystemType[]>) => {
                 this.operatingSystemTypes = res.body;
             },
@@ -43,7 +43,7 @@ export class OperatingSystemComponent implements OnInit {
     }
 
     private loadAllOperatingSystem() {
-        this.operatingSystemService.query().subscribe(
+        this.operatingSystemService.findAllWithType().subscribe(
             (res: HttpResponse<OperatingSystem[]>) => {
                 this.operatingSystems = res.body;
             },

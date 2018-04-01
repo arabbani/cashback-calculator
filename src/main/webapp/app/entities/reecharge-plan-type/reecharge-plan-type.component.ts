@@ -31,7 +31,7 @@ export class ReechargePlanTypeComponent implements OnInit {
     }
 
     private loadAllReechargePlanType() {
-        this.reechargePlanTypeService.query().subscribe(
+        this.reechargePlanTypeService.findAll().subscribe(
             (res: HttpResponse<ReechargePlanType[]>) => {
                 this.reechargePlanTypes = res.body;
             },

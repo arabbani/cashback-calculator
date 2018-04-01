@@ -17,14 +17,12 @@ export class ServiceProviderService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(serviceProvider: ServiceProvider): Observable<EntityResponseType> {
-        const copy = this.convert(serviceProvider);
-        return this.http.post<ServiceProvider>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.post<ServiceProvider>(this.resourceUrl, serviceProvider, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(serviceProvider: ServiceProvider): Observable<EntityResponseType> {
-        const copy = this.convert(serviceProvider);
-        return this.http.put<ServiceProvider>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.put<ServiceProvider>(this.resourceUrl, serviceProvider, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -33,9 +31,20 @@ export class ServiceProviderService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<HttpResponse<ServiceProvider[]>> {
+    finAll(req?: any): Observable<HttpResponse<ServiceProvider[]>> {
         const options = createRequestOption(req);
         return this.http.get<ServiceProvider[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .map((res: HttpResponse<ServiceProvider[]>) => this.convertArrayResponse(res));
+    }
+
+    finAllWithSubCategories(req?: any): Observable<HttpResponse<ServiceProvider[]>> {
+        const options = createRequestOption(req);
+        return this.http.get<ServiceProvider[]>(`${this.resourceUrl}/with/subCategories`, { params: options, observe: 'response' })
+            .map((res: HttpResponse<ServiceProvider[]>) => this.convertArrayResponse(res));
+    }
+
+    findBySubCategoryCode(subCategoryCode: string): Observable<HttpResponse<ServiceProvider[]>> {
+        return this.http.get<ServiceProvider[]>(`${this.resourceUrl}/by/subCategoryCode/${subCategoryCode}`, { observe: 'response' })
             .map((res: HttpResponse<ServiceProvider[]>) => this.convertArrayResponse(res));
     }
 
@@ -43,39 +52,14 @@ export class ServiceProviderService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    bySubCategoryCode(subCategoryCode: string): Observable<HttpResponse<ServiceProvider[]>> {
-        return this.http.get<ServiceProvider[]>(`${this.resourceUrl}/by-sub-category-code/${subCategoryCode}`, { observe: 'response' })
-            .map((res: HttpResponse<ServiceProvider[]>) => this.convertArrayResponse(res));
-    }
-
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: ServiceProvider = this.convertItemFromServer(this.deserializeObject(res.body));
+        const body: ServiceProvider = this.deserializeObject(res.body);
         return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<ServiceProvider[]>): HttpResponse<ServiceProvider[]> {
-        const jsonResponse: ServiceProvider[] = this.deserializeArray(res.body);
-        const body: ServiceProvider[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
-        }
+        const body: ServiceProvider[] = this.deserializeArray(res.body);
         return res.clone({ body });
-    }
-
-    /**
-     * Convert a returned JSON object to ServiceProvider.
-     */
-    private convertItemFromServer(serviceProvider: ServiceProvider): ServiceProvider {
-        const copy: ServiceProvider = Object.assign({}, serviceProvider);
-        return copy;
-    }
-
-    /**
-     * Convert a ServiceProvider to a JSON which can be sent to the server.
-     */
-    private convert(serviceProvider: ServiceProvider): ServiceProvider {
-        const copy: ServiceProvider = Object.assign({}, serviceProvider);
-        return copy;
     }
 
     private deserializeArray(json: any): ServiceProvider[] {

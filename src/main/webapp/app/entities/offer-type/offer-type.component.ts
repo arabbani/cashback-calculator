@@ -31,7 +31,7 @@ export class OfferTypeComponent implements OnInit {
     }
 
     private loadAllOfferType() {
-        this.offerTypeService.query().subscribe(
+        this.offerTypeService.findAll().subscribe(
             (res: HttpResponse<OfferType[]>) => {
                 this.offerTypes = res.body;
             },

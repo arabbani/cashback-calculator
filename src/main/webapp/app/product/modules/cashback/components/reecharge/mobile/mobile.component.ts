@@ -103,7 +103,7 @@ export class MobileComponent implements OnInit {
         crawlFromServer = true;
     }
     if (crawlFromServer) {
-      this.serviceProviderService.bySubCategoryCode(subCategoryCode).subscribe(
+      this.serviceProviderService.findBySubCategoryCode(subCategoryCode).subscribe(
         (res: HttpResponse<ServiceProvider[]>) => {
           providers = res.body;
           switch (subCategoryCode) {
@@ -153,7 +153,7 @@ export class MobileComponent implements OnInit {
   }
 
   private getReechargePlanTypes(): void {
-    this.reechargePlanTypeService.query().subscribe(
+    this.reechargePlanTypeService.findAll().subscribe(
       (res: HttpResponse<ReechargePlanType[]>) => {
         this.reechargePlanTypes = res.body;
       },

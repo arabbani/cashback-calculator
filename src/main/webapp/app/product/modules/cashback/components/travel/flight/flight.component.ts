@@ -80,7 +80,7 @@ export class FlightComponent implements OnInit {
   }
 
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {
-    this.serviceProviderService.bySubCategoryCode(subCategoryCode).subscribe(
+    this.serviceProviderService.findBySubCategoryCode(subCategoryCode).subscribe(
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
         this.flightInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
@@ -108,7 +108,7 @@ export class FlightComponent implements OnInit {
   }
 
   private getRegions(): void {
-    this.regionService.query().subscribe(
+    this.regionService.findAll().subscribe(
       (res: HttpResponse<Region[]>) => {
         this.regions = res.body;
       },

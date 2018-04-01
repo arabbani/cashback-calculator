@@ -104,7 +104,7 @@ export class DatacardComponent implements OnInit {
         crawlFromServer = true;
     }
     if (crawlFromServer) {
-      this.serviceProviderService.bySubCategoryCode(subCategoryCode).subscribe(
+      this.serviceProviderService.findBySubCategoryCode(subCategoryCode).subscribe(
         (res: HttpResponse<ServiceProvider[]>) => {
           providers = res.body;
           switch (subCategoryCode) {
@@ -154,7 +154,7 @@ export class DatacardComponent implements OnInit {
   }
 
   private getReechargePlanTypes(): void {
-    this.reechargePlanTypeService.getDataPlans().subscribe(
+    this.reechargePlanTypeService.findAllDataPlans().subscribe(
       (res: HttpResponse<ReechargePlanType[]>) => {
         this.reechargePlanTypes = res.body;
       },

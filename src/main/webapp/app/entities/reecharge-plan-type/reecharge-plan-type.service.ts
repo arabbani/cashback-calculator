@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { JsogService } from 'jsog-typescript';
 import { Observable } from 'rxjs/Observable';
-import { SERVER_API_URL } from '../../app.constants';
 
-import { ReechargePlanType } from './reecharge-plan-type.model';
+import { SERVER_API_URL } from '../../app.constants';
 import { createRequestOption } from '../../shared';
+import { ReechargePlanType } from './reecharge-plan-type.model';
 
 type EntityResponseType = HttpResponse<ReechargePlanType>;
 
@@ -13,17 +14,15 @@ export class ReechargePlanTypeService {
 
     private resourceUrl = SERVER_API_URL + 'api/reecharge-plan-types';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(reechargePlanType: ReechargePlanType): Observable<EntityResponseType> {
-        const copy = this.convert(reechargePlanType);
-        return this.http.post<ReechargePlanType>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.post<ReechargePlanType>(this.resourceUrl, reechargePlanType, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(reechargePlanType: ReechargePlanType): Observable<EntityResponseType> {
-        const copy = this.convert(reechargePlanType);
-        return this.http.put<ReechargePlanType>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.put<ReechargePlanType>(this.resourceUrl, reechargePlanType, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -32,13 +31,13 @@ export class ReechargePlanTypeService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<HttpResponse<ReechargePlanType[]>> {
+    findAll(req?: any): Observable<HttpResponse<ReechargePlanType[]>> {
         const options = createRequestOption(req);
         return this.http.get<ReechargePlanType[]>(this.resourceUrl, { params: options, observe: 'response' })
             .map((res: HttpResponse<ReechargePlanType[]>) => this.convertArrayResponse(res));
     }
 
-    getDataPlans(): Observable<HttpResponse<ReechargePlanType[]>> {
+    findAllDataPlans(): Observable<HttpResponse<ReechargePlanType[]>> {
         return this.http.get<ReechargePlanType[]>(`${this.resourceUrl}/data-plans`, { observe: 'response' })
             .map((res: HttpResponse<ReechargePlanType[]>) => this.convertArrayResponse(res));
     }
@@ -48,32 +47,20 @@ export class ReechargePlanTypeService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: ReechargePlanType = this.convertItemFromServer(res.body);
+        const body: ReechargePlanType = this.deserializeObject(res.body);
         return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<ReechargePlanType[]>): HttpResponse<ReechargePlanType[]> {
-        const jsonResponse: ReechargePlanType[] = res.body;
-        const body: ReechargePlanType[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
-        }
+        const body: ReechargePlanType[] = this.deserializeArray(res.body);
         return res.clone({ body });
     }
 
-    /**
-     * Convert a returned JSON object to ReechargePlanType.
-     */
-    private convertItemFromServer(reechargePlanType: ReechargePlanType): ReechargePlanType {
-        const copy: ReechargePlanType = Object.assign({}, reechargePlanType);
-        return copy;
+    private deserializeArray(json: any): ReechargePlanType[] {
+        return this.jsogService.deserializeArray(json, ReechargePlanType);
     }
 
-    /**
-     * Convert a ReechargePlanType to a JSON which can be sent to the server.
-     */
-    private convert(reechargePlanType: ReechargePlanType): ReechargePlanType {
-        const copy: ReechargePlanType = Object.assign({}, reechargePlanType);
-        return copy;
+    private deserializeObject(json: any): ReechargePlanType {
+        return this.jsogService.deserializeObject(json, ReechargePlanType);
     }
 }

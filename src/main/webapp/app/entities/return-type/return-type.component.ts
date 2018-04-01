@@ -31,7 +31,7 @@ export class ReturnTypeComponent implements OnInit {
     }
 
     private loadAllReturnType() {
-        this.returnTypeService.query().subscribe(
+        this.returnTypeService.findAll().subscribe(
             (res: HttpResponse<ReturnType[]>) => {
                 this.returnTypes = res.body;
             },

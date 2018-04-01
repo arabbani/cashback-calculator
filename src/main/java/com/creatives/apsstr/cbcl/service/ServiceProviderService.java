@@ -43,7 +43,29 @@ public class ServiceProviderService {
     @Transactional(readOnly = true)
     public List<ServiceProvider> findAll() {
         log.debug("Request to get all ServiceProviders");
-        return serviceProviderRepository.findAllWithEagerRelationships();
+        return serviceProviderRepository.findAll();
+    }
+
+    /**
+     * Get all the serviceProviders with subCategories.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<ServiceProvider> findAllWithSubCategories() {
+        log.debug("Request to get all ServiceProviders with subCategories");
+        return serviceProviderRepository.findAllWithSubCategories();
+    }
+
+    /**
+     * Get all the serviceProviders with subCategories by subCategoryCode.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<ServiceProvider> findAllWithSubCategoriesBySubCategoryCode(String code) {
+        log.debug("Request to get all ServiceProviders with subCategories by subCategoryCode");
+        return serviceProviderRepository.findBySubCategories_Code(code);
     }
 
     /**

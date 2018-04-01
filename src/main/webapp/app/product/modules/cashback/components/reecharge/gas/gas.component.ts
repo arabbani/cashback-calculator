@@ -63,7 +63,7 @@ export class GasComponent implements OnInit {
   }
 
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {
-    this.serviceProviderService.bySubCategoryCode(subCategoryCode).subscribe(
+    this.serviceProviderService.findBySubCategoryCode(subCategoryCode).subscribe(
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
         this.gasInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();

@@ -51,7 +51,7 @@ export class UserInfoDialogComponent implements OnInit {
             .subscribe((res: HttpResponse<Merchant[]>) => { this.merchants = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.cardService.findAll()
             .subscribe((res: HttpResponse<Card[]>) => { this.cards = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
-        this.operatingSystemService.query()
+        this.operatingSystemService.findAll()
             .subscribe((res: HttpResponse<OperatingSystem[]>) => { this.operatingsystems = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 

@@ -32,7 +32,7 @@ public class OperatingSystem implements Serializable {
     @Column(name = "name", length = 50, nullable = false)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private OperatingSystemType type;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

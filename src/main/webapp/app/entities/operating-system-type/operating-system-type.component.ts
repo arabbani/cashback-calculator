@@ -31,7 +31,7 @@ export class OperatingSystemTypeComponent implements OnInit {
     }
 
     private loadAllOperatingSystemType() {
-        this.operatingSystemTypeService.query().subscribe(
+        this.operatingSystemTypeService.findAll().subscribe(
             (res: HttpResponse<OperatingSystemType[]>) => {
                 this.operatingSystemTypes = res.body;
             },

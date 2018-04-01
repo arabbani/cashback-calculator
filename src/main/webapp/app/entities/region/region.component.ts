@@ -31,7 +31,7 @@ export class RegionComponent implements OnInit {
     }
 
     private loadAllRegion() {
-        this.regionService.query().subscribe(
+        this.regionService.findAll().subscribe(
             (res: HttpResponse<Region[]>) => {
                 this.regions = res.body;
             },

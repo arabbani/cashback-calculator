@@ -47,6 +47,17 @@ public class OperatingSystemService {
     }
 
     /**
+     * Get all the operatingSystems with type.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<OperatingSystem> findAllWithType() {
+        log.debug("Request to get all OperatingSystems with type");
+        return operatingSystemRepository.findAllWithType();
+    }
+
+    /**
      * Get one operatingSystem by id.
      *
      * @param id the id of the entity

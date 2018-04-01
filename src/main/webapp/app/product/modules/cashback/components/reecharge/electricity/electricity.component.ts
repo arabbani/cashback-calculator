@@ -63,7 +63,7 @@ export class ElectricityComponent implements OnInit {
   }
 
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {
-    this.serviceProviderService.bySubCategoryCode(subCategoryCode).subscribe(
+    this.serviceProviderService.findBySubCategoryCode(subCategoryCode).subscribe(
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
         this.electricityInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
