@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Offer;
+import com.creatives.apsstr.cbcl.helper.projections.OfferForReference;
 import com.creatives.apsstr.cbcl.service.OfferService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -95,7 +96,7 @@ public class OfferResource {
      */
     @GetMapping("/offers/for/reference-exclude/{id}")
     @Timed
-    public List<Offer> getOffersForReferenceExclusive(@PathVariable Long id) {
+    public List<OfferForReference> getOffersForReferenceExclusive(@PathVariable Long id) {
         log.debug("REST request to get offers for reference except : {}", id);
         return offerService.findForReferenceExclusive(id);
     }
@@ -108,7 +109,7 @@ public class OfferResource {
      */
     @GetMapping("/offers/for/reference")
     @Timed
-    public List<Offer> getOffersForReference() {
+    public List<OfferForReference> getOffersForReference() {
         log.debug("REST request to get offers for reference");
         return offerService.findForReference();
     }

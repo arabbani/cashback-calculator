@@ -134,7 +134,8 @@ public class OfferRepositoryConstants {
 	/* ####################### CASHBACK CONDITIONS ####################### */
 
 	public static final String CASHBACK_CONDITION_COMMON = WHERE_ACTIVE + SharedRepositoryConstants.AND
-			+ WHERE_SUBCATEGORY + SharedRepositoryConstants.AND + WHERE_DATE_BOUND + SharedRepositoryConstants.AND + WHERE_ACTIVE_DATE + SharedRepositoryConstants.AND + WHERE_ACTIVE_DAY;
+			+ WHERE_SUBCATEGORY + SharedRepositoryConstants.AND + WHERE_DATE_BOUND + SharedRepositoryConstants.AND
+			+ WHERE_ACTIVE_DATE + SharedRepositoryConstants.AND + WHERE_ACTIVE_DAY;
 
 	public static final String CONDITION_REECHARGE_COMMON = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
 			+ WHERE_SERVICE_PROVIDER;
@@ -160,7 +161,8 @@ public class OfferRepositoryConstants {
 	public static final String CASHBACK_REECHARGE_COMMON = DEFAULT + SharedRepositoryConstants.WHERE
 			+ CONDITION_REECHARGE_COMMON;
 
-	public static final String CASHBACK_REECHARGE_WITH_CHILDS = SELECT_REECHARGE + SharedRepositoryConstants.WHERE
+	public static final String CASHBACK_REECHARGE_WITH_CHILDS = SELECT_REECHARGE
+			+ " left join fetch offer.offerReturns offerReturns" + SharedRepositoryConstants.WHERE
 			+ CONDITION_REECHARGE_COMMON + SharedRepositoryConstants.AND + CONDITION_REECHARGE_CHILDS;
 
 	public static final String CASHBACK_TRAVEL_DEFAULT = SELECT_TRAVEL + SharedRepositoryConstants.WHERE

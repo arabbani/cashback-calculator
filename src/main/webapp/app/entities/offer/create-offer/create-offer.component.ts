@@ -238,7 +238,6 @@ export class CreateOfferComponent implements OnInit {
       if (mode) {
         this.editOffer();
       }
-      console.log(this.offer);
     } else {
       this.isCoupon = false;
       this.initializeToEdit();
@@ -293,20 +292,25 @@ export class CreateOfferComponent implements OnInit {
   }
 
   onSelectTab(tabNumber: number): void {
-    if (this.editMode) {
-      switch (tabNumber) {
-        case 2:
+    switch (tabNumber) {
+      case 2:
+        if (this.editMode) {
           this.loadTabTwoEntities();
-          break;
-        case 3:
+        }
+        break;
+      case 3:
+        if (this.editMode) {
           this.loadTabThreeEntities();
-          break;
-        case 4:
+        }
+        this.setUpSubCategoriesToEdit(this.offer.subCategories);
+        break;
+      case 4:
+        if (this.editMode) {
           this.loadTabFourEntities();
-          break;
-        default:
-          break;
-      }
+        }
+        break;
+      default:
+        break;
     }
   }
 
@@ -336,7 +340,7 @@ export class CreateOfferComponent implements OnInit {
           this.isReechargeExtra = true;
           if (!this.offer.reechargeInfo) {
             this.offer.reechargeInfo = new ReechargeInfo();
-            if (this.editMode && this.offer.id !== undefined) {
+            if (this.offer.id !== undefined) {
               this.loadReechargeInfo();
             }
           }
@@ -349,7 +353,7 @@ export class CreateOfferComponent implements OnInit {
           }
           if (!this.offer.travelInfo['flightInfo']) {
             this.offer.travelInfo['flightInfo'] = new FlightInfo();
-            if (this.editMode && this.offer.id !== undefined) {
+            if (this.offer.id !== undefined) {
               this.loadFlightInfo();
             }
           }
@@ -362,7 +366,7 @@ export class CreateOfferComponent implements OnInit {
           }
           if (!this.offer.travelInfo['busInfo']) {
             this.offer.travelInfo['busInfo'] = new BusInfo();
-            if (this.editMode && this.offer.id !== undefined) {
+            if (this.offer.id !== undefined) {
               this.loadBusInfo();
             }
           }
@@ -575,6 +579,8 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private refineOfferToSave(): void {
+    // const of = Object.assign({}, this.offer);
+    // console.log(of);
     this.offer.startDate.setSeconds(0);
     this.offer.endDate.setSeconds(59);
     _.forEach(this.offer.offerReturns, (offerReturn) => {

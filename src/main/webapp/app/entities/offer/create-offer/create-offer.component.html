@@ -680,10 +680,8 @@
                 </div>
                 <div class="float-right">
                     <button type="button" class="btn btn-info" *ngIf="!editMode" (click)="editOffer()">Edit</button>
-                    <button *ngIf="editMode" type="button" class="btn btn-success" [disabled]="isSaving || basicInfoForm.form.invalid || optionsForm.form.invalid || detailInfoForm.form.invalid || offerInfoForm.form.invalid"
+                    <button *ngIf="editMode" type="button" class="btn btn-success" [disabled]="isSaving || basicInfoForm.form.invalid || optionsForm.form.invalid || detailInfoForm.form.invalid || offerInfoForm.form.invalid|| offerReturnForm.form.invalid"
                         (click)="saveOffer()">Save</button>
-                    <!-- <button *ngIf="editMode" type="button" class="btn btn-success" [disabled]="isSaving || offerReturnForm.form.invalid || offerInfoForm.form.invalid || detailInfoForm.form.invalid || optionsForm.form.invalid || basicInfoForm.form.invalid"
-                        (click)="saveOffer()">Save</button> -->
                     <button type="button" class="btn btn-danger" *ngIf="offer.id && editMode" (click)="cancelEdit()">Cancel</button>
                 </div>
             </div>

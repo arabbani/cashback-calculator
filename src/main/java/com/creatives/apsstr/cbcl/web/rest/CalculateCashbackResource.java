@@ -48,15 +48,15 @@ public class CalculateCashbackResource {
 	 * @return the ResponseEntity with status 200 (OK) and the list of
 	 *         cashbackResults in body
 	 */
-	// @PostMapping("/mobile")
-	// @Timed
-	// public List<CashbackInfo> calculateCashbackForMobile(@RequestBody MobileInput mobileInput) {
-	// 	log.debug("REST request to calculate cashback for mobile : {} ", mobileInput);
-	// 	return calculateCashbackService.calculateCashbackReechargeWithReechargeCondition(mobileInput.getSubCategoryId(),
-	// 			mobileInput.getServiceProviderId(), mobileInput.getDateTime(), mobileInput.getActiveDate(),
-	// 			mobileInput.getActiveDay(), mobileInput.getCircleId(), mobileInput.getReechargePlaneTypeId(),
-	// 			mobileInput.getExpense());
-	// }
+	@PostMapping("/mobile")
+	@Timed
+	public List<CashbackInfo> calculateCashbackForMobile(@RequestBody MobileInput mobileInput) {
+		log.debug("REST request to calculate cashback for mobile : {} ", mobileInput);
+		return calculateCashbackService.calculateCashbackReechargeWithReechargeCondition(mobileInput.getSubCategoryId(),
+				mobileInput.getServiceProviderId(), mobileInput.getDateTime(), mobileInput.getActiveDate(),
+				mobileInput.getActiveDay(), mobileInput.getCircleId(), mobileInput.getReechargePlaneTypeId(),
+				mobileInput.getExpense());
+	}
 
 	/**
 	 * POST /dth : calculate cashback for dth

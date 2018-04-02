@@ -1,6 +1,7 @@
 package com.creatives.apsstr.cbcl.service;
 
 import com.creatives.apsstr.cbcl.domain.Offer;
+import com.creatives.apsstr.cbcl.helper.projections.OfferForReference;
 import com.creatives.apsstr.cbcl.repository.OfferRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +53,7 @@ public class OfferService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Offer> findForReferenceExclusive(Long id) {
+    public List<OfferForReference> findForReferenceExclusive(Long id) {
         log.debug("Request to get all offers for reference exclusive");
         return offerRepository.findForReferenceByIdNotAndActiveTrueAndDummyFalse(id);
     }
@@ -63,7 +64,7 @@ public class OfferService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Offer> findForReference() {
+    public List<OfferForReference> findForReference() {
         log.debug("Request to get all offers for reference");
         return offerRepository.findForReferenceByActiveTrueAndDummyFalse();
     }

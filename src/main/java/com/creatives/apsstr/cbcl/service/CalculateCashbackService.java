@@ -41,13 +41,13 @@ public class CalculateCashbackService {
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	// public List<CashbackInfo> calculateCashbackReechargeWithReechargeCondition(Long subCategoryId,
-	// 		Long serviceProviderId, String dateTime, Integer activeDate, String activeDay, Long circleId,
-	// 		Long reechargePlaneTypeId, Expense expense) {
-	// 	List<Offer> offers = offerRepository.cashbackReechargeWithReechargeCondition(true, false, subCategoryId,
-	// 			dateTime, activeDate, activeDay, serviceProviderId, circleId, reechargePlaneTypeId);
-	// 	return this.cashbackCalculatorAlgo.calculate(offers, expense);
-	// }
+	public List<CashbackInfo> calculateCashbackReechargeWithReechargeCondition(Long subCategoryId,
+			Long serviceProviderId, String dateTime, Integer activeDate, String activeDay, Long circleId,
+			Long reechargePlaneTypeId, Expense expense) {
+		List<Offer> offers = offerRepository.cashbackReechargeWithReechargeCondition(true, false, subCategoryId,
+				dateTime, activeDate, activeDay, serviceProviderId, circleId, reechargePlaneTypeId);
+		return this.cashbackCalculatorAlgo.calculate(offers, expense);
+	}
 
 	/**
 	 * Calculate cashback for dth, landline, broadband, electricity, gas, metro, water
