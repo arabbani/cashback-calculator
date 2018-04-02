@@ -31,7 +31,7 @@ export class TravelTypeComponent implements OnInit {
     }
 
     private loadAllTravelType() {
-        this.travelTypeService.query().subscribe(
+        this.travelTypeService.findAll().subscribe(
             (res: HttpResponse<TravelType[]>) => {
                 this.travelTypes = res.body;
             },

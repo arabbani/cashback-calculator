@@ -17,14 +17,12 @@ export class StateService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(state: State): Observable<EntityResponseType> {
-        const copy = this.convert(state);
-        return this.http.post<State>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.post<State>(this.resourceUrl, state, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(state: State): Observable<EntityResponseType> {
-        const copy = this.convert(state);
-        return this.http.put<State>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.put<State>(this.resourceUrl, state, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -33,7 +31,7 @@ export class StateService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<HttpResponse<State[]>> {
+    findAll(req?: any): Observable<HttpResponse<State[]>> {
         const options = createRequestOption(req);
         return this.http.get<State[]>(this.resourceUrl, { params: options, observe: 'response' })
             .map((res: HttpResponse<State[]>) => this.convertArrayResponse(res));
@@ -44,33 +42,13 @@ export class StateService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: State = this.convertItemFromServer(this.deserializeObject(res.body));
+        const body: State = this.deserializeObject(res.body);
         return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<State[]>): HttpResponse<State[]> {
-        const jsonResponse: State[] = this.deserializeArray(res.body);
-        const body: State[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
-        }
+        const body: State[] = this.deserializeArray(res.body);
         return res.clone({ body });
-    }
-
-    /**
-     * Convert a returned JSON object to State.
-     */
-    private convertItemFromServer(state: State): State {
-        const copy: State = Object.assign({}, state);
-        return copy;
-    }
-
-    /**
-     * Convert a State to a JSON which can be sent to the server.
-     */
-    private convert(state: State): State {
-        const copy: State = Object.assign({}, state);
-        return copy;
     }
 
     private deserializeArray(json: any): State[] {

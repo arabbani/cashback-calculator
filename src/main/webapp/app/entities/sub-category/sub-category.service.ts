@@ -17,14 +17,12 @@ export class SubCategoryService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(subCategory: SubCategory): Observable<EntityResponseType> {
-        const copy = this.convert(subCategory);
-        return this.http.post<SubCategory>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.post<SubCategory>(this.resourceUrl, subCategory, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(subCategory: SubCategory): Observable<EntityResponseType> {
-        const copy = this.convert(subCategory);
-        return this.http.put<SubCategory>(this.resourceUrl, copy, { observe: 'response' })
+        return this.http.put<SubCategory>(this.resourceUrl, subCategory, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -33,9 +31,15 @@ export class SubCategoryService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<HttpResponse<SubCategory[]>> {
+    findAll(req?: any): Observable<HttpResponse<SubCategory[]>> {
         const options = createRequestOption(req);
         return this.http.get<SubCategory[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .map((res: HttpResponse<SubCategory[]>) => this.convertArrayResponse(res));
+    }
+
+    findAllWithCategory(req?: any): Observable<HttpResponse<SubCategory[]>> {
+        const options = createRequestOption(req);
+        return this.http.get<SubCategory[]>(`${this.resourceUrl}/with/category`, { params: options, observe: 'response' })
             .map((res: HttpResponse<SubCategory[]>) => this.convertArrayResponse(res));
     }
 
@@ -44,33 +48,13 @@ export class SubCategoryService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: SubCategory = this.convertItemFromServer(res.body);
+        const body: SubCategory = this.deserializeObject(res.body);
         return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<SubCategory[]>): HttpResponse<SubCategory[]> {
-        const jsonResponse: SubCategory[] = this.deserializeArray(this.deserializeObject(res.body));
-        const body: SubCategory[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
-        }
+        const body: SubCategory[] = this.deserializeArray(res.body);
         return res.clone({ body });
-    }
-
-    /**
-     * Convert a returned JSON object to SubCategory.
-     */
-    private convertItemFromServer(subCategory: SubCategory): SubCategory {
-        const copy: SubCategory = Object.assign({}, subCategory);
-        return copy;
-    }
-
-    /**
-     * Convert a SubCategory to a JSON which can be sent to the server.
-     */
-    private convert(subCategory: SubCategory): SubCategory {
-        const copy: SubCategory = Object.assign({}, subCategory);
-        return copy;
     }
 
     private deserializeArray(json: any): SubCategory[] {

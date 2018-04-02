@@ -262,7 +262,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadStates(): void {
-    this.stateService.query().subscribe(
+    this.stateService.findAll().subscribe(
       (res: HttpResponse<State[]>) => {
         this.states = res.body;
       },
@@ -317,7 +317,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadSubCategories(): void {
-    this.subCategoryService.query().subscribe(
+    this.subCategoryService.findAllWithCategory().subscribe(
       (res: HttpResponse<SubCategory[]>) => {
         this.subCategories = res.body;
         this.filteredSubCategories = [];
@@ -327,7 +327,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadServiceProviders(): void {
-    this.serviceProviderService.finAllWithSubCategories().subscribe(
+    this.serviceProviderService.findAllWithSubCategories().subscribe(
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
         this.filteredServiceProviders = [];
@@ -355,7 +355,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadTravelTypes(): void {
-    this.travelTypeService.query().subscribe(
+    this.travelTypeService.findAll().subscribe(
       (res: HttpResponse<TravelType[]>) => {
         this.travelTypes = res.body;
       },
@@ -410,7 +410,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadOffersForReference(): void {
-    this.offerService.query().subscribe(
+    this.offerService.findAll().subscribe(
       (res: HttpResponse<Offer[]>) => {
         this.offers = res.body;
       },

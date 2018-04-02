@@ -19,7 +19,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "travel_info")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@JsonIdentityInfo(generator = JSOGGenerator.class)
 public class TravelInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;

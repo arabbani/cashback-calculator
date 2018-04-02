@@ -90,7 +90,7 @@ export class FlightComponent implements OnInit {
   }
 
   private getTravelTypes(): void {
-    this.travelTypeService.query().subscribe(
+    this.travelTypeService.findAll().subscribe(
       (res: HttpResponse<TravelType[]>) => {
         this.travelTypes = res.body;
       },

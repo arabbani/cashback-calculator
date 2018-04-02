@@ -34,7 +34,7 @@ export class ServiceProviderComponent implements OnInit {
     }
 
     private loadAllSubCategories() {
-        this.subCategoryService.query().subscribe(
+        this.subCategoryService.findAll().subscribe(
             (res: HttpResponse<SubCategory[]>) => {
                 this.subCategories = res.body;
             },
@@ -43,7 +43,7 @@ export class ServiceProviderComponent implements OnInit {
     }
 
     private loadAllServiceProvider() {
-        this.serviceProviderService.finAllWithSubCategories().subscribe(
+        this.serviceProviderService.findAllWithSubCategories().subscribe(
             (res: HttpResponse<ServiceProvider[]>) => {
                 this.serviceProviders = res.body;
             },

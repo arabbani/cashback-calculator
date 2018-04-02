@@ -43,7 +43,7 @@ export class SubCategoryComponent implements OnInit {
     }
 
     private loadAllSubCategory() {
-        this.subCategoryService.query().subscribe(
+        this.subCategoryService.findAllWithCategory().subscribe(
             (res: HttpResponse<SubCategory[]>) => {
                 this.subCategories = res.body;
             },

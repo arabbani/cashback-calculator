@@ -18,13 +18,11 @@ export class OfferService {
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils, private jsogService: JsogService) { }
 
     create(offer: Offer): Observable<EntityResponseType> {
-        // const copy = this.convert(offer);
         return this.http.post<Offer>(this.resourceUrl, offer, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(offer: Offer): Observable<EntityResponseType> {
-        // const copy = this.convert(offer);
         return this.http.put<Offer>(this.resourceUrl, offer, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
@@ -34,7 +32,7 @@ export class OfferService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<HttpResponse<Offer[]>> {
+    findAll(req?: any): Observable<HttpResponse<Offer[]>> {
         const options = createRequestOption(req);
         return this.http.get<Offer[]>(this.resourceUrl, { params: options, observe: 'response' })
             .map((res: HttpResponse<Offer[]>) => this.convertArrayResponse(res));
@@ -45,16 +43,12 @@ export class OfferService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Offer = this.convertItemFromServer(this.deserializeObject(res.body));
+        const body: Offer = this.deserializeObject(res.body);
         return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<Offer[]>): HttpResponse<Offer[]> {
-        const jsonResponse: Offer[] = this.deserializeArray(res.body);
-        const body: Offer[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
-        }
+        const body: Offer[] = this.deserializeArray(res.body);
         return res.clone({ body });
     }
 
@@ -67,18 +61,6 @@ export class OfferService {
             .convertDateTimeFromServer(offer.startDate);
         copy.endDate = this.dateUtils
             .convertDateTimeFromServer(offer.endDate);
-        return copy;
-    }
-
-    /**
-     * Convert a Offer to a JSON which can be sent to the server.
-     */
-    private convert(offer: Offer): Offer {
-        const copy: Offer = Object.assign({}, offer);
-
-        copy.startDate = this.dateUtils.toDate(offer.startDate);
-
-        copy.endDate = this.dateUtils.toDate(offer.endDate);
         return copy;
     }
 

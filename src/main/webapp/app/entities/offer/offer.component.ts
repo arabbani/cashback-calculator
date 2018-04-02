@@ -26,7 +26,7 @@ export class OfferComponent implements OnInit {
     }
 
     private loadAllOffer() {
-        this.offerService.query().subscribe(
+        this.offerService.findAll().subscribe(
             (res: HttpResponse<Offer[]>) => {
                 this.offers = res.body;
             },

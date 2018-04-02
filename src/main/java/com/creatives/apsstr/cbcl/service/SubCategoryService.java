@@ -47,6 +47,17 @@ public class SubCategoryService {
     }
 
     /**
+     * Get all the subCategories with category.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<SubCategory> findAllWityCategory() {
+        log.debug("Request to get all SubCategories with category");
+        return subCategoryRepository.findAllWityCategory();
+    }
+
+    /**
      * Get one subCategory by id.
      *
      * @param id the id of the entity

@@ -44,15 +44,15 @@ public class SubCategoryResource {
      */
     @PostMapping("/sub-categories")
     @Timed
-    public ResponseEntity<SubCategory> createSubCategory(@Valid @RequestBody SubCategory subCategory) throws URISyntaxException {
+    public ResponseEntity<SubCategory> createSubCategory(@Valid @RequestBody SubCategory subCategory)
+            throws URISyntaxException {
         log.debug("REST request to save SubCategory : {}", subCategory);
         if (subCategory.getId() != null) {
             throw new BadRequestAlertException("A new subCategory cannot already have an ID", ENTITY_NAME, "idexists");
         }
         SubCategory result = subCategoryService.save(subCategory);
         return ResponseEntity.created(new URI("/api/sub-categories/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +66,15 @@ public class SubCategoryResource {
      */
     @PutMapping("/sub-categories")
     @Timed
-    public ResponseEntity<SubCategory> updateSubCategory(@Valid @RequestBody SubCategory subCategory) throws URISyntaxException {
+    public ResponseEntity<SubCategory> updateSubCategory(@Valid @RequestBody SubCategory subCategory)
+            throws URISyntaxException {
         log.debug("REST request to update SubCategory : {}", subCategory);
         if (subCategory.getId() == null) {
             return createSubCategory(subCategory);
         }
         SubCategory result = subCategoryService.save(subCategory);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, subCategory.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, subCategory.getId().toString())).body(result);
     }
 
     /**
@@ -87,7 +87,19 @@ public class SubCategoryResource {
     public List<SubCategory> getAllSubCategories() {
         log.debug("REST request to get all SubCategories");
         return subCategoryService.findAll();
-        }
+    }
+
+    /**
+    * GET  /sub-categories/with/category : get all the subCategories with category.
+    *
+    * @return the ResponseEntity with status 200 (OK) and the list of subCategories in body
+    */
+    @GetMapping("/sub-categories/with/category")
+    @Timed
+    public List<SubCategory> getAllSubCategoriesWithCategory() {
+        log.debug("REST request to get all SubCategories with category");
+        return subCategoryService.findAllWityCategory();
+    }
 
     /**
      * GET  /sub-categories/:id : get the "id" subCategory.

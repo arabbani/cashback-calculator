@@ -31,13 +31,13 @@ export class ServiceProviderService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    finAll(req?: any): Observable<HttpResponse<ServiceProvider[]>> {
+    findAll(req?: any): Observable<HttpResponse<ServiceProvider[]>> {
         const options = createRequestOption(req);
         return this.http.get<ServiceProvider[]>(this.resourceUrl, { params: options, observe: 'response' })
             .map((res: HttpResponse<ServiceProvider[]>) => this.convertArrayResponse(res));
     }
 
-    finAllWithSubCategories(req?: any): Observable<HttpResponse<ServiceProvider[]>> {
+    findAllWithSubCategories(req?: any): Observable<HttpResponse<ServiceProvider[]>> {
         const options = createRequestOption(req);
         return this.http.get<ServiceProvider[]>(`${this.resourceUrl}/with/subCategories`, { params: options, observe: 'response' })
             .map((res: HttpResponse<ServiceProvider[]>) => this.convertArrayResponse(res));
