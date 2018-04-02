@@ -856,12 +856,21 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadOffersForReference(): void {
-    this.offerService.findAll().subscribe(
-      (res: HttpResponse<Offer[]>) => {
-        this.offers = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
+    if (this.offer.id) {
+      this.offerService.findAllForReferenceExclusive(this.offer.id).subscribe(
+        (res: HttpResponse<Offer[]>) => {
+          this.offers = res.body;
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
+    } else {
+      this.offerService.findAllForReference().subscribe(
+        (res: HttpResponse<Offer[]>) => {
+          this.offers = res.body;
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
+    }
   }
 
   private loadCardTypes(): void {

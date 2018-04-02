@@ -47,6 +47,28 @@ public class OfferService {
     }
 
     /**
+     * Get all the offers for reference except "id" offer.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Offer> findForReferenceExclusive(Long id) {
+        log.debug("Request to get all offers for reference exclusive");
+        return offerRepository.findForReferenceByIdNotAndActiveTrueAndDummyFalse(id);
+    }
+
+    /**
+     * Get all the offers for reference.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Offer> findForReference() {
+        log.debug("Request to get all offers for reference");
+        return offerRepository.findForReferenceByActiveTrueAndDummyFalse();
+    }
+
+    /**
      * Get one offer by id.
      *
      * @param id the id of the entity

@@ -88,6 +88,32 @@ public class OfferResource {
     }
 
     /**
+     * GET  /offers/for/reference-exclude/:id : get offers for reference except "id" offer.
+     *
+     * @param id the id of the offer to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the offer, or with status 404 (Not Found)
+     */
+    @GetMapping("/offers/for/reference-exclude/{id}")
+    @Timed
+    public List<Offer> getOffersForReferenceExclusive(@PathVariable Long id) {
+        log.debug("REST request to get offers for reference except : {}", id);
+        return offerService.findForReferenceExclusive(id);
+    }
+
+    /**
+     * GET  /offers/for/reference : get offers for reference.
+     *
+     * @param id the id of the offer to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the offer, or with status 404 (Not Found)
+     */
+    @GetMapping("/offers/for/reference")
+    @Timed
+    public List<Offer> getOffersForReference() {
+        log.debug("REST request to get offers for reference");
+        return offerService.findForReference();
+    }
+
+    /**
      * GET  /offers/:id : get the "id" offer.
      *
      * @param id the id of the offer to retrieve

@@ -1,6 +1,8 @@
 package com.creatives.apsstr.cbcl.repository;
 
 import com.creatives.apsstr.cbcl.domain.Offer;
+import com.creatives.apsstr.cbcl.helper.projections.OfferForReference;
+
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -33,5 +35,9 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 
     @EntityGraph(attributePaths = { "travelInfo", "travelInfo.types", "travelInfo.busInfo", })
     Offer findOneWithBusInfoById(Long id);
+
+    List<Offer> findForReferenceByIdNotAndActiveTrueAndDummyFalse(Long id);
+
+    List<OfferForReference> findForReferenceByActiveTrueAndDummyFalse();
 
 }

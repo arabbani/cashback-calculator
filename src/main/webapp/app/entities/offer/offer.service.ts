@@ -37,6 +37,16 @@ export class OfferService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
+    findAllForReferenceExclusive(id: number): Observable<HttpResponse<Offer[]>> {
+        return this.http.get<Offer[]>(`${this.resourceUrl}/for/reference-exclude/${id}`, { observe: 'response' })
+            .map((res: HttpResponse<Offer[]>) => this.convertArrayResponse(res));
+    }
+
+    findAllForReference(): Observable<HttpResponse<Offer[]>> {
+        return this.http.get<Offer[]>(`${this.resourceUrl}/for/reference`, { observe: 'response' })
+            .map((res: HttpResponse<Offer[]>) => this.convertArrayResponse(res));
+    }
+
     findAll(req?: any): Observable<HttpResponse<Offer[]>> {
         const options = createRequestOption(req);
         return this.http.get<Offer[]>(this.resourceUrl, { params: options, observe: 'response' })
