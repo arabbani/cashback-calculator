@@ -263,7 +263,7 @@
                         </div>
                     </fieldset>
                     <div class="text-center mt-2">
-                        <button type="button" class="btn btn-primary mr-3" (click)="goToPreviousTab(0)">Previous</button>
+                        <button type="button" class="btn btn-primary mr-3" (click)="goToTab(0)">Previous</button>
                         <button type="button" class="btn btn-success" [disabled]="optionsForm.form.invalid" (click)="goToNextTab(2)">Next</button>
                     </div>
                 </form>
@@ -354,12 +354,12 @@
                         </div>
                     </div>
                     <div class="text-center mt-2">
-                        <button type="button" class="btn btn-primary mr-3" (click)="goToPreviousTab(1)">Previous</button>
+                        <button type="button" class="btn btn-primary mr-3" (click)="goToTab(1)">Previous</button>
                         <button type="button" class="btn btn-success" [disabled]="detailInfoForm.form.invalid" (click)="goToNextTab(3)">Next</button>
                     </div>
                 </form>
             </tab>
-            <tab heading="Offer Info">
+            <!-- <tab heading="Offer Info">
                 <form name="offerInfoForm" role="form" #offerInfoForm="ngForm" novalidate>
                     <div class="form-group mb-3" *ngIf="editMode">
                         <label for="adminDescription">Admin Description</label>
@@ -503,12 +503,6 @@
                                             </span>
                                             <ng-select *ngIf="editMode" id="toCity" name="toCity" [(ngModel)]="offer.travelInfo.busInfo.tos" [items]="cities" bindLabel="name"
                                                 [multiple]="true" [closeOnSelect]="false" placeholder="To" appendTo="body" required>
-                                                <!-- <ng-template ng-header-tmp>
-                                                                <div class="my-2 ml-5">
-                                                                    <button (click)="selectAllCities()" class="btn btn-sm btn-secondary">Select all</button>
-                                                                    <button (click)="unselectAllCities()" class="btn btn-sm btn-danger">Unselect all</button>
-                                                                </div>
-                                                            </ng-template> -->
                                             </ng-select>
                                         </div>
                                     </fieldset>
@@ -517,12 +511,12 @@
                         </ng-container>
                     </fieldset>
                     <div class="text-center mt-2">
-                        <button type="button" class="btn btn-primary mr-3" (click)="goToPreviousTab(2)">Previous</button>
+                        <button type="button" class="btn btn-primary mr-3" (click)="goToTab(2)">Previous</button>
                         <button type="button" class="btn btn-success" [disabled]="offerInfoForm.form.invalid" (click)="goToNextTab(4)">Next</button>
                     </div>
                 </form>
-            </tab>
-            <tab heading="Offer Return">
+            </tab> -->
+            <!-- <tab heading="Offer Return">
                 <form name="offerReturnForm" role="form" #offerReturnForm="ngForm" novalidate>
                     <kendo-grid [kendoGridReactiveEditing]="createOfferReturnFormGroup" [kendoGridBinding]="offer.offerReturns" [pageable]="true"
                         [pageSize]="gridState.take" [skip]="gridState.skip" [resizable]="true" [navigable]="true" (save)="saveOfferReturn($event.dataItem)"
@@ -672,17 +666,19 @@
                     </kendo-grid>
                 </form>
                 <div class="text-center mt-2">
-                    <button type="button" class="btn btn-primary mr-3" (click)="goToPreviousTab(3)">Previous</button>
+                    <button type="button" class="btn btn-primary mr-3" (click)="goToTab(3)">Previous</button>
                 </div>
-            </tab>
+            </tab> -->
             <div class="px-5 py-3 clearfix">
                 <div class="float-left">
                     <button type="button" class="btn btn-danger" (click)="goBack()">Go Back</button>
                 </div>
                 <div class="float-right">
                     <button type="button" class="btn btn-info" *ngIf="!editMode" (click)="editOffer()">Edit</button>
-                    <button *ngIf="editMode" type="button" class="btn btn-success" [disabled]="isSaving || offerReturnForm.form.invalid || offerInfoForm.form.invalid || detailInfoForm.form.invalid || optionsForm.form.invalid || basicInfoForm.form.invalid"
+                    <button *ngIf="editMode" type="button" class="btn btn-success" [disabled]="isSaving || basicInfoForm.form.invalid || optionsForm.form.invalid"
                         (click)="saveOffer()">Save</button>
+                    <!-- <button *ngIf="editMode" type="button" class="btn btn-success" [disabled]="isSaving || offerReturnForm.form.invalid || offerInfoForm.form.invalid || detailInfoForm.form.invalid || optionsForm.form.invalid || basicInfoForm.form.invalid"
+                        (click)="saveOffer()">Save</button> -->
                     <button type="button" class="btn btn-danger" *ngIf="offer.id && editMode" (click)="cancelEdit()">Cancel</button>
                 </div>
             </div>

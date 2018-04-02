@@ -114,8 +114,8 @@ export class CreateOfferComponent implements OnInit {
     private apsstrKendoDialogService: ApsstrDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
     private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService, private router: Router,
     private route: ActivatedRoute, private location: Location, private filterEntitiesService: FilterEntitiesService, private flightClassService: FlightClassService) {
-    this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
-    this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
+    // this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
+    // this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
   }
 
   ngOnInit() {
@@ -127,19 +127,35 @@ export class CreateOfferComponent implements OnInit {
 
   private initialize(): void {
     this.categoryEnum = Categories;
-    this.returnTypesEnum = ReturnTypes;
+    // this.returnTypesEnum = ReturnTypes;
     this.gridState = GRID_STATE;
     this.isSaving = false;
   }
 
   private initializeToEdit(): void {
     this.editMode = true;
-    this.loadEntities();
+    this.loadEssentialEntities();
   }
 
-  private loadEntities() {
+  private loadEssentialEntities() {
     this.loadOfferTypes();
     this.loadOfferPolicies();
+    // this.loadCategories();
+    // this.loadSubCategories();
+    // this.loadServiceProviders();
+    // this.loadCircles();
+    // this.loadReechargePlanTypes();
+    // this.loadTravelTypes();
+    // this.loadRegions();
+    // this.loadReturnTypes();
+    // this.loadReturnModes();
+    // this.loadCards();
+    // this.loadOffersForReference();
+    // this.loadCardTypes();
+    // this.loadFlightClasses();
+  }
+
+  private loadTabTwoEntities() {
     this.loadDates();
     this.loadDays();
     this.loadStates();
@@ -147,19 +163,14 @@ export class CreateOfferComponent implements OnInit {
     this.loadOperatingSystems();
     this.loadAffiliates();
     this.loadMerchants();
-    this.loadCategories();
-    this.loadSubCategories();
-    this.loadServiceProviders();
-    this.loadCircles();
-    this.loadReechargePlanTypes();
-    this.loadTravelTypes();
-    this.loadRegions();
-    this.loadReturnTypes();
-    this.loadReturnModes();
-    this.loadCards();
-    this.loadOffersForReference();
-    this.loadCardTypes();
-    this.loadFlightClasses();
+  }
+
+  private loadMoreEntities(tabNumber: number): void {
+    switch (tabNumber) {
+      case 2:
+        this.loadTabTwoEntities();
+        break;
+    }
   }
 
   private extractRouteParams(): void {
@@ -188,10 +199,9 @@ export class CreateOfferComponent implements OnInit {
     this.offer.offerReturns = [];
     _.forEach(this.createOfferTabs.tabs, (tab, index) => {
       if (index !== 0) {
-        // tab.disabled = true;
+        tab.disabled = true;
       }
     });
-    this.enableTab(0);
   }
 
   private extractCategories(): void {
@@ -223,6 +233,39 @@ export class CreateOfferComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  goToNextTab(tabNumber: number): void {
+    if (this.createOfferTabs.tabs[tabNumber].disabled) {
+      this.enableTab(tabNumber);
+      this.loadMoreEntities(tabNumber);
+    }
+    this.goToTab(tabNumber);
+  }
+
+  goToTab(tabNumber: number): void {
+    this.createOfferTabs.tabs[tabNumber].active = true;
+  }
+
+  isCoupon(offerType: OfferType): boolean {
+    switch (offerType.name) {
+      case OfferTypes.COUPON:
+      case OfferTypes.LDC:
+        return true;
+      case OfferTypes.DEAL:
+      case OfferTypes.LDD:
+        return false;
+      default:
+        return false;
+    }
+  }
+
+  onChangeStartDate(startDate: Date): void {
+    if (startDate) {
+      this.offer.startDate = startDate;
+      this.minEndDate = startDate;
+      this.offer.endDate = startDate;
+    }
   }
 
   private loadOfferTypes(): void {
@@ -307,138 +350,125 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  private loadCategories(): void {
-    this.categoryService.findAll().subscribe(
-      (res: HttpResponse<Category[]>) => {
-        this.categories = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
+  // private loadCategories(): void {
+  //   this.categoryService.findAll().subscribe(
+  //     (res: HttpResponse<Category[]>) => {
+  //       this.categories = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
-  private loadSubCategories(): void {
-    this.subCategoryService.findAllWithCategory().subscribe(
-      (res: HttpResponse<SubCategory[]>) => {
-        this.subCategories = res.body;
-        this.filteredSubCategories = [];
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
+  // private loadSubCategories(): void {
+  //   this.subCategoryService.findAllWithCategory().subscribe(
+  //     (res: HttpResponse<SubCategory[]>) => {
+  //       this.subCategories = res.body;
+  //       this.filteredSubCategories = [];
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
-  private loadServiceProviders(): void {
-    this.serviceProviderService.findAllWithSubCategories().subscribe(
-      (res: HttpResponse<ServiceProvider[]>) => {
-        this.serviceProviders = res.body;
-        this.filteredServiceProviders = [];
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
+  // private loadServiceProviders(): void {
+  //   this.serviceProviderService.findAllWithSubCategories().subscribe(
+  //     (res: HttpResponse<ServiceProvider[]>) => {
+  //       this.serviceProviders = res.body;
+  //       this.filteredServiceProviders = [];
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
-  private loadCircles(): void {
-    this.circleService.findAll().subscribe(
-      (res: HttpResponse<Circle[]>) => {
-        this.circles = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
+  // private loadCircles(): void {
+  //   this.circleService.findAll().subscribe(
+  //     (res: HttpResponse<Circle[]>) => {
+  //       this.circles = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
-  private loadReechargePlanTypes(): void {
-    this.reechargePlanTypeService.findAll().subscribe(
-      (res: HttpResponse<ReechargePlanType[]>) => {
-        this.reechargePlanTypes = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
+  // private loadReechargePlanTypes(): void {
+  //   this.reechargePlanTypeService.findAll().subscribe(
+  //     (res: HttpResponse<ReechargePlanType[]>) => {
+  //       this.reechargePlanTypes = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
-  private loadTravelTypes(): void {
-    this.travelTypeService.findAll().subscribe(
-      (res: HttpResponse<TravelType[]>) => {
-        this.travelTypes = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
+  // private loadTravelTypes(): void {
+  //   this.travelTypeService.findAll().subscribe(
+  //     (res: HttpResponse<TravelType[]>) => {
+  //       this.travelTypes = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
-  private loadRegions(): void {
-    this.regionService.findAll().subscribe(
-      (res: HttpResponse<Region[]>) => {
-        this.regions = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
+  // private loadRegions(): void {
+  //   this.regionService.findAll().subscribe(
+  //     (res: HttpResponse<Region[]>) => {
+  //       this.regions = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
-  private loadReturnTypes(): void {
-    this.returnTypeService.findAll().subscribe(
-      (res: HttpResponse<ReturnType[]>) => {
-        this.returnTypes = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
+  // private loadReturnTypes(): void {
+  //   this.returnTypeService.findAll().subscribe(
+  //     (res: HttpResponse<ReturnType[]>) => {
+  //       this.returnTypes = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
-  private loadReturnModes(): void {
-    this.returnModeService.findAll().subscribe(
-      (res: HttpResponse<ReturnMode[]>) => {
-        this.returnModes = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
+  // private loadReturnModes(): void {
+  //   this.returnModeService.findAll().subscribe(
+  //     (res: HttpResponse<ReturnMode[]>) => {
+  //       this.returnModes = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
-  private loadCards(): void {
-    this.cardService.findAll().subscribe(
-      (res: HttpResponse<Card[]>) => {
-        this.cards = res.body;
-        this.filteredCards = [];
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
+  // private loadCards(): void {
+  //   this.cardService.findAll().subscribe(
+  //     (res: HttpResponse<Card[]>) => {
+  //       this.cards = res.body;
+  //       this.filteredCards = [];
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
-  private loadFlightClasses(): void {
-    this.flightClassService.findAll().subscribe(
-      (res: HttpResponse<FlightClass[]>) => {
-        this.flightClasses = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
+  // private loadFlightClasses(): void {
+  //   this.flightClassService.findAll().subscribe(
+  //     (res: HttpResponse<FlightClass[]>) => {
+  //       this.flightClasses = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
-  private loadOffersForReference(): void {
-    this.offerService.findAll().subscribe(
-      (res: HttpResponse<Offer[]>) => {
-        this.offers = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
+  // private loadOffersForReference(): void {
+  //   this.offerService.findAll().subscribe(
+  //     (res: HttpResponse<Offer[]>) => {
+  //       this.offers = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
-  private loadCardTypes(): void {
-    this.cardTypeService.findAll().subscribe(
-      (res: HttpResponse<CardType[]>) => {
-        this.cardTypes = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  isCoupon(offerType: OfferType): boolean {
-    switch (offerType.name) {
-      case OfferTypes.COUPON:
-      case OfferTypes.LDC:
-        return true;
-      case OfferTypes.DEAL:
-      case OfferTypes.LDD:
-        return false;
-      default:
-        return false;
-    }
-  }
+  // private loadCardTypes(): void {
+  //   this.cardTypeService.findAll().subscribe(
+  //     (res: HttpResponse<CardType[]>) => {
+  //       this.cardTypes = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
   private filterCitiesForStates(states: State[]): void {
     this.filteredCities = this.filterEntitiesService.bySingleRelationId(states, this.cities, 'state');
@@ -449,146 +479,129 @@ export class CreateOfferComponent implements OnInit {
     this.offer.cities = this.filterEntitiesService.bySingleRelationId(states, this.offer.cities, 'state');
   }
 
-  private filterSubCategoriesForCategories(categories: Category[]): void {
-    this.filteredSubCategories = this.filterEntitiesService.bySingleRelationId(categories, this.subCategories, 'category');
-  }
+  // private filterSubCategoriesForCategories(categories: Category[]): void {
+  //   this.filteredSubCategories = this.filterEntitiesService.bySingleRelationId(categories, this.subCategories, 'category');
+  // }
 
-  onCategoryChange(categories: Category[]): void {
-    this.filterSubCategoriesForCategories(categories);
-    this.offer.subCategories = this.filterEntitiesService.bySingleRelationId(categories, this.offer.subCategories, 'category');
-    this.onSubCategoryChange(this.offer.subCategories);
-    _.forEach(categories, (category) => {
-      switch (category.name) {
-        case this.categoryEnum.REECHARGE:
-          if (!this.offer.reechargeInfo) {
-            this.offer.reechargeInfo = new ReechargeInfo();
-          }
-          break;
-        case this.categoryEnum.TRAVEL:
-          if (!this.offer.travelInfo) {
-            this.offer.travelInfo = new TravelInfo();
-          }
-          break;
-      }
-    });
-  }
+  // onCategoryChange(categories: Category[]): void {
+  //   this.filterSubCategoriesForCategories(categories);
+  //   this.offer.subCategories = this.filterEntitiesService.bySingleRelationId(categories, this.offer.subCategories, 'category');
+  //   this.onSubCategoryChange(this.offer.subCategories);
+  //   _.forEach(categories, (category) => {
+  //     switch (category.name) {
+  //       case this.categoryEnum.REECHARGE:
+  //         if (!this.offer.reechargeInfo) {
+  //           this.offer.reechargeInfo = new ReechargeInfo();
+  //         }
+  //         break;
+  //       case this.categoryEnum.TRAVEL:
+  //         if (!this.offer.travelInfo) {
+  //           this.offer.travelInfo = new TravelInfo();
+  //         }
+  //         break;
+  //     }
+  //   });
+  // }
 
-  private filterServiceProvidersForSubCategories(subCategories: SubCategory[]): void {
-    this.filteredServiceProviders = this.filterEntitiesService.byManyRelationId(subCategories, this.serviceProviders, 'subCategories');
-  }
+  // private filterServiceProvidersForSubCategories(subCategories: SubCategory[]): void {
+  //   this.filteredServiceProviders = this.filterEntitiesService.byManyRelationId(subCategories, this.serviceProviders, 'subCategories');
+  // }
 
-  onSubCategoryChange(subCategories: SubCategory[]): void {
-    this.filterServiceProvidersForSubCategories(subCategories);
-    this.offer.serviceProviders = this.filterEntitiesService.byManyRelationId(subCategories, this.offer.serviceProviders, 'subCategories');
-  }
+  // onSubCategoryChange(subCategories: SubCategory[]): void {
+  //   this.filterServiceProvidersForSubCategories(subCategories);
+  //   this.offer.serviceProviders = this.filterEntitiesService.byManyRelationId(subCategories, this.offer.serviceProviders, 'subCategories');
+  // }
 
-  private filterCardsForPaymentModes(modes: CardType[]): void {
-    this.filteredCards = this.filterEntitiesService.bySingleRelationId(modes, this.cards, 'type');
-  }
+  // private filterCardsForPaymentModes(modes: CardType[]): void {
+  //   this.filteredCards = this.filterEntitiesService.bySingleRelationId(modes, this.cards, 'type');
+  // }
 
-  onPaymentModeChange(modes: CardType[], dataItem): void {
-    this.filterCardsForPaymentModes(modes);
-    dataItem.payment.cards = this.filterEntitiesService.bySingleRelationId(modes, dataItem.payment.cards, 'type');
-  }
+  // onPaymentModeChange(modes: CardType[], dataItem): void {
+  //   this.filterCardsForPaymentModes(modes);
+  //   dataItem.payment.cards = this.filterEntitiesService.bySingleRelationId(modes, dataItem.payment.cards, 'type');
+  // }
 
-  public createOfferReturnFormGroup(args: any): FormGroup {
-    let item;
-    if (args.isNew) {
-      const offerReturn = new OfferReturn();
-      offerReturn.extras = new ReturnExtras();
-      item = offerReturn;
-    } else {
-      item = args.dataItem;
-    }
-    this.offerReturnFormGroup = this.formBuilder.group({
-      'id': item.id,
-      'extras': this.formBuilder.group({
-        'minimumExpense': item.extras.minimumExpense,
-        'maximumExpense': item.extras.maximumExpense,
-        'minimumReturn': item.extras.minimumReturn,
-        'maximumReturn': item.extras.maximumReturn,
-        'minimumTicketRequired': item.extras.minimumTicketRequired
-      })
-    });
-    return this.offerReturnFormGroup;
-  }
+  // public createOfferReturnFormGroup(args: any): FormGroup {
+  //   let item;
+  //   if (args.isNew) {
+  //     const offerReturn = new OfferReturn();
+  //     offerReturn.extras = new ReturnExtras();
+  //     item = offerReturn;
+  //   } else {
+  //     item = args.dataItem;
+  //   }
+  //   this.offerReturnFormGroup = this.formBuilder.group({
+  //     'id': item.id,
+  //     'extras': this.formBuilder.group({
+  //       'minimumExpense': item.extras.minimumExpense,
+  //       'maximumExpense': item.extras.maximumExpense,
+  //       'minimumReturn': item.extras.minimumReturn,
+  //       'maximumReturn': item.extras.maximumReturn,
+  //       'minimumTicketRequired': item.extras.minimumTicketRequired
+  //     })
+  //   });
+  //   return this.offerReturnFormGroup;
+  // }
 
-  public createReturnInfoFormGroup(args: any): FormGroup {
-    let item;
-    if (args.isNew) {
-      const returnInfo = new ReturnInfo();
-      returnInfo.extras = new ReturnExtras();
-      item = returnInfo;
-    } else {
-      item = args.dataItem;
-    }
-    this.returnInfoFormGroup = this.formBuilder.group({
-      'id': item.id,
-      'extras': this.formBuilder.group({
-        'minimumExpense': item.extras.minimumExpense,
-        'maximumExpense': item.extras.maximumExpense,
-        'minimumReturn': item.extras.minimumReturn,
-        'maximumReturn': item.extras.maximumReturn,
-        'minimumTicketRequired': item.extras.minimumTicketRequired
-      })
-    });
-    return this.returnInfoFormGroup;
-  }
+  // public createReturnInfoFormGroup(args: any): FormGroup {
+  //   let item;
+  //   if (args.isNew) {
+  //     const returnInfo = new ReturnInfo();
+  //     returnInfo.extras = new ReturnExtras();
+  //     item = returnInfo;
+  //   } else {
+  //     item = args.dataItem;
+  //   }
+  //   this.returnInfoFormGroup = this.formBuilder.group({
+  //     'id': item.id,
+  //     'extras': this.formBuilder.group({
+  //       'minimumExpense': item.extras.minimumExpense,
+  //       'maximumExpense': item.extras.maximumExpense,
+  //       'minimumReturn': item.extras.minimumReturn,
+  //       'maximumReturn': item.extras.maximumReturn,
+  //       'minimumTicketRequired': item.extras.minimumTicketRequired
+  //     })
+  //   });
+  //   return this.returnInfoFormGroup;
+  // }
 
-  public saveOfferReturn(offerReturn): void {
-    if (!offerReturn.returnInfos) {
-      offerReturn.returnInfos = [];
-    }
-  }
+  // public saveOfferReturn(offerReturn): void {
+  //   if (!offerReturn.returnInfos) {
+  //     offerReturn.returnInfos = [];
+  //   }
+  // }
 
-  public saveReturnInfo(returnInfo): void {
-    if (!returnInfo.mainReturn) {
-      returnInfo.mainReturn = new MainReturn();
-    }
-    if (!returnInfo.payment) {
-      returnInfo.payment = new OfferPayment();
-    }
-  }
+  // public saveReturnInfo(returnInfo): void {
+  //   if (!returnInfo.mainReturn) {
+  //     returnInfo.mainReturn = new MainReturn();
+  //   }
+  //   if (!returnInfo.payment) {
+  //     returnInfo.payment = new OfferPayment();
+  //   }
+  // }
 
-  public deleteOfferReturn(dataItem: any): void {
-    this.apsstrKendoDialogService.confirm().subscribe((result) => {
-      if (result['text'] === 'No') {
-        this.offer.offerReturns.push(dataItem);
-        this.offer.offerReturns = _.sortBy(this.offer.offerReturns, (item) => item.id);
-      }
-    });
-  }
+  // public deleteOfferReturn(dataItem: any): void {
+  //   this.apsstrKendoDialogService.confirm().subscribe((result) => {
+  //     if (result['text'] === 'No') {
+  //       this.offer.offerReturns.push(dataItem);
+  //       this.offer.offerReturns = _.sortBy(this.offer.offerReturns, (item) => item.id);
+  //     }
+  //   });
+  // }
 
-  public deleteReturnInfo(event: any): void {
-    this.apsstrKendoDialogService.confirm().subscribe((result) => {
-      if (result['text'] === 'No') {
-        console.log(event);
-        // event.sender.data['data'].push(event.dataItem);
-        // event.sender.data.data = _.sortBy(event.data, (item) => item.id);
-      }
-    });
-  }
+  // public deleteReturnInfo(event: any): void {
+  //   this.apsstrKendoDialogService.confirm().subscribe((result) => {
+  //     if (result['text'] === 'No') {
+  //       console.log(event);
+  //       // event.sender.data['data'].push(event.dataItem);
+  //       // event.sender.data.data = _.sortBy(event.data, (item) => item.id);
+  //     }
+  //   });
+  // }
 
-  removePaymentCard(dataItem, card: Card): void {
-    dataItem.payment.cards = _.pull(dataItem.payment.cards, card);
-  }
-
-  goToNextTab(tabNumber: number): void {
-    this.enableTab(tabNumber);
-    this.createOfferTabs.tabs[tabNumber].active = true;
-  }
-
-  goToPreviousTab(tabNumber: number): void {
-    this.createOfferTabs.tabs[tabNumber].active = true;
-  }
-
-  onChangeStartDate(startDate: Date): void {
-    if (startDate) {
-      this.offer.startDate = startDate;
-      this.minEndDate = startDate;
-      this.offer.endDate = startDate;
-    }
-  }
+  // removePaymentCard(dataItem, card: Card): void {
+  //   dataItem.payment.cards = _.pull(dataItem.payment.cards, card);
+  // }
 
   selectAllCities(): void {
     this.offer.cities = _.cloneDeep(this.filteredCities);
@@ -606,83 +619,83 @@ export class CreateOfferComponent implements OnInit {
     this.offer.operatingSystems = [];
   }
 
-  selectAllServiceProviders(): void {
-    this.offer.serviceProviders = _.cloneDeep(this.filteredServiceProviders);
-  }
+  // selectAllServiceProviders(): void {
+  //   this.offer.serviceProviders = _.cloneDeep(this.filteredServiceProviders);
+  // }
 
-  unselectAllServiceProviders(): void {
-    this.offer.serviceProviders = [];
-  }
+  // unselectAllServiceProviders(): void {
+  //   this.offer.serviceProviders = [];
+  // }
 
-  selectAllCircles(): void {
-    this.offer.reechargeInfo['circles'] = _.cloneDeep(this.circles);
-  }
+  // selectAllCircles(): void {
+  //   this.offer.reechargeInfo['circles'] = _.cloneDeep(this.circles);
+  // }
 
-  unselectAllCircles(): void {
-    this.offer.reechargeInfo['circles'] = [];
-  }
+  // unselectAllCircles(): void {
+  //   this.offer.reechargeInfo['circles'] = [];
+  // }
 
-  selectAllReechargeTypes(): void {
-    this.offer.reechargeInfo['reechargePlanTypes'] = _.cloneDeep(this.circles);
-  }
+  // selectAllReechargeTypes(): void {
+  //   this.offer.reechargeInfo['reechargePlanTypes'] = _.cloneDeep(this.circles);
+  // }
 
-  unselectAllReechargeTypes(): void {
-    this.offer.reechargeInfo['reechargePlanTypes'] = [];
-  }
+  // unselectAllReechargeTypes(): void {
+  //   this.offer.reechargeInfo['reechargePlanTypes'] = [];
+  // }
 
-  selectAllStates(): void {
-    this.offerStates = _.cloneDeep(this.states);
-    this.onStateChange(this.offerStates);
-  }
+  // selectAllStates(): void {
+  //   this.offerStates = _.cloneDeep(this.states);
+  //   this.onStateChange(this.offerStates);
+  // }
 
-  unselectAllStates(): void {
-    this.offerStates = [];
-    this.onStateChange(this.offerStates);
-  }
+  // unselectAllStates(): void {
+  //   this.offerStates = [];
+  //   this.onStateChange(this.offerStates);
+  // }
 
-  isFlight(): boolean {
-    const found = _.find(this.offer.subCategories, (subCategory) => subCategory.code === SubCategories.Flight);
-    if (found) {
-      if (!this.offer.travelInfo['flightInfo']) {
-        this.offer.travelInfo['flightInfo'] = new FlightInfo();
-      }
-      return true;
-    } else {
-      this.offer.travelInfo['flightInfo'] = undefined;
-      return false;
-    }
-  }
+  // isFlight(): boolean {
+  //   const found = _.find(this.offer.subCategories, (subCategory) => subCategory.code === SubCategories.Flight);
+  //   if (found) {
+  //     if (!this.offer.travelInfo['flightInfo']) {
+  //       this.offer.travelInfo['flightInfo'] = new FlightInfo();
+  //     }
+  //     return true;
+  //   } else {
+  //     this.offer.travelInfo['flightInfo'] = undefined;
+  //     return false;
+  //   }
+  // }
 
-  isBus(): boolean {
-    const found = _.find(this.offer.subCategories, (subCategory) => subCategory.code === SubCategories.Bus);
-    if (found) {
-      if (!this.offer.travelInfo['busInfo']) {
-        this.offer.travelInfo['busInfo'] = new BusInfo();
-      }
-      return true;
-    } else {
-      this.offer.travelInfo['busInfo'] = undefined;
-      return false;
-    }
-  }
+  // isBus(): boolean {
+  //   const found = _.find(this.offer.subCategories, (subCategory) => subCategory.code === SubCategories.Bus);
+  //   if (found) {
+  //     if (!this.offer.travelInfo['busInfo']) {
+  //       this.offer.travelInfo['busInfo'] = new BusInfo();
+  //     }
+  //     return true;
+  //   } else {
+  //     this.offer.travelInfo['busInfo'] = undefined;
+  //     return false;
+  //   }
+  // }
 
   saveOffer(): void {
     this.isSaving = true;
     this.offer.startDate.setSeconds(0);
     this.offer.endDate.setSeconds(59);
-    _.forEach(this.offer.offerReturns, (offerReturn) => {
-      _.forEach(offerReturn.returnInfos, (returnInfo) => {
-        delete returnInfo.payment.modes;
-      });
-    });
+    // _.forEach(this.offer.offerReturns, (offerReturn) => {
+    //   _.forEach(offerReturn.returnInfos, (returnInfo) => {
+    //     delete returnInfo.payment.modes;
+    //   });
+    // });
     console.log(this.offer);
-    if (this.offer.id !== undefined) {
-      this.subscribeToSaveResponse(
-        this.offerService.update(this.offer));
-    } else {
-      this.subscribeToSaveResponse(
-        this.offerService.create(this.offer));
-    }
+    // if (this.offer.id !== undefined) {
+    //   this.subscribeToSaveResponse(
+    //     this.offerService.update(this.offer));
+    // } else {
+    //   this.subscribeToSaveResponse(
+    //     this.offerService.create(this.offer));
+    // }
   }
 
   private subscribeToSaveResponse(result: Observable<HttpResponse<Offer>>) {
