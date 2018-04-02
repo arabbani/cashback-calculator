@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 import { UserRouteAccessService } from '../../shared';
 import { CreateOfferComponent } from './create-offer/create-offer.component';
-import { OfferResolver } from './offer-resolver.service';
+import { OfferAdminViewResolver } from './offer-admin-view-resolver.service';
 import { OfferComponent } from './offer.component';
 
 export const offerRoute: Routes = [
@@ -24,7 +24,7 @@ export const offerRoute: Routes = [
         },
         canActivate: [UserRouteAccessService],
         resolve: {
-            offer: OfferResolver
+            offer: OfferAdminViewResolver
         }
     }
 ];

@@ -102,6 +102,34 @@ public class OfferResource {
     }
 
     /**
+     * GET  /offers/with/reechargeInfo/:id : get the "id" offer with reechargeInfo.
+     *
+     * @param id the id of the offer to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the offer, or with status 404 (Not Found)
+     */
+    @GetMapping("/offers/with/reechargeInfo/{id}")
+    @Timed
+    public ResponseEntity<Offer> getOfferWithReechargeInfo(@PathVariable Long id) {
+        log.debug("REST request to get Offer  with reechargeInfo: {}", id);
+        Offer offer = offerService.findWithReechargeInfo(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
+    }
+
+    /**
+     * GET  /offers/for/admin-view/:id : get the "id" offer for admin view.
+     *
+     * @param id the id of the offer to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the offer, or with status 404 (Not Found)
+     */
+    @GetMapping("/offers/for/admin-view/{id}")
+    @Timed
+    public ResponseEntity<Offer> getOfferForAdminView(@PathVariable Long id) {
+        log.debug("REST request to get Offer  for admin view: {}", id);
+        Offer offer = offerService.findOneForAdminView(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
+    }
+
+    /**
      * DELETE  /offers/:id : delete the "id" offer.
      *
      * @param id the id of the offer to delete

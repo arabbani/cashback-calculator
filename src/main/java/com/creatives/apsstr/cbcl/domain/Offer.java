@@ -123,7 +123,7 @@ public class Offer implements Serializable {
     @JsonManagedReference
     private Set<OfferReturn> offerReturns = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private OfferPolicy policy;
 
     @ManyToMany

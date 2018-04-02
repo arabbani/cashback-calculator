@@ -32,10 +32,20 @@ export class OfferService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
+    findOneForAdminView(id: number): Observable<EntityResponseType> {
+        return this.http.get<Offer>(`${this.resourceUrl}/for/admin-view/${id}`, { observe: 'response' })
+            .map((res: EntityResponseType) => this.convertResponse(res));
+    }
+
     findAll(req?: any): Observable<HttpResponse<Offer[]>> {
         const options = createRequestOption(req);
         return this.http.get<Offer[]>(this.resourceUrl, { params: options, observe: 'response' })
             .map((res: HttpResponse<Offer[]>) => this.convertArrayResponse(res));
+    }
+
+    findReechargeInfoById(id: number): Observable<EntityResponseType> {
+        return this.http.get<Offer>(`${this.resourceUrl}/with/reechargeInfo/${id}`, { observe: 'response' })
+            .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     delete(id: number): Observable<HttpResponse<any>> {

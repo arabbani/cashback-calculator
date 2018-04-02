@@ -55,7 +55,31 @@ public class OfferService {
     @Transactional(readOnly = true)
     public Offer findOne(Long id) {
         log.debug("Request to get Offer : {}", id);
-        return offerRepository.findOneWithEagerRelationships(id);
+        return offerRepository.findOne(id);
+    }
+
+    /**
+     * Get one offer by id with reechargeInfo.
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    @Transactional(readOnly = true)
+    public Offer findWithReechargeInfo(Long id) {
+        log.debug("Request to get Offer  with reechargeInfo: {}", id);
+        return offerRepository.findOneWithReechargeInfoById(id);
+    }
+
+    /**
+     * Get one offer by id for admin view.
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    @Transactional(readOnly = true)
+    public Offer findOneForAdminView(Long id) {
+        log.debug("Request to get Offer  for admin view: {}", id);
+        return offerRepository.findOneForAdminViewById(id);
     }
 
     /**

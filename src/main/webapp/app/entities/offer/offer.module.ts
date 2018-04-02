@@ -12,7 +12,7 @@ import { ApsstrSharedModule } from '../../apsstr-core-ui';
 import { CbclSharedModule } from '../../shared';
 import { OfferComponent, OfferFilterService, offerRoute, OfferService } from './';
 import { CreateOfferComponent } from './create-offer/create-offer.component';
-import { OfferResolver } from './offer-resolver.service';
+import { OfferAdminViewResolver } from './offer-admin-view-resolver.service';
 
 const ENTITY_STATES = offerRoute;
 
@@ -41,7 +41,7 @@ const ENTITY_STATES = offerRoute;
     ],
     providers: [
         OfferService,
-        OfferResolver,
+        OfferAdminViewResolver,
         OfferFilterService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

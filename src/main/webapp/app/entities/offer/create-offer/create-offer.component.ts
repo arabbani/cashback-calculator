@@ -105,6 +105,8 @@ export class CreateOfferComponent implements OnInit {
   minEndDate: Date;
   editMode: boolean;
   editedOffer: Offer;
+  reechargePlanTypesLoaded = false;
+  circlesLoaded = false;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
     private dayService: DayService, private stateService: StateService, private cityService: CityService,
@@ -211,17 +213,6 @@ export class CreateOfferComponent implements OnInit {
     }
   }
 
-  private loadMoreEntitiesByTabNumber(tabNumber: number): void {
-    switch (tabNumber) {
-      case 2:
-        this.loadTabTwoEntities();
-        break;
-      case 3:
-        this.loadTabThreeEntities();
-        break;
-    }
-  }
-
   private extractRouteParams(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -233,6 +224,7 @@ export class CreateOfferComponent implements OnInit {
       if (mode) {
         this.editOffer();
       }
+      console.log(this.offer);
     } else {
       this.isCoupon = false;
       this.initializeToEdit();
@@ -272,6 +264,7 @@ export class CreateOfferComponent implements OnInit {
 
   editOffer(): void {
     this.editedOffer = Object.assign({}, this.offer);
+    this.goToTab(0);
     this.initializeToEdit();
   }
 
@@ -286,7 +279,18 @@ export class CreateOfferComponent implements OnInit {
   }
 
   onSelectTab(tabNumber: number): void {
-    this.loadMoreEntitiesByTabNumber(tabNumber);
+    if (this.editMode) {
+      switch (tabNumber) {
+        case 2:
+          this.loadTabTwoEntities();
+          break;
+        case 3:
+          this.loadTabThreeEntities();
+          break;
+        default:
+          break;
+      }
+    }
   }
 
   goToNextTab(tabNumber: number): void {
@@ -305,9 +309,6 @@ export class CreateOfferComponent implements OnInit {
       switch (category.name) {
         case this.categoryEnum.TRAVEL:
           this.loadTravelEntities();
-          if (!this.offer.travelInfo) {
-            this.offer.travelInfo = new TravelInfo();
-          }
           break;
         default:
           break;
@@ -330,6 +331,9 @@ export class CreateOfferComponent implements OnInit {
           this.isReechargeExtra = true;
           if (!this.offer.reechargeInfo) {
             this.offer.reechargeInfo = new ReechargeInfo();
+            if (this.editMode && this.offer.id !== undefined) {
+              this.loadReechargeInfo();
+            }
           }
           break;
         case this.subCategoryEnum.Flight:
@@ -552,8 +556,7 @@ export class CreateOfferComponent implements OnInit {
     this.offer.reechargeInfo['reechargePlanTypes'] = [];
   }
 
-  saveOffer(): void {
-    this.isSaving = true;
+  private refineOfferToSave(): void {
     this.offer.startDate.setSeconds(0);
     this.offer.endDate.setSeconds(59);
     // _.forEach(this.offer.offerReturns, (offerReturn) => {
@@ -561,14 +564,39 @@ export class CreateOfferComponent implements OnInit {
     //     delete returnInfo.payment.modes;
     //   });
     // });
+
+    let found = _.find(this.offerCategories, (category) => category.name === this.categoryEnum.REECHARGE);
+    if (!found) {
+      this.offer.reechargeInfo = undefined;
+    } else {
+      if (!this.isReechargeExtra) {
+        this.offer.reechargeInfo = undefined;
+      }
+    }
+    found = _.find(this.offerCategories, (category) => category.name === this.categoryEnum.TRAVEL);
+    if (!found) {
+      this.offer.travelInfo = undefined;
+    } else {
+      if (!this.isFlight) {
+        this.offer.travelInfo['flightInfo'] = undefined;
+      }
+      if (!this.isBus) {
+        this.offer.travelInfo['busInfo'] = undefined;
+      }
+    }
     console.log(this.offer);
-    // if (this.offer.id !== undefined) {
-    //   this.subscribeToSaveResponse(
-    //     this.offerService.update(this.offer));
-    // } else {
-    //   this.subscribeToSaveResponse(
-    //     this.offerService.create(this.offer));
-    // }
+  }
+
+  saveOffer(): void {
+    this.isSaving = true;
+    this.refineOfferToSave();
+    if (this.offer.id !== undefined) {
+      this.subscribeToSaveResponse(
+        this.offerService.update(this.offer));
+    } else {
+      this.subscribeToSaveResponse(
+        this.offerService.create(this.offer));
+    }
   }
 
   private subscribeToSaveResponse(result: Observable<HttpResponse<Offer>>) {
@@ -640,6 +668,9 @@ export class CreateOfferComponent implements OnInit {
       (res: HttpResponse<City[]>) => {
         this.cities = res.body;
         this.filteredCities = [];
+        if (this.editMode && this.offer.id !== undefined) {
+          this.onStateChange(this.offerStates);
+        }
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -696,6 +727,20 @@ export class CreateOfferComponent implements OnInit {
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
         this.filteredServiceProviders = [];
+        if (this.editMode && this.offer.id !== undefined) {
+          this.onCategoryChange(this.offerCategories);
+        }
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadReechargeInfo(): void {
+    this.offerService.findReechargeInfoById(this.offer.id).subscribe(
+      (res: HttpResponse<Offer>) => {
+        const offer = res.body;
+        this.offer.reechargeInfo = offer.reechargeInfo;
+        console.log(this.offer);
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -705,6 +750,7 @@ export class CreateOfferComponent implements OnInit {
     this.circleService.findAll().subscribe(
       (res: HttpResponse<Circle[]>) => {
         this.circles = res.body;
+        this.circlesLoaded = true;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -714,6 +760,7 @@ export class CreateOfferComponent implements OnInit {
     this.reechargePlanTypeService.findAll().subscribe(
       (res: HttpResponse<ReechargePlanType[]>) => {
         this.reechargePlanTypes = res.body;
+        this.reechargePlanTypesLoaded = true;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -723,6 +770,13 @@ export class CreateOfferComponent implements OnInit {
     this.travelTypeService.findAll().subscribe(
       (res: HttpResponse<TravelType[]>) => {
         this.travelTypes = res.body;
+        if (this.offer.id !== undefined) {
+          if (!this.offer.travelInfo) {
+
+          }
+        } else if (!this.offer.travelInfo) {
+          this.offer.travelInfo = new TravelInfo();
+        }
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
