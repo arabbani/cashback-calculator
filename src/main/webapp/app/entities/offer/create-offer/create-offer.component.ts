@@ -10,9 +10,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { Offer, OfferService } from '..';
 import { ApsstrDialogService, FilterEntitiesService } from '../../../apsstr-core-ui/apsstr-core/services';
-import { Categories, OfferTypes } from '../../../product';
+import { Categories, OfferTypes, ReturnTypes, SubCategories } from '../../../product';
 import { GRID_STATE } from '../../../shared';
 import { Affiliate, AffiliateService } from '../../affiliate';
+import { BusInfo } from '../../bus-info';
 import { Card, CardService } from '../../card';
 import { CardType, CardTypeService } from '../../card-type';
 import { Category, CategoryService } from '../../category';
@@ -21,6 +22,7 @@ import { City, CityService } from '../../city';
 import { Date as DateEntity, Date, DateService } from '../../date';
 import { Day, DayService } from '../../day';
 import { FlightClass, FlightClassService } from '../../flight-class';
+import { FlightInfo } from '../../flight-info';
 import { Merchant, MerchantService } from '../../merchant';
 import { OfferPolicy, OfferPolicyService } from '../../offer-policy';
 import { OfferType, OfferTypeService } from '../../offer-type';
@@ -87,9 +89,13 @@ export class CreateOfferComponent implements OnInit {
   defaultOrigin;
 
   isCoupon: boolean;
+  isFlight: boolean;
+  isBus: boolean;
+  isReechargeExtra: boolean;
   offerCategories: Category[];
   offerStates: State[];
   categoryEnum;
+  subCategoryEnum;
   returnTypesEnum;
   offerReturnFormGroup: FormGroup;
   gridState: GridState;
@@ -121,9 +127,13 @@ export class CreateOfferComponent implements OnInit {
 
   private initialize(): void {
     this.categoryEnum = Categories;
-    // this.returnTypesEnum = ReturnTypes;
+    this.returnTypesEnum = ReturnTypes;
+    this.subCategoryEnum = SubCategories;
     this.gridState = GRID_STATE;
     this.isSaving = false;
+    this.isFlight = false;
+    this.isBus = false;
+    this.isReechargeExtra = false;
   }
 
   private initializeToEdit(): void {
@@ -134,17 +144,11 @@ export class CreateOfferComponent implements OnInit {
   private loadEssentialEntities() {
     this.loadOfferTypes();
     this.loadOfferPolicies();
-
-    // this.loadCircles();
-    // this.loadReechargePlanTypes();
-    // this.loadTravelTypes();
-    // this.loadRegions();
     // this.loadReturnTypes();
     // this.loadReturnModes();
     // this.loadCards();
     // this.loadOffersForReference();
     // this.loadCardTypes();
-    // this.loadFlightClasses();
   }
 
   private loadTabTwoEntities() {
@@ -183,7 +187,31 @@ export class CreateOfferComponent implements OnInit {
     }
   }
 
-  private loadMoreEntities(tabNumber: number): void {
+  private loadReechargeEntities() {
+    if (!this.circles) {
+      this.loadCircles();
+    }
+    if (!this.reechargePlanTypes) {
+      this.loadReechargePlanTypes();
+    }
+  }
+
+  private loadTravelEntities() {
+    if (!this.travelTypes) {
+      this.loadTravelTypes();
+    }
+  }
+
+  private loadFlightEntities(): void {
+    if (!this.regions) {
+      this.loadRegions();
+    }
+    if (!this.flightClasses) {
+      this.loadFlightClasses();
+    }
+  }
+
+  private loadMoreEntitiesByTabNumber(tabNumber: number): void {
     switch (tabNumber) {
       case 2:
         this.loadTabTwoEntities();
@@ -258,7 +286,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   onSelectTab(tabNumber: number): void {
-    this.loadMoreEntities(tabNumber);
+    this.loadMoreEntitiesByTabNumber(tabNumber);
   }
 
   goToNextTab(tabNumber: number): void {
@@ -272,211 +300,56 @@ export class CreateOfferComponent implements OnInit {
     this.createOfferTabs.tabs[tabNumber].active = true;
   }
 
-  // isCoupon(offerType: OfferType): boolean {
-
-  // }
-
-  private loadOfferTypes(): void {
-    this.offerTypeService.findAll().subscribe(
-      (res: HttpResponse<OfferType[]>) => {
-        this.offerTypes = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
+  private setUpCategoriesToEdit(categories: Category[]): void {
+    _.forEach(categories, (category) => {
+      switch (category.name) {
+        case this.categoryEnum.TRAVEL:
+          this.loadTravelEntities();
+          if (!this.offer.travelInfo) {
+            this.offer.travelInfo = new TravelInfo();
+          }
+          break;
+        default:
+          break;
+      }
+    });
   }
 
-  private loadOfferPolicies(): void {
-    this.offerPolicyService.findAll().subscribe(
-      (res: HttpResponse<OfferPolicy[]>) => {
-        this.offerPolicies = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
+  private setUpSubCategoriesToEdit(subCategories: SubCategory[]): void {
+    this.isFlight = false;
+    this.isBus = false;
+    this.isReechargeExtra = false;
+    _.forEach(subCategories, (subCategory) => {
+      switch (subCategory.code) {
+        case this.subCategoryEnum.PrepaidMobile:
+        case this.subCategoryEnum.PostpaidMobile:
+        case this.subCategoryEnum.PrepaidDatacard:
+        case this.subCategoryEnum.PostpaidDatacard:
+        case this.subCategoryEnum.Broadband:
+          this.loadReechargeEntities();
+          this.isReechargeExtra = true;
+          if (!this.offer.reechargeInfo) {
+            this.offer.reechargeInfo = new ReechargeInfo();
+          }
+          break;
+        case this.subCategoryEnum.Flight:
+          this.loadFlightEntities();
+          if (!this.offer.travelInfo['flightInfo']) {
+            this.offer.travelInfo['flightInfo'] = new FlightInfo();
+          }
+          this.isFlight = true;
+          break;
+        case this.subCategoryEnum.Bus:
+          if (!this.offer.travelInfo['busInfo']) {
+            this.offer.travelInfo['busInfo'] = new BusInfo();
+          }
+          this.isBus = true;
+          break;
+        default:
+          break;
+      }
+    });
   }
-
-  private loadDates(): void {
-    this.dateService.findAll().subscribe(
-      (res: HttpResponse<DateEntity[]>) => {
-        this.dates = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadDays(): void {
-    this.dayService.findAll().subscribe(
-      (res: HttpResponse<Day[]>) => {
-        this.days = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadStates(): void {
-    this.stateService.findAll().subscribe(
-      (res: HttpResponse<State[]>) => {
-        this.states = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadCities(): void {
-    this.cityService.findAllWithState().subscribe(
-      (res: HttpResponse<City[]>) => {
-        this.cities = res.body;
-        this.filteredCities = [];
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadOperatingSystems(): void {
-    this.operatingSystemService.findAll().subscribe(
-      (res: HttpResponse<OperatingSystem[]>) => {
-        this.operatingSystems = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadAffiliates(): void {
-    this.affiliateService.query().subscribe(
-      (res: HttpResponse<Affiliate[]>) => {
-        this.affiliates = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadMerchants(): void {
-    this.merchantService.findAllWithSubCategories().subscribe(
-      (res: HttpResponse<Merchant[]>) => {
-        this.merchants = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadCategories(): void {
-    this.categoryService.findAll().subscribe(
-      (res: HttpResponse<Category[]>) => {
-        this.categories = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadSubCategories(): void {
-    this.subCategoryService.findAllWithCategory().subscribe(
-      (res: HttpResponse<SubCategory[]>) => {
-        this.subCategories = res.body;
-        this.filteredSubCategories = [];
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadServiceProviders(): void {
-    this.serviceProviderService.findAllWithSubCategories().subscribe(
-      (res: HttpResponse<ServiceProvider[]>) => {
-        this.serviceProviders = res.body;
-        this.filteredServiceProviders = [];
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  // private loadCircles(): void {
-  //   this.circleService.findAll().subscribe(
-  //     (res: HttpResponse<Circle[]>) => {
-  //       this.circles = res.body;
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
-
-  // private loadReechargePlanTypes(): void {
-  //   this.reechargePlanTypeService.findAll().subscribe(
-  //     (res: HttpResponse<ReechargePlanType[]>) => {
-  //       this.reechargePlanTypes = res.body;
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
-
-  // private loadTravelTypes(): void {
-  //   this.travelTypeService.findAll().subscribe(
-  //     (res: HttpResponse<TravelType[]>) => {
-  //       this.travelTypes = res.body;
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
-
-  // private loadRegions(): void {
-  //   this.regionService.findAll().subscribe(
-  //     (res: HttpResponse<Region[]>) => {
-  //       this.regions = res.body;
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
-
-  // private loadReturnTypes(): void {
-  //   this.returnTypeService.findAll().subscribe(
-  //     (res: HttpResponse<ReturnType[]>) => {
-  //       this.returnTypes = res.body;
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
-
-  // private loadReturnModes(): void {
-  //   this.returnModeService.findAll().subscribe(
-  //     (res: HttpResponse<ReturnMode[]>) => {
-  //       this.returnModes = res.body;
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
-
-  // private loadCards(): void {
-  //   this.cardService.findAll().subscribe(
-  //     (res: HttpResponse<Card[]>) => {
-  //       this.cards = res.body;
-  //       this.filteredCards = [];
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
-
-  // private loadFlightClasses(): void {
-  //   this.flightClassService.findAll().subscribe(
-  //     (res: HttpResponse<FlightClass[]>) => {
-  //       this.flightClasses = res.body;
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
-
-  // private loadOffersForReference(): void {
-  //   this.offerService.findAll().subscribe(
-  //     (res: HttpResponse<Offer[]>) => {
-  //       this.offers = res.body;
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
-
-  // private loadCardTypes(): void {
-  //   this.cardTypeService.findAll().subscribe(
-  //     (res: HttpResponse<CardType[]>) => {
-  //       this.cardTypes = res.body;
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
 
   onOfferTypeChange(offerType: OfferType): void {
     switch (offerType.name) {
@@ -512,23 +385,10 @@ export class CreateOfferComponent implements OnInit {
   }
 
   onCategoryChange(categories: Category[]): void {
+    this.setUpCategoriesToEdit(categories);
     this.filterSubCategoriesForCategories(categories);
     this.offer.subCategories = this.filterEntitiesService.bySingleRelationId(categories, this.offer.subCategories, 'category');
     this.onSubCategoryChange(this.offer.subCategories);
-    _.forEach(categories, (category) => {
-      switch (category.name) {
-        case this.categoryEnum.REECHARGE:
-          if (!this.offer.reechargeInfo) {
-            this.offer.reechargeInfo = new ReechargeInfo();
-          }
-          break;
-        case this.categoryEnum.TRAVEL:
-          if (!this.offer.travelInfo) {
-            this.offer.travelInfo = new TravelInfo();
-          }
-          break;
-      }
-    });
   }
 
   private filterServiceProvidersForSubCategories(subCategories: SubCategory[]): void {
@@ -536,6 +396,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   onSubCategoryChange(subCategories: SubCategory[]): void {
+    this.setUpSubCategoriesToEdit(this.offer.subCategories);
     this.filterServiceProvidersForSubCategories(subCategories);
     this.offer.serviceProviders = this.filterEntitiesService.byManyRelationId(subCategories, this.offer.serviceProviders, 'subCategories');
   }
@@ -675,47 +536,21 @@ export class CreateOfferComponent implements OnInit {
     this.offer.serviceProviders = [];
   }
 
-  // selectAllCircles(): void {
-  //   this.offer.reechargeInfo['circles'] = _.cloneDeep(this.circles);
-  // }
+  selectAllCircles(): void {
+    this.offer.reechargeInfo['circles'] = _.cloneDeep(this.circles);
+  }
 
-  // unselectAllCircles(): void {
-  //   this.offer.reechargeInfo['circles'] = [];
-  // }
+  unselectAllCircles(): void {
+    this.offer.reechargeInfo['circles'] = [];
+  }
 
-  // selectAllReechargeTypes(): void {
-  //   this.offer.reechargeInfo['reechargePlanTypes'] = _.cloneDeep(this.circles);
-  // }
+  selectAllReechargeTypes(): void {
+    this.offer.reechargeInfo['reechargePlanTypes'] = _.cloneDeep(this.circles);
+  }
 
-  // unselectAllReechargeTypes(): void {
-  //   this.offer.reechargeInfo['reechargePlanTypes'] = [];
-  // }
-
-  // isFlight(): boolean {
-  //   const found = _.find(this.offer.subCategories, (subCategory) => subCategory.code === SubCategories.Flight);
-  //   if (found) {
-  //     if (!this.offer.travelInfo['flightInfo']) {
-  //       this.offer.travelInfo['flightInfo'] = new FlightInfo();
-  //     }
-  //     return true;
-  //   } else {
-  //     this.offer.travelInfo['flightInfo'] = undefined;
-  //     return false;
-  //   }
-  // }
-
-  // isBus(): boolean {
-  //   const found = _.find(this.offer.subCategories, (subCategory) => subCategory.code === SubCategories.Bus);
-  //   if (found) {
-  //     if (!this.offer.travelInfo['busInfo']) {
-  //       this.offer.travelInfo['busInfo'] = new BusInfo();
-  //     }
-  //     return true;
-  //   } else {
-  //     this.offer.travelInfo['busInfo'] = undefined;
-  //     return false;
-  //   }
-  // }
+  unselectAllReechargeTypes(): void {
+    this.offer.reechargeInfo['reechargePlanTypes'] = [];
+  }
 
   saveOffer(): void {
     this.isSaving = true;
@@ -754,5 +589,207 @@ export class CreateOfferComponent implements OnInit {
   private onError(error) {
     console.log('ERROR');
   }
+
+  private loadOfferTypes(): void {
+    this.offerTypeService.findAll().subscribe(
+      (res: HttpResponse<OfferType[]>) => {
+        this.offerTypes = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadOfferPolicies(): void {
+    this.offerPolicyService.findAll().subscribe(
+      (res: HttpResponse<OfferPolicy[]>) => {
+        this.offerPolicies = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadDates(): void {
+    this.dateService.findAll().subscribe(
+      (res: HttpResponse<DateEntity[]>) => {
+        this.dates = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadDays(): void {
+    this.dayService.findAll().subscribe(
+      (res: HttpResponse<Day[]>) => {
+        this.days = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadStates(): void {
+    this.stateService.findAll().subscribe(
+      (res: HttpResponse<State[]>) => {
+        this.states = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadCities(): void {
+    this.cityService.findAllWithState().subscribe(
+      (res: HttpResponse<City[]>) => {
+        this.cities = res.body;
+        this.filteredCities = [];
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadOperatingSystems(): void {
+    this.operatingSystemService.findAll().subscribe(
+      (res: HttpResponse<OperatingSystem[]>) => {
+        this.operatingSystems = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadAffiliates(): void {
+    this.affiliateService.query().subscribe(
+      (res: HttpResponse<Affiliate[]>) => {
+        this.affiliates = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadMerchants(): void {
+    this.merchantService.findAllWithSubCategories().subscribe(
+      (res: HttpResponse<Merchant[]>) => {
+        this.merchants = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadCategories(): void {
+    this.categoryService.findAll().subscribe(
+      (res: HttpResponse<Category[]>) => {
+        this.categories = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadSubCategories(): void {
+    this.subCategoryService.findAllWithCategory().subscribe(
+      (res: HttpResponse<SubCategory[]>) => {
+        this.subCategories = res.body;
+        this.filteredSubCategories = [];
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadServiceProviders(): void {
+    this.serviceProviderService.findAllWithSubCategories().subscribe(
+      (res: HttpResponse<ServiceProvider[]>) => {
+        this.serviceProviders = res.body;
+        this.filteredServiceProviders = [];
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadCircles(): void {
+    this.circleService.findAll().subscribe(
+      (res: HttpResponse<Circle[]>) => {
+        this.circles = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadReechargePlanTypes(): void {
+    this.reechargePlanTypeService.findAll().subscribe(
+      (res: HttpResponse<ReechargePlanType[]>) => {
+        this.reechargePlanTypes = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadTravelTypes(): void {
+    this.travelTypeService.findAll().subscribe(
+      (res: HttpResponse<TravelType[]>) => {
+        this.travelTypes = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadRegions(): void {
+    this.regionService.findAll().subscribe(
+      (res: HttpResponse<Region[]>) => {
+        this.regions = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadFlightClasses(): void {
+    this.flightClassService.findAll().subscribe(
+      (res: HttpResponse<FlightClass[]>) => {
+        this.flightClasses = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  // private loadReturnTypes(): void {
+  //   this.returnTypeService.findAll().subscribe(
+  //     (res: HttpResponse<ReturnType[]>) => {
+  //       this.returnTypes = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
+
+  // private loadReturnModes(): void {
+  //   this.returnModeService.findAll().subscribe(
+  //     (res: HttpResponse<ReturnMode[]>) => {
+  //       this.returnModes = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
+
+  // private loadCards(): void {
+  //   this.cardService.findAll().subscribe(
+  //     (res: HttpResponse<Card[]>) => {
+  //       this.cards = res.body;
+  //       this.filteredCards = [];
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
+
+  // private loadOffersForReference(): void {
+  //   this.offerService.findAll().subscribe(
+  //     (res: HttpResponse<Offer[]>) => {
+  //       this.offers = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
+
+  // private loadCardTypes(): void {
+  //   this.cardTypeService.findAll().subscribe(
+  //     (res: HttpResponse<CardType[]>) => {
+  //       this.cardTypes = res.body;
+  //     },
+  //     (res: HttpErrorResponse) => this.onError(res.message)
+  //   );
+  // }
 
 }
