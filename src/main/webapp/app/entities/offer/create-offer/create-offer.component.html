@@ -99,12 +99,12 @@
                             <ng-container *ngIf="editMode">
                                 <div class="col-md-9">
                                     <ng-select *ngIf="editMode" id="type" name="type" [(ngModel)]="offer.type" [items]="offerTypes" bindLabel="name" placeholder="Offer Type"
-                                        required appendTo="body"></ng-select>
+                                        required appendTo="body" (change)="onOfferTypeChange($event)"></ng-select>
                                 </div>
                             </ng-container>
                         </div>
                         <div class="col-md-6">
-                            <div *ngIf="offer.type && isCoupon(offer.type)" class="form-group mb-3 row">
+                            <div *ngIf="offer.type && isCoupon" class="form-group mb-3 row">
                                 <label class="col-md-3 col-form-label" for="code">Code</label>
                                 <h6 *ngIf="!editMode">{{ offer.code }}</h6>
                                 <ng-container *ngIf="editMode">
@@ -268,7 +268,7 @@
                     </div>
                 </form>
             </tab>
-            <tab heading="Detail Info">
+            <tab heading="Detail Info" (select)="onSelectTab(2)">
                 <form name="detailInfoForm" role="form" #detailInfoForm="ngForm" novalidate>
                     <div class="form-group mb-3" *ngIf="editMode">
                         <label for="adminDescription">Admin Description</label>
@@ -359,7 +359,7 @@
                     </div>
                 </form>
             </tab>
-            <!-- <tab heading="Offer Info">
+            <tab heading="Offer Info" (select)="onSelectTab(3)">
                 <form name="offerInfoForm" role="form" #offerInfoForm="ngForm" novalidate>
                     <div class="form-group mb-3" *ngIf="editMode">
                         <label for="adminDescription">Admin Description</label>
@@ -380,7 +380,14 @@
                         </span>
                         <ng-select *ngIf="editMode" id="subCategories" name="subCategories" [(ngModel)]="offer.subCategories" [items]="filteredSubCategories"
                             bindLabel="code" [multiple]="true" [closeOnSelect]="false" placeholder="Sub Categories" appendTo="body"
-                            (change)="onSubCategoryChange($event)" required></ng-select>
+                            (change)="onSubCategoryChange($event)" required>
+                            <ng-template ng-header-tmp>
+                                <div class="my-2 ml-5">
+                                    <button (click)="selectAllSubCategories()" class="btn btn-sm btn-secondary">Select all</button>
+                                    <button (click)="unselectAllSubCategories()" class="btn btn-sm btn-danger">Unselect all</button>
+                                </div>
+                            </ng-template>
+                        </ng-select>
                     </div>
                     <div class="form-group mb-3">
                         <label class="mr-5" for="serviceProviders">Service Providers</label>
@@ -515,7 +522,7 @@
                         <button type="button" class="btn btn-success" [disabled]="offerInfoForm.form.invalid" (click)="goToNextTab(4)">Next</button>
                     </div>
                 </form>
-            </tab> -->
+            </tab>
             <!-- <tab heading="Offer Return">
                 <form name="offerReturnForm" role="form" #offerReturnForm="ngForm" novalidate>
                     <kendo-grid [kendoGridReactiveEditing]="createOfferReturnFormGroup" [kendoGridBinding]="offer.offerReturns" [pageable]="true"
