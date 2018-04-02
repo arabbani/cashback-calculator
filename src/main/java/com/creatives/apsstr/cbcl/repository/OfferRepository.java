@@ -21,10 +21,17 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     Offer findOneWithEagerRelationships(@Param("id") Long id);
 
     @EntityGraph(attributePaths = { "operatingSystems", "cities", "cities.state", "subCategories",
-            "subCategories.category", "serviceProviders", "serviceProviders.subCategories", "activeDates", "activeDays", "affiliate", "policy" })
+            "subCategories.category", "serviceProviders", "serviceProviders.subCategories", "activeDates", "activeDays",
+            "affiliate", "policy" })
     Offer findOneForAdminViewById(Long id);
 
     @EntityGraph(attributePaths = { "reechargeInfo", "reechargeInfo.circles", "reechargeInfo.reechargePlanTypes" })
     Offer findOneWithReechargeInfoById(Long id);
+
+    @EntityGraph(attributePaths = { "travelInfo", "travelInfo.types", "travelInfo.flightInfo", })
+    Offer findOneWithFlightInfoById(Long id);
+
+    @EntityGraph(attributePaths = { "travelInfo", "travelInfo.types", "travelInfo.busInfo", })
+    Offer findOneWithBusInfoById(Long id);
 
 }

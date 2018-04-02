@@ -48,6 +48,16 @@ export class OfferService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
+    findFlightInfoById(id: number): Observable<EntityResponseType> {
+        return this.http.get<Offer>(`${this.resourceUrl}/with/flightInfo/${id}`, { observe: 'response' })
+            .map((res: EntityResponseType) => this.convertResponse(res));
+    }
+
+    findBusInfoById(id: number): Observable<EntityResponseType> {
+        return this.http.get<Offer>(`${this.resourceUrl}/with/busInfo/${id}`, { observe: 'response' })
+            .map((res: EntityResponseType) => this.convertResponse(res));
+    }
+
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }

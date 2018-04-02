@@ -105,8 +105,6 @@ export class CreateOfferComponent implements OnInit {
   minEndDate: Date;
   editMode: boolean;
   editedOffer: Offer;
-  reechargePlanTypesLoaded = false;
-  circlesLoaded = false;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
     private dayService: DayService, private stateService: StateService, private cityService: CityService,
@@ -304,18 +302,6 @@ export class CreateOfferComponent implements OnInit {
     this.createOfferTabs.tabs[tabNumber].active = true;
   }
 
-  private setUpCategoriesToEdit(categories: Category[]): void {
-    _.forEach(categories, (category) => {
-      switch (category.name) {
-        case this.categoryEnum.TRAVEL:
-          this.loadTravelEntities();
-          break;
-        default:
-          break;
-      }
-    });
-  }
-
   private setUpSubCategoriesToEdit(subCategories: SubCategory[]): void {
     this.isFlight = false;
     this.isBus = false;
@@ -337,15 +323,29 @@ export class CreateOfferComponent implements OnInit {
           }
           break;
         case this.subCategoryEnum.Flight:
+          this.loadTravelEntities();
           this.loadFlightEntities();
+          if (!this.offer.travelInfo) {
+            this.offer.travelInfo = new TravelInfo();
+          }
           if (!this.offer.travelInfo['flightInfo']) {
             this.offer.travelInfo['flightInfo'] = new FlightInfo();
+            if (this.editMode && this.offer.id !== undefined) {
+              this.loadFlightInfo();
+            }
           }
           this.isFlight = true;
           break;
         case this.subCategoryEnum.Bus:
+          this.loadTravelEntities();
+          if (!this.offer.travelInfo) {
+            this.offer.travelInfo = new TravelInfo();
+          }
           if (!this.offer.travelInfo['busInfo']) {
             this.offer.travelInfo['busInfo'] = new BusInfo();
+            if (this.editMode && this.offer.id !== undefined) {
+              this.loadBusInfo();
+            }
           }
           this.isBus = true;
           break;
@@ -389,7 +389,6 @@ export class CreateOfferComponent implements OnInit {
   }
 
   onCategoryChange(categories: Category[]): void {
-    this.setUpCategoriesToEdit(categories);
     this.filterSubCategoriesForCategories(categories);
     this.offer.subCategories = this.filterEntitiesService.bySingleRelationId(categories, this.offer.subCategories, 'category');
     this.onSubCategoryChange(this.offer.subCategories);
@@ -565,16 +564,10 @@ export class CreateOfferComponent implements OnInit {
     //   });
     // });
 
-    let found = _.find(this.offerCategories, (category) => category.name === this.categoryEnum.REECHARGE);
-    if (!found) {
+    if (!this.isReechargeExtra) {
       this.offer.reechargeInfo = undefined;
-    } else {
-      if (!this.isReechargeExtra) {
-        this.offer.reechargeInfo = undefined;
-      }
     }
-    found = _.find(this.offerCategories, (category) => category.name === this.categoryEnum.TRAVEL);
-    if (!found) {
+    if (!this.isFlight && !this.isBus) {
       this.offer.travelInfo = undefined;
     } else {
       if (!this.isFlight) {
@@ -735,22 +728,10 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  private loadReechargeInfo(): void {
-    this.offerService.findReechargeInfoById(this.offer.id).subscribe(
-      (res: HttpResponse<Offer>) => {
-        const offer = res.body;
-        this.offer.reechargeInfo = offer.reechargeInfo;
-        console.log(this.offer);
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
   private loadCircles(): void {
     this.circleService.findAll().subscribe(
       (res: HttpResponse<Circle[]>) => {
         this.circles = res.body;
-        this.circlesLoaded = true;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -760,7 +741,6 @@ export class CreateOfferComponent implements OnInit {
     this.reechargePlanTypeService.findAll().subscribe(
       (res: HttpResponse<ReechargePlanType[]>) => {
         this.reechargePlanTypes = res.body;
-        this.reechargePlanTypesLoaded = true;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -770,13 +750,6 @@ export class CreateOfferComponent implements OnInit {
     this.travelTypeService.findAll().subscribe(
       (res: HttpResponse<TravelType[]>) => {
         this.travelTypes = res.body;
-        if (this.offer.id !== undefined) {
-          if (!this.offer.travelInfo) {
-
-          }
-        } else if (!this.offer.travelInfo) {
-          this.offer.travelInfo = new TravelInfo();
-        }
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -795,6 +768,42 @@ export class CreateOfferComponent implements OnInit {
     this.flightClassService.findAll().subscribe(
       (res: HttpResponse<FlightClass[]>) => {
         this.flightClasses = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadReechargeInfo(): void {
+    this.offerService.findReechargeInfoById(this.offer.id).subscribe(
+      (res: HttpResponse<Offer>) => {
+        const offer = res.body;
+        this.offer.reechargeInfo = offer.reechargeInfo;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadFlightInfo(): void {
+    this.offerService.findFlightInfoById(this.offer.id).subscribe(
+      (res: HttpResponse<Offer>) => {
+        const offer = res.body;
+        if (offer.travelInfo) {
+          this.offer.travelInfo['types'] = offer.travelInfo['types'];
+          this.offer.travelInfo['flightInfo'] = offer.travelInfo['flightInfo'];
+        }
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadBusInfo(): void {
+    this.offerService.findBusInfoById(this.offer.id).subscribe(
+      (res: HttpResponse<Offer>) => {
+        const offer = res.body;
+        if (offer.travelInfo) {
+          this.offer.travelInfo['types'] = offer.travelInfo['types'];
+          this.offer.travelInfo['busInfo'] = offer.travelInfo['busInfo'];
+        }
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );

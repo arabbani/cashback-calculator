@@ -71,6 +71,30 @@ public class OfferService {
     }
 
     /**
+     * Get one offer by id with flightInfo.
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    @Transactional(readOnly = true)
+    public Offer findWithFlightInfo(Long id) {
+        log.debug("Request to get Offer  with flightInfo: {}", id);
+        return offerRepository.findOneWithFlightInfoById(id);
+    }
+
+    /**
+     * Get one offer by id with busInfo.
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    @Transactional(readOnly = true)
+    public Offer findWithBusInfo(Long id) {
+        log.debug("Request to get Offer  with busInfo: {}", id);
+        return offerRepository.findOneWithBusInfoById(id);
+    }
+
+    /**
      * Get one offer by id for admin view.
      *
      * @param id the id of the entity

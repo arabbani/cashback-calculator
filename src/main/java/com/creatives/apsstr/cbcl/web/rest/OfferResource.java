@@ -116,6 +116,34 @@ public class OfferResource {
     }
 
     /**
+     * GET  /offers/with/flightInfo/:id : get the "id" offer with flightInfo.
+     *
+     * @param id the id of the offer to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the offer, or with status 404 (Not Found)
+     */
+    @GetMapping("/offers/with/flightInfo/{id}")
+    @Timed
+    public ResponseEntity<Offer> getOfferWithFlightInfo(@PathVariable Long id) {
+        log.debug("REST request to get Offer  with flightInfo: {}", id);
+        Offer offer = offerService.findWithFlightInfo(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
+    }
+
+    /**
+     * GET  /offers/with/busInfo/:id : get the "id" offer with busInfo.
+     *
+     * @param id the id of the offer to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the offer, or with status 404 (Not Found)
+     */
+    @GetMapping("/offers/with/busInfo/{id}")
+    @Timed
+    public ResponseEntity<Offer> getOfferWithBusInfo(@PathVariable Long id) {
+        log.debug("REST request to get Offer  with busInfo: {}", id);
+        Offer offer = offerService.findWithBusInfo(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
+    }
+
+    /**
      * GET  /offers/for/admin-view/:id : get the "id" offer for admin view.
      *
      * @param id the id of the offer to retrieve
