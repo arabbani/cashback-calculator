@@ -51,8 +51,7 @@ public class OfferResource {
         }
         Offer result = offerService.save(offer);
         return ResponseEntity.created(new URI("/api/offers/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -72,9 +71,8 @@ public class OfferResource {
             return createOffer(offer);
         }
         Offer result = offerService.save(offer);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, offer.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, offer.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,7 +85,7 @@ public class OfferResource {
     public List<Offer> getAllOffers() {
         log.debug("REST request to get all Offers");
         return offerService.findAll();
-        }
+    }
 
     /**
      * GET  /offers/:id : get the "id" offer.

@@ -168,7 +168,7 @@ public class Offer implements Serializable {
                inverseJoinColumns = @JoinColumn(name="active_days_id", referencedColumnName="id"))
     private Set<Day> activeDays = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Affiliate affiliate;
 
     @ManyToOne

@@ -13,6 +13,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface OfferRepository extends JpaRepository<Offer, Long> {
+    
     @Query("select distinct offer from Offer offer left join fetch offer.operatingSystems left join fetch offer.cities left join fetch offer.subCategories left join fetch offer.serviceProviders left join fetch offer.activeDates left join fetch offer.activeDays")
     List<Offer> findAllWithEagerRelationships();
 
