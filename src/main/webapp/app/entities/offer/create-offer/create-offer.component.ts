@@ -37,6 +37,8 @@ import { State, StateService } from '../../state';
 import { SubCategory, SubCategoryService } from '../../sub-category';
 import { TravelInfo } from '../../travel-info';
 import { TravelType, TravelTypeService } from '../../travel-type';
+import { OfferReturn, ReturnExtras, ReturnInfo, OfferPayment } from '../..';
+import { MainReturn } from '../../main-return';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -114,8 +116,8 @@ export class CreateOfferComponent implements OnInit {
     private apsstrKendoDialogService: ApsstrDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
     private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService, private router: Router,
     private route: ActivatedRoute, private location: Location, private filterEntitiesService: FilterEntitiesService, private flightClassService: FlightClassService) {
-    // this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
-    // this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
+    this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
+    this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
   }
 
   ngOnInit() {
@@ -144,11 +146,6 @@ export class CreateOfferComponent implements OnInit {
   private loadEssentialEntities() {
     this.loadOfferTypes();
     this.loadOfferPolicies();
-    // this.loadReturnTypes();
-    // this.loadReturnModes();
-    // this.loadCards();
-    // this.loadOffersForReference();
-    // this.loadCardTypes();
   }
 
   private loadTabTwoEntities() {
@@ -185,6 +182,25 @@ export class CreateOfferComponent implements OnInit {
     if (!this.serviceProviders) {
       this.loadServiceProviders();
     }
+  }
+
+  private loadTabFourEntities() {
+    if (!this.returnTypes) {
+      this.loadReturnTypes();
+    }
+    if (!this.returnModes) {
+      this.loadReturnModes();
+    }
+    if (!this.cards) {
+      this.loadCards();
+    }
+    if (!this.offers) {
+      this.loadOffersForReference();
+    }
+    if (!this.cardTypes) {
+      this.loadCardTypes();
+    }
+
   }
 
   private loadReechargeEntities() {
@@ -284,6 +300,9 @@ export class CreateOfferComponent implements OnInit {
           break;
         case 3:
           this.loadTabThreeEntities();
+          break;
+        case 4:
+          this.loadTabFourEntities();
           break;
         default:
           break;
@@ -404,96 +423,96 @@ export class CreateOfferComponent implements OnInit {
     this.offer.serviceProviders = this.filterEntitiesService.byManyRelationId(subCategories, this.offer.serviceProviders, 'subCategories');
   }
 
-  // private filterCardsForPaymentModes(modes: CardType[]): void {
-  //   this.filteredCards = this.filterEntitiesService.bySingleRelationId(modes, this.cards, 'type');
-  // }
+  private filterCardsForPaymentModes(modes: CardType[]): void {
+    this.filteredCards = this.filterEntitiesService.bySingleRelationId(modes, this.cards, 'type');
+  }
 
-  // onPaymentModeChange(modes: CardType[], dataItem): void {
-  //   this.filterCardsForPaymentModes(modes);
-  //   dataItem.payment.cards = this.filterEntitiesService.bySingleRelationId(modes, dataItem.payment.cards, 'type');
-  // }
+  onPaymentModeChange(modes: CardType[], dataItem): void {
+    this.filterCardsForPaymentModes(modes);
+    dataItem.payment.cards = this.filterEntitiesService.bySingleRelationId(modes, dataItem.payment.cards, 'type');
+  }
 
-  // public createOfferReturnFormGroup(args: any): FormGroup {
-  //   let item;
-  //   if (args.isNew) {
-  //     const offerReturn = new OfferReturn();
-  //     offerReturn.extras = new ReturnExtras();
-  //     item = offerReturn;
-  //   } else {
-  //     item = args.dataItem;
-  //   }
-  //   this.offerReturnFormGroup = this.formBuilder.group({
-  //     'id': item.id,
-  //     'extras': this.formBuilder.group({
-  //       'minimumExpense': item.extras.minimumExpense,
-  //       'maximumExpense': item.extras.maximumExpense,
-  //       'minimumReturn': item.extras.minimumReturn,
-  //       'maximumReturn': item.extras.maximumReturn,
-  //       'minimumTicketRequired': item.extras.minimumTicketRequired
-  //     })
-  //   });
-  //   return this.offerReturnFormGroup;
-  // }
+  public createOfferReturnFormGroup(args: any): FormGroup {
+    let item;
+    if (args.isNew) {
+      const offerReturn = new OfferReturn();
+      offerReturn.extras = new ReturnExtras();
+      item = offerReturn;
+    } else {
+      item = args.dataItem;
+    }
+    this.offerReturnFormGroup = this.formBuilder.group({
+      'id': item.id,
+      'extras': this.formBuilder.group({
+        'minimumExpense': item.extras.minimumExpense,
+        'maximumExpense': item.extras.maximumExpense,
+        'minimumReturn': item.extras.minimumReturn,
+        'maximumReturn': item.extras.maximumReturn,
+        'minimumTicketRequired': item.extras.minimumTicketRequired
+      })
+    });
+    return this.offerReturnFormGroup;
+  }
 
-  // public createReturnInfoFormGroup(args: any): FormGroup {
-  //   let item;
-  //   if (args.isNew) {
-  //     const returnInfo = new ReturnInfo();
-  //     returnInfo.extras = new ReturnExtras();
-  //     item = returnInfo;
-  //   } else {
-  //     item = args.dataItem;
-  //   }
-  //   this.returnInfoFormGroup = this.formBuilder.group({
-  //     'id': item.id,
-  //     'extras': this.formBuilder.group({
-  //       'minimumExpense': item.extras.minimumExpense,
-  //       'maximumExpense': item.extras.maximumExpense,
-  //       'minimumReturn': item.extras.minimumReturn,
-  //       'maximumReturn': item.extras.maximumReturn,
-  //       'minimumTicketRequired': item.extras.minimumTicketRequired
-  //     })
-  //   });
-  //   return this.returnInfoFormGroup;
-  // }
+  public createReturnInfoFormGroup(args: any): FormGroup {
+    let item;
+    if (args.isNew) {
+      const returnInfo = new ReturnInfo();
+      returnInfo.extras = new ReturnExtras();
+      item = returnInfo;
+    } else {
+      item = args.dataItem;
+    }
+    this.returnInfoFormGroup = this.formBuilder.group({
+      'id': item.id,
+      'extras': this.formBuilder.group({
+        'minimumExpense': item.extras.minimumExpense,
+        'maximumExpense': item.extras.maximumExpense,
+        'minimumReturn': item.extras.minimumReturn,
+        'maximumReturn': item.extras.maximumReturn,
+        'minimumTicketRequired': item.extras.minimumTicketRequired
+      })
+    });
+    return this.returnInfoFormGroup;
+  }
 
-  // public saveOfferReturn(offerReturn): void {
-  //   if (!offerReturn.returnInfos) {
-  //     offerReturn.returnInfos = [];
-  //   }
-  // }
+  public saveOfferReturn(offerReturn): void {
+    if (!offerReturn.returnInfos) {
+      offerReturn.returnInfos = [];
+    }
+  }
 
-  // public saveReturnInfo(returnInfo): void {
-  //   if (!returnInfo.mainReturn) {
-  //     returnInfo.mainReturn = new MainReturn();
-  //   }
-  //   if (!returnInfo.payment) {
-  //     returnInfo.payment = new OfferPayment();
-  //   }
-  // }
+  public saveReturnInfo(returnInfo): void {
+    if (!returnInfo.mainReturn) {
+      returnInfo.mainReturn = new MainReturn();
+    }
+    if (!returnInfo.payment) {
+      returnInfo.payment = new OfferPayment();
+    }
+  }
 
-  // public deleteOfferReturn(dataItem: any): void {
-  //   this.apsstrKendoDialogService.confirm().subscribe((result) => {
-  //     if (result['text'] === 'No') {
-  //       this.offer.offerReturns.push(dataItem);
-  //       this.offer.offerReturns = _.sortBy(this.offer.offerReturns, (item) => item.id);
-  //     }
-  //   });
-  // }
+  public deleteOfferReturn(dataItem: any): void {
+    this.apsstrKendoDialogService.confirm().subscribe((result) => {
+      if (result['text'] === 'No') {
+        this.offer.offerReturns.push(dataItem);
+        this.offer.offerReturns = _.sortBy(this.offer.offerReturns, (item) => item.id);
+      }
+    });
+  }
 
-  // public deleteReturnInfo(event: any): void {
-  //   this.apsstrKendoDialogService.confirm().subscribe((result) => {
-  //     if (result['text'] === 'No') {
-  //       console.log(event);
-  //       // event.sender.data['data'].push(event.dataItem);
-  //       // event.sender.data.data = _.sortBy(event.data, (item) => item.id);
-  //     }
-  //   });
-  // }
+  public deleteReturnInfo(event: any): void {
+    this.apsstrKendoDialogService.confirm().subscribe((result) => {
+      if (result['text'] === 'No') {
+        console.log(event);
+        // event.sender.data['data'].push(event.dataItem);
+        // event.sender.data.data = _.sortBy(event.data, (item) => item.id);
+      }
+    });
+  }
 
-  // removePaymentCard(dataItem, card: Card): void {
-  //   dataItem.payment.cards = _.pull(dataItem.payment.cards, card);
-  // }
+  removePaymentCard(dataItem, card: Card): void {
+    dataItem.payment.cards = _.pull(dataItem.payment.cards, card);
+  }
 
   selectAllStates(): void {
     this.offerStates = _.cloneDeep(this.states);
@@ -558,12 +577,11 @@ export class CreateOfferComponent implements OnInit {
   private refineOfferToSave(): void {
     this.offer.startDate.setSeconds(0);
     this.offer.endDate.setSeconds(59);
-    // _.forEach(this.offer.offerReturns, (offerReturn) => {
-    //   _.forEach(offerReturn.returnInfos, (returnInfo) => {
-    //     delete returnInfo.payment.modes;
-    //   });
-    // });
-
+    _.forEach(this.offer.offerReturns, (offerReturn) => {
+      _.forEach(offerReturn.returnInfos, (returnInfo) => {
+        delete returnInfo.payment.modes;
+      });
+    });
     if (!this.isReechargeExtra) {
       this.offer.reechargeInfo = undefined;
     }
@@ -809,50 +827,50 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  // private loadReturnTypes(): void {
-  //   this.returnTypeService.findAll().subscribe(
-  //     (res: HttpResponse<ReturnType[]>) => {
-  //       this.returnTypes = res.body;
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
+  private loadReturnTypes(): void {
+    this.returnTypeService.findAll().subscribe(
+      (res: HttpResponse<ReturnType[]>) => {
+        this.returnTypes = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
 
-  // private loadReturnModes(): void {
-  //   this.returnModeService.findAll().subscribe(
-  //     (res: HttpResponse<ReturnMode[]>) => {
-  //       this.returnModes = res.body;
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
+  private loadReturnModes(): void {
+    this.returnModeService.findAll().subscribe(
+      (res: HttpResponse<ReturnMode[]>) => {
+        this.returnModes = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
 
-  // private loadCards(): void {
-  //   this.cardService.findAll().subscribe(
-  //     (res: HttpResponse<Card[]>) => {
-  //       this.cards = res.body;
-  //       this.filteredCards = [];
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
+  private loadCards(): void {
+    this.cardService.findAllWithTypeAndProviders().subscribe(
+      (res: HttpResponse<Card[]>) => {
+        this.cards = res.body;
+        this.filteredCards = [];
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
 
-  // private loadOffersForReference(): void {
-  //   this.offerService.findAll().subscribe(
-  //     (res: HttpResponse<Offer[]>) => {
-  //       this.offers = res.body;
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
+  private loadOffersForReference(): void {
+    this.offerService.findAll().subscribe(
+      (res: HttpResponse<Offer[]>) => {
+        this.offers = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
 
-  // private loadCardTypes(): void {
-  //   this.cardTypeService.findAll().subscribe(
-  //     (res: HttpResponse<CardType[]>) => {
-  //       this.cardTypes = res.body;
-  //     },
-  //     (res: HttpErrorResponse) => this.onError(res.message)
-  //   );
-  // }
+  private loadCardTypes(): void {
+    this.cardTypeService.findAll().subscribe(
+      (res: HttpResponse<CardType[]>) => {
+        this.cardTypes = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
 
 }

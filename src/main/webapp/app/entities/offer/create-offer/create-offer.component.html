@@ -442,7 +442,7 @@
                             </ng-select>
                         </div>
                     </fieldset>
-                    <fieldset class="fieldset-fix mb-3" *ngIf="(isBus || isFlight) && offer.travelInfo">
+                    <fieldset class="fieldset-fix mb-3" *ngIf="isBus || isFlight">
                         <legend class="legend-fix">
                             <strong>Travel Info</strong>
                         </legend>
@@ -521,7 +521,7 @@
                     </div>
                 </form>
             </tab>
-            <!-- <tab heading="Offer Return">
+            <tab heading="Offer Return" (select)="onSelectTab(4)">
                 <form name="offerReturnForm" role="form" #offerReturnForm="ngForm" novalidate>
                     <kendo-grid [kendoGridReactiveEditing]="createOfferReturnFormGroup" [kendoGridBinding]="offer.offerReturns" [pageable]="true"
                         [pageSize]="gridState.take" [skip]="gridState.skip" [resizable]="true" [navigable]="true" (save)="saveOfferReturn($event.dataItem)"
@@ -673,7 +673,7 @@
                 <div class="text-center mt-2">
                     <button type="button" class="btn btn-primary mr-3" (click)="goToTab(3)">Previous</button>
                 </div>
-            </tab> -->
+            </tab>
             <div class="px-5 py-3 clearfix">
                 <div class="float-left">
                     <button type="button" class="btn btn-danger" (click)="goBack()">Go Back</button>
