@@ -12,7 +12,6 @@ export const userInfoRoute: Routes = [
         component: UserInfoComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'UserInfos'
         },
         canActivate: [UserRouteAccessService]
     }, {
@@ -20,7 +19,6 @@ export const userInfoRoute: Routes = [
         component: UserInfoDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'UserInfos'
         },
         canActivate: [UserRouteAccessService]
     }
@@ -32,7 +30,6 @@ export const userInfoPopupRoute: Routes = [
         component: UserInfoPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'UserInfos'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -42,7 +39,6 @@ export const userInfoPopupRoute: Routes = [
         component: UserInfoPopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'UserInfos'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'
@@ -52,7 +48,6 @@ export const userInfoPopupRoute: Routes = [
         component: UserInfoDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],
-            pageTitle: 'UserInfos'
         },
         canActivate: [UserRouteAccessService],
         outlet: 'popup'

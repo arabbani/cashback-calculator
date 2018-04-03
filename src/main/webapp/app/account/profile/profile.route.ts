@@ -7,7 +7,9 @@ export const profileRoute: Route = {
     component: ProfileComponent,
     data: {
         authorities: ['ROLE_USER'],
-        pageTitle: 'Settings'
+        meta: {
+            title: 'User Profile'
+        }
     },
     canActivate: [UserRouteAccessService]
 };

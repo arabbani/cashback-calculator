@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { MetaGuard } from '@ngx-meta/core';
 
 import { UserRouteAccessService } from '../../shared';
 import { OfferTypeComponent } from './offer-type.component';
@@ -8,7 +9,9 @@ export const offerTypeRoute: Route = {
     component: OfferTypeComponent,
     data: {
         authorities: ['ROLE_ADMIN'],
-        pageTitle: 'OfferTypes'
+        meta: {
+            title: 'Offer Types'
+        }
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService, MetaGuard]
 };

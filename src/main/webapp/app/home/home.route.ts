@@ -9,9 +9,9 @@ export const HOME_ROUTE: Route = {
     canActivate: [MetaGuard],
     data: {
         authorities: [],
-        meta: {
-            title: 'Sweet home',
-            description: 'Home, home sweet home... and what?'
-        }
+        // meta: {
+        //     title: 'Sweet home',
+        //     description: 'Home, home sweet home... and what?'
+        // }
     }
 };

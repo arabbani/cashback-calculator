@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { MetaGuard } from '@ngx-meta/core';
 
 import { UserRouteAccessService } from '../../shared';
 import { DateComponent } from './date.component';
@@ -8,7 +9,9 @@ export const dateRoute: Route = {
     component: DateComponent,
     data: {
         authorities: ['ROLE_ADMIN'],
-        pageTitle: 'Dates'
+        meta: {
+            title: 'Dates'
+        }
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService, MetaGuard]
 };

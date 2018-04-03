@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { MetaGuard } from '@ngx-meta/core';
 
 import { UserRouteAccessService } from '../../shared';
 import { CircleComponent } from './circle.component';
@@ -8,7 +9,9 @@ export const circleRoute: Route = {
     component: CircleComponent,
     data: {
         authorities: ['ROLE_ADMIN'],
-        pageTitle: 'Circles'
+        meta: {
+            title: 'Circles'
+        }
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService, MetaGuard]
 };

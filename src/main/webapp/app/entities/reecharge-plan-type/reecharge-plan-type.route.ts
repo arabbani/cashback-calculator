@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { MetaGuard } from '@ngx-meta/core';
 
 import { UserRouteAccessService } from '../../shared';
 import { ReechargePlanTypeComponent } from './reecharge-plan-type.component';
@@ -8,7 +9,9 @@ export const reechargePlanTypeRoute: Route = {
     component: ReechargePlanTypeComponent,
     data: {
         authorities: ['ROLE_ADMIN'],
-        pageTitle: 'ReechargePlanTypes'
+        meta: {
+            title: 'Reecharge Plan Types'
+        }
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService, MetaGuard]
 };

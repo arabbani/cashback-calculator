@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { MetaGuard } from '@ngx-meta/core';
 
 import { UserRouteAccessService } from '../../shared';
 import { SubCategoryComponent } from './sub-category.component';
@@ -8,7 +9,9 @@ export const subCategoryRoute: Route = {
     component: SubCategoryComponent,
     data: {
         authorities: ['ROLE_ADMIN'],
-        pageTitle: 'SubCategories'
+        meta: {
+            title: 'Sub Categories'
+        }
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService, MetaGuard]
 };

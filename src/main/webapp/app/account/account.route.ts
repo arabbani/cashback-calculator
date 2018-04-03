@@ -4,6 +4,7 @@ import {
     sessionsRoute, settingsRoute, socialRegisterRoute
 } from './';
 import { profileRoute } from './profile';
+import { MetaGuard } from '@ngx-meta/core';
 
 const ACCOUNT_ROUTES = [
     activateRoute,
@@ -19,5 +20,6 @@ const ACCOUNT_ROUTES = [
 
 export const accountState: Routes = [{
     path: '',
+    canActivateChild: [MetaGuard],
     children: ACCOUNT_ROUTES
 }];

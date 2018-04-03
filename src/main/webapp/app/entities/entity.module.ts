@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { MetaGuard } from '@ngx-meta/core';
 
 import { UserRouteAccessService } from '../shared';
 import { CbclAffiliateCredentialModule } from './affiliate-credential/affiliate-credential.module';
@@ -71,9 +72,11 @@ import { CbclUserInfoModule } from './user-info/user-info.module';
                 component: EntityComponent,
                 data: {
                     authorities: ['ROLE_ADMIN'],
-                    pageTitle: 'Entities'
+                    meta: {
+                        title: 'Entities'
+                    }
                 },
-                canActivate: [UserRouteAccessService]
+                canActivate: [UserRouteAccessService, MetaGuard]
             }
         ]),
         CommonModule,

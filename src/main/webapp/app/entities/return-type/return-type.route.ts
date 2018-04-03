@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { MetaGuard } from '@ngx-meta/core';
 
 import { UserRouteAccessService } from '../../shared';
 import { ReturnTypeComponent } from './return-type.component';
@@ -8,7 +9,9 @@ export const returnTypeRoute: Route = {
     component: ReturnTypeComponent,
     data: {
         authorities: ['ROLE_ADMIN'],
-        pageTitle: 'ReturnTypes'
+        meta: {
+            title: 'Return Types'
+        }
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService, MetaGuard]
 };

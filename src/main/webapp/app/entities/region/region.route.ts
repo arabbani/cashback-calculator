@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { MetaGuard } from '@ngx-meta/core';
 
 import { UserRouteAccessService } from '../../shared';
 import { RegionComponent } from './region.component';
@@ -8,7 +9,9 @@ export const regionRoute: Route = {
     component: RegionComponent,
     data: {
         authorities: ['ROLE_ADMIN'],
-        pageTitle: 'Regions'
+        meta: {
+            title: 'Regions'
+        }
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService, MetaGuard]
 };

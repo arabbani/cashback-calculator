@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { MetaGuard } from '@ngx-meta/core';
 
 import { UserRouteAccessService } from '../../shared';
 import { OperatingSystemTypeComponent } from './operating-system-type.component';
@@ -8,7 +9,9 @@ export const operatingSystemTypeRoute: Route = {
     component: OperatingSystemTypeComponent,
     data: {
         authorities: ['ROLE_ADMIN'],
-        pageTitle: 'OperatingSystemTypes'
+        meta: {
+            title: 'Operating System Types'
+        }
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService, MetaGuard]
 };

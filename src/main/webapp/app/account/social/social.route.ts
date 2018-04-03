@@ -7,8 +7,9 @@ export const socialRegisterRoute: Route = {
     path: 'social-register/:provider?{success:boolean}',
     component: SocialRegisterComponent,
     data: {
-        authorities: [],
-        pageTitle: 'Register with {{ label }}'
+        meta: {
+            title: 'Register with {{ label }}'
+        }
     },
     canActivate: [UserRouteAccessService]
 };

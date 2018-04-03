@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { MetaGuard } from '@ngx-meta/core';
 
 import { UserRouteAccessService } from '../../shared';
 import { BankTypeComponent } from './bank-type.component';
@@ -8,7 +9,9 @@ export const bankTypeRoute: Route = {
     component: BankTypeComponent,
     data: {
         authorities: ['ROLE_ADMIN'],
-        pageTitle: 'BankTypes'
+        meta: {
+            title: 'Bank Types'
+        }
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService, MetaGuard]
 };

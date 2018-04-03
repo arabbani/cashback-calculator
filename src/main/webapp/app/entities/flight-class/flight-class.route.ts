@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { MetaGuard } from '@ngx-meta/core';
 
 import { UserRouteAccessService } from '../../shared';
 import { FlightClassComponent } from './flight-class.component';
@@ -8,7 +9,9 @@ export const flightClassRoute: Route = {
     component: FlightClassComponent,
     data: {
         authorities: ['ROLE_ADMIN'],
-        pageTitle: 'FlightClasses'
+        meta: {
+            title: 'Flight Classes'
+        }
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService, MetaGuard]
 };

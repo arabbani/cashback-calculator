@@ -6,6 +6,8 @@ export const healthRoute: Route = {
     path: 'apsstr-health',
     component: ApsstrHealthCheckComponent,
     data: {
-        pageTitle: 'Health Checks'
+        meta: {
+            title: 'Health Checks'
+        }
     }
 };

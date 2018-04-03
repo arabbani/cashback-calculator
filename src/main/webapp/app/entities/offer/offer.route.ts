@@ -4,6 +4,7 @@ import { UserRouteAccessService } from '../../shared';
 import { CreateOfferComponent } from './create-offer/create-offer.component';
 import { OfferAdminViewResolver } from './offer-admin-view-resolver.service';
 import { OfferComponent } from './offer.component';
+import { MetaGuard } from '@ngx-meta/core';
 
 export const offerRoute: Routes = [
     {
@@ -11,18 +12,22 @@ export const offerRoute: Routes = [
         component: OfferComponent,
         data: {
             authorities: ['ROLE_ADMIN'],
-            pageTitle: 'Offers'
+            meta: {
+                title: 'Offers'
+            }
         },
-        canActivate: [UserRouteAccessService]
+        canActivate: [UserRouteAccessService, MetaGuard]
     },
     {
         path: 'offer',
         component: CreateOfferComponent,
         data: {
             authorities: ['ROLE_ADMIN'],
-            pageTitle: 'Offer'
+            meta: {
+                title: 'Offer'
+            }
         },
-        canActivate: [UserRouteAccessService],
+        canActivate: [UserRouteAccessService, MetaGuard],
         resolve: {
             offer: OfferAdminViewResolver
         }

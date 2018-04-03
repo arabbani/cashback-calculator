@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { MetaGuard } from '@ngx-meta/core';
 
 import { UserRouteAccessService } from '../../shared';
 import { AffiliateCredentialComponent } from './affiliate-credential.component';
@@ -8,7 +9,9 @@ export const affiliateCredentialRoute: Route = {
     component: AffiliateCredentialComponent,
     data: {
         authorities: ['ROLE_ADMIN'],
-        pageTitle: 'AffiliateCredentials'
+        meta: {
+            title: 'Affiliate Credentials'
+        }
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService, MetaGuard]
 };

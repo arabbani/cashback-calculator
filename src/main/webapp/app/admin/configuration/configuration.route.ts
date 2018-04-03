@@ -6,6 +6,8 @@ export const configurationRoute: Route = {
     path: 'apsstr-configuration',
     component: ApsstrConfigurationComponent,
     data: {
-        pageTitle: 'Configuration'
+        meta: {
+            title: 'Configuration'
+        }
     }
 };
