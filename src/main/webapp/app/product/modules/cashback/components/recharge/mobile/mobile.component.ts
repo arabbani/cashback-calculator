@@ -51,7 +51,7 @@ export class MobileComponent implements OnInit {
   }
 
   private setMeta(): void {
-    this.apsstrMetaService.setMeta(this.route.snapshot.data['title']);
+    this.apsstrMetaService.setMeta(this.route.snapshot.data['title'], this.route.snapshot.data.meta['description']);
   }
 
   calculate(): void {
