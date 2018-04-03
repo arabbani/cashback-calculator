@@ -28,8 +28,9 @@ const routes: Routes = [
         path: 'mobile-reecharge-coupons',
         component: MobileComponent,
         data: {
-          title: 'Latest Prepaid and Postpaid Mobile Reecharge Offers, Deals, Coupons | ',
+          title: 'Prepaid and Postpaid Mobile Reecharge Offers, Deals, Coupons | ',
           meta: {
+            description: ''
           }
         }
       },
@@ -37,7 +38,7 @@ const routes: Routes = [
         path: 'dth-reecharge-coupons',
         component: DthComponent,
         data: {
-          title: 'Latest Dth Reecharge Offers, Deals, Coupons | ',
+          title: 'Dth Reecharge Offers, Deals, Coupons | ',
           meta: {
           }
         }
@@ -46,7 +47,7 @@ const routes: Routes = [
         path: 'datacard-reecharge-coupons',
         component: DatacardComponent,
         data: {
-          title: 'Latest Prepaid and Postpaid Datacard Reecharge Offers, Deals, Coupons | ',
+          title: 'Prepaid and Postpaid Datacard Reecharge Offers, Deals, Coupons | ',
           meta: {
           }
         }
@@ -55,7 +56,7 @@ const routes: Routes = [
         path: 'broadband-reecharge-coupons',
         component: BroadbandComponent,
         data: {
-          title: 'Latest Broadband Reecharge Offers, Deals, Coupons | ',
+          title: 'Broadband Reecharge Offers, Deals, Coupons | ',
           meta: {
           }
         }
@@ -64,7 +65,7 @@ const routes: Routes = [
         path: 'landline-reecharge-coupons',
         component: LandlineComponent,
         data: {
-          title: 'Latest Landline Reecharge Offers, Deals, Coupons | ',
+          title: 'Landline Reecharge Offers, Deals, Coupons | ',
           meta: {
           }
         }
@@ -73,7 +74,7 @@ const routes: Routes = [
         path: 'electricity-bill-payment-coupons',
         component: ElectricityComponent,
         data: {
-          title: 'Latest Electricity Bill Payment Offers, Deals, Coupons | ',
+          title: 'Electricity Bill Payment Offers, Deals, Coupons | ',
           meta: {
           }
         }
@@ -82,7 +83,7 @@ const routes: Routes = [
         path: 'gas-bill-payment-coupons',
         component: GasComponent,
         data: {
-          title: 'Latest Gas Bill Payment Offers, Deals, Coupons | ',
+          title: 'Gas Bill Payment Offers, Deals, Coupons | ',
           meta: {
           }
         }
@@ -91,7 +92,7 @@ const routes: Routes = [
         path: 'metro-reecharge-coupons',
         component: MetroComponent,
         data: {
-          title: 'Latest Metro Reecharge Offers, Deals, Coupons | ',
+          title: 'Metro Reecharge Offers, Deals, Coupons | ',
           meta: {
           }
         }
@@ -100,7 +101,7 @@ const routes: Routes = [
         path: 'water-bill-payment-coupons',
         component: WaterComponent,
         data: {
-          title: 'Latest Water Bill Payment Offers, Deals, Coupons | ',
+          title: 'Water Bill Payment Offers, Deals, Coupons | ',
           meta: {
           }
         }
@@ -109,7 +110,7 @@ const routes: Routes = [
         path: 'flight-coupons',
         component: FlightComponent,
         data: {
-          title: 'Latest Flight Booking Offers, Deals, Coupons | ',
+          title: 'Flight Booking Offers, Deals, Coupons | ',
           meta: {
           }
         }
@@ -118,7 +119,7 @@ const routes: Routes = [
         path: 'bus-coupons',
         component: BusComponent,
         data: {
-          title: 'Latest Bus Offers, Deals, Coupons | ',
+          title: 'Bus Offers, Deals, Coupons | ',
           meta: {
           }
         }
@@ -127,7 +128,7 @@ const routes: Routes = [
         path: 'cab-coupons',
         component: CabComponent,
         data: {
-          title: 'Latest Cab Offers, Deals, Coupons | ',
+          title: 'Cab Offers, Deals, Coupons | ',
           meta: {
           }
         }
