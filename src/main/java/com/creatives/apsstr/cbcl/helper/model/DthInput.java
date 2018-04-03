@@ -5,7 +5,7 @@ package com.creatives.apsstr.cbcl.helper.model;
  * 
  *         Calculate cashback input model for DTH
  */
-public class DthInput extends CommonReechargeInput {
+public class DthInput extends CommonRechargeInput {
 
 	@Override
 	public String toString() {

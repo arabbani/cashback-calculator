@@ -25,7 +25,7 @@ import { CbclOfferTypeModule } from './offer-type/offer-type.module';
 import { CbclOfferModule } from './offer/offer.module';
 import { CbclOperatingSystemTypeModule } from './operating-system-type/operating-system-type.module';
 import { CbclOperatingSystemModule } from './operating-system/operating-system.module';
-import { CbclReechargePlanTypeModule } from './reecharge-plan-type/reecharge-plan-type.module';
+import { CbclRechargePlanTypeModule } from './recharge-plan-type/recharge-plan-type.module';
 import { CbclRegionModule } from './region/region.module';
 import { CbclReturnModeModule } from './return-mode/return-mode.module';
 import { CbclReturnTypeModule } from './return-type/return-type.module';
@@ -62,7 +62,7 @@ import { CbclUserInfoModule } from './user-info/user-info.module';
         CbclBankModule,
         CbclCardTypeModule,
         CbclCardModule,
-        CbclReechargePlanTypeModule,
+        CbclRechargePlanTypeModule,
         CbclOfferModule,
         CbclUserInfoModule,
         CbclBrandModule,

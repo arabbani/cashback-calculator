@@ -4,33 +4,33 @@ export const SIDEBAR_NAV_ITEMS = [
     name: 'Categories'
   },
   {
-    name: 'Reecharge',
-    url: 'reecharge',
+    name: 'Recharge',
+    url: 'recharge',
     icon: 'icon-screen-smartphone',
     children: [
       {
         name: 'Mobile',
-        url: 'mobile-reecharge-coupons',
+        url: 'mobile-recharge-coupons',
         icon: 'icon-screen-smartphone'
       },
       {
         name: 'DTH',
-        url: 'dth-reecharge-coupons',
+        url: 'dth-recharge-coupons',
         icon: 'icon-puzzle'
       },
       {
         name: 'Datacard',
-        url: 'datacard-reecharge-coupons',
+        url: 'datacard-recharge-coupons',
         icon: 'icon-puzzle'
       },
       {
         name: 'Broadband',
-        url: 'broadband-reecharge-coupons',
+        url: 'broadband-recharge-coupons',
         icon: 'icon-puzzle'
       },
       {
         name: 'Landline',
-        url: 'landline-reecharge-coupons',
+        url: 'landline-recharge-coupons',
         icon: 'icon-puzzle'
       },
       {
@@ -45,7 +45,7 @@ export const SIDEBAR_NAV_ITEMS = [
       },
       {
         name: 'Metro',
-        url: 'metro-reecharge-coupons',
+        url: 'metro-recharge-coupons',
         icon: 'icon-puzzle'
       },
       {

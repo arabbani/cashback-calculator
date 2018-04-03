@@ -5,10 +5,10 @@ package com.creatives.apsstr.cbcl.helper.model;
  * 
  *         Calculate cashback input model for DATACARD
  */
-public class DatacardInput extends CommonReechargeInput {
+public class DatacardInput extends CommonRechargeInput {
 
 	private Long circleId;
-	private Long reechargePlaneTypeId;
+	private Long rechargePlaneTypeId;
 
 	/**
 	 * @return the circleId
@@ -26,23 +26,23 @@ public class DatacardInput extends CommonReechargeInput {
 	}
 
 	/**
-	 * @return the reechargePlaneTypeId
+	 * @return the rechargePlaneTypeId
 	 */
-	public Long getReechargePlaneTypeId() {
-		return reechargePlaneTypeId;
+	public Long getRechargePlaneTypeId() {
+		return rechargePlaneTypeId;
 	}
 
 	/**
-	 * @param reechargePlaneTypeId
-	 *            the reechargePlaneTypeId to set
+	 * @param rechargePlaneTypeId
+	 *            the rechargePlaneTypeId to set
 	 */
-	public void setReechargePlaneTypeId(Long reechargePlaneTypeId) {
-		this.reechargePlaneTypeId = reechargePlaneTypeId;
+	public void setRechargePlaneTypeId(Long rechargePlaneTypeId) {
+		this.rechargePlaneTypeId = rechargePlaneTypeId;
 	}
 
 	@Override
 	public String toString() {
-		return "DatacardInput [circleId=" + circleId + ", reechargePlaneTypeId=" + reechargePlaneTypeId
+		return "DatacardInput [circleId=" + circleId + ", rechargePlaneTypeId=" + rechargePlaneTypeId
 				+ ", getServiceProviderId()=" + getServiceProviderId() + ", getSubCategoryId()=" + getSubCategoryId()
 				+ ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense() + ", getActiveDate()="
 				+ getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";

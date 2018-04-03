@@ -27,8 +27,8 @@ import { Merchant, MerchantService } from '../../merchant';
 import { OfferPolicy, OfferPolicyService } from '../../offer-policy';
 import { OfferType, OfferTypeService } from '../../offer-type';
 import { OperatingSystem, OperatingSystemService } from '../../operating-system';
-import { ReechargeInfo } from '../../reecharge-info';
-import { ReechargePlanType, ReechargePlanTypeService } from '../../reecharge-plan-type';
+import { RechargeInfo } from '../../recharge-info';
+import { RechargePlanType, RechargePlanTypeService } from '../../recharge-plan-type';
 import { Region, RegionService } from '../../region';
 import { ReturnMode, ReturnModeService } from '../../return-mode';
 import { ReturnType, ReturnTypeService } from '../../return-type';
@@ -65,7 +65,7 @@ export class CreateOfferComponent implements OnInit {
   serviceProviders: ServiceProvider[];
   filteredServiceProviders: ServiceProvider[];
   circles: Circle[];
-  reechargePlanTypes: ReechargePlanType[];
+  rechargePlanTypes: RechargePlanType[];
   travelTypes: TravelType[];
   regions: Region[];
   returnTypes: ReturnType[];
@@ -85,7 +85,7 @@ export class CreateOfferComponent implements OnInit {
   defaultSubCategory;
   defaultServiceProvider;
   defaultCircle;
-  defaultReechargePlanType;
+  defaultRechargePlanType;
   defaultTravelType;
   defaultRegion;
   defaultOrigin;
@@ -93,7 +93,7 @@ export class CreateOfferComponent implements OnInit {
   isCoupon: boolean;
   isFlight: boolean;
   isBus: boolean;
-  isReechargeExtra: boolean;
+  isRechargeExtra: boolean;
   offerCategories: Category[];
   offerStates: State[];
   categoryEnum;
@@ -113,7 +113,7 @@ export class CreateOfferComponent implements OnInit {
     private operatingSystemService: OperatingSystemService, private affiliateService: AffiliateService, private merchantService: MerchantService,
     private categoryService: CategoryService, private subCategoryService: SubCategoryService, private serviceProviderService: ServiceProviderService,
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
-    private apsstrDialogService: ApsstrDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
+    private apsstrDialogService: ApsstrDialogService, private rechargePlanTypeService: RechargePlanTypeService, private returnTypeService: ReturnTypeService,
     private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService, private router: Router,
     private route: ActivatedRoute, private location: Location, private filterEntitiesService: FilterEntitiesService, private flightClassService: FlightClassService) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
@@ -135,7 +135,7 @@ export class CreateOfferComponent implements OnInit {
     this.isSaving = false;
     this.isFlight = false;
     this.isBus = false;
-    this.isReechargeExtra = false;
+    this.isRechargeExtra = false;
   }
 
   private initializeToEdit(): void {
@@ -203,12 +203,12 @@ export class CreateOfferComponent implements OnInit {
 
   }
 
-  private loadReechargeEntities() {
+  private loadRechargeEntities() {
     if (!this.circles) {
       this.loadCircles();
     }
-    if (!this.reechargePlanTypes) {
-      this.loadReechargePlanTypes();
+    if (!this.rechargePlanTypes) {
+      this.loadRechargePlanTypes();
     }
   }
 
@@ -328,7 +328,7 @@ export class CreateOfferComponent implements OnInit {
   private setUpSubCategoriesToEdit(subCategories: SubCategory[]): void {
     this.isFlight = false;
     this.isBus = false;
-    this.isReechargeExtra = false;
+    this.isRechargeExtra = false;
     _.forEach(subCategories, (subCategory) => {
       switch (subCategory.code) {
         case this.subCategoryEnum.PrepaidMobile:
@@ -336,12 +336,12 @@ export class CreateOfferComponent implements OnInit {
         case this.subCategoryEnum.PrepaidDatacard:
         case this.subCategoryEnum.PostpaidDatacard:
         case this.subCategoryEnum.Broadband:
-          this.loadReechargeEntities();
-          this.isReechargeExtra = true;
-          if (!this.offer.reechargeInfo) {
-            this.offer.reechargeInfo = new ReechargeInfo();
+          this.loadRechargeEntities();
+          this.isRechargeExtra = true;
+          if (!this.offer.rechargeInfo) {
+            this.offer.rechargeInfo = new RechargeInfo();
             if (this.offer.id !== undefined) {
-              this.loadReechargeInfo();
+              this.loadRechargeInfo();
             }
           }
           break;
@@ -563,19 +563,19 @@ export class CreateOfferComponent implements OnInit {
   }
 
   selectAllCircles(): void {
-    this.offer.reechargeInfo['circles'] = _.cloneDeep(this.circles);
+    this.offer.rechargeInfo['circles'] = _.cloneDeep(this.circles);
   }
 
   unselectAllCircles(): void {
-    this.offer.reechargeInfo['circles'] = [];
+    this.offer.rechargeInfo['circles'] = [];
   }
 
-  selectAllReechargeTypes(): void {
-    this.offer.reechargeInfo['reechargePlanTypes'] = _.cloneDeep(this.circles);
+  selectAllRechargeTypes(): void {
+    this.offer.rechargeInfo['rechargePlanTypes'] = _.cloneDeep(this.circles);
   }
 
-  unselectAllReechargeTypes(): void {
-    this.offer.reechargeInfo['reechargePlanTypes'] = [];
+  unselectAllRechargeTypes(): void {
+    this.offer.rechargeInfo['rechargePlanTypes'] = [];
   }
 
   private refineOfferToSave(): void {
@@ -588,8 +588,8 @@ export class CreateOfferComponent implements OnInit {
         delete returnInfo.payment.modes;
       });
     });
-    if (!this.isReechargeExtra) {
-      this.offer.reechargeInfo = undefined;
+    if (!this.isRechargeExtra) {
+      this.offer.rechargeInfo = undefined;
     }
     if (!this.isFlight && !this.isBus) {
       this.offer.travelInfo = undefined;
@@ -761,10 +761,10 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  private loadReechargePlanTypes(): void {
-    this.reechargePlanTypeService.findAll().subscribe(
-      (res: HttpResponse<ReechargePlanType[]>) => {
-        this.reechargePlanTypes = res.body;
+  private loadRechargePlanTypes(): void {
+    this.rechargePlanTypeService.findAll().subscribe(
+      (res: HttpResponse<RechargePlanType[]>) => {
+        this.rechargePlanTypes = res.body;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -797,11 +797,11 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  private loadReechargeInfo(): void {
-    this.offerService.findReechargeInfoById(this.offer.id).subscribe(
+  private loadRechargeInfo(): void {
+    this.offerService.findRechargeInfoById(this.offer.id).subscribe(
       (res: HttpResponse<Offer>) => {
         const offer = res.body;
-        this.offer.reechargeInfo = offer.reechargeInfo;
+        this.offer.rechargeInfo = offer.rechargeInfo;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );

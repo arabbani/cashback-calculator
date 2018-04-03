@@ -22,8 +22,8 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
                         "activeDays", "affiliate", "policy", "offerReturns" })
         Offer findOneForAdminViewById(Long id);
 
-        @EntityGraph(attributePaths = { "reechargeInfo", "reechargeInfo.circles", "reechargeInfo.reechargePlanTypes" })
-        Offer findOneWithReechargeInfoById(Long id);
+        @EntityGraph(attributePaths = { "rechargeInfo", "rechargeInfo.circles", "rechargeInfo.rechargePlanTypes" })
+        Offer findOneWithRechargeInfoById(Long id);
 
         @EntityGraph(attributePaths = { "travelInfo", "travelInfo.types", "travelInfo.flightInfo", })
         Offer findOneWithFlightInfoById(Long id);
@@ -35,11 +35,11 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 
         List<OfferForReference> findForReferenceByActiveTrueAndDummyFalse();
 
-        @Query(OfferRepositoryConstants.CASHBACK_REECHARGE_WITH_CHILDS)
-        List<Offer> cashbackReechargeWithReechargeCondition(@Param("active") boolean active,
+        @Query(OfferRepositoryConstants.CASHBACK_RECHARGE_WITH_CHILDS)
+        List<Offer> cashbackRechargeWithRechargeCondition(@Param("active") boolean active,
                         @Param("dummy") boolean dummy, @Param("subCategoryId") Long subCategoryId,
                         @Param("dateTime") String dateTime, @Param("activeDate") Integer activeDate,
                         @Param("activeDay") String activeDay, @Param("serviceProviderId") Long serviceProviderId,
-                        @Param("circleId") Long circleId, @Param("reechargePlaneTypeId") Long reechargePlaneTypeId);
+                        @Param("circleId") Long circleId, @Param("rechargePlaneTypeId") Long rechargePlaneTypeId);
 
 }

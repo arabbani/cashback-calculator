@@ -1,0 +1,28 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "circle",
+            "otherEntityName": "circle",
+            "otherEntityField": "name",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "rechargePlanType",
+            "otherEntityName": "rechargePlanType",
+            "otherEntityField": "name",
+            "ownerSide": true
+        }
+    ],
+    "fields": [],
+    "changelogDate": "20180329045924",
+    "entityTableName": "recharge_info",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

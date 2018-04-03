@@ -129,16 +129,16 @@ public class OfferResource {
     }
 
     /**
-     * GET  /offers/with/reechargeInfo/:id : get the "id" offer with reechargeInfo.
+     * GET  /offers/with/rechargeInfo/:id : get the "id" offer with rechargeInfo.
      *
      * @param id the id of the offer to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the offer, or with status 404 (Not Found)
      */
-    @GetMapping("/offers/with/reechargeInfo/{id}")
+    @GetMapping("/offers/with/rechargeInfo/{id}")
     @Timed
-    public ResponseEntity<Offer> getOfferWithReechargeInfo(@PathVariable Long id) {
-        log.debug("REST request to get Offer  with reechargeInfo: {}", id);
-        Offer offer = offerService.findWithReechargeInfo(id);
+    public ResponseEntity<Offer> getOfferWithRechargeInfo(@PathVariable Long id) {
+        log.debug("REST request to get Offer  with rechargeInfo: {}", id);
+        Offer offer = offerService.findWithRechargeInfo(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
     }
 

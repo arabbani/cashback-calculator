@@ -84,9 +84,9 @@ public class CacheConfiguration {
             cm.createCache(com.creatives.apsstr.cbcl.domain.Circle.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.TravelType.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.Region.class.getName(), jcacheConfiguration);
-            cm.createCache(com.creatives.apsstr.cbcl.domain.ReechargeInfo.class.getName(), jcacheConfiguration);
-            cm.createCache(com.creatives.apsstr.cbcl.domain.ReechargeInfo.class.getName() + ".circles", jcacheConfiguration);
-            cm.createCache(com.creatives.apsstr.cbcl.domain.ReechargeInfo.class.getName() + ".reechargeTypes", jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.RechargeInfo.class.getName(), jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.RechargeInfo.class.getName() + ".circles", jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.RechargeInfo.class.getName() + ".rechargeTypes", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.TravelInfo.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.TravelInfo.class.getName() + ".types", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.TravelInfo.class.getName() + ".regions", jcacheConfiguration);
@@ -99,7 +99,7 @@ public class CacheConfiguration {
             cm.createCache(com.creatives.apsstr.cbcl.domain.OfferPayment.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.OfferPayment.class.getName() + ".modes", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.OfferPayment.class.getName() + ".cards", jcacheConfiguration);
-            cm.createCache(com.creatives.apsstr.cbcl.domain.ReechargePlanType.class.getName(), jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.RechargePlanType.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.Offer.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.Offer.class.getName() + ".offerReturns", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.Offer.class.getName() + ".operatingSystems", jcacheConfiguration);
@@ -118,7 +118,7 @@ public class CacheConfiguration {
             cm.createCache(com.creatives.apsstr.cbcl.domain.ElectronicsInfo.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.ElectronicsInfo.class.getName() + ".brands", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.FlightClass.class.getName(), jcacheConfiguration);
-            cm.createCache(com.creatives.apsstr.cbcl.domain.ReechargeInfo.class.getName() + ".reechargePlanTypes", jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.RechargeInfo.class.getName() + ".rechargePlanTypes", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.FlightInfo.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.FlightInfo.class.getName() + ".types", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.FlightInfo.class.getName() + ".origins", jcacheConfiguration);

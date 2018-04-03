@@ -24,7 +24,7 @@ export class Offer implements BaseEntity {
         public apsstrExclusive?: boolean,
         public url?: string,
         public travelInfo?: BaseEntity,
-        public reechargeInfo?: BaseEntity,
+        public rechargeInfo?: BaseEntity,
         public electronicsInfo?: BaseEntity,
         public offerReturns?: BaseEntity[],
         public policy?: BaseEntity,

@@ -1,9 +1,9 @@
-import { CommonReechargeInput } from './common-reecharge-input';
+import { CommonRechargeInput } from './common-recharge-input';
 
-export class DatacardInput extends CommonReechargeInput {
+export class DatacardInput extends CommonRechargeInput {
 
     public circleId: number;
-    public reechargePlaneTypeId: number;
+    public rechargePlaneTypeId: number;
 
     constructor() {
         super();

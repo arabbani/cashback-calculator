@@ -405,16 +405,16 @@
                             </ng-template>
                         </ng-select>
                     </div>
-                    <fieldset class="fieldset-fix mb-3" *ngIf="isReechargeExtra">
+                    <fieldset class="fieldset-fix mb-3" *ngIf="isRechargeExtra">
                         <legend class="legend-fix">
-                            <strong>Reecharge Info</strong>
+                            <strong>Recharge Info</strong>
                         </legend>
                         <div class="form-group mb-3">
-                            <label class="mr-5" for="reecharge_info_circles">Circles</label>
-                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let circle of offer.reechargeInfo.circles">
+                            <label class="mr-5" for="recharge_info_circles">Circles</label>
+                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let circle of offer.rechargeInfo.circles">
                                 {{ circle.name }}
                             </span>
-                            <ng-select *ngIf="editMode" id="reecharge_info_circles" name="reecharge_info_circles" [(ngModel)]="offer.reechargeInfo.circles"
+                            <ng-select *ngIf="editMode" id="recharge_info_circles" name="recharge_info_circles" [(ngModel)]="offer.rechargeInfo.circles"
                                 [items]="circles" bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Circles"
                                 appendTo="body" required>
                                 <ng-template ng-header-tmp>
@@ -426,17 +426,17 @@
                             </ng-select>
                         </div>
                         <div class="form-group mb-3">
-                            <label class="mr-5" for="reecharge_info_reecharge_types">Reecharge Types</label>
-                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let reechargePlanType of offer.reechargeInfo.reechargePlanTypes">
-                                {{ reechargePlanType.name }}
+                            <label class="mr-5" for="recharge_info_recharge_types">Recharge Types</label>
+                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let rechargePlanType of offer.rechargeInfo.rechargePlanTypes">
+                                {{ rechargePlanType.name }}
                             </span>
-                            <ng-select *ngIf="editMode" id="reecharge_info_reecharge_types" name="reecharge_info_reecharge_types" [(ngModel)]="offer.reechargeInfo.reechargePlanTypes"
-                                [items]="reechargePlanTypes" bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Reecharge Types"
+                            <ng-select *ngIf="editMode" id="recharge_info_recharge_types" name="recharge_info_recharge_types" [(ngModel)]="offer.rechargeInfo.rechargePlanTypes"
+                                [items]="rechargePlanTypes" bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Recharge Types"
                                 appendTo="body" required>
                                 <ng-template ng-header-tmp>
                                     <div class="my-2 ml-5">
-                                        <button (click)="selectAllReechargeTypes()" class="btn btn-sm btn-secondary">Select all</button>
-                                        <button (click)="unselectAllReechargeTypes()" class="btn btn-sm btn-danger">Unselect all</button>
+                                        <button (click)="selectAllRechargeTypes()" class="btn btn-sm btn-secondary">Select all</button>
+                                        <button (click)="unselectAllRechargeTypes()" class="btn btn-sm btn-danger">Unselect all</button>
                                     </div>
                                 </ng-template>
                             </ng-select>

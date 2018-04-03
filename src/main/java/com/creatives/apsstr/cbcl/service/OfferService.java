@@ -82,15 +82,15 @@ public class OfferService {
     }
 
     /**
-     * Get one offer by id with reechargeInfo.
+     * Get one offer by id with rechargeInfo.
      *
      * @param id the id of the entity
      * @return the entity
      */
     @Transactional(readOnly = true)
-    public Offer findWithReechargeInfo(Long id) {
-        log.debug("Request to get Offer  with reechargeInfo: {}", id);
-        return offerRepository.findOneWithReechargeInfoById(id);
+    public Offer findWithRechargeInfo(Long id) {
+        log.debug("Request to get Offer  with rechargeInfo: {}", id);
+        return offerRepository.findOneWithRechargeInfoById(id);
     }
 
     /**

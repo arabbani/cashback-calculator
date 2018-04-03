@@ -5,10 +5,10 @@ package com.creatives.apsstr.cbcl.helper.model;
  * 
  *         Calculate cashback input model for MOBILE
  */
-public class MobileInput extends CommonReechargeInput {
+public class MobileInput extends CommonRechargeInput {
 
 	private Long circleId;
-	private Long reechargePlaneTypeId;
+	private Long rechargePlaneTypeId;
 
 	public Long getCircleId() {
 		return circleId;
@@ -18,17 +18,17 @@ public class MobileInput extends CommonReechargeInput {
 		this.circleId = circleId;
 	}
 
-	public Long getReechargePlaneTypeId() {
-		return reechargePlaneTypeId;
+	public Long getRechargePlaneTypeId() {
+		return rechargePlaneTypeId;
 	}
 
-	public void setReechargePlaneTypeId(Long reechargePlaneTypeId) {
-		this.reechargePlaneTypeId = reechargePlaneTypeId;
+	public void setRechargePlaneTypeId(Long rechargePlaneTypeId) {
+		this.rechargePlaneTypeId = rechargePlaneTypeId;
 	}
 
 	@Override
 	public String toString() {
-		return "MobileInput [circleId=" + circleId + ", reechargePlaneTypeId=" + reechargePlaneTypeId
+		return "MobileInput [circleId=" + circleId + ", rechargePlaneTypeId=" + rechargePlaneTypeId
 				+ ", getServiceProviderId()=" + getServiceProviderId() + ", getSubCategoryId()=" + getSubCategoryId()
 				+ ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense() + ", getActiveDate()="
 				+ getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";

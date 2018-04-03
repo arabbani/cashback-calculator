@@ -5,7 +5,7 @@ package com.creatives.apsstr.cbcl.helper.model;
  * 
  *         Calculate cashback input model for GAS
  */
-public class GasInput extends CommonReechargeInput {
+public class GasInput extends CommonRechargeInput {
 
 	@Override
 	public String toString() {

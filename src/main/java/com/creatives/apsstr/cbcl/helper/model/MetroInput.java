@@ -5,7 +5,7 @@ package com.creatives.apsstr.cbcl.helper.model;
  * 
  *         Calculate cashback input model for Metro
  */
-public class MetroInput extends CommonReechargeInput {
+public class MetroInput extends CommonRechargeInput {
 
 	@Override
 	public String toString() {

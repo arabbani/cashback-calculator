@@ -41,11 +41,11 @@ public class CalculateCashbackService {
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	public List<CashbackInfo> calculateCashbackReechargeWithReechargeCondition(Long subCategoryId,
+	public List<CashbackInfo> calculateCashbackRechargeWithRechargeCondition(Long subCategoryId,
 			Long serviceProviderId, String dateTime, Integer activeDate, String activeDay, Long circleId,
-			Long reechargePlaneTypeId, Expense expense) {
-		List<Offer> offers = offerRepository.cashbackReechargeWithReechargeCondition(true, false, subCategoryId,
-				dateTime, activeDate, activeDay, serviceProviderId, circleId, reechargePlaneTypeId);
+			Long rechargePlaneTypeId, Expense expense) {
+		List<Offer> offers = offerRepository.cashbackRechargeWithRechargeCondition(true, false, subCategoryId,
+				dateTime, activeDate, activeDay, serviceProviderId, circleId, rechargePlaneTypeId);
 		return this.cashbackCalculatorAlgo.calculate(offers, expense);
 	}
 
@@ -54,9 +54,9 @@ public class CalculateCashbackService {
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	// public List<CashbackInfo> calculateCashbackReecharge(Long subCategoryId, Long serviceProviderId, String dateTime,
+	// public List<CashbackInfo> calculateCashbackRecharge(Long subCategoryId, Long serviceProviderId, String dateTime,
 	// 		Integer activeDate, String activeDay, Expense expense) {
-	// 	List<Offer> offers = offerRepository.cashbackReechargeCommon(true, false, subCategoryId, dateTime, activeDate,
+	// 	List<Offer> offers = offerRepository.cashbackRechargeCommon(true, false, subCategoryId, dateTime, activeDate,
 	// 			activeDay, serviceProviderId);
 	// 	return this.cashbackCalculatorAlgo.calculate(offers, expense);
 	// }

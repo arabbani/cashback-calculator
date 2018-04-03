@@ -112,7 +112,7 @@ entity Region {
 	name String required maxlength(25)
 }
 
-entity ReechargeInfo {
+entity RechargeInfo {
 
 }
 
@@ -152,7 +152,7 @@ entity OfferPayment {
 
 }
 
-entity ReechargePlanType {
+entity RechargePlanType {
 	name String required maxlength(150),
     dataPlan Boolean required
 }
@@ -198,7 +198,7 @@ relationship OneToOne {
    	ReturnInfo{extras} to ReturnExtras,
    	ReturnInfo{payment} to OfferPayment,
    	Offer{travelInfo} to TravelInfo,
-  	Offer{reechargeInfo} to ReechargeInfo,
+  	Offer{rechargeInfo} to RechargeInfo,
     Offer{electronicsInfo} to ElectronicsInfo,
    	TravelInfo{flightInfo} to FlightInfo,
    	TravelInfo{busInfo} to BusInfo
@@ -243,7 +243,7 @@ relationship ManyToMany {
     FlightInfo{travelClass(name)} to FlightClass,
    	BusInfo{from(name)} to City,
    	BusInfo{to(name)} to City,
-   	ReechargeInfo{circle(name)} to Circle,
+   	RechargeInfo{circle(name)} to Circle,
     OfferPayment{card(name)} to Card,
     UserInfo{merchant(name)} to Merchant,
     UserInfo{card(name)} to Card,
@@ -251,9 +251,9 @@ relationship ManyToMany {
 	Brand{subCategory(name)} to SubCategory,
     ElectronicsInfo{brand(name)} to Brand,
     Card{cardProvider(name)} to CardProvider,
-    ReechargeInfo{reechargePlanType(name)} to ReechargePlanType
+    RechargeInfo{rechargePlanType(name)} to RechargePlanType
 }
 
 service all with serviceClass except ReturnExtras, MainReturn, OfferReturn,
-ReturnInfo, ReechargeInfo, FlightInfo, TravelInfo, BusInfo, OfferPayment,
+ReturnInfo, RechargeInfo, FlightInfo, TravelInfo, BusInfo, OfferPayment,
 ElectronicsInfo

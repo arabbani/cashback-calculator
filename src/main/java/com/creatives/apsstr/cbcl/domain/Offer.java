@@ -112,7 +112,7 @@ public class Offer implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true)
-    private ReechargeInfo reechargeInfo;
+    private RechargeInfo rechargeInfo;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(unique = true)
@@ -459,17 +459,17 @@ public class Offer implements Serializable {
         this.travelInfo = travelInfo;
     }
 
-    public ReechargeInfo getReechargeInfo() {
-        return reechargeInfo;
+    public RechargeInfo getRechargeInfo() {
+        return rechargeInfo;
     }
 
-    public Offer reechargeInfo(ReechargeInfo reechargeInfo) {
-        this.reechargeInfo = reechargeInfo;
+    public Offer rechargeInfo(RechargeInfo rechargeInfo) {
+        this.rechargeInfo = rechargeInfo;
         return this;
     }
 
-    public void setReechargeInfo(ReechargeInfo reechargeInfo) {
-        this.reechargeInfo = reechargeInfo;
+    public void setRechargeInfo(RechargeInfo rechargeInfo) {
+        this.rechargeInfo = rechargeInfo;
     }
 
     public ElectronicsInfo getElectronicsInfo() {

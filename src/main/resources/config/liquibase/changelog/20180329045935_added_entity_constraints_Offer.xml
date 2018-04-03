@@ -14,11 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="travel_info"/>
 
-        <addForeignKeyConstraint baseColumnNames="reecharge_info_id"
+        <addForeignKeyConstraint baseColumnNames="recharge_info_id"
                                  baseTableName="offer"
-                                 constraintName="fk_offer_reecharge_info_id"
+                                 constraintName="fk_offer_recharge_info_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="reecharge_info"/>
+                                 referencedTableName="recharge_info"/>
 
         <addForeignKeyConstraint baseColumnNames="electronics_info_id"
                                  baseTableName="offer"

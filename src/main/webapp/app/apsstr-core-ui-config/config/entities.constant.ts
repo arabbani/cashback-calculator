@@ -92,8 +92,8 @@ export const ENTITIES = [
         route: '/card'
     },
     {
-        name: 'Reecharge Plan Type',
-        route: '/reecharge-plan-type'
+        name: 'Recharge Plan Type',
+        route: '/recharge-plan-type'
     },
     {
         name: 'Offer',

@@ -1,3 +1,3 @@
 export * from './cashback';
-export * from './reecharge';
+export * from './recharge';
 export * from './travel';

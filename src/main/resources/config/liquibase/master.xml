@@ -29,7 +29,7 @@
     <include file="config/liquibase/changelog/20180329045921_added_entity_FlightClass.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045922_added_entity_TravelType.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045923_added_entity_Region.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180329045924_added_entity_ReechargeInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180329045924_added_entity_RechargeInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045925_added_entity_FlightInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045926_added_entity_BusInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045927_added_entity_TravelInfo.xml" relativeToChangelogFile="false"/>
@@ -39,7 +39,7 @@
     <include file="config/liquibase/changelog/20180329045931_added_entity_CardProvider.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045932_added_entity_Card.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045933_added_entity_OfferPayment.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180329045934_added_entity_ReechargePlanType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180329045934_added_entity_RechargePlanType.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045935_added_entity_Offer.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045936_added_entity_UserInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045937_added_entity_Brand.xml" relativeToChangelogFile="false"/>
@@ -54,7 +54,7 @@
     <include file="config/liquibase/changelog/20180329045917_added_entity_constraints_MainReturn.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045918_added_entity_constraints_ReturnInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045919_added_entity_constraints_OfferReturn.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180329045924_added_entity_constraints_ReechargeInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180329045924_added_entity_constraints_RechargeInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045925_added_entity_constraints_FlightInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045926_added_entity_constraints_BusInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045927_added_entity_constraints_TravelInfo.xml" relativeToChangelogFile="false"/>

@@ -5,7 +5,7 @@ package com.creatives.apsstr.cbcl.helper.model;
  * 
  *         Calculate cashback input model for LANDLINE
  */
-public class LandlineInput extends CommonReechargeInput {
+public class LandlineInput extends CommonRechargeInput {
 
 	@Override
 	public String toString() {

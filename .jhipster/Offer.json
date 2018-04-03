@@ -11,8 +11,8 @@
         },
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "reechargeInfo",
-            "otherEntityName": "reechargeInfo",
+            "relationshipName": "rechargeInfo",
+            "otherEntityName": "rechargeInfo",
             "otherEntityField": "id",
             "ownerSide": true,
             "otherEntityRelationshipName": "offer"

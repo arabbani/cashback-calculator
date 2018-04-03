@@ -53,8 +53,8 @@ export class OfferService {
             .map((res: HttpResponse<Offer[]>) => this.convertArrayResponse(res));
     }
 
-    findReechargeInfoById(id: number): Observable<EntityResponseType> {
-        return this.http.get<Offer>(`${this.resourceUrl}/with/reechargeInfo/${id}`, { observe: 'response' })
+    findRechargeInfoById(id: number): Observable<EntityResponseType> {
+        return this.http.get<Offer>(`${this.resourceUrl}/with/rechargeInfo/${id}`, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 

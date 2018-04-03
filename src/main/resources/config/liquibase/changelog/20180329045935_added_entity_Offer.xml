@@ -103,7 +103,7 @@
             </column>
             <column name="travel_info_id" type="bigint">
                 <constraints unique="true" nullable="true" />
-            </column>            <column name="reecharge_info_id" type="bigint">
+            </column>            <column name="recharge_info_id" type="bigint">
                 <constraints unique="true" nullable="true" />
             </column>            <column name="electronics_info_id" type="bigint">
                 <constraints unique="true" nullable="true" />
