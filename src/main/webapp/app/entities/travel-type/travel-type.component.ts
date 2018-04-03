@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui';
 import { GRID_STATE } from '../../shared';
 import { TravelType } from './travel-type.model';
 import { TravelTypeService } from './travel-type.service';
@@ -21,7 +21,7 @@ export class TravelTypeComponent implements OnInit {
     travelTypeFormGroup: FormGroup;
 
     constructor(private travelTypeService: TravelTypeService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrDialogService) {
+        private apsstrDialogService: ApsstrDialogService) {
         this.createTravelTypeFormGroup = this.createTravelTypeFormGroup.bind(this);
     }
 
@@ -58,7 +58,7 @@ export class TravelTypeComponent implements OnInit {
     }
 
     public deleteItem(dataItem: any): void {
-        this.apsstrKendoDialogService.confirm().subscribe((result) => {
+        this.apsstrDialogService.confirm().subscribe((result) => {
             if (result['text'] === 'No') {
                 this.travelTypes.push(dataItem);
                 this.travelTypes = _.sortBy(this.travelTypes, (item) => item.id);

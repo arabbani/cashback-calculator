@@ -1,11 +1,13 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
 import { CashbackInfo, FlightInput, Regions, StoredCashback, SubCategories } from '../../../../..';
+import { ApsstrMetaService } from '../../../../../../apsstr-core-ui';
 import {
   Region,
   RegionService,
@@ -35,7 +37,7 @@ export class FlightComponent implements OnInit {
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
     private calculateCashbackService: CalculateCashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
     private serviceProviderService: ServiceProviderService, private travelTypeService: TravelTypeService, private flightClassService: FlightClassService,
-    private regionService: RegionService) { }
+    private regionService: RegionService, private route: ActivatedRoute, private apsstrMetaService: ApsstrMetaService) { }
 
   ngOnInit() {
     this.initializeSubCategory();
@@ -44,6 +46,11 @@ export class FlightComponent implements OnInit {
     this.getFlightClasses();
     this.getRegions();
     this.regionsEnum = Regions;
+    this.setMeta();
+  }
+
+  private setMeta(): void {
+    this.apsstrMetaService.setMeta(this.route.snapshot.data['title']);
   }
 
   calculate(): void {

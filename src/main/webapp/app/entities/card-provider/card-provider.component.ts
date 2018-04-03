@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui';
 import { GRID_STATE } from '../../shared';
 import { CardProvider } from './card-provider.model';
 import { CardProviderService } from './card-provider.service';
@@ -21,7 +21,7 @@ export class CardProviderComponent implements OnInit {
     cardProviderFormGroup: FormGroup;
 
     constructor(private cardProviderService: CardProviderService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrDialogService) {
+        private apsstrDialogService: ApsstrDialogService) {
         this.createCardProviderFormGroup = this.createCardProviderFormGroup.bind(this);
     }
 
@@ -58,7 +58,7 @@ export class CardProviderComponent implements OnInit {
     }
 
     public deleteItem(dataItem: any): void {
-        this.apsstrKendoDialogService.confirm().subscribe((result) => {
+        this.apsstrDialogService.confirm().subscribe((result) => {
             if (result['text'] === 'No') {
                 this.cardProviders.push(dataItem);
                 this.cardProviders = _.sortBy(this.cardProviders, (item) => item.id);

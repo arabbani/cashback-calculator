@@ -1,11 +1,13 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
 import { CabInput, CashbackInfo, StoredCashback, SubCategories } from '../../../../..';
+import { ApsstrMetaService } from '../../../../../../apsstr-core-ui';
 import { City, CityService, ServiceProvider, ServiceProviderService } from '../../../../../../entities';
 
 @Component({
@@ -23,12 +25,17 @@ export class CabComponent implements OnInit {
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
     private calculateCashbackService: CalculateCashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
-    private serviceProviderService: ServiceProviderService, private cityService: CityService) { }
+    private serviceProviderService: ServiceProviderService, private cityService: CityService, private route: ActivatedRoute, private apsstrMetaService: ApsstrMetaService) { }
 
   ngOnInit() {
     this.initializeSubCategory();
     this.getServiceProvidersBySubCategoryCode(this.subCategoryCode);
     this.getCities();
+    this.setMeta();
+  }
+
+  private setMeta(): void {
+    this.apsstrMetaService.setMeta(this.route.snapshot.data['title']);
   }
 
   calculate(): void {

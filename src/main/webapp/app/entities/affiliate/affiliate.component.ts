@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui';
 import { GRID_STATE } from '../../shared';
 import { Affiliate } from './affiliate.model';
 import { AffiliateService } from './affiliate.service';
@@ -21,7 +21,7 @@ export class AffiliateComponent implements OnInit {
     affiliateFormGroup: FormGroup;
 
     constructor(private affiliateService: AffiliateService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrDialogService) {
+        private apsstrDialogService: ApsstrDialogService) {
         this.createAffiliateFormGroup = this.createAffiliateFormGroup.bind(this);
     }
 
@@ -60,7 +60,7 @@ export class AffiliateComponent implements OnInit {
     }
 
     public deleteItem(dataItem: any): void {
-        this.apsstrKendoDialogService.confirm().subscribe((result) => {
+        this.apsstrDialogService.confirm().subscribe((result) => {
             if (result['text'] === 'No') {
                 this.affiliates.push(dataItem);
                 this.affiliates = _.sortBy(this.affiliates, (item) => item.id);

@@ -1,11 +1,13 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
 import { CashbackInfo, MobileInput, StoredCashback, SubCategories } from '../../../../..';
+import { ApsstrMetaService } from '../../../../../../apsstr-core-ui';
 import {
   Circle,
   CircleService,
@@ -33,7 +35,8 @@ export class MobileComponent implements OnInit {
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
     private calculateCashbackService: CalculateCashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
-    private serviceProviderService: ServiceProviderService, private circleService: CircleService, private reechargePlanTypeService: ReechargePlanTypeService) { }
+    private serviceProviderService: ServiceProviderService, private circleService: CircleService, private reechargePlanTypeService: ReechargePlanTypeService,
+    private route: ActivatedRoute, private apsstrMetaService: ApsstrMetaService) { }
 
   ngOnInit() {
     this.initializeSubCategory();
@@ -44,6 +47,11 @@ export class MobileComponent implements OnInit {
   onSelectSubCategory(subCategoryCode: string): void {
     this.mobileInput.serviceProviderId = undefined;
     this.getServiceProvidersBySubCategoryCode(subCategoryCode);
+    this.setMeta();
+  }
+
+  private setMeta(): void {
+    this.apsstrMetaService.setMeta(this.route.snapshot.data['title']);
   }
 
   calculate(): void {

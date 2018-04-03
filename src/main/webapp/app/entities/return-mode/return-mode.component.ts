@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui';
 import { GRID_STATE } from '../../shared';
 import { ReturnMode } from './return-mode.model';
 import { ReturnModeService } from './return-mode.service';
@@ -21,7 +21,7 @@ export class ReturnModeComponent implements OnInit {
     returnModeFormGroup: FormGroup;
 
     constructor(private returnModeService: ReturnModeService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrDialogService) {
+        private apsstrDialogService: ApsstrDialogService) {
         this.createReturnModeFormGroup = this.createReturnModeFormGroup.bind(this);
     }
 
@@ -58,7 +58,7 @@ export class ReturnModeComponent implements OnInit {
     }
 
     public deleteItem(dataItem: any): void {
-        this.apsstrKendoDialogService.confirm().subscribe((result) => {
+        this.apsstrDialogService.confirm().subscribe((result) => {
             if (result['text'] === 'No') {
                 this.returnModes.push(dataItem);
                 this.returnModes = _.sortBy(this.returnModes, (item) => item.id);

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 
-import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui';
 import { GRID_STATE } from '../../shared';
 import { Offer } from './offer.model';
 import { OfferService } from './offer.service';
@@ -18,7 +18,7 @@ export class OfferComponent implements OnInit {
     public offers: Offer[];
     public gridState: State;
 
-    constructor(private offerService: OfferService, private router: Router, private apsstrKendoDialogService: ApsstrDialogService) { }
+    constructor(private offerService: OfferService, private router: Router, private apsstrDialogService: ApsstrDialogService) { }
 
     ngOnInit() {
         this.gridState = GRID_STATE;
@@ -52,7 +52,7 @@ export class OfferComponent implements OnInit {
     }
 
     removeOffer({ rowIndex, dataItem }): void {
-        this.apsstrKendoDialogService.confirm().subscribe((result) => {
+        this.apsstrDialogService.confirm().subscribe((result) => {
             if (result['text'] === 'Yes') {
                 this.offerService.delete(dataItem.id).subscribe(
                     (response) => {

@@ -4,8 +4,8 @@ import { DialogModule } from '@progress/kendo-angular-dialog';
 
 import {
   ApsstrDialogService,
+  ApsstrMetaService,
   AssetPathService,
-  DeserializeEntityService,
   FilterEntitiesService,
   SelectableService,
 } from './services';
@@ -20,7 +20,7 @@ import {
     ApsstrDialogService,
     FilterEntitiesService,
     SelectableService,
-    DeserializeEntityService
+    ApsstrMetaService
   ]
 })
 export class ApsstrCoreModule { }

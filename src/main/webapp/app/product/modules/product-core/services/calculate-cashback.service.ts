@@ -79,7 +79,6 @@ export class CalculateCashbackService {
 
   private calculate(restUrl: string, input: any): Observable<EntityResponseType> {
     input = this.setDateTime(input);
-    console.log(input);
     return this.http.post<any>(restUrl, input, { observe: 'response' })
       .map((res: EntityResponseType) => this.convertArrayResponse(res));
   }

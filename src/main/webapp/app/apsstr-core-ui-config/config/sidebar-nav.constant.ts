@@ -5,74 +5,74 @@ export const SIDEBAR_NAV_ITEMS = [
   },
   {
     name: 'Reecharge',
-    url: '/reecharge',
+    url: 'reecharge',
     icon: 'icon-screen-smartphone',
     children: [
       {
         name: 'Mobile',
-        url: '/reecharge/mobile',
+        url: 'mobile-reecharge-coupons',
         icon: 'icon-screen-smartphone'
       },
       {
         name: 'DTH',
-        url: '/reecharge/dth',
+        url: 'dth-reecharge-coupons',
         icon: 'icon-puzzle'
       },
       {
         name: 'Datacard',
-        url: '/reecharge/datacard',
+        url: 'datacard-reecharge-coupons',
         icon: 'icon-puzzle'
       },
       {
         name: 'Broadband',
-        url: '/reecharge/broadband',
+        url: 'broadband-reecharge-coupons',
         icon: 'icon-puzzle'
       },
       {
         name: 'Landline',
-        url: '/reecharge/landline',
+        url: 'landline-reecharge-coupons',
         icon: 'icon-puzzle'
       },
       {
         name: 'Electricity',
-        url: '/reecharge/electricity',
+        url: 'electricity-bill-payment-coupons',
         icon: 'icon-puzzle'
       },
       {
         name: 'Gas',
-        url: '/reecharge/gas',
+        url: 'gas-bill-payment-coupons',
         icon: 'icon-puzzle'
       },
       {
         name: 'Metro',
-        url: '/reecharge/metro',
+        url: 'metro-reecharge-coupons',
         icon: 'icon-puzzle'
       },
       {
         name: 'Water',
-        url: '/reecharge/water',
+        url: 'water-bill-payment-coupons',
         icon: 'icon-puzzle'
       }
     ]
   },
   {
     name: 'Travel',
-    url: '/travel',
+    url: 'travel',
     icon: 'icon-screen-smartphone',
     children: [
       {
         name: 'Flight',
-        url: '/travel/flight',
+        url: 'flight-coupons',
         icon: 'icon-puzzle'
       },
       {
         name: 'Bus',
-        url: '/travel/bus',
+        url: 'bus-coupons',
         icon: 'icon-puzzle'
       },
       {
         name: 'Cab',
-        url: '/travel/cab',
+        url: 'cab-coupons',
         icon: 'icon-puzzle'
       }
     ]

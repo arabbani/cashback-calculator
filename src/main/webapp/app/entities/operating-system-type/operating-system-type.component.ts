@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui';
 import { GRID_STATE } from '../../shared';
 import { OperatingSystemType } from './operating-system-type.model';
 import { OperatingSystemTypeService } from './operating-system-type.service';
@@ -21,7 +21,7 @@ export class OperatingSystemTypeComponent implements OnInit {
     operatingSystemTypeFormGroup: FormGroup;
 
     constructor(private operatingSystemTypeService: OperatingSystemTypeService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrDialogService) {
+        private apsstrDialogService: ApsstrDialogService) {
         this.createOperatingSystemTypeFormGroup = this.createOperatingSystemTypeFormGroup.bind(this);
     }
 
@@ -58,7 +58,7 @@ export class OperatingSystemTypeComponent implements OnInit {
     }
 
     public deleteItem(dataItem: any): void {
-        this.apsstrKendoDialogService.confirm().subscribe((result) => {
+        this.apsstrDialogService.confirm().subscribe((result) => {
             if (result['text'] === 'No') {
                 this.operatingSystemTypes.push(dataItem);
                 this.operatingSystemTypes = _.sortBy(this.operatingSystemTypes, (item) => item.id);

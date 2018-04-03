@@ -5,7 +5,7 @@ import { State } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
 
-import { ApsstrDialogService } from '../../apsstr-core-ui/apsstr-core/services';
+import { ApsstrDialogService } from '../../apsstr-core-ui';
 import { GRID_STATE } from '../../shared';
 import { SubCategory, SubCategoryService } from '../sub-category';
 import { Brand } from './brand.model';
@@ -23,7 +23,7 @@ export class BrandComponent implements OnInit {
     subCategories: SubCategory[];
 
     constructor(private brandService: BrandService, private formBuilder: FormBuilder,
-        private apsstrKendoDialogService: ApsstrDialogService, private subCategoryService: SubCategoryService) {
+        private apsstrDialogService: ApsstrDialogService, private subCategoryService: SubCategoryService) {
         this.createBrandFormGroup = this.createBrandFormGroup.bind(this);
     }
 
@@ -71,7 +71,7 @@ export class BrandComponent implements OnInit {
     }
 
     public deleteItem(dataItem: any): void {
-        this.apsstrKendoDialogService.confirm().subscribe((result) => {
+        this.apsstrDialogService.confirm().subscribe((result) => {
             if (result['text'] === 'No') {
                 this.brands.push(dataItem);
                 this.brands = _.sortBy(this.brands, (item) => item.id);

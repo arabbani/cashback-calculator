@@ -1,11 +1,13 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
 import { BroadbandInput, CashbackInfo, StoredCashback, SubCategories } from '../../../../..';
+import { ApsstrMetaService } from '../../../../../../apsstr-core-ui';
 import { ServiceProvider, ServiceProviderService } from '../../../../../../entities';
 
 @Component({
@@ -22,11 +24,16 @@ export class BroadbandComponent implements OnInit {
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
     private calculateCashbackService: CalculateCashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
-    private serviceProviderService: ServiceProviderService) { }
+    private serviceProviderService: ServiceProviderService, private apsstrMetaService: ApsstrMetaService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.initializeSubCategory();
     this.getServiceProvidersBySubCategoryCode(this.subCategoryCode);
+    this.setMeta();
+  }
+
+  private setMeta(): void {
+    this.apsstrMetaService.setMeta(this.route.snapshot.data['title']);
   }
 
   calculate(): void {

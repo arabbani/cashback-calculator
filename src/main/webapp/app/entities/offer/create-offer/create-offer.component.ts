@@ -113,7 +113,7 @@ export class CreateOfferComponent implements OnInit {
     private operatingSystemService: OperatingSystemService, private affiliateService: AffiliateService, private merchantService: MerchantService,
     private categoryService: CategoryService, private subCategoryService: SubCategoryService, private serviceProviderService: ServiceProviderService,
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
-    private apsstrKendoDialogService: ApsstrDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
+    private apsstrDialogService: ApsstrDialogService, private reechargePlanTypeService: ReechargePlanTypeService, private returnTypeService: ReturnTypeService,
     private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService, private router: Router,
     private route: ActivatedRoute, private location: Location, private filterEntitiesService: FilterEntitiesService, private flightClassService: FlightClassService) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
@@ -496,7 +496,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   public deleteOfferReturn(dataItem: any): void {
-    this.apsstrKendoDialogService.confirm().subscribe((result) => {
+    this.apsstrDialogService.confirm().subscribe((result) => {
       if (result['text'] === 'No') {
         this.offer.offerReturns.push(dataItem);
         this.offer.offerReturns = _.sortBy(this.offer.offerReturns, (item) => item.id);
@@ -505,7 +505,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   public deleteReturnInfo(event: any): void {
-    this.apsstrKendoDialogService.confirm().subscribe((result) => {
+    this.apsstrDialogService.confirm().subscribe((result) => {
       if (result['text'] === 'No') {
         console.log(event);
         // event.sender.data['data'].push(event.dataItem);
@@ -628,7 +628,7 @@ export class CreateOfferComponent implements OnInit {
 
   private onSaveError() {
     this.isSaving = false;
-    this.apsstrKendoDialogService.error();
+    this.apsstrDialogService.error();
   }
 
   private onError(error) {
