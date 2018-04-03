@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Subscription } from 'rxjs/Subscription';
+import { APP_CONFIG } from '../../apsstr-core-ui-config';
 
 @Component({
     selector: 'apsstr-alert-error',
@@ -21,7 +22,7 @@ export class ApsstrAlertErrorComponent implements OnDestroy {
     constructor(private alertService: JhiAlertService, private eventManager: JhiEventManager) {
         this.alerts = [];
 
-        this.cleanHttpErrorListener = eventManager.subscribe('cbclApp.httpError', (response) => {
+        this.cleanHttpErrorListener = eventManager.subscribe(`${APP_CONFIG.appStorageName}.httpError`, (response) => {
             let i;
             const httpErrorResponse = response.content;
             switch (httpErrorResponse.status) {

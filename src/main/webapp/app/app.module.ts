@@ -4,6 +4,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MetaLoader, MetaModule } from '@ngx-meta/core';
 import { JsogService } from 'jsog-typescript/dist';
 import { JhiEventManager } from 'ng-jhipster';
 import { Ng2Webstorage } from 'ngx-webstorage';
@@ -12,7 +13,7 @@ import { CbclAccountModule } from './account/account.module';
 import { CbclAdminModule } from './admin/admin.module';
 import { CbclAppRoutingModule } from './app-routing.module';
 import { ApsstrCoreModule, CoreUiLayoutModule } from './apsstr-core-ui';
-import { APP_CONFIG } from './apsstr-core-ui-config';
+import { APP_CONFIG, metaFactory } from './apsstr-core-ui-config';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
@@ -29,7 +30,7 @@ import { StateStorageService } from './shared/auth/state-storage.service';
     imports: [
         BrowserModule,
         CbclAppRoutingModule,
-        Ng2Webstorage.forRoot({ prefix: APP_CONFIG.appStorageName , separator: '-'}),
+        Ng2Webstorage.forRoot({ prefix: APP_CONFIG.appStorageName, separator: '-' }),
         CbclSharedModule.forRoot(),
         CbclHomeModule,
         CbclAdminModule,
@@ -39,7 +40,11 @@ import { StateStorageService } from './shared/auth/state-storage.service';
         ApsstrCoreModule,
         BrowserAnimationsModule,
         ProductCoreModule,
-        CashbackModule
+        CashbackModule,
+        MetaModule.forRoot({
+            provide: MetaLoader,
+            useFactory: (metaFactory)
+        }),
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
@@ -78,6 +83,6 @@ import { StateStorageService } from './shared/auth/state-storage.service';
         },
         JsogService
     ],
-    bootstrap: [ ApsstrMainComponent ]
+    bootstrap: [ApsstrMainComponent]
 })
-export class CbclAppModule {}
+export class CbclAppModule { }
