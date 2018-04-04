@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,25 +32,19 @@ public class FlightInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "flight_info_type",
-               joinColumns = @JoinColumn(name="flight_infos_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="types_id", referencedColumnName="id"))
+    @JoinTable(name = "flight_info_type", joinColumns = @JoinColumn(name = "flight_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "types_id", referencedColumnName = "id"))
     private Set<Region> types = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "flight_info_origin",
-               joinColumns = @JoinColumn(name="flight_infos_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="origins_id", referencedColumnName="id"))
+    @JoinTable(name = "flight_info_origin", joinColumns = @JoinColumn(name = "flight_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "origins_id", referencedColumnName = "id"))
     private Set<Region> origins = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "flight_info_travel_class",
-               joinColumns = @JoinColumn(name="flight_infos_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="travel_classes_id", referencedColumnName="id"))
+    @JoinTable(name = "flight_info_travel_class", joinColumns = @JoinColumn(name = "flight_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "travel_classes_id", referencedColumnName = "id"))
     private Set<FlightClass> travelClasses = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -153,8 +148,6 @@ public class FlightInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "FlightInfo{" +
-            "id=" + getId() +
-            "}";
+        return "FlightInfo{" + "id=" + getId() + "}";
     }
 }

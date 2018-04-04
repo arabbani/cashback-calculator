@@ -19,7 +19,6 @@ import {
   WaterComponent,
 } from './components';
 
-
 const dateTime = moment();
 
 const routes: Routes = [

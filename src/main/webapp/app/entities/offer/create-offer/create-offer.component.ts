@@ -599,6 +599,11 @@ export class CreateOfferComponent implements OnInit {
       }
       if (!this.isBus) {
         this.offer.travelInfo['busInfo'] = undefined;
+      } else if (this.isBus) {
+        // const busInfo = this.offer.travelInfo['busInfo'];
+        // if ((!busInfo['froms'] || busInfo['froms'].length === 0) && (!busInfo['tos'] || busInfo['tos'].length === 0)) {
+        //   this.offer.travelInfo['busInfo'] = undefined;
+        // }
       }
     }
     console.log(this.offer);
@@ -814,6 +819,9 @@ export class CreateOfferComponent implements OnInit {
         if (offer.travelInfo) {
           this.offer.travelInfo['types'] = offer.travelInfo['types'];
           this.offer.travelInfo['flightInfo'] = offer.travelInfo['flightInfo'];
+          if (!this.offer.travelInfo['flightInfo']) {
+            this.offer.travelInfo['flightInfo'] = new FlightInfo();
+          }
         }
       },
       (res: HttpErrorResponse) => this.onError(res.message)
@@ -827,6 +835,9 @@ export class CreateOfferComponent implements OnInit {
         if (offer.travelInfo) {
           this.offer.travelInfo['types'] = offer.travelInfo['types'];
           this.offer.travelInfo['busInfo'] = offer.travelInfo['busInfo'];
+          if (!this.offer.travelInfo['busInfo']) {
+            this.offer.travelInfo['busInfo'] = new BusInfo();
+          }
         }
       },
       (res: HttpErrorResponse) => this.onError(res.message)

@@ -500,7 +500,7 @@
                                         {{ fromCity.name }}
                                     </span>
                                     <ng-select *ngIf="editMode" id="fromCity" name="fromCity" [(ngModel)]="offer.travelInfo.busInfo.froms" [items]="cities" bindLabel="name"
-                                        [multiple]="true" [closeOnSelect]="false" placeholder="From" appendTo="body" required>
+                                        [multiple]="true" [closeOnSelect]="false" placeholder="From" appendTo="body">
                                     </ng-select>
                                 </div>
                                 <div class="form-group mb-3">
@@ -509,7 +509,7 @@
                                         {{ toCity.name }}
                                     </span>
                                     <ng-select *ngIf="editMode" id="toCity" name="toCity" [(ngModel)]="offer.travelInfo.busInfo.tos" [items]="cities" bindLabel="name"
-                                        [multiple]="true" [closeOnSelect]="false" placeholder="To" appendTo="body" required>
+                                        [multiple]="true" [closeOnSelect]="false" placeholder="To" appendTo="body">
                                     </ng-select>
                                 </div>
                             </fieldset>

@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,18 +32,14 @@ public class BusInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "bus_info_from",
-               joinColumns = @JoinColumn(name="bus_infos_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="froms_id", referencedColumnName="id"))
+    @JoinTable(name = "bus_info_from", joinColumns = @JoinColumn(name = "bus_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "froms_id", referencedColumnName = "id"))
     private Set<City> froms = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "bus_info_to",
-               joinColumns = @JoinColumn(name="bus_infos_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="tos_id", referencedColumnName="id"))
+    @JoinTable(name = "bus_info_to", joinColumns = @JoinColumn(name = "bus_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "tos_id", referencedColumnName = "id"))
     private Set<City> tos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -123,8 +120,6 @@ public class BusInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "BusInfo{" +
-            "id=" + getId() +
-            "}";
+        return "BusInfo{" + "id=" + getId() + "}";
     }
 }
