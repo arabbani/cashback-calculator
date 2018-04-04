@@ -20,6 +20,7 @@ import {
 } from './components';
 
 const dateTime = moment();
+const date = moment(dateTime).format('MMM') + ' ' + dateTime.year();
 
 const routes: Routes = [
   {
@@ -31,9 +32,9 @@ const routes: Routes = [
         path: 'mobile-recharge-coupons',
         component: MobileComponent,
         data: {
-          title: `Mobile Recharge Coupons, Offers for ${moment(dateTime).format('MMM') + ' ' + dateTime.year()}`,
+          title: `Mobile Recharge Coupons, Offers for ${date}`,
           meta: {
-            description: `Best Mobile recharge coupons, offers, promo codes for ${moment(dateTime).format('MMM') + ' ' + dateTime.year()} in India with only one click and save more.`
+            description: `Best Mobile recharge coupons, offers, promo codes for ${date} in India with only one click and save more.`
           }
         }
       },
@@ -41,9 +42,9 @@ const routes: Routes = [
         path: 'dth-recharge-coupons',
         component: DthComponent,
         data: {
-          title: `DTH Recharge Offers & Coupons, ${moment(dateTime).format('MMM') + ' ' + dateTime.year()}`,
+          title: `DTH Recharge Offers & Coupons, ${date}`,
           meta: {
-            description: `Best DTH recharge offers, coupons, promo codes ${moment(dateTime).format('MMM') + ' ' + dateTime.year()} in India with only one click and save more.`
+            description: `Best DTH recharge offers, coupons, promo codes ${date} in India with only one click and save more.`
           }
         }
       },
@@ -51,9 +52,9 @@ const routes: Routes = [
         path: 'datacard-recharge-coupons',
         component: DatacardComponent,
         data: {
-          title: `Datacard Recharge Coupons, Offers | ${moment(dateTime).format('MMM') + ' ' + dateTime.year()}`,
+          title: `Datacard Recharge Coupons, Offers | ${date}`,
           meta: {
-            description: `Best Datacard recharge coupons, offers & promo codes for ${moment(dateTime).format('MMM') + ' ' + dateTime.year()} in India with only one click and save more.`
+            description: `Best Datacard recharge coupons, offers & promo codes for ${date} in India with only one click and save more.`
           }
         }
       },
@@ -61,9 +62,9 @@ const routes: Routes = [
         path: 'broadband-recharge-coupons',
         component: BroadbandComponent,
         data: {
-          title: `Broadband Recharge Coupons & Offers, ${moment(dateTime).format('MMM') + ' ' + dateTime.year()}`,
+          title: `Broadband Recharge Coupons & Offers, ${date}`,
           meta: {
-            description: `Best Broadband recharge coupons, offers & promo codes ${moment(dateTime).format('MMM') + ' ' + dateTime.year()} in India with only one click and save more.`
+            description: `Best Broadband recharge coupons, offers & promo codes ${date} in India with only one click and save more.`
           }
         }
       },
@@ -71,9 +72,9 @@ const routes: Routes = [
         path: 'landline-recharge-coupons',
         component: LandlineComponent,
         data: {
-          title: `Landline Recharge Offers & Coupons ${moment(dateTime).format('MMM') + ' ' + dateTime.year()}`,
+          title: `Landline Recharge Offers & Coupons ${date}`,
           meta: {
-            description: `Best Landline recharge coupons, promo codes, offers for ${moment(dateTime).format('MMM') + ' ' + dateTime.year()} in India with only one click and save more.`
+            description: `Best Landline recharge coupons, promo codes, offers for ${date} in India with only one click and save more.`
           }
         }
       },
@@ -81,9 +82,9 @@ const routes: Routes = [
         path: 'electricity-bill-payment-coupons',
         component: ElectricityComponent,
         data: {
-          title: `Electricity Bill Payment Offers, Coupons | ${moment(dateTime).format('MMM') + ' ' + dateTime.year()}`,
+          title: `Electricity Bill Payment Offers, Coupons | ${date}`,
           meta: {
-            description: `Best Electricity Bill Payment coupons, offers, promo codes ${moment(dateTime).format('MMM') + ' ' + dateTime.year()} in India with only one click and save more.`
+            description: `Best Electricity Bill Payment coupons, offers, promo codes ${date} in India with only one click and save more.`
           }
         }
       },
@@ -91,9 +92,9 @@ const routes: Routes = [
         path: 'gas-bill-payment-coupons',
         component: GasComponent,
         data: {
-          title: `Gas Bill Payment Offers & Coupons for ${moment(dateTime).format('MMM') + ' ' + dateTime.year()}`,
+          title: `Gas Bill Payment Offers & Coupons for ${date}`,
           meta: {
-            description: `Best Gas Bill Payment promo codes, coupons, offers for ${moment(dateTime).format('MMM') + ' ' + dateTime.year()} in India with only one click and save more.`
+            description: `Best Gas Bill Payment promo codes, coupons, offers for ${date} in India with only one click and save more.`
           }
         }
       },
@@ -101,9 +102,9 @@ const routes: Routes = [
         path: 'metro-recharge-coupons',
         component: MetroComponent,
         data: {
-          title: `Metro Recharge Offers, Coupons ${moment(dateTime).format('MMM') + ' ' + dateTime.year()}`,
+          title: `Metro Recharge Offers, Coupons ${date}`,
           meta: {
-            description: `Best Metro Recharge coupons, offers & promo codes for ${moment(dateTime).format('MMM') + ' ' + dateTime.year()} in India with only one click and save more.`
+            description: `Best Metro Recharge coupons, offers & promo codes for ${date} in India with only one click and save more.`
           }
         }
       },
@@ -111,9 +112,9 @@ const routes: Routes = [
         path: 'water-bill-payment-coupons',
         component: WaterComponent,
         data: {
-          title: `Water Bill Payment Coupons, Offers ${moment(dateTime).format('MMM') + ' ' + dateTime.year()}`,
+          title: `Water Bill Payment Coupons, Offers ${date}`,
           meta: {
-            description: `Best Water Bill Payment promo codes, offers & coupons ${moment(dateTime).format('MMM') + ' ' + dateTime.year()} in India with only one click and save more.`
+            description: `Best Water Bill Payment promo codes, offers & coupons ${date} in India with only one click and save more.`
           }
         }
       },
@@ -121,9 +122,9 @@ const routes: Routes = [
         path: 'flight-coupons',
         component: FlightComponent,
         data: {
-          title: `Mobile Recharge Coupons & Offers ${moment(dateTime).format('MMM') + ' ' + dateTime.year()}`,
+          title: `Flight Coupons & Offers ${date}`,
           meta: {
-            description: `Best Flight offers, coupons & promo codes for ${moment(dateTime).format('MMM') + ' ' + dateTime.year()} in India with only one click and save more.`
+            description: `Best Flight offers, coupons & promo codes for ${date} in India with only one click and save more.`
           }
         }
       },
@@ -131,9 +132,9 @@ const routes: Routes = [
         path: 'bus-coupons',
         component: BusComponent,
         data: {
-          title: `Mobile Recharge Offers & Coupons | ${moment(dateTime).format('MMM') + ' ' + dateTime.year()}`,
+          title: `Bus Offers & Coupons | ${date}`,
           meta: {
-            description: `Best Bus offers, coupons & promo codes ${moment(dateTime).format('MMM') + ' ' + dateTime.year()} in India with only one click and save more.`
+            description: `Best Bus offers, coupons & promo codes ${date} in India with only one click and save more.`
           }
         }
       },
@@ -141,9 +142,9 @@ const routes: Routes = [
         path: 'cab-coupons',
         component: CabComponent,
         data: {
-          title: `Mobile Recharge Offers, Coupons for ${moment(dateTime).format('MMM') + ' ' + dateTime.year()}`,
+          title: `Cab Offers, Coupons for ${date}`,
           meta: {
-            description: `Best Cab coupons, offers, promo codes in India for ${moment(dateTime).format('MMM') + ' ' + dateTime.year()} with only one click and save more.`
+            description: `Best Cab coupons, offers, promo codes in India for ${date} with only one click and save more.`
           }
         }
       }

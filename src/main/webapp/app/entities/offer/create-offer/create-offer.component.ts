@@ -232,6 +232,7 @@ export class CreateOfferComponent implements OnInit {
     if (id) {
       this.editMode = false;
       this.offer = this.route.snapshot.data.offer;
+      this.onOfferTypeChange(this.offer.type);
       this.extractCategories();
       this.extractStates();
       const mode = this.route.snapshot.paramMap.get('edit');
@@ -887,15 +888,17 @@ export class CreateOfferComponent implements OnInit {
       (res: HttpResponse<Offer>) => {
         const offer = res.body;
         if (offer.travelInfo) {
-          this.offer.travelInfo.types = offer.travelInfo.types;
-          this.offer.travelInfo.flightInfo = offer.travelInfo.flightInfo;
-          if (this.editMode && !this.offer.travelInfo.flightInfo) {
-            this.offer.travelInfo.flightInfo = new FlightInfo();
+          if (offer.travelInfo.flightInfo) {
+            this.offer.travelInfo.types = offer.travelInfo.types;
+            this.offer.travelInfo.flightInfo = offer.travelInfo.flightInfo;
+            if (this.editMode && !this.offer.travelInfo.flightInfo) {
+              this.offer.travelInfo.flightInfo = new FlightInfo();
+            }
+          } else if (!this.editMode) {
+            this.isFlight = false;
           }
-        } else {
-          if (!this.editMode) {
-            this.offer.travelInfo = undefined;
-          }
+        } else if (!this.editMode) {
+          this.isFlight = false;
         }
       },
       (res: HttpErrorResponse) => this.onError(res.message)
@@ -907,15 +910,17 @@ export class CreateOfferComponent implements OnInit {
       (res: HttpResponse<Offer>) => {
         const offer = res.body;
         if (offer.travelInfo) {
-          this.offer.travelInfo.types = offer.travelInfo.types;
-          this.offer.travelInfo.busInfo = offer.travelInfo.busInfo;
-          if (this.editMode && !this.offer.travelInfo.busInfo) {
-            this.offer.travelInfo.busInfo = new BusInfo();
+          if (offer.travelInfo.busInfo) {
+            this.offer.travelInfo.types = offer.travelInfo.types;
+            this.offer.travelInfo.busInfo = offer.travelInfo.busInfo;
+            if (this.editMode && !this.offer.travelInfo.busInfo) {
+              this.offer.travelInfo.busInfo = new BusInfo();
+            }
+          } else if (!this.editMode) {
+            this.isBus = false;
           }
-        } else {
-          if (!this.editMode) {
-            this.offer.travelInfo = undefined;
-          }
+        } else if (!this.editMode) {
+          this.isBus = false;
         }
       },
       (res: HttpErrorResponse) => this.onError(res.message)

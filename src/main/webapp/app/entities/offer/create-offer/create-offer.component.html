@@ -125,14 +125,6 @@
                         </div>
                     </div>
                     <div class="form-group mb-3">
-                        <label class="mr-5" for="policy">Policy</label>
-                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.policy && !editMode">
-                            {{ offer.policy.name }}
-                        </span>
-                        <ng-select *ngIf="editMode" id="policy" name="policy" [(ngModel)]="offer.policy" [items]="offerPolicies" bindLabel="name"
-                            placeholder="Policy" appendTo="body"></ng-select>
-                    </div>
-                    <div class="form-group mb-3">
                         <label class="mr-5" for="url">Url</label>
                         <a [href]="offer.url" target="_balnk">{{ offer.url }}</a>
                         <ng-container *ngIf="editMode">
@@ -145,6 +137,14 @@
                             </ng-container>
                         </ng-container>
                     </div>
+                    <div class="form-group mb-3" *ngIf="editMode || offer.policy">
+                        <label class="mr-5" for="policy">Policy</label>
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.policy && !editMode">
+                            {{ offer.policy.name }}
+                        </span>
+                        <ng-select *ngIf="editMode" id="policy" name="policy" [(ngModel)]="offer.policy" [items]="offerPolicies" bindLabel="name"
+                            placeholder="Policy" appendTo="body"></ng-select>
+                    </div>
                     <div class="text-center mt-2">
                         <button type="button" class="btn btn-success" [disabled]="basicInfoForm.form.invalid" (click)="goToNextTab(1)">Next</button>
                     </div>
@@ -156,38 +156,6 @@
                         <label for="adminDescription">Admin Description</label>
                         <textarea class="form-control" id="adminDescription" name="adminDescription" [(ngModel)]="offer.adminDescription" readonly></textarea>
                     </div>
-                    <fieldset class="fieldset-fix mb-3">
-                        <legend class="legend-fix">
-                            <strong>Maximum Uses</strong>
-                        </legend>
-                        <div class="row">
-                            <div class="form-group col-sm-3 col-lg-2 mb-3">
-                                <label for="maximumUsesPerUser">Per User</label>
-                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerUser" name="maximumUsesPerUser" [(ngModel)]="offer.maximumUsesPerUser"
-                                    [readOnly]="!editMode" />
-                            </div>
-                            <div class="form-group col-sm-3 col-lg-2 mb-3">
-                                <label for="maximumUsesPerDay">Per Day</label>
-                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerDay" name="maximumUsesPerDay" [(ngModel)]="offer.maximumUsesPerDay"
-                                    [readOnly]="!editMode" />
-                            </div>
-                            <div class="form-group col-sm-3 col-lg-2 mb-3">
-                                <label for="maximumUsesPerWeek">Per Week</label>
-                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerWeek" name="maximumUsesPerWeek" [(ngModel)]="offer.maximumUsesPerWeek"
-                                    [readOnly]="!editMode" />
-                            </div>
-                            <div class="form-group col-sm-3 col-lg-2 mb-3">
-                                <label for="maximumUsesPerMonth">Per Month</label>
-                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerMonth" name="maximumUsesPerMonth" [(ngModel)]="offer.maximumUsesPerMonth"
-                                    [readOnly]="!editMode" />
-                            </div>
-                            <div class="form-group col-sm-3 col-lg-2 mb-3">
-                                <label for="maximumUsesPerNumber">Per Number</label>
-                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerNumber" name="maximumUsesPerNumber" [(ngModel)]="offer.maximumUsesPerNumber"
-                                    [readOnly]="!editMode" />
-                            </div>
-                        </div>
-                    </fieldset>
                     <fieldset class="fieldset-fix mb-3">
                         <legend class="legend-fix">
                             <strong>Options</strong>
@@ -262,6 +230,38 @@
                             </div>
                         </div>
                     </fieldset>
+                    <fieldset class="fieldset-fix mb-3">
+                        <legend class="legend-fix">
+                            <strong>Maximum Uses</strong>
+                        </legend>
+                        <div class="row">
+                            <div class="form-group col-sm-3 col-lg-2 mb-3">
+                                <label for="maximumUsesPerUser">Per User</label>
+                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerUser" name="maximumUsesPerUser" [(ngModel)]="offer.maximumUsesPerUser"
+                                    [readOnly]="!editMode" />
+                            </div>
+                            <div class="form-group col-sm-3 col-lg-2 mb-3">
+                                <label for="maximumUsesPerDay">Per Day</label>
+                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerDay" name="maximumUsesPerDay" [(ngModel)]="offer.maximumUsesPerDay"
+                                    [readOnly]="!editMode" />
+                            </div>
+                            <div class="form-group col-sm-3 col-lg-2 mb-3">
+                                <label for="maximumUsesPerWeek">Per Week</label>
+                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerWeek" name="maximumUsesPerWeek" [(ngModel)]="offer.maximumUsesPerWeek"
+                                    [readOnly]="!editMode" />
+                            </div>
+                            <div class="form-group col-sm-3 col-lg-2 mb-3">
+                                <label for="maximumUsesPerMonth">Per Month</label>
+                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerMonth" name="maximumUsesPerMonth" [(ngModel)]="offer.maximumUsesPerMonth"
+                                    [readOnly]="!editMode" />
+                            </div>
+                            <div class="form-group col-sm-3 col-lg-2 mb-3">
+                                <label for="maximumUsesPerNumber">Per Number</label>
+                                <input type="text" apsstrNumberInput class="form-control" id="maximumUsesPerNumber" name="maximumUsesPerNumber" [(ngModel)]="offer.maximumUsesPerNumber"
+                                    [readOnly]="!editMode" />
+                            </div>
+                        </div>
+                    </fieldset>
                     <div class="text-center mt-2">
                         <button type="button" class="btn btn-primary mr-3" (click)="goToTab(0)">Previous</button>
                         <button type="button" class="btn btn-success" [disabled]="optionsForm.form.invalid" (click)="goToNextTab(2)">Next</button>
@@ -273,67 +273,6 @@
                     <div class="form-group mb-3" *ngIf="editMode">
                         <label for="adminDescription">Admin Description</label>
                         <textarea class="form-control" id="adminDescription" name="adminDescription" [(ngModel)]="offer.adminDescription" readonly></textarea>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="mr-5" for="dates">Active Dates</label>
-                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let activeDate of offer.activeDates">
-                            {{ activeDate.date }}
-                        </span>
-                        <ng-select *ngIf="editMode" id="dates" name="dates" [(ngModel)]="offer.activeDates" [items]="dates" bindLabel="date" [multiple]="true"
-                            [closeOnSelect]="false" placeholder="Dates" appendTo="body"></ng-select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="mr-5" for="days">Active Days</label>
-                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let activeDay of offer.activeDays">
-                            {{ activeDay.day }}
-                        </span>
-                        <ng-select *ngIf="editMode" id="days" name="days" [(ngModel)]="offer.activeDays" [items]="days" bindLabel="day" [multiple]="true"
-                            [closeOnSelect]="false" placeholder="Days" appendTo="body"></ng-select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="mr-5" for="states">States</label>
-                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let state of offerStates">
-                            {{ state.name }}
-                        </span>
-                        <ng-select *ngIf="editMode" id="states" name="states" [(ngModel)]="offerStates" [items]="states" bindLabel="name" [multiple]="true"
-                            [closeOnSelect]="false" placeholder="States" appendTo="body" (change)="onStateChange($event)">
-                            <ng-template ng-header-tmp>
-                                <div class="my-2 ml-5">
-                                    <button (click)="selectAllStates()" class="btn btn-sm btn-secondary">Select all</button>
-                                    <button (click)="unselectAllStates()" class="btn btn-sm btn-danger">Unselect all</button>
-                                </div>
-                            </ng-template>
-                        </ng-select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="mr-5" for="cities">Cities</label>
-                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let city of offer.cities">
-                            {{ city.name }}
-                        </span>
-                        <ng-select *ngIf="editMode" id="cities" name="cities" [(ngModel)]="offer.cities" [items]="filteredCities" bindLabel="name"
-                            [multiple]="true" [closeOnSelect]="false" placeholder="Cities" appendTo="body">
-                            <ng-template ng-header-tmp>
-                                <div class="my-2 ml-5">
-                                    <button (click)="selectAllCities()" class="btn btn-sm btn-secondary">Select all</button>
-                                    <button (click)="unselectAllCities()" class="btn btn-sm btn-danger">Unselect all</button>
-                                </div>
-                            </ng-template>
-                        </ng-select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="mr-5" for="operatingSystems">Operating Systems</label>
-                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let operatingSystem of offer.operatingSystems">
-                            {{ operatingSystem.name }}
-                        </span>
-                        <ng-select *ngIf="editMode" id="operatingSystems" name="operatingSystems" [(ngModel)]="offer.operatingSystems" [items]="operatingSystems"
-                            bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="OS" appendTo="body">
-                            <ng-template ng-header-tmp>
-                                <div class="my-2 ml-5">
-                                    <button (click)="selectAllOS()" class="btn btn-sm btn-secondary">Select all</button>
-                                    <button (click)="unselectAllOS()" class="btn btn-sm btn-danger">Unselect all</button>
-                                </div>
-                            </ng-template>
-                        </ng-select>
                     </div>
                     <div class="row">
                         <div class="form-group mb-3 col-md-6">
@@ -352,6 +291,67 @@
                             <ng-select *ngIf="editMode" id="merchant" name="merchant" [(ngModel)]="offer.merchant" [items]="merchants" bindLabel="name"
                                 placeholder="Merchant" appendTo="body" required></ng-select>
                         </div>
+                    </div>
+                    <div class="form-group mb-3" *ngIf="editMode || offerStates.length > 0">
+                        <label class="mr-5" for="states">States</label>
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let state of offerStates">
+                            {{ state.name }}
+                        </span>
+                        <ng-select *ngIf="editMode" id="states" name="states" [(ngModel)]="offerStates" [items]="states" bindLabel="name" [multiple]="true"
+                            [closeOnSelect]="false" placeholder="States" appendTo="body" (change)="onStateChange($event)">
+                            <ng-template ng-header-tmp>
+                                <div class="my-2 ml-5">
+                                    <button (click)="selectAllStates()" class="btn btn-sm btn-secondary">Select all</button>
+                                    <button (click)="unselectAllStates()" class="btn btn-sm btn-danger">Unselect all</button>
+                                </div>
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="form-group mb-3" *ngIf="editMode || offer.cities.length > 0">
+                        <label class="mr-5" for="cities">Cities</label>
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let city of offer.cities">
+                            {{ city.name }}
+                        </span>
+                        <ng-select *ngIf="editMode" id="cities" name="cities" [(ngModel)]="offer.cities" [items]="filteredCities" bindLabel="name"
+                            [multiple]="true" [closeOnSelect]="false" placeholder="Cities" appendTo="body">
+                            <ng-template ng-header-tmp>
+                                <div class="my-2 ml-5">
+                                    <button (click)="selectAllCities()" class="btn btn-sm btn-secondary">Select all</button>
+                                    <button (click)="unselectAllCities()" class="btn btn-sm btn-danger">Unselect all</button>
+                                </div>
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="form-group mb-3" *ngIf="editMode || offer.operatingSystems.length > 0">
+                        <label class="mr-5" for="operatingSystems">Operating Systems</label>
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let operatingSystem of offer.operatingSystems">
+                            {{ operatingSystem.name }}
+                        </span>
+                        <ng-select *ngIf="editMode" id="operatingSystems" name="operatingSystems" [(ngModel)]="offer.operatingSystems" [items]="operatingSystems"
+                            bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="OS" appendTo="body">
+                            <ng-template ng-header-tmp>
+                                <div class="my-2 ml-5">
+                                    <button (click)="selectAllOS()" class="btn btn-sm btn-secondary">Select all</button>
+                                    <button (click)="unselectAllOS()" class="btn btn-sm btn-danger">Unselect all</button>
+                                </div>
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                    <div class="form-group mb-3" *ngIf="editMode || offer.activeDates.length > 0">
+                        <label class="mr-5" for="dates">Active Dates</label>
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let activeDate of offer.activeDates">
+                            {{ activeDate.date }}
+                        </span>
+                        <ng-select *ngIf="editMode" id="dates" name="dates" [(ngModel)]="offer.activeDates" [items]="dates" bindLabel="date" [multiple]="true"
+                            [closeOnSelect]="false" placeholder="Dates" appendTo="body"></ng-select>
+                    </div>
+                    <div class="form-group mb-3" *ngIf="editMode || offer.activeDays.length > 0">
+                        <label class="mr-5" for="days">Active Days</label>
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let activeDay of offer.activeDays">
+                            {{ activeDay.day }}
+                        </span>
+                        <ng-select *ngIf="editMode" id="days" name="days" [(ngModel)]="offer.activeDays" [items]="days" bindLabel="day" [multiple]="true"
+                            [closeOnSelect]="false" placeholder="Days" appendTo="body"></ng-select>
                     </div>
                     <div class="text-center mt-2">
                         <button type="button" class="btn btn-primary mr-3" (click)="goToTab(1)">Previous</button>
@@ -554,7 +554,7 @@
                     <kendo-grid [kendoGridReactiveEditing]="createOfferReturnFormGroup" [kendoGridBinding]="offer.offerReturns" [pageable]="true"
                         [pageSize]="gridState.take" [skip]="gridState.skip" [resizable]="true" [navigable]="true" (save)="saveOfferReturn($event.dataItem)"
                         (remove)="deleteOfferReturn($event.dataItem)">
-                        <ng-template kendoGridToolbarTemplate>
+                        <ng-template kendoGridToolbarTemplate *ngIf="editMode">
                             <button class="float-right" kendoGridAddCommand>Add new</button>
                         </ng-template>
                         <kendo-grid-column class="text-center" field="id" title="ID" width="50" [editable]="false"></kendo-grid-column>
@@ -563,7 +563,7 @@
                         <kendo-grid-column class="text-center" field="extras.minimumReturn" title="Min Return" editor="numeric"></kendo-grid-column>
                         <kendo-grid-column class="text-center" field="extras.maximumReturn" title="Max Return" editor="numeric"></kendo-grid-column>
                         <kendo-grid-column class="text-center" field="extras.minimumTicketRequired" title="Min Ticket Required" editor="numeric"></kendo-grid-column>
-                        <kendo-grid-command-column title="Action" width="180">
+                        <kendo-grid-command-column title="Action" width="180" *ngIf="editMode">
                             <ng-template kendoGridCellTemplate let-isNew="isNew">
                                 <div class="text-center">
                                     <button kendoGridEditCommand class="k-primary">Edit</button>
@@ -577,7 +577,7 @@
                             <kendo-grid [kendoGridReactiveEditing]="createReturnInfoFormGroup" [kendoGridBinding]="dataItem.returnInfos" [pageable]="true"
                                 [pageSize]="gridState.take" [skip]="gridState.skip" [resizable]="true" [navigable]="true" (save)="saveReturnInfo($event.dataItem)"
                                 (remove)="deleteReturnInfo($event)">
-                                <ng-template kendoGridToolbarTemplate>
+                                <ng-template kendoGridToolbarTemplate *ngIf="editMode">
                                     <div class="float-right">
                                         <button kendoGridAddCommand>Add new</button>
                                     </div>
@@ -588,7 +588,7 @@
                                 <kendo-grid-column class="text-center" field="extras.minimumReturn" title="Min Return" editor="numeric"></kendo-grid-column>
                                 <kendo-grid-column class="text-center" field="extras.maximumReturn" title="Max Return" editor="numeric"></kendo-grid-column>
                                 <kendo-grid-column class="text-center" field="extras.minimumTicketRequired" title="Min Ticket Required" editor="numeric"></kendo-grid-column>
-                                <kendo-grid-command-column title="Action" width="180">
+                                <kendo-grid-command-column title="Action" width="180" *ngIf="editMode">
                                     <ng-template kendoGridCellTemplate let-isNew="isNew">
                                         <div class="text-center">
                                             <button kendoGridEditCommand class="k-primary">Edit</button>
