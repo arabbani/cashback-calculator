@@ -26,6 +26,8 @@ public class OfferRepositoryConstants {
 
 	public static final String TRAVEL_INFO = " left join fetch offer.travelInfo travelInfo";
 
+	public static final String OFFER_RETURNS = " left join fetch offer.offerReturns offerReturns";
+
 	/* ####################### CHILD RELATIONNS ####################### */
 
 	public static final String SERVICE_PROVIDER_SUB_CATEGORIES = " left join fetch serviceProviders.subCategories serviceProviderSubCategories";
@@ -115,7 +117,7 @@ public class OfferRepositoryConstants {
 
 	/* ####################### CHILD CONDITIONS ####################### */
 
-	public static final String WHERE_RECHARGE_INFO_CIRCLE = " rechargeInfoCircles.id =:circleId";
+	public static final String WHERE_RECHARGE_INFO_CIRCLE = " rechargeInfoCircles IS NULL OR rechargeInfoCircles.id =:circleId";
 
 	public static final String WHERE_RECHARGE_INFO_RECHARGE_TYPE = " rechargeInfoRechargeTypes.id =:rechargePlaneTypeId";
 
@@ -158,12 +160,12 @@ public class OfferRepositoryConstants {
 	 * ####################### CASHBACK SELECT WITH CONDITIONS #######################
 	 */
 
-	public static final String CASHBACK_RECHARGE_COMMON = DEFAULT + SharedRepositoryConstants.WHERE
+	public static final String CASHBACK_RECHARGE = DEFAULT + OFFER_RETURNS + SharedRepositoryConstants.WHERE
 			+ CONDITION_RECHARGE_COMMON;
 
-	public static final String CASHBACK_RECHARGE_WITH_CHILDS = SELECT_RECHARGE
-			+ " left join fetch offer.offerReturns offerReturns" + SharedRepositoryConstants.WHERE
-			+ CONDITION_RECHARGE_COMMON + SharedRepositoryConstants.AND + CONDITION_RECHARGE_CHILDS;
+	public static final String CASHBACK_RECHARGE_WITH_CHILDS = SELECT_RECHARGE + OFFER_RETURNS
+			+ SharedRepositoryConstants.WHERE + CONDITION_RECHARGE_COMMON + SharedRepositoryConstants.AND
+			+ CONDITION_RECHARGE_CHILDS;
 
 	public static final String CASHBACK_TRAVEL_DEFAULT = SELECT_TRAVEL + SharedRepositoryConstants.WHERE
 			+ CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND + WHERE_TRAVEL_INFO_TYPE;

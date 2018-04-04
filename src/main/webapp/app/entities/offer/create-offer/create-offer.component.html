@@ -409,14 +409,14 @@
                         <legend class="legend-fix">
                             <strong>Recharge Info</strong>
                         </legend>
-                        <div class="form-group mb-3">
+                        <div class="form-group mb-3" *ngIf="editMode || offer?.rechargeInfo?.circles?.length > 0">
                             <label class="mr-5" for="recharge_info_circles">Circles</label>
                             <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let circle of offer.rechargeInfo.circles">
                                 {{ circle.name }}
                             </span>
                             <ng-select *ngIf="editMode" id="recharge_info_circles" name="recharge_info_circles" [(ngModel)]="offer.rechargeInfo.circles"
                                 [items]="circles" bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Circles"
-                                appendTo="body" required>
+                                appendTo="body">
                                 <ng-template ng-header-tmp>
                                     <div class="my-2 ml-5">
                                         <button (click)="selectAllCircles()" class="btn btn-sm btn-secondary">Select all</button>
