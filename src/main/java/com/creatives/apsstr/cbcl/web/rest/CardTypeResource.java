@@ -47,7 +47,7 @@ public class CardTypeResource {
      */
     @PostMapping("/card-types")
     @Timed
-    public ResponseEntity<CardType> createCardType(@Valid @RequestBody CardType cardType) throws URISyntaxException {
+    public ResponseEntity<CardType> create(@Valid @RequestBody CardType cardType) throws URISyntaxException {
         log.debug("REST request to save CardType : {}", cardType);
         if (cardType.getId() != null) {
             throw new BadRequestAlertException("A new cardType cannot already have an ID", ENTITY_NAME, "idexists");
@@ -68,10 +68,10 @@ public class CardTypeResource {
      */
     @PutMapping("/card-types")
     @Timed
-    public ResponseEntity<CardType> updateCardType(@Valid @RequestBody CardType cardType) throws URISyntaxException {
+    public ResponseEntity<CardType> update(@Valid @RequestBody CardType cardType) throws URISyntaxException {
         log.debug("REST request to update CardType : {}", cardType);
         if (cardType.getId() == null) {
-            return createCardType(cardType);
+            return create(cardType);
         }
         CardType result = cardTypeService.save(cardType);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cardType.getId().toString()))
@@ -85,7 +85,7 @@ public class CardTypeResource {
      */
     @GetMapping("/card-types")
     @Timed
-    public List<CardType> getAllCardTypes() {
+    public List<CardType> findAll() {
         log.debug("REST request to get all CardTypes");
         return cardTypeService.findAll();
     }
@@ -98,7 +98,7 @@ public class CardTypeResource {
      */
     @GetMapping("/card-types/{id}")
     @Timed
-    public ResponseEntity<CardType> getCardType(@PathVariable Long id) {
+    public ResponseEntity<CardType> findOne(@PathVariable Long id) {
         log.debug("REST request to get CardType : {}", id);
         CardType cardType = cardTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(cardType));
@@ -112,7 +112,7 @@ public class CardTypeResource {
      */
     @DeleteMapping("/card-types/{id}")
     @Timed
-    public ResponseEntity<Void> deleteCardType(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete CardType : {}", id);
         cardTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

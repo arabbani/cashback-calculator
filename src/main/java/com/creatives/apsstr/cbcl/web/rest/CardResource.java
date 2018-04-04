@@ -56,7 +56,7 @@ public class CardResource {
     @PostMapping("/cards")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Card> createCard(@Valid @RequestBody Card card) throws URISyntaxException {
+    public ResponseEntity<Card> create(@Valid @RequestBody Card card) throws URISyntaxException {
         log.debug("REST request to save Card : {}", card);
         if (card.getId() != null) {
             throw new BadRequestAlertException("A new card cannot already have an ID", ENTITY_NAME, "idexists");
@@ -78,10 +78,10 @@ public class CardResource {
     @PutMapping("/cards")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Card> updateCard(@Valid @RequestBody Card card) throws URISyntaxException {
+    public ResponseEntity<Card> update(@Valid @RequestBody Card card) throws URISyntaxException {
         log.debug("REST request to update Card : {}", card);
         if (card.getId() == null) {
-            return createCard(card);
+            return create(card);
         }
         Card result = cardService.save(card);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, card.getId().toString()))
@@ -95,7 +95,7 @@ public class CardResource {
      */
     @GetMapping("/cards")
     @Timed
-    public List<Card> getAllCards() {
+    public List<Card> findAll() {
         log.debug("REST request to get all Cards");
         return cardService.findAll();
     }
@@ -108,9 +108,9 @@ public class CardResource {
     @GetMapping("/cards/with/type")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public List<Card> getAllCardsWithType() {
+    public List<Card> findWithType() {
         log.debug("REST request to get all Cards with type");
-        return cardService.findAllWithType();
+        return cardService.findWithType();
     }
 
     /**
@@ -121,9 +121,9 @@ public class CardResource {
     @GetMapping("/cards/with/bank")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public List<Card> findAllWithBank() {
+    public List<Card> findWithBank() {
         log.debug("REST request to get all Cards with bank");
-        return cardService.findAllWithBank();
+        return cardService.findWithBank();
     }
 
     /**
@@ -134,9 +134,9 @@ public class CardResource {
     @GetMapping("/cards/with/providers")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public List<Card> findAllWithProviders() {
+    public List<Card> findWithProviders() {
         log.debug("REST request to get all Cards with providers");
-        return cardService.findAllWithProviders();
+        return cardService.findWithProviders();
     }
 
     /**
@@ -147,9 +147,9 @@ public class CardResource {
     @GetMapping("/cards/with/type-providers")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public List<Card> findAllWithTypeAndProviders() {
+    public List<Card> findWithTypeAndProviders() {
         log.debug("REST request to get all Cards with type and providers");
-        return cardService.findAllWithTypeAndProviders();
+        return cardService.findWithTypeAndProviders();
     }
 
     /**
@@ -160,9 +160,9 @@ public class CardResource {
     @GetMapping("/cards/with/type-bank-providers")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public List<Card> findAllWithTypeAndBankAndProviders() {
+    public List<Card> findWithTypeAndBankAndProviders() {
         log.debug("REST request to get all Cards with type, bank and providers");
-        return cardService.findAllWithTypeAndBankAndProviders();
+        return cardService.findWithTypeAndBankAndProviders();
     }
 
     /**
@@ -174,7 +174,7 @@ public class CardResource {
     @GetMapping("/cards/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Card> getCard(@PathVariable Long id) {
+    public ResponseEntity<Card> findOne(@PathVariable Long id) {
         log.debug("REST request to get Card : {}", id);
         Card card = cardService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(card));
@@ -189,7 +189,7 @@ public class CardResource {
     @DeleteMapping("/cards/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteCard(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Card : {}", id);
         cardService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

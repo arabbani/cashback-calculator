@@ -37,7 +37,7 @@ export class SubCategoryService {
             .map((res: HttpResponse<SubCategory[]>) => this.convertArrayResponse(res));
     }
 
-    findAllWithCategory(req?: any): Observable<HttpResponse<SubCategory[]>> {
+    findWithCategory(req?: any): Observable<HttpResponse<SubCategory[]>> {
         const options = createRequestOption(req);
         return this.http.get<SubCategory[]>(`${this.resourceUrl}/with/category`, { params: options, observe: 'response' })
             .map((res: HttpResponse<SubCategory[]>) => this.convertArrayResponse(res));

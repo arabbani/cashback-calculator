@@ -31,7 +31,7 @@ export class AffiliateComponent implements OnInit {
     }
 
     private loadAllAffiliate() {
-        this.affiliateService.query().subscribe(
+        this.affiliateService.findAll().subscribe(
             (res: HttpResponse<Affiliate[]>) => {
                 this.affiliates = res.body;
             },

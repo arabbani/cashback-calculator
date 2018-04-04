@@ -47,7 +47,7 @@ public class RegionResource {
     @PostMapping("/regions")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Region> createRegion(@Valid @RequestBody Region region) throws URISyntaxException {
+    public ResponseEntity<Region> create(@Valid @RequestBody Region region) throws URISyntaxException {
         log.debug("REST request to save Region : {}", region);
         if (region.getId() != null) {
             throw new BadRequestAlertException("A new region cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,10 +69,10 @@ public class RegionResource {
     @PutMapping("/regions")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Region> updateRegion(@Valid @RequestBody Region region) throws URISyntaxException {
+    public ResponseEntity<Region> update(@Valid @RequestBody Region region) throws URISyntaxException {
         log.debug("REST request to update Region : {}", region);
         if (region.getId() == null) {
-            return createRegion(region);
+            return create(region);
         }
         Region result = regionService.save(region);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, region.getId().toString()))
@@ -86,7 +86,7 @@ public class RegionResource {
      */
     @GetMapping("/regions")
     @Timed
-    public List<Region> getAllRegions() {
+    public List<Region> findAll() {
         log.debug("REST request to get all Regions");
         return regionService.findAll();
     }
@@ -100,7 +100,7 @@ public class RegionResource {
     @GetMapping("/regions/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Region> getRegion(@PathVariable Long id) {
+    public ResponseEntity<Region> findOne(@PathVariable Long id) {
         log.debug("REST request to get Region : {}", id);
         Region region = regionService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(region));
@@ -115,7 +115,7 @@ public class RegionResource {
     @DeleteMapping("/regions/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteRegion(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Region : {}", id);
         regionService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

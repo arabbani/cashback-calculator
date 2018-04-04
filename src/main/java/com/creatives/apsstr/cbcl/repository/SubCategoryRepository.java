@@ -17,6 +17,6 @@ public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> 
 
     @EntityGraph(attributePaths = { "category" })
     @Query("select distinct subCategory from SubCategory subCategory")
-	List<SubCategory> findAllWityCategory();
+	List<SubCategory> findWithCategory();
 
 }

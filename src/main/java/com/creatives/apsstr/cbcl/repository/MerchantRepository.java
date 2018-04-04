@@ -22,6 +22,6 @@ public interface MerchantRepository extends JpaRepository<Merchant, Long> {
 
     @EntityGraph(attributePaths = { "subCategories" })
     @Query("select distinct merchant from Merchant merchant")
-    List<Merchant> findAllWithSubCategories();
+    List<Merchant> findWithSubCategories();
 
 }

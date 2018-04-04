@@ -47,8 +47,7 @@ public class AffiliateResource {
      */
     @PostMapping("/affiliates")
     @Timed
-    public ResponseEntity<Affiliate> createAffiliate(@Valid @RequestBody Affiliate affiliate)
-            throws URISyntaxException {
+    public ResponseEntity<Affiliate> create(@Valid @RequestBody Affiliate affiliate) throws URISyntaxException {
         log.debug("REST request to save Affiliate : {}", affiliate);
         if (affiliate.getId() != null) {
             throw new BadRequestAlertException("A new affiliate cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,11 +68,10 @@ public class AffiliateResource {
      */
     @PutMapping("/affiliates")
     @Timed
-    public ResponseEntity<Affiliate> updateAffiliate(@Valid @RequestBody Affiliate affiliate)
-            throws URISyntaxException {
+    public ResponseEntity<Affiliate> update(@Valid @RequestBody Affiliate affiliate) throws URISyntaxException {
         log.debug("REST request to update Affiliate : {}", affiliate);
         if (affiliate.getId() == null) {
-            return createAffiliate(affiliate);
+            return create(affiliate);
         }
         Affiliate result = affiliateService.save(affiliate);
         return ResponseEntity.ok()
@@ -87,7 +85,7 @@ public class AffiliateResource {
      */
     @GetMapping("/affiliates")
     @Timed
-    public List<Affiliate> getAllAffiliates() {
+    public List<Affiliate> findAll() {
         log.debug("REST request to get all Affiliates");
         return affiliateService.findAll();
     }
@@ -100,7 +98,7 @@ public class AffiliateResource {
      */
     @GetMapping("/affiliates/{id}")
     @Timed
-    public ResponseEntity<Affiliate> getAffiliate(@PathVariable Long id) {
+    public ResponseEntity<Affiliate> findOne(@PathVariable Long id) {
         log.debug("REST request to get Affiliate : {}", id);
         Affiliate affiliate = affiliateService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(affiliate));
@@ -114,7 +112,7 @@ public class AffiliateResource {
      */
     @DeleteMapping("/affiliates/{id}")
     @Timed
-    public ResponseEntity<Void> deleteAffiliate(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Affiliate : {}", id);
         affiliateService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

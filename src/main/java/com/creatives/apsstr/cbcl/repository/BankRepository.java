@@ -17,14 +17,14 @@ public interface BankRepository extends JpaRepository<Bank, Long> {
 
     @EntityGraph(attributePaths = { "type" })
     @Query("select distinct bank from Bank bank")
-    List<Bank> findAllWithType();
+    List<Bank> findWithType();
 
     @EntityGraph(attributePaths = { "cards" })
     @Query("select distinct bank from Bank bank")
-    List<Bank> findAllWithCards();
+    List<Bank> findWithCards();
 
     @EntityGraph(attributePaths = { "cards", "type" })
     @Query("select distinct bank from Bank bank")
-	List<Bank> findAllWithTypeAndCards();
+    List<Bank> findWithTypeAndCards();
 
 }

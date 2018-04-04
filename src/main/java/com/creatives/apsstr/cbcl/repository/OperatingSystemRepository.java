@@ -16,6 +16,6 @@ public interface OperatingSystemRepository extends JpaRepository<OperatingSystem
 
     @EntityGraph(attributePaths = { "type" })
     @Query("select distinct operatingSystem from OperatingSystem operatingSystem")
-    List<OperatingSystem> findAllWithType();
+    List<OperatingSystem> findWithType();
 
 }

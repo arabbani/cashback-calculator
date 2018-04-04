@@ -47,7 +47,7 @@ public class OperatingSystemResource {
     @PostMapping("/operating-systems")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<OperatingSystem> createOperatingSystem(@Valid @RequestBody OperatingSystem operatingSystem)
+    public ResponseEntity<OperatingSystem> create(@Valid @RequestBody OperatingSystem operatingSystem)
             throws URISyntaxException {
         log.debug("REST request to save OperatingSystem : {}", operatingSystem);
         if (operatingSystem.getId() != null) {
@@ -71,11 +71,11 @@ public class OperatingSystemResource {
     @PutMapping("/operating-systems")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<OperatingSystem> updateOperatingSystem(@Valid @RequestBody OperatingSystem operatingSystem)
+    public ResponseEntity<OperatingSystem> update(@Valid @RequestBody OperatingSystem operatingSystem)
             throws URISyntaxException {
         log.debug("REST request to update OperatingSystem : {}", operatingSystem);
         if (operatingSystem.getId() == null) {
-            return createOperatingSystem(operatingSystem);
+            return create(operatingSystem);
         }
         OperatingSystem result = operatingSystemService.save(operatingSystem);
         return ResponseEntity.ok()
@@ -90,7 +90,7 @@ public class OperatingSystemResource {
      */
     @GetMapping("/operating-systems")
     @Timed
-    public List<OperatingSystem> getAllOperatingSystems() {
+    public List<OperatingSystem> findAll() {
         log.debug("REST request to get all OperatingSystems");
         return operatingSystemService.findAll();
     }
@@ -103,9 +103,9 @@ public class OperatingSystemResource {
     @GetMapping("/operating-systems/with/type")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public List<OperatingSystem> getAllOperatingSystemsWithType() {
+    public List<OperatingSystem> findWithType() {
         log.debug("REST request to get all OperatingSystems with type");
-        return operatingSystemService.findAllWithType();
+        return operatingSystemService.findWithType();
     }
 
     /**
@@ -117,7 +117,7 @@ public class OperatingSystemResource {
     @GetMapping("/operating-systems/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<OperatingSystem> getOperatingSystem(@PathVariable Long id) {
+    public ResponseEntity<OperatingSystem> findOne(@PathVariable Long id) {
         log.debug("REST request to get OperatingSystem : {}", id);
         OperatingSystem operatingSystem = operatingSystemService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(operatingSystem));
@@ -132,7 +132,7 @@ public class OperatingSystemResource {
     @DeleteMapping("/operating-systems/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteOperatingSystem(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete OperatingSystem : {}", id);
         operatingSystemService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

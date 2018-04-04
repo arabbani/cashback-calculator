@@ -43,7 +43,7 @@ export class BankComponent implements OnInit {
     }
 
     private loadAllBank() {
-        this.bankService.findAllWithType().subscribe(
+        this.bankService.findWithType().subscribe(
             (res: HttpResponse<Bank[]>) => {
                 this.banks = res.body;
             },

@@ -43,7 +43,7 @@ export class ServiceProviderComponent implements OnInit {
     }
 
     private loadAllServiceProvider() {
-        this.serviceProviderService.findAllWithSubCategories().subscribe(
+        this.serviceProviderService.findWithSubCategories().subscribe(
             (res: HttpResponse<ServiceProvider[]>) => {
                 this.serviceProviders = res.body;
             },

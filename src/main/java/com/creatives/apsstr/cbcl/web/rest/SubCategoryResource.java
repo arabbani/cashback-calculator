@@ -47,8 +47,7 @@ public class SubCategoryResource {
      */
     @PostMapping("/sub-categories")
     @Timed
-    public ResponseEntity<SubCategory> createSubCategory(@Valid @RequestBody SubCategory subCategory)
-            throws URISyntaxException {
+    public ResponseEntity<SubCategory> create(@Valid @RequestBody SubCategory subCategory) throws URISyntaxException {
         log.debug("REST request to save SubCategory : {}", subCategory);
         if (subCategory.getId() != null) {
             throw new BadRequestAlertException("A new subCategory cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,11 +68,10 @@ public class SubCategoryResource {
      */
     @PutMapping("/sub-categories")
     @Timed
-    public ResponseEntity<SubCategory> updateSubCategory(@Valid @RequestBody SubCategory subCategory)
-            throws URISyntaxException {
+    public ResponseEntity<SubCategory> update(@Valid @RequestBody SubCategory subCategory) throws URISyntaxException {
         log.debug("REST request to update SubCategory : {}", subCategory);
         if (subCategory.getId() == null) {
-            return createSubCategory(subCategory);
+            return create(subCategory);
         }
         SubCategory result = subCategoryService.save(subCategory);
         return ResponseEntity.ok()
@@ -87,7 +85,7 @@ public class SubCategoryResource {
      */
     @GetMapping("/sub-categories")
     @Timed
-    public List<SubCategory> getAllSubCategories() {
+    public List<SubCategory> findAll() {
         log.debug("REST request to get all SubCategories");
         return subCategoryService.findAll();
     }
@@ -99,9 +97,9 @@ public class SubCategoryResource {
     */
     @GetMapping("/sub-categories/with/category")
     @Timed
-    public List<SubCategory> getAllSubCategoriesWithCategory() {
+    public List<SubCategory> findWithCategory() {
         log.debug("REST request to get all SubCategories with category");
-        return subCategoryService.findAllWityCategory();
+        return subCategoryService.findWithCategory();
     }
 
     /**
@@ -112,7 +110,7 @@ public class SubCategoryResource {
      */
     @GetMapping("/sub-categories/{id}")
     @Timed
-    public ResponseEntity<SubCategory> getSubCategory(@PathVariable Long id) {
+    public ResponseEntity<SubCategory> findOne(@PathVariable Long id) {
         log.debug("REST request to get SubCategory : {}", id);
         SubCategory subCategory = subCategoryService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(subCategory));
@@ -126,7 +124,7 @@ public class SubCategoryResource {
      */
     @DeleteMapping("/sub-categories/{id}")
     @Timed
-    public ResponseEntity<Void> deleteSubCategory(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete SubCategory : {}", id);
         subCategoryService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

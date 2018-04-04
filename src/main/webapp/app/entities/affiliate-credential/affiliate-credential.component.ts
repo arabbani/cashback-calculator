@@ -34,7 +34,7 @@ export class AffiliateCredentialComponent implements OnInit {
     }
 
     private loadAllAffiliates() {
-        this.affiliateService.query().subscribe(
+        this.affiliateService.findAll().subscribe(
             (res: HttpResponse<Affiliate[]>) => {
                 this.affiliates = res.body;
             },
@@ -43,7 +43,7 @@ export class AffiliateCredentialComponent implements OnInit {
     }
 
     private loadAllAffiliateCredential() {
-        this.affiliateCredentialService.query().subscribe(
+        this.affiliateCredentialService.findAll().subscribe(
             (res: HttpResponse<AffiliateCredential[]>) => {
                 this.affiliateCredentials = res.body;
             },

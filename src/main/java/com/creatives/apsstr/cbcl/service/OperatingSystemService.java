@@ -52,9 +52,9 @@ public class OperatingSystemService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<OperatingSystem> findAllWithType() {
+    public List<OperatingSystem> findWithType() {
         log.debug("Request to get all OperatingSystems with type");
-        return operatingSystemRepository.findAllWithType();
+        return operatingSystemRepository.findWithType();
     }
 
     /**

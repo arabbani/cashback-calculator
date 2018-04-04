@@ -45,7 +45,7 @@ public class OfferResource {
      */
     @PostMapping("/offers")
     @Timed
-    public ResponseEntity<Offer> createOffer(@Valid @RequestBody Offer offer) throws URISyntaxException {
+    public ResponseEntity<Offer> create(@Valid @RequestBody Offer offer) throws URISyntaxException {
         log.debug("REST request to save Offer : {}", offer);
         if (offer.getId() != null) {
             throw new BadRequestAlertException("A new offer cannot already have an ID", ENTITY_NAME, "idexists");
@@ -66,10 +66,10 @@ public class OfferResource {
      */
     @PutMapping("/offers")
     @Timed
-    public ResponseEntity<Offer> updateOffer(@Valid @RequestBody Offer offer) throws URISyntaxException {
+    public ResponseEntity<Offer> update(@Valid @RequestBody Offer offer) throws URISyntaxException {
         log.debug("REST request to update Offer : {}", offer);
         if (offer.getId() == null) {
-            return createOffer(offer);
+            return create(offer);
         }
         Offer result = offerService.save(offer);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, offer.getId().toString()))
@@ -83,7 +83,7 @@ public class OfferResource {
      */
     @GetMapping("/offers")
     @Timed
-    public List<Offer> getAllOffers() {
+    public List<Offer> findAll() {
         log.debug("REST request to get all Offers");
         return offerService.findAll();
     }
@@ -96,7 +96,7 @@ public class OfferResource {
      */
     @GetMapping("/offers/for/reference-exclude/{id}")
     @Timed
-    public List<OfferForReference> getOffersForReferenceExclusive(@PathVariable Long id) {
+    public List<OfferForReference> findForReferenceExclusive(@PathVariable Long id) {
         log.debug("REST request to get offers for reference except : {}", id);
         return offerService.findForReferenceExclusive(id);
     }
@@ -109,7 +109,7 @@ public class OfferResource {
      */
     @GetMapping("/offers/for/reference")
     @Timed
-    public List<OfferForReference> getOffersForReference() {
+    public List<OfferForReference> findForReference() {
         log.debug("REST request to get offers for reference");
         return offerService.findForReference();
     }
@@ -122,7 +122,7 @@ public class OfferResource {
      */
     @GetMapping("/offers/{id}")
     @Timed
-    public ResponseEntity<Offer> getOffer(@PathVariable Long id) {
+    public ResponseEntity<Offer> findOne(@PathVariable Long id) {
         log.debug("REST request to get Offer : {}", id);
         Offer offer = offerService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
@@ -136,7 +136,7 @@ public class OfferResource {
      */
     @GetMapping("/offers/with/rechargeInfo/{id}")
     @Timed
-    public ResponseEntity<Offer> getOfferWithRechargeInfo(@PathVariable Long id) {
+    public ResponseEntity<Offer> findWithRechargeInfo(@PathVariable Long id) {
         log.debug("REST request to get Offer  with rechargeInfo: {}", id);
         Offer offer = offerService.findWithRechargeInfo(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
@@ -150,7 +150,7 @@ public class OfferResource {
      */
     @GetMapping("/offers/with/flightInfo/{id}")
     @Timed
-    public ResponseEntity<Offer> getOfferWithFlightInfo(@PathVariable Long id) {
+    public ResponseEntity<Offer> findWithFlightInfo(@PathVariable Long id) {
         log.debug("REST request to get Offer  with flightInfo: {}", id);
         Offer offer = offerService.findWithFlightInfo(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
@@ -164,7 +164,7 @@ public class OfferResource {
      */
     @GetMapping("/offers/with/busInfo/{id}")
     @Timed
-    public ResponseEntity<Offer> getOfferWithBusInfo(@PathVariable Long id) {
+    public ResponseEntity<Offer> findWithBusInfo(@PathVariable Long id) {
         log.debug("REST request to get Offer  with busInfo: {}", id);
         Offer offer = offerService.findWithBusInfo(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
@@ -178,7 +178,7 @@ public class OfferResource {
      */
     @GetMapping("/offers/for/admin-view/{id}")
     @Timed
-    public ResponseEntity<Offer> getOfferForAdminView(@PathVariable Long id) {
+    public ResponseEntity<Offer> findOneForAdminView(@PathVariable Long id) {
         log.debug("REST request to get Offer  for admin view: {}", id);
         Offer offer = offerService.findOneForAdminView(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
@@ -192,7 +192,7 @@ public class OfferResource {
      */
     @DeleteMapping("/offers/{id}")
     @Timed
-    public ResponseEntity<Void> deleteOffer(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Offer : {}", id);
         offerService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

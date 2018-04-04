@@ -52,9 +52,9 @@ public class SubCategoryService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<SubCategory> findAllWityCategory() {
+    public List<SubCategory> findWithCategory() {
         log.debug("Request to get all SubCategories with category");
-        return subCategoryRepository.findAllWityCategory();
+        return subCategoryRepository.findWithCategory();
     }
 
     /**

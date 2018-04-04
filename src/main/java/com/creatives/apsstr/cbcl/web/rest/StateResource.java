@@ -47,7 +47,7 @@ public class StateResource {
      */
     @PostMapping("/states")
     @Timed
-    public ResponseEntity<State> createState(@Valid @RequestBody State state) throws URISyntaxException {
+    public ResponseEntity<State> create(@Valid @RequestBody State state) throws URISyntaxException {
         log.debug("REST request to save State : {}", state);
         if (state.getId() != null) {
             throw new BadRequestAlertException("A new state cannot already have an ID", ENTITY_NAME, "idexists");
@@ -68,10 +68,10 @@ public class StateResource {
      */
     @PutMapping("/states")
     @Timed
-    public ResponseEntity<State> updateState(@Valid @RequestBody State state) throws URISyntaxException {
+    public ResponseEntity<State> update(@Valid @RequestBody State state) throws URISyntaxException {
         log.debug("REST request to update State : {}", state);
         if (state.getId() == null) {
-            return createState(state);
+            return create(state);
         }
         State result = stateService.save(state);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, state.getId().toString()))
@@ -85,7 +85,7 @@ public class StateResource {
      */
     @GetMapping("/states")
     @Timed
-    public List<State> getAllStates() {
+    public List<State> findAll() {
         log.debug("REST request to get all States");
         return stateService.findAll();
     }
@@ -98,7 +98,7 @@ public class StateResource {
      */
     @GetMapping("/states/{id}")
     @Timed
-    public ResponseEntity<State> getState(@PathVariable Long id) {
+    public ResponseEntity<State> findOne(@PathVariable Long id) {
         log.debug("REST request to get State : {}", id);
         State state = stateService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(state));
@@ -112,7 +112,7 @@ public class StateResource {
      */
     @DeleteMapping("/states/{id}")
     @Timed
-    public ResponseEntity<Void> deleteState(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete State : {}", id);
         stateService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

@@ -47,8 +47,8 @@ public class RechargePlanTypeResource {
     @PostMapping("/recharge-plan-types")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<RechargePlanType> createRechargePlanType(
-            @Valid @RequestBody RechargePlanType rechargePlanType) throws URISyntaxException {
+    public ResponseEntity<RechargePlanType> create(@Valid @RequestBody RechargePlanType rechargePlanType)
+            throws URISyntaxException {
         log.debug("REST request to save RechargePlanType : {}", rechargePlanType);
         if (rechargePlanType.getId() != null) {
             throw new BadRequestAlertException("A new rechargePlanType cannot already have an ID", ENTITY_NAME,
@@ -71,11 +71,11 @@ public class RechargePlanTypeResource {
     @PutMapping("/recharge-plan-types")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<RechargePlanType> updateRechargePlanType(
-            @Valid @RequestBody RechargePlanType rechargePlanType) throws URISyntaxException {
+    public ResponseEntity<RechargePlanType> update(@Valid @RequestBody RechargePlanType rechargePlanType)
+            throws URISyntaxException {
         log.debug("REST request to update RechargePlanType : {}", rechargePlanType);
         if (rechargePlanType.getId() == null) {
-            return createRechargePlanType(rechargePlanType);
+            return create(rechargePlanType);
         }
         RechargePlanType result = rechargePlanTypeService.save(rechargePlanType);
         return ResponseEntity.ok()
@@ -90,7 +90,7 @@ public class RechargePlanTypeResource {
      */
     @GetMapping("/recharge-plan-types")
     @Timed
-    public List<RechargePlanType> getAllRechargePlanTypes() {
+    public List<RechargePlanType> findAll() {
         log.debug("REST request to get all RechargePlanTypes");
         return rechargePlanTypeService.findAll();
     }
@@ -104,7 +104,7 @@ public class RechargePlanTypeResource {
     @GetMapping("/recharge-plan-types/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<RechargePlanType> getRechargePlanType(@PathVariable Long id) {
+    public ResponseEntity<RechargePlanType> findOne(@PathVariable Long id) {
         log.debug("REST request to get RechargePlanType : {}", id);
         RechargePlanType rechargePlanType = rechargePlanTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(rechargePlanType));
@@ -119,7 +119,7 @@ public class RechargePlanTypeResource {
     @DeleteMapping("/recharge-plan-types/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteRechargePlanType(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete RechargePlanType : {}", id);
         rechargePlanTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
@@ -132,8 +132,8 @@ public class RechargePlanTypeResource {
     */
     @GetMapping("/recharge-plan-types/data-plans")
     @Timed
-    public List<RechargePlanType> getAllDataPlans() {
+    public List<RechargePlanType> findDataPlan() {
         log.debug("REST request to get all dataPlans");
-        return rechargePlanTypeService.findByDataPlan();
+        return rechargePlanTypeService.findDataPlan();
     }
 }

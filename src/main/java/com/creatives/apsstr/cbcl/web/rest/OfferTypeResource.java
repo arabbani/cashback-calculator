@@ -47,8 +47,7 @@ public class OfferTypeResource {
      */
     @PostMapping("/offer-types")
     @Timed
-    public ResponseEntity<OfferType> createOfferType(@Valid @RequestBody OfferType offerType)
-            throws URISyntaxException {
+    public ResponseEntity<OfferType> create(@Valid @RequestBody OfferType offerType) throws URISyntaxException {
         log.debug("REST request to save OfferType : {}", offerType);
         if (offerType.getId() != null) {
             throw new BadRequestAlertException("A new offerType cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,11 +68,10 @@ public class OfferTypeResource {
      */
     @PutMapping("/offer-types")
     @Timed
-    public ResponseEntity<OfferType> updateOfferType(@Valid @RequestBody OfferType offerType)
-            throws URISyntaxException {
+    public ResponseEntity<OfferType> update(@Valid @RequestBody OfferType offerType) throws URISyntaxException {
         log.debug("REST request to update OfferType : {}", offerType);
         if (offerType.getId() == null) {
-            return createOfferType(offerType);
+            return create(offerType);
         }
         OfferType result = offerTypeService.save(offerType);
         return ResponseEntity.ok()
@@ -87,7 +85,7 @@ public class OfferTypeResource {
      */
     @GetMapping("/offer-types")
     @Timed
-    public List<OfferType> getAllOfferTypes() {
+    public List<OfferType> findAll() {
         log.debug("REST request to get all OfferTypes");
         return offerTypeService.findAll();
     }
@@ -100,7 +98,7 @@ public class OfferTypeResource {
      */
     @GetMapping("/offer-types/{id}")
     @Timed
-    public ResponseEntity<OfferType> getOfferType(@PathVariable Long id) {
+    public ResponseEntity<OfferType> findOne(@PathVariable Long id) {
         log.debug("REST request to get OfferType : {}", id);
         OfferType offerType = offerTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offerType));
@@ -114,7 +112,7 @@ public class OfferTypeResource {
      */
     @DeleteMapping("/offer-types/{id}")
     @Timed
-    public ResponseEntity<Void> deleteOfferType(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete OfferType : {}", id);
         offerTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

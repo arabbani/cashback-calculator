@@ -43,7 +43,7 @@ export class OperatingSystemComponent implements OnInit {
     }
 
     private loadAllOperatingSystem() {
-        this.operatingSystemService.findAllWithType().subscribe(
+        this.operatingSystemService.findWithType().subscribe(
             (res: HttpResponse<OperatingSystem[]>) => {
                 this.operatingSystems = res.body;
             },

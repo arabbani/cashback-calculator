@@ -47,7 +47,7 @@ public class ServiceProviderResource {
     @PostMapping("/service-providers")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<ServiceProvider> createServiceProvider(@Valid @RequestBody ServiceProvider serviceProvider)
+    public ResponseEntity<ServiceProvider> create(@Valid @RequestBody ServiceProvider serviceProvider)
             throws URISyntaxException {
         log.debug("REST request to save ServiceProvider : {}", serviceProvider);
         if (serviceProvider.getId() != null) {
@@ -71,11 +71,11 @@ public class ServiceProviderResource {
     @PutMapping("/service-providers")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<ServiceProvider> updateServiceProvider(@Valid @RequestBody ServiceProvider serviceProvider)
+    public ResponseEntity<ServiceProvider> update(@Valid @RequestBody ServiceProvider serviceProvider)
             throws URISyntaxException {
         log.debug("REST request to update ServiceProvider : {}", serviceProvider);
         if (serviceProvider.getId() == null) {
-            return createServiceProvider(serviceProvider);
+            return create(serviceProvider);
         }
         ServiceProvider result = serviceProviderService.save(serviceProvider);
         return ResponseEntity.ok()
@@ -90,7 +90,7 @@ public class ServiceProviderResource {
      */
     @GetMapping("/service-providers")
     @Timed
-    public List<ServiceProvider> getAllServiceProviders() {
+    public List<ServiceProvider> findAll() {
         log.debug("REST request to get all ServiceProviders");
         return serviceProviderService.findAll();
     }
@@ -102,9 +102,9 @@ public class ServiceProviderResource {
     */
     @GetMapping("/service-providers/with/subCategories")
     @Timed
-    public List<ServiceProvider> getAllServiceProvidersWithSubCategories() {
+    public List<ServiceProvider> findWithSubCategories() {
         log.debug("REST request to get all ServiceProviders with subCategories");
-        return serviceProviderService.findAllWithSubCategories();
+        return serviceProviderService.findWithSubCategories();
     }
 
     /**
@@ -114,9 +114,9 @@ public class ServiceProviderResource {
     */
     @GetMapping("/service-providers/by/subCategoryCode/{code}")
     @Timed
-    public List<ServiceProvider> getAllServiceProvidersWithSubCategoriesBySubCategoryCode(@PathVariable String code) {
+    public List<ServiceProvider> findWithSubCategoriesBySubCategoryCode(@PathVariable String code) {
         log.debug("REST request to get all ServiceProviders with subCategories with subCategories by subCategoryCode");
-        return serviceProviderService.findAllWithSubCategoriesBySubCategoryCode(code);
+        return serviceProviderService.findWithSubCategoriesBySubCategoryCode(code);
     }
 
     /**
@@ -128,7 +128,7 @@ public class ServiceProviderResource {
     @GetMapping("/service-providers/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<ServiceProvider> getServiceProvider(@PathVariable Long id) {
+    public ResponseEntity<ServiceProvider> findOne(@PathVariable Long id) {
         log.debug("REST request to get ServiceProvider : {}", id);
         ServiceProvider serviceProvider = serviceProviderService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(serviceProvider));
@@ -143,7 +143,7 @@ public class ServiceProviderResource {
     @DeleteMapping("/service-providers/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteServiceProvider(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete ServiceProvider : {}", id);
         serviceProviderService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

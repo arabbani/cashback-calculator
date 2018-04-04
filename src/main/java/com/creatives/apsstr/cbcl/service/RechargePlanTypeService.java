@@ -74,7 +74,7 @@ public class RechargePlanTypeService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<RechargePlanType> findByDataPlan() {
+    public List<RechargePlanType> findDataPlan() {
         log.debug("Request to get all dataPlans");
         return rechargePlanTypeRepository.findByDataPlanTrue();
     }

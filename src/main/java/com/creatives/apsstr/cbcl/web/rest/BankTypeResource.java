@@ -47,7 +47,7 @@ public class BankTypeResource {
      */
     @PostMapping("/bank-types")
     @Timed
-    public ResponseEntity<BankType> createBankType(@Valid @RequestBody BankType bankType) throws URISyntaxException {
+    public ResponseEntity<BankType> create(@Valid @RequestBody BankType bankType) throws URISyntaxException {
         log.debug("REST request to save BankType : {}", bankType);
         if (bankType.getId() != null) {
             throw new BadRequestAlertException("A new bankType cannot already have an ID", ENTITY_NAME, "idexists");
@@ -68,10 +68,10 @@ public class BankTypeResource {
      */
     @PutMapping("/bank-types")
     @Timed
-    public ResponseEntity<BankType> updateBankType(@Valid @RequestBody BankType bankType) throws URISyntaxException {
+    public ResponseEntity<BankType> update(@Valid @RequestBody BankType bankType) throws URISyntaxException {
         log.debug("REST request to update BankType : {}", bankType);
         if (bankType.getId() == null) {
-            return createBankType(bankType);
+            return create(bankType);
         }
         BankType result = bankTypeService.save(bankType);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, bankType.getId().toString()))
@@ -85,7 +85,7 @@ public class BankTypeResource {
      */
     @GetMapping("/bank-types")
     @Timed
-    public List<BankType> getAllBankTypes() {
+    public List<BankType> findAll() {
         log.debug("REST request to get all BankTypes");
         return bankTypeService.findAll();
     }
@@ -98,7 +98,7 @@ public class BankTypeResource {
      */
     @GetMapping("/bank-types/{id}")
     @Timed
-    public ResponseEntity<BankType> getBankType(@PathVariable Long id) {
+    public ResponseEntity<BankType> findOne(@PathVariable Long id) {
         log.debug("REST request to get BankType : {}", id);
         BankType bankType = bankTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(bankType));
@@ -112,7 +112,7 @@ public class BankTypeResource {
      */
     @DeleteMapping("/bank-types/{id}")
     @Timed
-    public ResponseEntity<Void> deleteBankType(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete BankType : {}", id);
         bankTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

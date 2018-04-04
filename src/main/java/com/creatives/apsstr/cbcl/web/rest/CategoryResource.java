@@ -47,7 +47,7 @@ public class CategoryResource {
     @PostMapping("/categories")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) throws URISyntaxException {
+    public ResponseEntity<Category> create(@Valid @RequestBody Category category) throws URISyntaxException {
         log.debug("REST request to save Category : {}", category);
         if (category.getId() != null) {
             throw new BadRequestAlertException("A new category cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,10 +69,10 @@ public class CategoryResource {
     @PutMapping("/categories")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Category> updateCategory(@Valid @RequestBody Category category) throws URISyntaxException {
+    public ResponseEntity<Category> update(@Valid @RequestBody Category category) throws URISyntaxException {
         log.debug("REST request to update Category : {}", category);
         if (category.getId() == null) {
-            return createCategory(category);
+            return create(category);
         }
         Category result = categoryService.save(category);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, category.getId().toString()))
@@ -86,7 +86,7 @@ public class CategoryResource {
      */
     @GetMapping("/categories")
     @Timed
-    public List<Category> getAllCategories() {
+    public List<Category> findAll() {
         log.debug("REST request to get all Categories");
         return categoryService.findAll();
     }
@@ -100,7 +100,7 @@ public class CategoryResource {
     @GetMapping("/categories/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Category> getCategory(@PathVariable Long id) {
+    public ResponseEntity<Category> findOne(@PathVariable Long id) {
         log.debug("REST request to get Category : {}", id);
         Category category = categoryService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(category));
@@ -115,7 +115,7 @@ public class CategoryResource {
     @DeleteMapping("/categories/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Category : {}", id);
         categoryService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

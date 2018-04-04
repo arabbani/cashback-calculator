@@ -52,9 +52,9 @@ public class MerchantService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Merchant> findAllWithSubCategories() {
+    public List<Merchant> findWithSubCategories() {
         log.debug("Request to get all Merchants with subCategories");
-        return merchantRepository.findAllWithSubCategories();
+        return merchantRepository.findWithSubCategories();
     }
 
     /**

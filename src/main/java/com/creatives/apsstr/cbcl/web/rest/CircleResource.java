@@ -47,7 +47,7 @@ public class CircleResource {
     @PostMapping("/circles")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Circle> createCircle(@Valid @RequestBody Circle circle) throws URISyntaxException {
+    public ResponseEntity<Circle> create(@Valid @RequestBody Circle circle) throws URISyntaxException {
         log.debug("REST request to save Circle : {}", circle);
         if (circle.getId() != null) {
             throw new BadRequestAlertException("A new circle cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,10 +69,10 @@ public class CircleResource {
     @PutMapping("/circles")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Circle> updateCircle(@Valid @RequestBody Circle circle) throws URISyntaxException {
+    public ResponseEntity<Circle> update(@Valid @RequestBody Circle circle) throws URISyntaxException {
         log.debug("REST request to update Circle : {}", circle);
         if (circle.getId() == null) {
-            return createCircle(circle);
+            return create(circle);
         }
         Circle result = circleService.save(circle);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, circle.getId().toString()))
@@ -86,7 +86,7 @@ public class CircleResource {
      */
     @GetMapping("/circles")
     @Timed
-    public List<Circle> getAllCircles() {
+    public List<Circle> findAll() {
         log.debug("REST request to get all Circles");
         return circleService.findAll();
     }
@@ -100,7 +100,7 @@ public class CircleResource {
     @GetMapping("/circles/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Circle> getCircle(@PathVariable Long id) {
+    public ResponseEntity<Circle> findOne(@PathVariable Long id) {
         log.debug("REST request to get Circle : {}", id);
         Circle circle = circleService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(circle));
@@ -115,7 +115,7 @@ public class CircleResource {
     @DeleteMapping("/circles/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteCircle(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Circle : {}", id);
         circleService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

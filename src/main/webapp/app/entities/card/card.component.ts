@@ -59,7 +59,7 @@ export class CardComponent implements OnInit {
     }
 
     private loadAllCards() {
-        this.cardService.findAllWithTypeAndBankAndProviders().subscribe(
+        this.cardService.findWithTypeAndBankAndProviders().subscribe(
             (res: HttpResponse<Card[]>) => {
                 this.cards = res.body;
             },

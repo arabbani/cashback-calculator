@@ -18,6 +18,6 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
 
     @EntityGraph(attributePaths = { "subCategories" })
     @Query("select distinct brand from Brand brand")
-    List<Brand> findAllWithSubCategories();
+    List<Brand> findWithSubCategories();
 
 }

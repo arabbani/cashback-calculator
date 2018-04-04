@@ -47,7 +47,7 @@ public class DayResource {
      */
     @PostMapping("/days")
     @Timed
-    public ResponseEntity<Day> createDay(@Valid @RequestBody Day day) throws URISyntaxException {
+    public ResponseEntity<Day> create(@Valid @RequestBody Day day) throws URISyntaxException {
         log.debug("REST request to save Day : {}", day);
         if (day.getId() != null) {
             throw new BadRequestAlertException("A new day cannot already have an ID", ENTITY_NAME, "idexists");
@@ -68,10 +68,10 @@ public class DayResource {
      */
     @PutMapping("/days")
     @Timed
-    public ResponseEntity<Day> updateDay(@Valid @RequestBody Day day) throws URISyntaxException {
+    public ResponseEntity<Day> update(@Valid @RequestBody Day day) throws URISyntaxException {
         log.debug("REST request to update Day : {}", day);
         if (day.getId() == null) {
-            return createDay(day);
+            return create(day);
         }
         Day result = dayService.save(day);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, day.getId().toString()))
@@ -85,7 +85,7 @@ public class DayResource {
      */
     @GetMapping("/days")
     @Timed
-    public List<Day> getAllDays() {
+    public List<Day> findAll() {
         log.debug("REST request to get all Days");
         return dayService.findAll();
     }
@@ -98,7 +98,7 @@ public class DayResource {
      */
     @GetMapping("/days/{id}")
     @Timed
-    public ResponseEntity<Day> getDay(@PathVariable Long id) {
+    public ResponseEntity<Day> findOne(@PathVariable Long id) {
         log.debug("REST request to get Day : {}", id);
         Day day = dayService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(day));
@@ -112,7 +112,7 @@ public class DayResource {
      */
     @DeleteMapping("/days/{id}")
     @Timed
-    public ResponseEntity<Void> deleteDay(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Day : {}", id);
         dayService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

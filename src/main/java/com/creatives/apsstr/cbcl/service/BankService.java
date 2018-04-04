@@ -52,9 +52,9 @@ public class BankService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Bank> findAllWithType() {
+    public List<Bank> findWithType() {
         log.debug("Request to get all Banks with type");
-        return bankRepository.findAllWithType();
+        return bankRepository.findWithType();
     }
 
     /**
@@ -63,20 +63,20 @@ public class BankService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Bank> findAllWithCards() {
+    public List<Bank> findWithCards() {
         log.debug("Request to get all Banks with cards");
-        return bankRepository.findAllWithCards();
+        return bankRepository.findWithCards();
     }
-    
+
     /**
      * Get all the banks with type and cards.
      *
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Bank> findAllWithTypeAndCards() {
+    public List<Bank> findWithTypeAndCards() {
         log.debug("Request to get all Banks with type and cards");
-        return bankRepository.findAllWithTypeAndCards();
+        return bankRepository.findWithTypeAndCards();
     }
 
     /**

@@ -56,7 +56,7 @@ public class BrandResource {
      */
     @PostMapping("/brands")
     @Timed
-    public ResponseEntity<Brand> createBrand(@Valid @RequestBody Brand brand) throws URISyntaxException {
+    public ResponseEntity<Brand> create(@Valid @RequestBody Brand brand) throws URISyntaxException {
         log.debug("REST request to save Brand : {}", brand);
         if (brand.getId() != null) {
             throw new BadRequestAlertException("A new brand cannot already have an ID", ENTITY_NAME, "idexists");
@@ -77,10 +77,10 @@ public class BrandResource {
      */
     @PutMapping("/brands")
     @Timed
-    public ResponseEntity<Brand> updateBrand(@Valid @RequestBody Brand brand) throws URISyntaxException {
+    public ResponseEntity<Brand> update(@Valid @RequestBody Brand brand) throws URISyntaxException {
         log.debug("REST request to update Brand : {}", brand);
         if (brand.getId() == null) {
-            return createBrand(brand);
+            return create(brand);
         }
         Brand result = brandService.save(brand);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, brand.getId().toString()))
@@ -94,7 +94,7 @@ public class BrandResource {
      */
     @GetMapping("/brands")
     @Timed
-    public List<Brand> getAllBrands() {
+    public List<Brand> findAll() {
         log.debug("REST request to get all Brands");
         return brandService.findAll();
     }
@@ -106,9 +106,9 @@ public class BrandResource {
      */
     @GetMapping("/brands/with/subCategories")
     @Timed
-    public List<Brand> getAllBrandsWithSubCategories() {
+    public List<Brand> findWithSubCategories() {
         log.debug("REST request to get all Brands with subCategories");
-        return brandService.findAllWithSubCategories();
+        return brandService.findWithSubCategories();
     }
 
     /**
@@ -119,7 +119,7 @@ public class BrandResource {
      */
     @GetMapping("/brands/{id}")
     @Timed
-    public ResponseEntity<Brand> getBrand(@PathVariable Long id) {
+    public ResponseEntity<Brand> findOne(@PathVariable Long id) {
         log.debug("REST request to get Brand : {}", id);
         Brand brand = brandService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(brand));
@@ -133,7 +133,7 @@ public class BrandResource {
      */
     @DeleteMapping("/brands/{id}")
     @Timed
-    public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Brand : {}", id);
         brandService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

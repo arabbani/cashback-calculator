@@ -45,7 +45,7 @@ export class UserInfoDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.cityService.findAllWithState()
+        this.cityService.findWithState()
             .subscribe((res: HttpResponse<City[]>) => { this.cities = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.merchantService.findAll()
             .subscribe((res: HttpResponse<Merchant[]>) => { this.merchants = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));

@@ -16,6 +16,6 @@ public interface CityRepository extends JpaRepository<City, Long> {
 
     @EntityGraph(attributePaths = { "state" })
     @Query("select distinct city from City city")
-    List<City> findAllWithState();
+    List<City> findWithState();
 
 }

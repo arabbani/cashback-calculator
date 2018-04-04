@@ -47,8 +47,7 @@ public class OfferPolicyResource {
      */
     @PostMapping("/offer-policies")
     @Timed
-    public ResponseEntity<OfferPolicy> createOfferPolicy(@Valid @RequestBody OfferPolicy offerPolicy)
-            throws URISyntaxException {
+    public ResponseEntity<OfferPolicy> create(@Valid @RequestBody OfferPolicy offerPolicy) throws URISyntaxException {
         log.debug("REST request to save OfferPolicy : {}", offerPolicy);
         if (offerPolicy.getId() != null) {
             throw new BadRequestAlertException("A new offerPolicy cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,11 +68,10 @@ public class OfferPolicyResource {
      */
     @PutMapping("/offer-policies")
     @Timed
-    public ResponseEntity<OfferPolicy> updateOfferPolicy(@Valid @RequestBody OfferPolicy offerPolicy)
-            throws URISyntaxException {
+    public ResponseEntity<OfferPolicy> update(@Valid @RequestBody OfferPolicy offerPolicy) throws URISyntaxException {
         log.debug("REST request to update OfferPolicy : {}", offerPolicy);
         if (offerPolicy.getId() == null) {
-            return createOfferPolicy(offerPolicy);
+            return create(offerPolicy);
         }
         OfferPolicy result = offerPolicyService.save(offerPolicy);
         return ResponseEntity.ok()
@@ -87,7 +85,7 @@ public class OfferPolicyResource {
      */
     @GetMapping("/offer-policies")
     @Timed
-    public List<OfferPolicy> getAllOfferPolicies() {
+    public List<OfferPolicy> findAll() {
         log.debug("REST request to get all OfferPolicies");
         return offerPolicyService.findAll();
     }
@@ -100,7 +98,7 @@ public class OfferPolicyResource {
      */
     @GetMapping("/offer-policies/{id}")
     @Timed
-    public ResponseEntity<OfferPolicy> getOfferPolicy(@PathVariable Long id) {
+    public ResponseEntity<OfferPolicy> findOne(@PathVariable Long id) {
         log.debug("REST request to get OfferPolicy : {}", id);
         OfferPolicy offerPolicy = offerPolicyService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offerPolicy));
@@ -114,7 +112,7 @@ public class OfferPolicyResource {
      */
     @DeleteMapping("/offer-policies/{id}")
     @Timed
-    public ResponseEntity<Void> deleteOfferPolicy(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete OfferPolicy : {}", id);
         offerPolicyService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

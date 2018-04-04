@@ -681,7 +681,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadCities(): void {
-    this.cityService.findAllWithState().subscribe(
+    this.cityService.findWithState().subscribe(
       (res: HttpResponse<City[]>) => {
         this.cities = res.body;
         this.filteredCities = [];
@@ -703,7 +703,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadAffiliates(): void {
-    this.affiliateService.query().subscribe(
+    this.affiliateService.findAll().subscribe(
       (res: HttpResponse<Affiliate[]>) => {
         this.affiliates = res.body;
       },
@@ -712,7 +712,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadMerchants(): void {
-    this.merchantService.findAllWithSubCategories().subscribe(
+    this.merchantService.findWithSubCategories().subscribe(
       (res: HttpResponse<Merchant[]>) => {
         this.merchants = res.body;
       },
@@ -730,7 +730,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadSubCategories(): void {
-    this.subCategoryService.findAllWithCategory().subscribe(
+    this.subCategoryService.findWithCategory().subscribe(
       (res: HttpResponse<SubCategory[]>) => {
         this.subCategories = res.body;
         this.filteredSubCategories = [];
@@ -740,7 +740,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadServiceProviders(): void {
-    this.serviceProviderService.findAllWithSubCategories().subscribe(
+    this.serviceProviderService.findWithSubCategories().subscribe(
       (res: HttpResponse<ServiceProvider[]>) => {
         this.serviceProviders = res.body;
         this.filteredServiceProviders = [];
@@ -852,7 +852,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadCards(): void {
-    this.cardService.findAllWithTypeAndProviders().subscribe(
+    this.cardService.findWithTypeAndProviders().subscribe(
       (res: HttpResponse<Card[]>) => {
         this.cards = res.body;
         this.filteredCards = [];

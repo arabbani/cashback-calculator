@@ -47,8 +47,7 @@ public class ReturnTypeResource {
      */
     @PostMapping("/return-types")
     @Timed
-    public ResponseEntity<ReturnType> createReturnType(@Valid @RequestBody ReturnType returnType)
-            throws URISyntaxException {
+    public ResponseEntity<ReturnType> create(@Valid @RequestBody ReturnType returnType) throws URISyntaxException {
         log.debug("REST request to save ReturnType : {}", returnType);
         if (returnType.getId() != null) {
             throw new BadRequestAlertException("A new returnType cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,11 +68,10 @@ public class ReturnTypeResource {
      */
     @PutMapping("/return-types")
     @Timed
-    public ResponseEntity<ReturnType> updateReturnType(@Valid @RequestBody ReturnType returnType)
-            throws URISyntaxException {
+    public ResponseEntity<ReturnType> update(@Valid @RequestBody ReturnType returnType) throws URISyntaxException {
         log.debug("REST request to update ReturnType : {}", returnType);
         if (returnType.getId() == null) {
-            return createReturnType(returnType);
+            return create(returnType);
         }
         ReturnType result = returnTypeService.save(returnType);
         return ResponseEntity.ok()
@@ -87,7 +85,7 @@ public class ReturnTypeResource {
      */
     @GetMapping("/return-types")
     @Timed
-    public List<ReturnType> getAllReturnTypes() {
+    public List<ReturnType> findAll() {
         log.debug("REST request to get all ReturnTypes");
         return returnTypeService.findAll();
     }
@@ -100,7 +98,7 @@ public class ReturnTypeResource {
      */
     @GetMapping("/return-types/{id}")
     @Timed
-    public ResponseEntity<ReturnType> getReturnType(@PathVariable Long id) {
+    public ResponseEntity<ReturnType> findOne(@PathVariable Long id) {
         log.debug("REST request to get ReturnType : {}", id);
         ReturnType returnType = returnTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(returnType));
@@ -114,7 +112,7 @@ public class ReturnTypeResource {
      */
     @DeleteMapping("/return-types/{id}")
     @Timed
-    public ResponseEntity<Void> deleteReturnType(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete ReturnType : {}", id);
         returnTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

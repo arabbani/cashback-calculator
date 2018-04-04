@@ -33,7 +33,7 @@ export class AffiliateCredentialService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
-    query(req?: any): Observable<HttpResponse<AffiliateCredential[]>> {
+    findAll(req?: any): Observable<HttpResponse<AffiliateCredential[]>> {
         const options = createRequestOption(req);
         return this.http.get<AffiliateCredential[]>(this.resourceUrl, { params: options, observe: 'response' })
             .map((res: HttpResponse<AffiliateCredential[]>) => this.convertArrayResponse(res));

@@ -47,7 +47,7 @@ public class BankResource {
      */
     @PostMapping("/banks")
     @Timed
-    public ResponseEntity<Bank> createBank(@Valid @RequestBody Bank bank) throws URISyntaxException {
+    public ResponseEntity<Bank> create(@Valid @RequestBody Bank bank) throws URISyntaxException {
         log.debug("REST request to save Bank : {}", bank);
         if (bank.getId() != null) {
             throw new BadRequestAlertException("A new bank cannot already have an ID", ENTITY_NAME, "idexists");
@@ -68,10 +68,10 @@ public class BankResource {
      */
     @PutMapping("/banks")
     @Timed
-    public ResponseEntity<Bank> updateBank(@Valid @RequestBody Bank bank) throws URISyntaxException {
+    public ResponseEntity<Bank> update(@Valid @RequestBody Bank bank) throws URISyntaxException {
         log.debug("REST request to update Bank : {}", bank);
         if (bank.getId() == null) {
-            return createBank(bank);
+            return create(bank);
         }
         Bank result = bankService.save(bank);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, bank.getId().toString()))
@@ -85,7 +85,7 @@ public class BankResource {
      */
     @GetMapping("/banks")
     @Timed
-    public List<Bank> getAllBanks() {
+    public List<Bank> findAll() {
         log.debug("REST request to get all Banks");
         return bankService.findAll();
     }
@@ -97,9 +97,9 @@ public class BankResource {
      */
     @GetMapping("/banks/with/type")
     @Timed
-    public List<Bank> getAllBanksWithType() {
+    public List<Bank> findWithType() {
         log.debug("REST request to get all Banks with type");
-        return bankService.findAllWithType();
+        return bankService.findWithType();
     }
 
     /**
@@ -109,9 +109,9 @@ public class BankResource {
      */
     @GetMapping("/banks/with/cards")
     @Timed
-    public List<Bank> getAllBanksWithCards() {
+    public List<Bank> findWithCards() {
         log.debug("REST request to get all Banks with cards");
-        return bankService.findAllWithCards();
+        return bankService.findWithCards();
     }
 
     /**
@@ -121,9 +121,9 @@ public class BankResource {
      */
     @GetMapping("/banks/with/type-cards")
     @Timed
-    public List<Bank> getAllBanksWithTypeAndCards() {
+    public List<Bank> findWithTypeAndCards() {
         log.debug("REST request to get all Banks with type and cards");
-        return bankService.findAllWithTypeAndCards();
+        return bankService.findWithTypeAndCards();
     }
 
     /**
@@ -134,7 +134,7 @@ public class BankResource {
      */
     @GetMapping("/banks/{id}")
     @Timed
-    public ResponseEntity<Bank> getBank(@PathVariable Long id) {
+    public ResponseEntity<Bank> findOne(@PathVariable Long id) {
         log.debug("REST request to get Bank : {}", id);
         Bank bank = bankService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(bank));
@@ -148,7 +148,7 @@ public class BankResource {
      */
     @DeleteMapping("/banks/{id}")
     @Timed
-    public ResponseEntity<Void> deleteBank(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Bank : {}", id);
         bankService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

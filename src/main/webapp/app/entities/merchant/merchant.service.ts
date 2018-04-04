@@ -37,7 +37,7 @@ export class MerchantService {
             .map((res: HttpResponse<Merchant[]>) => this.convertArrayResponse(res));
     }
 
-    findAllWithSubCategories(req?: any): Observable<HttpResponse<Merchant[]>> {
+    findWithSubCategories(req?: any): Observable<HttpResponse<Merchant[]>> {
         const options = createRequestOption(req);
         return this.http.get<Merchant[]>(`${this.resourceUrl}/with/subCategories`, { params: options, observe: 'response' })
             .map((res: HttpResponse<Merchant[]>) => this.convertArrayResponse(res));

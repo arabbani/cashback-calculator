@@ -37,7 +37,7 @@ export class BankService {
             .map((res: HttpResponse<Bank[]>) => this.convertArrayResponse(res));
     }
 
-    findAllWithType(req?: any): Observable<HttpResponse<Bank[]>> {
+    findWithType(req?: any): Observable<HttpResponse<Bank[]>> {
         const options = createRequestOption(req);
         return this.http.get<Bank[]>(`${this.resourceUrl}/with/type`, { params: options, observe: 'response' })
             .map((res: HttpResponse<Bank[]>) => this.convertArrayResponse(res));

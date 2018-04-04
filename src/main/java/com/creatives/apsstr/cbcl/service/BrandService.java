@@ -52,9 +52,9 @@ public class BrandService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Brand> findAllWithSubCategories() {
+    public List<Brand> findWithSubCategories() {
         log.debug("Request to get all Brands with subCategories");
-        return brandRepository.findAllWithSubCategories();
+        return brandRepository.findWithSubCategories();
     }
 
     /**

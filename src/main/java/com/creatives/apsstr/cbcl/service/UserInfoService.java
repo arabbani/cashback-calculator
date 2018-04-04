@@ -43,7 +43,7 @@ public class UserInfoService {
     @Transactional(readOnly = true)
     public List<UserInfo> findAll() {
         log.debug("Request to get all UserInfos");
-        return userInfoRepository.findAllWithEagerRelationships();
+        return userInfoRepository.findWithEagerRelationships();
     }
 
     /**

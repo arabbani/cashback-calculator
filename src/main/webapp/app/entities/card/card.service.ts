@@ -37,13 +37,13 @@ export class CardService {
             .map((res: HttpResponse<Card[]>) => this.convertArrayResponse(res));
     }
 
-    findAllWithTypeAndProviders(req?: any): Observable<HttpResponse<Card[]>> {
+    findWithTypeAndProviders(req?: any): Observable<HttpResponse<Card[]>> {
         const options = createRequestOption(req);
         return this.http.get<Card[]>(`${this.resourceUrl}/with/type-providers`, { params: options, observe: 'response' })
             .map((res: HttpResponse<Card[]>) => this.convertArrayResponse(res));
     }
 
-    findAllWithTypeAndBankAndProviders(req?: any): Observable<HttpResponse<Card[]>> {
+    findWithTypeAndBankAndProviders(req?: any): Observable<HttpResponse<Card[]>> {
         const options = createRequestOption(req);
         return this.http.get<Card[]>(`${this.resourceUrl}/with/type-bank-providers`, { params: options, observe: 'response' })
             .map((res: HttpResponse<Card[]>) => this.convertArrayResponse(res));

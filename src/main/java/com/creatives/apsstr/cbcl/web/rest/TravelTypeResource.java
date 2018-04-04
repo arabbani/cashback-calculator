@@ -47,8 +47,7 @@ public class TravelTypeResource {
     @PostMapping("/travel-types")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<TravelType> createTravelType(@Valid @RequestBody TravelType travelType)
-            throws URISyntaxException {
+    public ResponseEntity<TravelType> create(@Valid @RequestBody TravelType travelType) throws URISyntaxException {
         log.debug("REST request to save TravelType : {}", travelType);
         if (travelType.getId() != null) {
             throw new BadRequestAlertException("A new travelType cannot already have an ID", ENTITY_NAME, "idexists");
@@ -70,11 +69,10 @@ public class TravelTypeResource {
     @PutMapping("/travel-types")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<TravelType> updateTravelType(@Valid @RequestBody TravelType travelType)
-            throws URISyntaxException {
+    public ResponseEntity<TravelType> update(@Valid @RequestBody TravelType travelType) throws URISyntaxException {
         log.debug("REST request to update TravelType : {}", travelType);
         if (travelType.getId() == null) {
-            return createTravelType(travelType);
+            return create(travelType);
         }
         TravelType result = travelTypeService.save(travelType);
         return ResponseEntity.ok()
@@ -88,7 +86,7 @@ public class TravelTypeResource {
      */
     @GetMapping("/travel-types")
     @Timed
-    public List<TravelType> getAllTravelTypes() {
+    public List<TravelType> findAll() {
         log.debug("REST request to get all TravelTypes");
         return travelTypeService.findAll();
     }
@@ -102,7 +100,7 @@ public class TravelTypeResource {
     @GetMapping("/travel-types/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<TravelType> getTravelType(@PathVariable Long id) {
+    public ResponseEntity<TravelType> findOne(@PathVariable Long id) {
         log.debug("REST request to get TravelType : {}", id);
         TravelType travelType = travelTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(travelType));
@@ -117,7 +115,7 @@ public class TravelTypeResource {
     @DeleteMapping("/travel-types/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteTravelType(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete TravelType : {}", id);
         travelTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

@@ -47,8 +47,8 @@ public class OperatingSystemTypeResource {
      */
     @PostMapping("/operating-system-types")
     @Timed
-    public ResponseEntity<OperatingSystemType> createOperatingSystemType(
-            @Valid @RequestBody OperatingSystemType operatingSystemType) throws URISyntaxException {
+    public ResponseEntity<OperatingSystemType> create(@Valid @RequestBody OperatingSystemType operatingSystemType)
+            throws URISyntaxException {
         log.debug("REST request to save OperatingSystemType : {}", operatingSystemType);
         if (operatingSystemType.getId() != null) {
             throw new BadRequestAlertException("A new operatingSystemType cannot already have an ID", ENTITY_NAME,
@@ -70,11 +70,11 @@ public class OperatingSystemTypeResource {
      */
     @PutMapping("/operating-system-types")
     @Timed
-    public ResponseEntity<OperatingSystemType> updateOperatingSystemType(
-            @Valid @RequestBody OperatingSystemType operatingSystemType) throws URISyntaxException {
+    public ResponseEntity<OperatingSystemType> update(@Valid @RequestBody OperatingSystemType operatingSystemType)
+            throws URISyntaxException {
         log.debug("REST request to update OperatingSystemType : {}", operatingSystemType);
         if (operatingSystemType.getId() == null) {
-            return createOperatingSystemType(operatingSystemType);
+            return create(operatingSystemType);
         }
         OperatingSystemType result = operatingSystemTypeService.save(operatingSystemType);
         return ResponseEntity.ok()
@@ -89,7 +89,7 @@ public class OperatingSystemTypeResource {
      */
     @GetMapping("/operating-system-types")
     @Timed
-    public List<OperatingSystemType> getAllOperatingSystemTypes() {
+    public List<OperatingSystemType> findAll() {
         log.debug("REST request to get all OperatingSystemTypes");
         return operatingSystemTypeService.findAll();
     }
@@ -102,7 +102,7 @@ public class OperatingSystemTypeResource {
      */
     @GetMapping("/operating-system-types/{id}")
     @Timed
-    public ResponseEntity<OperatingSystemType> getOperatingSystemType(@PathVariable Long id) {
+    public ResponseEntity<OperatingSystemType> findOne(@PathVariable Long id) {
         log.debug("REST request to get OperatingSystemType : {}", id);
         OperatingSystemType operatingSystemType = operatingSystemTypeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(operatingSystemType));
@@ -116,7 +116,7 @@ public class OperatingSystemTypeResource {
      */
     @DeleteMapping("/operating-system-types/{id}")
     @Timed
-    public ResponseEntity<Void> deleteOperatingSystemType(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete OperatingSystemType : {}", id);
         operatingSystemTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

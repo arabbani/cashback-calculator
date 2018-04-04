@@ -56,7 +56,7 @@ public class CardProviderResource {
      */
     @PostMapping("/card-providers")
     @Timed
-    public ResponseEntity<CardProvider> createCardProvider(@Valid @RequestBody CardProvider cardProvider)
+    public ResponseEntity<CardProvider> create(@Valid @RequestBody CardProvider cardProvider)
             throws URISyntaxException {
         log.debug("REST request to save CardProvider : {}", cardProvider);
         if (cardProvider.getId() != null) {
@@ -78,11 +78,11 @@ public class CardProviderResource {
      */
     @PutMapping("/card-providers")
     @Timed
-    public ResponseEntity<CardProvider> updateCardProvider(@Valid @RequestBody CardProvider cardProvider)
+    public ResponseEntity<CardProvider> update(@Valid @RequestBody CardProvider cardProvider)
             throws URISyntaxException {
         log.debug("REST request to update CardProvider : {}", cardProvider);
         if (cardProvider.getId() == null) {
-            return createCardProvider(cardProvider);
+            return create(cardProvider);
         }
         CardProvider result = cardProviderService.save(cardProvider);
         return ResponseEntity.ok()
@@ -96,7 +96,7 @@ public class CardProviderResource {
      */
     @GetMapping("/card-providers")
     @Timed
-    public List<CardProvider> getAllCardProviders() {
+    public List<CardProvider> findAll() {
         log.debug("REST request to get all CardProviders");
         return cardProviderService.findAll();
     }
@@ -109,7 +109,7 @@ public class CardProviderResource {
      */
     @GetMapping("/card-providers/{id}")
     @Timed
-    public ResponseEntity<CardProvider> getCardProvider(@PathVariable Long id) {
+    public ResponseEntity<CardProvider> findOne(@PathVariable Long id) {
         log.debug("REST request to get CardProvider : {}", id);
         CardProvider cardProvider = cardProviderService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(cardProvider));
@@ -123,7 +123,7 @@ public class CardProviderResource {
      */
     @DeleteMapping("/card-providers/{id}")
     @Timed
-    public ResponseEntity<Void> deleteCardProvider(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete CardProvider : {}", id);
         cardProviderService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

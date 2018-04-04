@@ -19,7 +19,7 @@ public interface ServiceProviderRepository extends JpaRepository<ServiceProvider
 
     @EntityGraph(attributePaths = { "subCategories" })
     @Query("select distinct serviceProvider from ServiceProvider serviceProvider")
-    List<ServiceProvider> findAllWithSubCategories();
+    List<ServiceProvider> findWithSubCategories();
 
     @EntityGraph(attributePaths = { "subCategories" })
     List<ServiceProvider> findBySubCategories_Code(String code);

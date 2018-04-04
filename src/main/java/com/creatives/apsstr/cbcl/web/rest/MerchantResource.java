@@ -47,7 +47,7 @@ public class MerchantResource {
     @PostMapping("/merchants")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Merchant> createMerchant(@Valid @RequestBody Merchant merchant) throws URISyntaxException {
+    public ResponseEntity<Merchant> create(@Valid @RequestBody Merchant merchant) throws URISyntaxException {
         log.debug("REST request to save Merchant : {}", merchant);
         if (merchant.getId() != null) {
             throw new BadRequestAlertException("A new merchant cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,10 +69,10 @@ public class MerchantResource {
     @PutMapping("/merchants")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Merchant> updateMerchant(@Valid @RequestBody Merchant merchant) throws URISyntaxException {
+    public ResponseEntity<Merchant> update(@Valid @RequestBody Merchant merchant) throws URISyntaxException {
         log.debug("REST request to update Merchant : {}", merchant);
         if (merchant.getId() == null) {
-            return createMerchant(merchant);
+            return create(merchant);
         }
         Merchant result = merchantService.save(merchant);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, merchant.getId().toString()))
@@ -87,7 +87,7 @@ public class MerchantResource {
     @GetMapping("/merchants")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public List<Merchant> getAllMerchants() {
+    public List<Merchant> findAll() {
         log.debug("REST request to get all Merchants");
         return merchantService.findAll();
     }
@@ -100,9 +100,9 @@ public class MerchantResource {
     @GetMapping("/merchants/with/subCategories")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public List<Merchant> getAllMerchantsWithSubCategories() {
+    public List<Merchant> findWithSubCategories() {
         log.debug("REST request to get all Merchants with subCategories");
-        return merchantService.findAllWithSubCategories();
+        return merchantService.findWithSubCategories();
     }
 
     /**
@@ -114,7 +114,7 @@ public class MerchantResource {
     @GetMapping("/merchants/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Merchant> getMerchant(@PathVariable Long id) {
+    public ResponseEntity<Merchant> findOne(@PathVariable Long id) {
         log.debug("REST request to get Merchant : {}", id);
         Merchant merchant = merchantService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(merchant));
@@ -129,7 +129,7 @@ public class MerchantResource {
     @DeleteMapping("/merchants/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteMerchant(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Merchant : {}", id);
         merchantService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

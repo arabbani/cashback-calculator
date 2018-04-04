@@ -37,7 +37,7 @@ export class BrandService {
             .map((res: HttpResponse<Brand[]>) => this.convertArrayResponse(res));
     }
 
-    findAllWithSubCategories(req?: any): Observable<HttpResponse<Brand[]>> {
+    findWithSubCategories(req?: any): Observable<HttpResponse<Brand[]>> {
         const options = createRequestOption(req);
         return this.http.get<Brand[]>(`${this.resourceUrl}/with/subCategories`, { params: options, observe: 'response' })
             .map((res: HttpResponse<Brand[]>) => this.convertArrayResponse(res));

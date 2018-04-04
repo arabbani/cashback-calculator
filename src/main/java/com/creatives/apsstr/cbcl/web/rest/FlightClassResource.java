@@ -47,8 +47,7 @@ public class FlightClassResource {
     @PostMapping("/flight-classes")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<FlightClass> createFlightClass(@Valid @RequestBody FlightClass flightClass)
-            throws URISyntaxException {
+    public ResponseEntity<FlightClass> create(@Valid @RequestBody FlightClass flightClass) throws URISyntaxException {
         log.debug("REST request to save FlightClass : {}", flightClass);
         if (flightClass.getId() != null) {
             throw new BadRequestAlertException("A new flightClass cannot already have an ID", ENTITY_NAME, "idexists");
@@ -70,11 +69,10 @@ public class FlightClassResource {
     @PutMapping("/flight-classes")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<FlightClass> updateFlightClass(@Valid @RequestBody FlightClass flightClass)
-            throws URISyntaxException {
+    public ResponseEntity<FlightClass> update(@Valid @RequestBody FlightClass flightClass) throws URISyntaxException {
         log.debug("REST request to update FlightClass : {}", flightClass);
         if (flightClass.getId() == null) {
-            return createFlightClass(flightClass);
+            return create(flightClass);
         }
         FlightClass result = flightClassService.save(flightClass);
         return ResponseEntity.ok()
@@ -88,7 +86,7 @@ public class FlightClassResource {
      */
     @GetMapping("/flight-classes")
     @Timed
-    public List<FlightClass> getAllFlightClasses() {
+    public List<FlightClass> findAll() {
         log.debug("REST request to get all FlightClasses");
         return flightClassService.findAll();
     }
@@ -102,7 +100,7 @@ public class FlightClassResource {
     @GetMapping("/flight-classes/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<FlightClass> getFlightClass(@PathVariable Long id) {
+    public ResponseEntity<FlightClass> findOne(@PathVariable Long id) {
         log.debug("REST request to get FlightClass : {}", id);
         FlightClass flightClass = flightClassService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(flightClass));
@@ -117,7 +115,7 @@ public class FlightClassResource {
     @DeleteMapping("/flight-classes/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteFlightClass(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete FlightClass : {}", id);
         flightClassService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

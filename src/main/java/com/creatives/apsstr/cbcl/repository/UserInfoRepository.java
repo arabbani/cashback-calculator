@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
     @Query("select distinct user_info from UserInfo user_info left join fetch user_info.merchants left join fetch user_info.cards left join fetch user_info.operatingSystems")
-    List<UserInfo> findAllWithEagerRelationships();
+    List<UserInfo> findWithEagerRelationships();
 
     @Query("select user_info from UserInfo user_info left join fetch user_info.merchants left join fetch user_info.cards left join fetch user_info.operatingSystems where user_info.id =:id")
     UserInfo findOneWithEagerRelationships(@Param("id") Long id);

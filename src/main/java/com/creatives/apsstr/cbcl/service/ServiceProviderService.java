@@ -52,9 +52,9 @@ public class ServiceProviderService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<ServiceProvider> findAllWithSubCategories() {
+    public List<ServiceProvider> findWithSubCategories() {
         log.debug("Request to get all ServiceProviders with subCategories");
-        return serviceProviderRepository.findAllWithSubCategories();
+        return serviceProviderRepository.findWithSubCategories();
     }
 
     /**
@@ -63,7 +63,7 @@ public class ServiceProviderService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<ServiceProvider> findAllWithSubCategoriesBySubCategoryCode(String code) {
+    public List<ServiceProvider> findWithSubCategoriesBySubCategoryCode(String code) {
         log.debug("Request to get all ServiceProviders with subCategories by subCategoryCode");
         return serviceProviderRepository.findBySubCategories_Code(code);
     }

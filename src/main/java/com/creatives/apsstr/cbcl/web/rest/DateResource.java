@@ -47,7 +47,7 @@ public class DateResource {
      */
     @PostMapping("/dates")
     @Timed
-    public ResponseEntity<Date> createDate(@Valid @RequestBody Date date) throws URISyntaxException {
+    public ResponseEntity<Date> create(@Valid @RequestBody Date date) throws URISyntaxException {
         log.debug("REST request to save Date : {}", date);
         if (date.getId() != null) {
             throw new BadRequestAlertException("A new date cannot already have an ID", ENTITY_NAME, "idexists");
@@ -68,10 +68,10 @@ public class DateResource {
      */
     @PutMapping("/dates")
     @Timed
-    public ResponseEntity<Date> updateDate(@Valid @RequestBody Date date) throws URISyntaxException {
+    public ResponseEntity<Date> update(@Valid @RequestBody Date date) throws URISyntaxException {
         log.debug("REST request to update Date : {}", date);
         if (date.getId() == null) {
-            return createDate(date);
+            return create(date);
         }
         Date result = dateService.save(date);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, date.getId().toString()))
@@ -85,7 +85,7 @@ public class DateResource {
      */
     @GetMapping("/dates")
     @Timed
-    public List<Date> getAllDates() {
+    public List<Date> findAll() {
         log.debug("REST request to get all Dates");
         return dateService.findAll();
     }
@@ -98,7 +98,7 @@ public class DateResource {
      */
     @GetMapping("/dates/{id}")
     @Timed
-    public ResponseEntity<Date> getDate(@PathVariable Long id) {
+    public ResponseEntity<Date> findOne(@PathVariable Long id) {
         log.debug("REST request to get Date : {}", id);
         Date date = dateService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(date));
@@ -112,7 +112,7 @@ public class DateResource {
      */
     @DeleteMapping("/dates/{id}")
     @Timed
-    public ResponseEntity<Void> deleteDate(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete Date : {}", id);
         dateService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

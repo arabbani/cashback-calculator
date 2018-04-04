@@ -37,7 +37,7 @@ export class OperatingSystemService {
             .map((res: HttpResponse<OperatingSystem[]>) => this.convertArrayResponse(res));
     }
 
-    findAllWithType(req?: any): Observable<HttpResponse<OperatingSystem[]>> {
+    findWithType(req?: any): Observable<HttpResponse<OperatingSystem[]>> {
         const options = createRequestOption(req);
         return this.http.get<OperatingSystem[]>(`${this.resourceUrl}/with/type`, { params: options, observe: 'response' })
             .map((res: HttpResponse<OperatingSystem[]>) => this.convertArrayResponse(res));

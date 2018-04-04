@@ -47,7 +47,7 @@ public class CityResource {
     @PostMapping("/cities")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<City> createCity(@Valid @RequestBody City city) throws URISyntaxException {
+    public ResponseEntity<City> create(@Valid @RequestBody City city) throws URISyntaxException {
         log.debug("REST request to save City : {}", city);
         if (city.getId() != null) {
             throw new BadRequestAlertException("A new city cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,10 +69,10 @@ public class CityResource {
     @PutMapping("/cities")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<City> updateCity(@Valid @RequestBody City city) throws URISyntaxException {
+    public ResponseEntity<City> update(@Valid @RequestBody City city) throws URISyntaxException {
         log.debug("REST request to update City : {}", city);
         if (city.getId() == null) {
-            return createCity(city);
+            return create(city);
         }
         City result = cityService.save(city);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, city.getId().toString()))
@@ -86,7 +86,7 @@ public class CityResource {
      */
     @GetMapping("/cities")
     @Timed
-    public List<City> getAllCities() {
+    public List<City> findAll() {
         log.debug("REST request to get all Cities");
         return cityService.findAll();
     }
@@ -99,9 +99,9 @@ public class CityResource {
     @GetMapping("/cities/with/state")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public List<City> getAllCitiesWithState() {
+    public List<City> findWithState() {
         log.debug("REST request to get all Cities with state");
-        return cityService.findAllWithState();
+        return cityService.findWithState();
     }
 
     /**
@@ -113,7 +113,7 @@ public class CityResource {
     @GetMapping("/cities/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<City> getCity(@PathVariable Long id) {
+    public ResponseEntity<City> findOne(@PathVariable Long id) {
         log.debug("REST request to get City : {}", id);
         City city = cityService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(city));
@@ -128,7 +128,7 @@ public class CityResource {
     @DeleteMapping("/cities/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteCity(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete City : {}", id);
         cityService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

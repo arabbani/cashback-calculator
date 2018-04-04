@@ -47,8 +47,7 @@ public class ReturnModeResource {
      */
     @PostMapping("/return-modes")
     @Timed
-    public ResponseEntity<ReturnMode> createReturnMode(@Valid @RequestBody ReturnMode returnMode)
-            throws URISyntaxException {
+    public ResponseEntity<ReturnMode> create(@Valid @RequestBody ReturnMode returnMode) throws URISyntaxException {
         log.debug("REST request to save ReturnMode : {}", returnMode);
         if (returnMode.getId() != null) {
             throw new BadRequestAlertException("A new returnMode cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,11 +68,10 @@ public class ReturnModeResource {
      */
     @PutMapping("/return-modes")
     @Timed
-    public ResponseEntity<ReturnMode> updateReturnMode(@Valid @RequestBody ReturnMode returnMode)
-            throws URISyntaxException {
+    public ResponseEntity<ReturnMode> update(@Valid @RequestBody ReturnMode returnMode) throws URISyntaxException {
         log.debug("REST request to update ReturnMode : {}", returnMode);
         if (returnMode.getId() == null) {
-            return createReturnMode(returnMode);
+            return create(returnMode);
         }
         ReturnMode result = returnModeService.save(returnMode);
         return ResponseEntity.ok()
@@ -87,7 +85,7 @@ public class ReturnModeResource {
      */
     @GetMapping("/return-modes")
     @Timed
-    public List<ReturnMode> getAllReturnModes() {
+    public List<ReturnMode> findAll() {
         log.debug("REST request to get all ReturnModes");
         return returnModeService.findAll();
     }
@@ -100,7 +98,7 @@ public class ReturnModeResource {
      */
     @GetMapping("/return-modes/{id}")
     @Timed
-    public ResponseEntity<ReturnMode> getReturnMode(@PathVariable Long id) {
+    public ResponseEntity<ReturnMode> findOne(@PathVariable Long id) {
         log.debug("REST request to get ReturnMode : {}", id);
         ReturnMode returnMode = returnModeService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(returnMode));
@@ -114,7 +112,7 @@ public class ReturnModeResource {
      */
     @DeleteMapping("/return-modes/{id}")
     @Timed
-    public ResponseEntity<Void> deleteReturnMode(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete ReturnMode : {}", id);
         returnModeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

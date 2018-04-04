@@ -47,8 +47,8 @@ public class AffiliateCredentialResource {
      */
     @PostMapping("/affiliate-credentials")
     @Timed
-    public ResponseEntity<AffiliateCredential> createAffiliateCredential(
-            @Valid @RequestBody AffiliateCredential affiliateCredential) throws URISyntaxException {
+    public ResponseEntity<AffiliateCredential> create(@Valid @RequestBody AffiliateCredential affiliateCredential)
+            throws URISyntaxException {
         log.debug("REST request to save AffiliateCredential : {}", affiliateCredential);
         if (affiliateCredential.getId() != null) {
             throw new BadRequestAlertException("A new affiliateCredential cannot already have an ID", ENTITY_NAME,
@@ -70,11 +70,11 @@ public class AffiliateCredentialResource {
      */
     @PutMapping("/affiliate-credentials")
     @Timed
-    public ResponseEntity<AffiliateCredential> updateAffiliateCredential(
-            @Valid @RequestBody AffiliateCredential affiliateCredential) throws URISyntaxException {
+    public ResponseEntity<AffiliateCredential> update(@Valid @RequestBody AffiliateCredential affiliateCredential)
+            throws URISyntaxException {
         log.debug("REST request to update AffiliateCredential : {}", affiliateCredential);
         if (affiliateCredential.getId() == null) {
-            return createAffiliateCredential(affiliateCredential);
+            return create(affiliateCredential);
         }
         AffiliateCredential result = affiliateCredentialService.save(affiliateCredential);
         return ResponseEntity.ok()
@@ -89,7 +89,7 @@ public class AffiliateCredentialResource {
      */
     @GetMapping("/affiliate-credentials")
     @Timed
-    public List<AffiliateCredential> getAllAffiliateCredentials() {
+    public List<AffiliateCredential> findAll() {
         log.debug("REST request to get all AffiliateCredentials");
         return affiliateCredentialService.findAll();
     }
@@ -102,7 +102,7 @@ public class AffiliateCredentialResource {
      */
     @GetMapping("/affiliate-credentials/{id}")
     @Timed
-    public ResponseEntity<AffiliateCredential> getAffiliateCredential(@PathVariable Long id) {
+    public ResponseEntity<AffiliateCredential> findOne(@PathVariable Long id) {
         log.debug("REST request to get AffiliateCredential : {}", id);
         AffiliateCredential affiliateCredential = affiliateCredentialService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(affiliateCredential));
@@ -116,7 +116,7 @@ public class AffiliateCredentialResource {
      */
     @DeleteMapping("/affiliate-credentials/{id}")
     @Timed
-    public ResponseEntity<Void> deleteAffiliateCredential(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete AffiliateCredential : {}", id);
         affiliateCredentialService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

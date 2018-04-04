@@ -52,9 +52,9 @@ public class CardService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Card> findAllWithType() {
+    public List<Card> findWithType() {
         log.debug("Request to get all Cards with type");
-        return cardRepository.findAllWithType();
+        return cardRepository.findWithType();
     }
 
     /**
@@ -63,9 +63,9 @@ public class CardService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Card> findAllWithBank() {
+    public List<Card> findWithBank() {
         log.debug("Request to get all Cards with bank");
-        return cardRepository.findAllWithBank();
+        return cardRepository.findWithBank();
     }
 
     /**
@@ -74,9 +74,9 @@ public class CardService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Card> findAllWithProviders() {
+    public List<Card> findWithProviders() {
         log.debug("Request to get all Cards with providers");
-        return cardRepository.findAllWithProviders();
+        return cardRepository.findWithProviders();
     }
 
     /**
@@ -85,9 +85,9 @@ public class CardService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Card> findAllWithTypeAndProviders() {
+    public List<Card> findWithTypeAndProviders() {
         log.debug("Request to get all Cards with type and providers");
-        return cardRepository.findAllWithTypeAndProviders();
+        return cardRepository.findWithTypeAndProviders();
     }
 
     /**
@@ -96,9 +96,9 @@ public class CardService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Card> findAllWithTypeAndBankAndProviders() {
+    public List<Card> findWithTypeAndBankAndProviders() {
         log.debug("Request to get all Cards with type, bank and providers");
-        return cardRepository.findAllWithTypeAndBankAndProviders();
+        return cardRepository.findWithTypeAndBankAndProviders();
     }
 
     /**

@@ -52,9 +52,9 @@ public class CityService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<City> findAllWithState() {
+    public List<City> findWithState() {
         log.debug("Request to get all Cities with state");
-        return cityRepository.findAllWithState();
+        return cityRepository.findWithState();
     }
 
     /**

@@ -37,7 +37,7 @@ export class CityService {
             .map((res: HttpResponse<City[]>) => this.convertArrayResponse(res));
     }
 
-    findAllWithState(req?: any): Observable<HttpResponse<City[]>> {
+    findWithState(req?: any): Observable<HttpResponse<City[]>> {
         const options = createRequestOption(req);
         return this.http.get<City[]>(`${this.resourceUrl}/with/state`, { params: options, observe: 'response' })
             .map((res: HttpResponse<City[]>) => this.convertArrayResponse(res));
