@@ -356,8 +356,8 @@ export class CreateOfferComponent implements OnInit {
           if (!this.offer.travelInfo) {
             this.offer.travelInfo = new TravelInfo();
           }
-          if (!this.offer.travelInfo['flightInfo']) {
-            this.offer.travelInfo['flightInfo'] = new FlightInfo();
+          if (!this.offer.travelInfo.flightInfo) {
+            this.offer.travelInfo.flightInfo = new FlightInfo();
             if (this.offer.id !== undefined) {
               this.loadFlightInfo();
             }
@@ -889,6 +889,7 @@ export class CreateOfferComponent implements OnInit {
         const offer = res.body;
         if (offer.travelInfo) {
           if (offer.travelInfo.flightInfo) {
+            this.offer.travelInfo.id = offer.travelInfo.id;
             this.offer.travelInfo.types = offer.travelInfo.types;
             this.offer.travelInfo.flightInfo = offer.travelInfo.flightInfo;
             if (this.editMode && !this.offer.travelInfo.flightInfo) {
@@ -911,6 +912,7 @@ export class CreateOfferComponent implements OnInit {
         const offer = res.body;
         if (offer.travelInfo) {
           if (offer.travelInfo.busInfo) {
+            this.offer.travelInfo.id = offer.travelInfo.id;
             this.offer.travelInfo.types = offer.travelInfo.types;
             this.offer.travelInfo.busInfo = offer.travelInfo.busInfo;
             if (this.editMode && !this.offer.travelInfo.busInfo) {
