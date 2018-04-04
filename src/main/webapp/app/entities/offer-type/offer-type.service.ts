@@ -17,12 +17,14 @@ export class OfferTypeService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(offerType: OfferType): Observable<EntityResponseType> {
-        return this.http.post<OfferType>(this.resourceUrl, offerType, { observe: 'response' })
+        const copy = this.convert(offerType);
+        return this.http.post<OfferType>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(offerType: OfferType): Observable<EntityResponseType> {
-        return this.http.put<OfferType>(this.resourceUrl, offerType, { observe: 'response' })
+        const copy = this.convert(offerType);
+        return this.http.put<OfferType>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class OfferTypeService {
     private convertArrayResponse(res: HttpResponse<OfferType[]>): HttpResponse<OfferType[]> {
         const body: OfferType[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a OfferType to a JSON which can be sent to the server.
+     */
+    private convert(offerType: OfferType): OfferType {
+        const copy: OfferType = Object.assign({}, offerType);
+        return copy;
     }
 
     private deserializeArray(json: any): OfferType[] {

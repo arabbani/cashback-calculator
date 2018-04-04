@@ -17,12 +17,14 @@ export class ReturnTypeService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(returnType: ReturnType): Observable<EntityResponseType> {
-        return this.http.post<ReturnType>(this.resourceUrl, returnType, { observe: 'response' })
+        const copy = this.convert(returnType);
+        return this.http.post<ReturnType>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(returnType: ReturnType): Observable<EntityResponseType> {
-        return this.http.put<ReturnType>(this.resourceUrl, returnType, { observe: 'response' })
+        const copy = this.convert(returnType);
+        return this.http.put<ReturnType>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class ReturnTypeService {
     private convertArrayResponse(res: HttpResponse<ReturnType[]>): HttpResponse<ReturnType[]> {
         const body: ReturnType[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a ReturnType to a JSON which can be sent to the server.
+     */
+    private convert(returnType: ReturnType): ReturnType {
+        const copy: ReturnType = Object.assign({}, returnType);
+        return copy;
     }
 
     private deserializeArray(json: any): ReturnType[] {

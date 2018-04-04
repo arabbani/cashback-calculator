@@ -17,12 +17,14 @@ export class FlightClassService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(flightClass: FlightClass): Observable<EntityResponseType> {
-        return this.http.post<FlightClass>(this.resourceUrl, flightClass, { observe: 'response' })
+        const copy = this.convert(flightClass);
+        return this.http.post<FlightClass>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(flightClass: FlightClass): Observable<EntityResponseType> {
-        return this.http.put<FlightClass>(this.resourceUrl, flightClass, { observe: 'response' })
+        const copy = this.convert(flightClass);
+        return this.http.put<FlightClass>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class FlightClassService {
     private convertArrayResponse(res: HttpResponse<FlightClass[]>): HttpResponse<FlightClass[]> {
         const body: FlightClass[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a FlightClass to a JSON which can be sent to the server.
+     */
+    private convert(flightClass: FlightClass): FlightClass {
+        const copy: FlightClass = Object.assign({}, flightClass);
+        return copy;
     }
 
     private deserializeArray(json: any): FlightClass[] {

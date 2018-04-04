@@ -17,12 +17,14 @@ export class RechargePlanTypeService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(rechargePlanType: RechargePlanType): Observable<EntityResponseType> {
-        return this.http.post<RechargePlanType>(this.resourceUrl, rechargePlanType, { observe: 'response' })
+        const copy = this.convert(rechargePlanType);
+        return this.http.post<RechargePlanType>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(rechargePlanType: RechargePlanType): Observable<EntityResponseType> {
-        return this.http.put<RechargePlanType>(this.resourceUrl, rechargePlanType, { observe: 'response' })
+        const copy = this.convert(rechargePlanType);
+        return this.http.put<RechargePlanType>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -54,6 +56,14 @@ export class RechargePlanTypeService {
     private convertArrayResponse(res: HttpResponse<RechargePlanType[]>): HttpResponse<RechargePlanType[]> {
         const body: RechargePlanType[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a RechargePlanType to a JSON which can be sent to the server.
+     */
+    private convert(rechargePlanType: RechargePlanType): RechargePlanType {
+        const copy: RechargePlanType = Object.assign({}, rechargePlanType);
+        return copy;
     }
 
     private deserializeArray(json: any): RechargePlanType[] {

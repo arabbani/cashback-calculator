@@ -12,7 +12,7 @@ type EntityResponseType = HttpResponse<AffiliateCredential>;
 @Injectable()
 export class AffiliateCredentialService {
 
-    private resourceUrl =  SERVER_API_URL + 'api/affiliate-credentials';
+    private resourceUrl = SERVER_API_URL + 'api/affiliate-credentials';
 
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
@@ -29,7 +29,7 @@ export class AffiliateCredentialService {
     }
 
     find(id: number): Observable<EntityResponseType> {
-        return this.http.get<AffiliateCredential>(`${this.resourceUrl}/${id}`, { observe: 'response'})
+        return this.http.get<AffiliateCredential>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -40,29 +40,17 @@ export class AffiliateCredentialService {
     }
 
     delete(id: number): Observable<HttpResponse<any>> {
-        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
+        return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: AffiliateCredential = this.convertItemFromServer(this.deserializeObject(res.body));
-        return res.clone({body});
+        const body: AffiliateCredential = this.deserializeObject(res.body);
+        return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<AffiliateCredential[]>): HttpResponse<AffiliateCredential[]> {
-        const jsonResponse: AffiliateCredential[] = this.deserializeArray(res.body);
-        const body: AffiliateCredential[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
-        }
-        return res.clone({body});
-    }
-
-    /**
-     * Convert a returned JSON object to AffiliateCredential.
-     */
-    private convertItemFromServer(affiliateCredential: AffiliateCredential): AffiliateCredential {
-        const copy: AffiliateCredential = Object.assign({}, affiliateCredential);
-        return copy;
+        const body: AffiliateCredential[] = this.deserializeArray(res.body);
+        return res.clone({ body });
     }
 
     /**

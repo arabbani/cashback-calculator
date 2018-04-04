@@ -17,12 +17,14 @@ export class OfferPolicyService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(offerPolicy: OfferPolicy): Observable<EntityResponseType> {
-        return this.http.post<OfferPolicy>(this.resourceUrl, offerPolicy, { observe: 'response' })
+        const copy = this.convert(offerPolicy);
+        return this.http.post<OfferPolicy>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(offerPolicy: OfferPolicy): Observable<EntityResponseType> {
-        return this.http.put<OfferPolicy>(this.resourceUrl, offerPolicy, { observe: 'response' })
+        const copy = this.convert(offerPolicy);
+        return this.http.put<OfferPolicy>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class OfferPolicyService {
     private convertArrayResponse(res: HttpResponse<OfferPolicy[]>): HttpResponse<OfferPolicy[]> {
         const body: OfferPolicy[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a OfferPolicy to a JSON which can be sent to the server.
+     */
+    private convert(offerPolicy: OfferPolicy): OfferPolicy {
+        const copy: OfferPolicy = Object.assign({}, offerPolicy);
+        return copy;
     }
 
     private deserializeArray(json: any): OfferPolicy[] {

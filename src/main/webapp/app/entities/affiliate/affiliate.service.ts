@@ -44,25 +44,13 @@ export class AffiliateService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Affiliate = this.convertItemFromServer(this.deserializeObject(res.body));
+        const body: Affiliate = this.deserializeObject(res.body);
         return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<Affiliate[]>): HttpResponse<Affiliate[]> {
-        const jsonResponse: Affiliate[] = this.deserializeArray(res.body);
-        const body: Affiliate[] = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            body.push(this.convertItemFromServer(jsonResponse[i]));
-        }
+        const body: Affiliate[] = this.deserializeArray(res.body);
         return res.clone({ body });
-    }
-
-    /**
-     * Convert a returned JSON object to Affiliate.
-     */
-    private convertItemFromServer(affiliate: Affiliate): Affiliate {
-        const copy: Affiliate = Object.assign({}, affiliate);
-        return copy;
     }
 
     /**

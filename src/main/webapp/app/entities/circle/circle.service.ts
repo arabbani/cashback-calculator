@@ -17,12 +17,14 @@ export class CircleService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(circle: Circle): Observable<EntityResponseType> {
-        return this.http.post<Circle>(this.resourceUrl, circle, { observe: 'response' })
+        const copy = this.convert(circle);
+        return this.http.post<Circle>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(circle: Circle): Observable<EntityResponseType> {
-        return this.http.put<Circle>(this.resourceUrl, circle, { observe: 'response' })
+        const copy = this.convert(circle);
+        return this.http.put<Circle>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class CircleService {
     private convertArrayResponse(res: HttpResponse<Circle[]>): HttpResponse<Circle[]> {
         const body: Circle[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a Circle to a JSON which can be sent to the server.
+     */
+    private convert(circle: Circle): Circle {
+        const copy: Circle = Object.assign({}, circle);
+        return copy;
     }
 
     private deserializeArray(json: any): Circle[] {

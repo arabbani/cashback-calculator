@@ -17,12 +17,14 @@ export class MerchantService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(merchant: Merchant): Observable<EntityResponseType> {
-        return this.http.post<Merchant>(this.resourceUrl, merchant, { observe: 'response' })
+        const copy = this.convert(merchant);
+        return this.http.post<Merchant>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(merchant: Merchant): Observable<EntityResponseType> {
-        return this.http.put<Merchant>(this.resourceUrl, merchant, { observe: 'response' })
+        const copy = this.convert(merchant);
+        return this.http.put<Merchant>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -55,6 +57,14 @@ export class MerchantService {
     private convertArrayResponse(res: HttpResponse<Merchant[]>): HttpResponse<Merchant[]> {
         const body: Merchant[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a Merchant to a JSON which can be sent to the server.
+     */
+    private convert(merchant: Merchant): Merchant {
+        const copy: Merchant = Object.assign({}, merchant);
+        return copy;
     }
 
     private deserializeArray(json: any): Merchant[] {

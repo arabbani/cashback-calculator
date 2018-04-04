@@ -17,12 +17,14 @@ export class BankTypeService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(bankType: BankType): Observable<EntityResponseType> {
-        return this.http.post<BankType>(this.resourceUrl, bankType, { observe: 'response' })
+        const copy = this.convert(bankType);
+        return this.http.post<BankType>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(bankType: BankType): Observable<EntityResponseType> {
-        return this.http.put<BankType>(this.resourceUrl, bankType, { observe: 'response' })
+        const copy = this.convert(bankType);
+        return this.http.put<BankType>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class BankTypeService {
     private convertArrayResponse(res: HttpResponse<BankType[]>): HttpResponse<BankType[]> {
         const body: BankType[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a BankType to a JSON which can be sent to the server.
+     */
+    private convert(bankType: BankType): BankType {
+        const copy: BankType = Object.assign({}, bankType);
+        return copy;
     }
 
     private deserializeArray(json: any): BankType[] {

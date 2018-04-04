@@ -17,12 +17,14 @@ export class SubCategoryService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(subCategory: SubCategory): Observable<EntityResponseType> {
-        return this.http.post<SubCategory>(this.resourceUrl, subCategory, { observe: 'response' })
+        const copy = this.convert(subCategory);
+        return this.http.post<SubCategory>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(subCategory: SubCategory): Observable<EntityResponseType> {
-        return this.http.put<SubCategory>(this.resourceUrl, subCategory, { observe: 'response' })
+        const copy = this.convert(subCategory);
+        return this.http.put<SubCategory>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -55,6 +57,14 @@ export class SubCategoryService {
     private convertArrayResponse(res: HttpResponse<SubCategory[]>): HttpResponse<SubCategory[]> {
         const body: SubCategory[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a SubCategory to a JSON which can be sent to the server.
+     */
+    private convert(subCategory: SubCategory): SubCategory {
+        const copy: SubCategory = Object.assign({}, subCategory);
+        return copy;
     }
 
     private deserializeArray(json: any): SubCategory[] {

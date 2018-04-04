@@ -17,12 +17,14 @@ export class CategoryService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(category: Category): Observable<EntityResponseType> {
-        return this.http.post<Category>(this.resourceUrl, category, { observe: 'response' })
+        const copy = this.convert(category);
+        return this.http.post<Category>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(category: Category): Observable<EntityResponseType> {
-        return this.http.put<Category>(this.resourceUrl, category, { observe: 'response' })
+        const copy = this.convert(category);
+        return this.http.put<Category>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class CategoryService {
     private convertArrayResponse(res: HttpResponse<Category[]>): HttpResponse<Category[]> {
         const body: Category[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a Category to a JSON which can be sent to the server.
+     */
+    private convert(category: Category): Category {
+        const copy: Category = Object.assign({}, category);
+        return copy;
     }
 
     private deserializeArray(json: any): Category[] {

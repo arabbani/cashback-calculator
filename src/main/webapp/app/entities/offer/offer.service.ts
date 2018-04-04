@@ -1,6 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JsogService } from 'jsog-typescript';
+import * as _ from 'lodash';
 import { JhiDateUtils } from 'ng-jhipster';
 import { Observable } from 'rxjs/Observable';
 
@@ -18,12 +19,14 @@ export class OfferService {
     constructor(private http: HttpClient, private dateUtils: JhiDateUtils, private jsogService: JsogService) { }
 
     create(offer: Offer): Observable<EntityResponseType> {
-        return this.http.post<Offer>(this.resourceUrl, offer, { observe: 'response' })
+        const copy = this.convert(offer);
+        return this.http.post<Offer>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(offer: Offer): Observable<EntityResponseType> {
-        return this.http.put<Offer>(this.resourceUrl, offer, { observe: 'response' })
+        const copy = this.convert(offer);
+        return this.http.put<Offer>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -91,6 +94,21 @@ export class OfferService {
             .convertDateTimeFromServer(offer.startDate);
         copy.endDate = this.dateUtils
             .convertDateTimeFromServer(offer.endDate);
+        return copy;
+    }
+
+    /**
+     * Convert a Offer to a JSON which can be sent to the server.
+     */
+    private convert(offer: Offer): Offer {
+        const copy: Offer = _.cloneDeep(offer);
+        if (copy.travelInfo && copy.travelInfo.busInfo) {
+            const busInfo = copy.travelInfo.busInfo;
+            if ((!busInfo.froms || busInfo.froms.length === 0) && (!busInfo.tos || busInfo.tos.length === 0)) {
+                copy.travelInfo.busInfo = undefined;
+            }
+        }
+        console.log('S ', copy);
         return copy;
     }
 

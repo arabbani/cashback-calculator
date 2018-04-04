@@ -17,12 +17,14 @@ export class CardProviderService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(cardProvider: CardProvider): Observable<EntityResponseType> {
-        return this.http.post<CardProvider>(this.resourceUrl, cardProvider, { observe: 'response' })
+        const copy = this.convert(cardProvider);
+        return this.http.post<CardProvider>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(cardProvider: CardProvider): Observable<EntityResponseType> {
-        return this.http.put<CardProvider>(this.resourceUrl, cardProvider, { observe: 'response' })
+        const copy = this.convert(cardProvider);
+        return this.http.put<CardProvider>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class CardProviderService {
     private convertArrayResponse(res: HttpResponse<CardProvider[]>): HttpResponse<CardProvider[]> {
         const body: CardProvider[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a CardProvider to a JSON which can be sent to the server.
+     */
+    private convert(cardProvider: CardProvider): CardProvider {
+        const copy: CardProvider = Object.assign({}, cardProvider);
+        return copy;
     }
 
     private deserializeArray(json: any): CardProvider[] {

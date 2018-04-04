@@ -17,12 +17,14 @@ export class ReturnModeService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(returnMode: ReturnMode): Observable<EntityResponseType> {
-        return this.http.post<ReturnMode>(this.resourceUrl, returnMode, { observe: 'response' })
+        const copy = this.convert(returnMode);
+        return this.http.post<ReturnMode>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(returnMode: ReturnMode): Observable<EntityResponseType> {
-        return this.http.put<ReturnMode>(this.resourceUrl, returnMode, { observe: 'response' })
+        const copy = this.convert(returnMode);
+        return this.http.put<ReturnMode>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class ReturnModeService {
     private convertArrayResponse(res: HttpResponse<ReturnMode[]>): HttpResponse<ReturnMode[]> {
         const body: ReturnMode[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a ReturnMode to a JSON which can be sent to the server.
+     */
+    private convert(returnMode: ReturnMode): ReturnMode {
+        const copy: ReturnMode = Object.assign({}, returnMode);
+        return copy;
     }
 
     private deserializeArray(json: any): ReturnMode[] {

@@ -17,12 +17,14 @@ export class TravelTypeService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(travelType: TravelType): Observable<EntityResponseType> {
-        return this.http.post<TravelType>(this.resourceUrl, travelType, { observe: 'response' })
+        const copy = this.convert(travelType);
+        return this.http.post<TravelType>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(travelType: TravelType): Observable<EntityResponseType> {
-        return this.http.put<TravelType>(this.resourceUrl, travelType, { observe: 'response' })
+        const copy = this.convert(travelType);
+        return this.http.put<TravelType>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class TravelTypeService {
     private convertArrayResponse(res: HttpResponse<TravelType[]>): HttpResponse<TravelType[]> {
         const body: TravelType[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a TravelType to a JSON which can be sent to the server.
+     */
+    private convert(travelType: TravelType): TravelType {
+        const copy: TravelType = Object.assign({}, travelType);
+        return copy;
     }
 
     private deserializeArray(json: any): TravelType[] {

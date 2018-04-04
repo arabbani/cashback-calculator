@@ -17,12 +17,14 @@ export class DateService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(date: Date): Observable<EntityResponseType> {
-        return this.http.post<Date>(this.resourceUrl, date, { observe: 'response' })
+        const copy = this.convert(date);
+        return this.http.post<Date>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(date: Date): Observable<EntityResponseType> {
-        return this.http.put<Date>(this.resourceUrl, date, { observe: 'response' })
+        const copy = this.convert(date);
+        return this.http.put<Date>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class DateService {
     private convertArrayResponse(res: HttpResponse<Date[]>): HttpResponse<Date[]> {
         const body: Date[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a Date to a JSON which can be sent to the server.
+     */
+    private convert(date: Date): Date {
+        const copy: Date = Object.assign({}, date);
+        return copy;
     }
 
     private deserializeArray(json: any): Date[] {

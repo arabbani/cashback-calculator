@@ -1,3 +1,5 @@
+import { RechargeInfo, TravelInfo } from '..';
+import { ElectronicsInfo } from '../electronics-info';
 import { BaseEntity } from './../../shared';
 
 export class Offer implements BaseEntity {
@@ -23,9 +25,9 @@ export class Offer implements BaseEntity {
         public dummy?: boolean,
         public apsstrExclusive?: boolean,
         public url?: string,
-        public travelInfo?: BaseEntity,
-        public rechargeInfo?: BaseEntity,
-        public electronicsInfo?: BaseEntity,
+        public travelInfo?: TravelInfo,
+        public rechargeInfo?: RechargeInfo,
+        public electronicsInfo?: ElectronicsInfo,
         public offerReturns?: BaseEntity[],
         public policy?: BaseEntity,
         public operatingSystems?: BaseEntity[],

@@ -17,12 +17,14 @@ export class CityService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(city: City): Observable<EntityResponseType> {
-        return this.http.post<City>(this.resourceUrl, city, { observe: 'response' })
+        const copy = this.convert(city);
+        return this.http.post<City>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(city: City): Observable<EntityResponseType> {
-        return this.http.put<City>(this.resourceUrl, city, { observe: 'response' })
+        const copy = this.convert(city);
+        return this.http.put<City>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -55,6 +57,14 @@ export class CityService {
     private convertArrayResponse(res: HttpResponse<City[]>): HttpResponse<City[]> {
         const body: City[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a City to a JSON which can be sent to the server.
+     */
+    private convert(city: City): City {
+        const copy: City = Object.assign({}, city);
+        return copy;
     }
 
     private deserializeArray(json: any): City[] {

@@ -17,12 +17,14 @@ export class DayService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(day: Day): Observable<EntityResponseType> {
-        return this.http.post<Day>(this.resourceUrl, day, { observe: 'response' })
+        const copy = this.convert(day);
+        return this.http.post<Day>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(day: Day): Observable<EntityResponseType> {
-        return this.http.put<Day>(this.resourceUrl, day, { observe: 'response' })
+        const copy = this.convert(day);
+        return this.http.put<Day>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class DayService {
     private convertArrayResponse(res: HttpResponse<Day[]>): HttpResponse<Day[]> {
         const body: Day[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a Day to a JSON which can be sent to the server.
+     */
+    private convert(day: Day): Day {
+        const copy: Day = Object.assign({}, day);
+        return copy;
     }
 
     private deserializeArray(json: any): Day[] {

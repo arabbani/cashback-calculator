@@ -17,12 +17,14 @@ export class ServiceProviderService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(serviceProvider: ServiceProvider): Observable<EntityResponseType> {
-        return this.http.post<ServiceProvider>(this.resourceUrl, serviceProvider, { observe: 'response' })
+        const copy = this.convert(serviceProvider);
+        return this.http.post<ServiceProvider>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(serviceProvider: ServiceProvider): Observable<EntityResponseType> {
-        return this.http.put<ServiceProvider>(this.resourceUrl, serviceProvider, { observe: 'response' })
+        const copy = this.convert(serviceProvider);
+        return this.http.put<ServiceProvider>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -60,6 +62,14 @@ export class ServiceProviderService {
     private convertArrayResponse(res: HttpResponse<ServiceProvider[]>): HttpResponse<ServiceProvider[]> {
         const body: ServiceProvider[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a ServiceProvider to a JSON which can be sent to the server.
+     */
+    private convert(serviceProvider: ServiceProvider): ServiceProvider {
+        const copy: ServiceProvider = Object.assign({}, serviceProvider);
+        return copy;
     }
 
     private deserializeArray(json: any): ServiceProvider[] {

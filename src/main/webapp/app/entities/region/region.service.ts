@@ -17,12 +17,14 @@ export class RegionService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(region: Region): Observable<EntityResponseType> {
-        return this.http.post<Region>(this.resourceUrl, region, { observe: 'response' })
+        const copy = this.convert(region);
+        return this.http.post<Region>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(region: Region): Observable<EntityResponseType> {
-        return this.http.put<Region>(this.resourceUrl, region, { observe: 'response' })
+        const copy = this.convert(region);
+        return this.http.put<Region>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class RegionService {
     private convertArrayResponse(res: HttpResponse<Region[]>): HttpResponse<Region[]> {
         const body: Region[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a Region to a JSON which can be sent to the server.
+     */
+    private convert(region: Region): Region {
+        const copy: Region = Object.assign({}, region);
+        return copy;
     }
 
     private deserializeArray(json: any): Region[] {

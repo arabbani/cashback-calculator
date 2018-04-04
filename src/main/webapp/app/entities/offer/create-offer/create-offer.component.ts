@@ -364,8 +364,8 @@ export class CreateOfferComponent implements OnInit {
           if (!this.offer.travelInfo) {
             this.offer.travelInfo = new TravelInfo();
           }
-          if (!this.offer.travelInfo['busInfo']) {
-            this.offer.travelInfo['busInfo'] = new BusInfo();
+          if (!this.offer.travelInfo.busInfo) {
+            this.offer.travelInfo.busInfo = new BusInfo();
             if (this.offer.id !== undefined) {
               this.loadBusInfo();
             }
@@ -563,19 +563,19 @@ export class CreateOfferComponent implements OnInit {
   }
 
   selectAllCircles(): void {
-    this.offer.rechargeInfo['circles'] = _.cloneDeep(this.circles);
+    this.offer.rechargeInfo.circles = _.cloneDeep(this.circles);
   }
 
   unselectAllCircles(): void {
-    this.offer.rechargeInfo['circles'] = [];
+    this.offer.rechargeInfo.circles = [];
   }
 
   selectAllRechargeTypes(): void {
-    this.offer.rechargeInfo['rechargePlanTypes'] = _.cloneDeep(this.circles);
+    this.offer.rechargeInfo.rechargePlanTypes = _.cloneDeep(this.circles);
   }
 
   unselectAllRechargeTypes(): void {
-    this.offer.rechargeInfo['rechargePlanTypes'] = [];
+    this.offer.rechargeInfo.rechargePlanTypes = [];
   }
 
   private refineOfferToSave(): void {
@@ -595,15 +595,10 @@ export class CreateOfferComponent implements OnInit {
       this.offer.travelInfo = undefined;
     } else {
       if (!this.isFlight) {
-        this.offer.travelInfo['flightInfo'] = undefined;
+        this.offer.travelInfo.flightInfo = undefined;
       }
       if (!this.isBus) {
-        this.offer.travelInfo['busInfo'] = undefined;
-      } else if (this.isBus) {
-        // const busInfo = this.offer.travelInfo['busInfo'];
-        // if ((!busInfo['froms'] || busInfo['froms'].length === 0) && (!busInfo['tos'] || busInfo['tos'].length === 0)) {
-        //   this.offer.travelInfo['busInfo'] = undefined;
-        // }
+        this.offer.travelInfo.busInfo = undefined;
       }
     }
     console.log(this.offer);
@@ -817,10 +812,10 @@ export class CreateOfferComponent implements OnInit {
       (res: HttpResponse<Offer>) => {
         const offer = res.body;
         if (offer.travelInfo) {
-          this.offer.travelInfo['types'] = offer.travelInfo['types'];
-          this.offer.travelInfo['flightInfo'] = offer.travelInfo['flightInfo'];
-          if (!this.offer.travelInfo['flightInfo']) {
-            this.offer.travelInfo['flightInfo'] = new FlightInfo();
+          this.offer.travelInfo.types = offer.travelInfo.types;
+          this.offer.travelInfo.flightInfo = offer.travelInfo.flightInfo;
+          if (!this.offer.travelInfo.flightInfo) {
+            this.offer.travelInfo.flightInfo = new FlightInfo();
           }
         }
       },
@@ -833,10 +828,10 @@ export class CreateOfferComponent implements OnInit {
       (res: HttpResponse<Offer>) => {
         const offer = res.body;
         if (offer.travelInfo) {
-          this.offer.travelInfo['types'] = offer.travelInfo['types'];
-          this.offer.travelInfo['busInfo'] = offer.travelInfo['busInfo'];
-          if (!this.offer.travelInfo['busInfo']) {
-            this.offer.travelInfo['busInfo'] = new BusInfo();
+          this.offer.travelInfo.types = offer.travelInfo.types;
+          this.offer.travelInfo.busInfo = offer.travelInfo.busInfo;
+          if (!this.offer.travelInfo.busInfo) {
+            this.offer.travelInfo.busInfo = new BusInfo();
           }
         }
       },

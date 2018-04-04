@@ -17,12 +17,14 @@ export class StateService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(state: State): Observable<EntityResponseType> {
-        return this.http.post<State>(this.resourceUrl, state, { observe: 'response' })
+        const copy = this.convert(state);
+        return this.http.post<State>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(state: State): Observable<EntityResponseType> {
-        return this.http.put<State>(this.resourceUrl, state, { observe: 'response' })
+        const copy = this.convert(state);
+        return this.http.put<State>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -49,6 +51,14 @@ export class StateService {
     private convertArrayResponse(res: HttpResponse<State[]>): HttpResponse<State[]> {
         const body: State[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a State to a JSON which can be sent to the server.
+     */
+    private convert(state: State): State {
+        const copy: State = Object.assign({}, state);
+        return copy;
     }
 
     private deserializeArray(json: any): State[] {

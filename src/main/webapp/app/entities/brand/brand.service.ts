@@ -17,12 +17,14 @@ export class BrandService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(brand: Brand): Observable<EntityResponseType> {
-        return this.http.post<Brand>(this.resourceUrl, brand, { observe: 'response' })
+        const copy = this.convert(brand);
+        return this.http.post<Brand>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(brand: Brand): Observable<EntityResponseType> {
-        return this.http.put<Brand>(this.resourceUrl, brand, { observe: 'response' })
+        const copy = this.convert(brand);
+        return this.http.put<Brand>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -55,6 +57,14 @@ export class BrandService {
     private convertArrayResponse(res: HttpResponse<Brand[]>): HttpResponse<Brand[]> {
         const body: Brand[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a Brand to a JSON which can be sent to the server.
+     */
+    private convert(brand: Brand): Brand {
+        const copy: Brand = Object.assign({}, brand);
+        return copy;
     }
 
     private deserializeArray(json: any): Brand[] {

@@ -17,12 +17,14 @@ export class OperatingSystemService {
     constructor(private http: HttpClient, private jsogService: JsogService) { }
 
     create(operatingSystem: OperatingSystem): Observable<EntityResponseType> {
-        return this.http.post<OperatingSystem>(this.resourceUrl, operatingSystem, { observe: 'response' })
+        const copy = this.convert(operatingSystem);
+        return this.http.post<OperatingSystem>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
     update(operatingSystem: OperatingSystem): Observable<EntityResponseType> {
-        return this.http.put<OperatingSystem>(this.resourceUrl, operatingSystem, { observe: 'response' })
+        const copy = this.convert(operatingSystem);
+        return this.http.put<OperatingSystem>(this.resourceUrl, copy, { observe: 'response' })
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
@@ -55,6 +57,14 @@ export class OperatingSystemService {
     private convertArrayResponse(res: HttpResponse<OperatingSystem[]>): HttpResponse<OperatingSystem[]> {
         const body: OperatingSystem[] = this.deserializeArray(res.body);
         return res.clone({ body });
+    }
+
+    /**
+     * Convert a OperatingSystem to a JSON which can be sent to the server.
+     */
+    private convert(operatingSystem: OperatingSystem): OperatingSystem {
+        const copy: OperatingSystem = Object.assign({}, operatingSystem);
+        return copy;
     }
 
     private deserializeArray(json: any): OperatingSystem[] {
