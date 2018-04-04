@@ -11,10 +11,10 @@
                             <input type="text" class="form-control" id="name" name="name" [(ngModel)]="offer.name" #name="ngModel" maxlength="500" required
                                 placeholder="Title" />
                             <ng-container *ngIf="name.dirty && name.invalid">
-                                <span class="form-text text-danger" *ngIf="name.errors.required">
+                                <span class="form-text text-danger" *ngIf="name?.errors.required">
                                     Name is required.
                                 </span>
-                                <span class="form-text text-danger" *ngIf="name.errors.maxlength">
+                                <span class="form-text text-danger" *ngIf="name?.errors.maxlength">
                                     This field cannot be longer than 500 characters.
                                 </span>
                             </ng-container>
@@ -26,10 +26,10 @@
                             maxlength="2000" required>
                         </textarea>
                         <ng-container *ngIf="adminDescription.dirty && adminDescription.invalid">
-                            <span class="form-text text-danger" *ngIf="adminDescription.errors.required">
+                            <span class="form-text text-danger" *ngIf="adminDescription?.errors.required">
                                 Admin Description is required.
                             </span>
-                            <span class="form-text text-danger" *ngIf="adminDescription.errors.maxlength">
+                            <span class="form-text text-danger" *ngIf="adminDescription?.errors.maxlength">
                                 This field cannot be longer than 2000 characters.
                             </span>
                         </ng-container>
@@ -40,10 +40,10 @@
                             maxlength="2000" required [readOnly]="!editMode">
                         </textarea>
                         <ng-container *ngIf="description.dirty && description.invalid">
-                            <span class="form-text text-danger" *ngIf="description.errors.required">
+                            <span class="form-text text-danger" *ngIf="description?.errors.required">
                                 Description is required.
                             </span>
-                            <span class="form-text text-danger" *ngIf="description.errors.maxlength">
+                            <span class="form-text text-danger" *ngIf="description?.errors.maxlength">
                                 This field cannot be longer than 2000 characters.
                             </span>
                         </ng-container>
@@ -93,7 +93,7 @@
                     <div class="row">
                         <div class="mb-3 col-md-6">
                             <label class="col-md-3 col-form-label" for="type">Type</label>
-                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.type && !editMode">
+                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer?.type && !editMode">
                                 {{ offer.type.name }}
                             </span>
                             <ng-container *ngIf="editMode">
@@ -104,7 +104,7 @@
                             </ng-container>
                         </div>
                         <div class="col-md-6">
-                            <div *ngIf="offer.type && isCoupon" class="form-group mb-3 row">
+                            <div *ngIf="offer?.type && isCoupon" class="form-group mb-3 row">
                                 <label class="col-md-3 col-form-label" for="code">Code</label>
                                 <h6 *ngIf="!editMode">{{ offer.code }}</h6>
                                 <ng-container *ngIf="editMode">
@@ -113,10 +113,10 @@
                                             placeholder="Code" />
                                     </div>
                                     <ng-container *ngIf="code.dirty && code.invalid">
-                                        <span class="form-text text-danger" *ngIf="code.errors.required">
+                                        <span class="form-text text-danger" *ngIf="code?.errors.required">
                                             Code is required.
                                         </span>
-                                        <span class="form-text text-danger" *ngIf="code.errors.maxlength">
+                                        <span class="form-text text-danger" *ngIf="code?.errors.maxlength">
                                             This field cannot be longer than 255 characters.
                                         </span>
                                     </ng-container>
@@ -131,7 +131,7 @@
                             <textarea class="form-control" id="url" name="url" [(ngModel)]="offer.url" #url="ngModel" maxlength="2000">
                             </textarea>
                             <ng-container *ngIf="url.dirty && url.invalid">
-                                <span class="form-text text-danger" *ngIf="url.errors.maxlength">
+                                <span class="form-text text-danger" *ngIf="url?.errors.maxlength">
                                     This field cannot be longer than 2000 characters.
                                 </span>
                             </ng-container>
@@ -139,7 +139,7 @@
                     </div>
                     <div class="form-group mb-3" *ngIf="editMode || offer.policy">
                         <label class="mr-5" for="policy">Policy</label>
-                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.policy && !editMode">
+                        <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer?.policy && !editMode">
                             {{ offer.policy.name }}
                         </span>
                         <ng-select *ngIf="editMode" id="policy" name="policy" [(ngModel)]="offer.policy" [items]="offerPolicies" bindLabel="name"
@@ -277,7 +277,7 @@
                     <div class="row">
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="affiliate">Affiliate</label>
-                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.affiliate && !editMode">
+                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer?.affiliate && !editMode">
                                 {{ offer.affiliate.name }}
                             </span>
                             <ng-select *ngIf="editMode" id="affiliate" name="affiliate" [(ngModel)]="offer.affiliate" [items]="affiliates" bindLabel="name"
@@ -285,14 +285,14 @@
                         </div>
                         <div class="form-group mb-3 col-md-6">
                             <label class="mr-5" for="merchant">Merchant</label>
-                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer.merchant && !editMode">
+                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="offer?.merchant && !editMode">
                                 {{ offer.merchant.name }}
                             </span>
                             <ng-select *ngIf="editMode" id="merchant" name="merchant" [(ngModel)]="offer.merchant" [items]="merchants" bindLabel="name"
                                 placeholder="Merchant" appendTo="body" required></ng-select>
                         </div>
                     </div>
-                    <div class="form-group mb-3" *ngIf="editMode || offerStates.length > 0">
+                    <div class="form-group mb-3" *ngIf="editMode || offerStates?.length > 0">
                         <label class="mr-5" for="states">States</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let state of offerStates">
                             {{ state.name }}
@@ -307,7 +307,7 @@
                             </ng-template>
                         </ng-select>
                     </div>
-                    <div class="form-group mb-3" *ngIf="editMode || offer.cities.length > 0">
+                    <div class="form-group mb-3" *ngIf="editMode || offer?.cities?.length > 0">
                         <label class="mr-5" for="cities">Cities</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let city of offer.cities">
                             {{ city.name }}
@@ -322,7 +322,7 @@
                             </ng-template>
                         </ng-select>
                     </div>
-                    <div class="form-group mb-3" *ngIf="editMode || offer.operatingSystems.length > 0">
+                    <div class="form-group mb-3" *ngIf="editMode || offer?.operatingSystems?.length > 0">
                         <label class="mr-5" for="operatingSystems">Operating Systems</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let operatingSystem of offer.operatingSystems">
                             {{ operatingSystem.name }}
@@ -337,7 +337,7 @@
                             </ng-template>
                         </ng-select>
                     </div>
-                    <div class="form-group mb-3" *ngIf="editMode || offer.activeDates.length > 0">
+                    <div class="form-group mb-3" *ngIf="editMode || offer?.activeDates?.length > 0">
                         <label class="mr-5" for="dates">Active Dates</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let activeDate of offer.activeDates">
                             {{ activeDate.date }}
@@ -345,7 +345,7 @@
                         <ng-select *ngIf="editMode" id="dates" name="dates" [(ngModel)]="offer.activeDates" [items]="dates" bindLabel="date" [multiple]="true"
                             [closeOnSelect]="false" placeholder="Dates" appendTo="body"></ng-select>
                     </div>
-                    <div class="form-group mb-3" *ngIf="editMode || offer.activeDays.length > 0">
+                    <div class="form-group mb-3" *ngIf="editMode || offer?.activeDays?.length > 0">
                         <label class="mr-5" for="days">Active Days</label>
                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let activeDay of offer.activeDays">
                             {{ activeDay.day }}
@@ -710,7 +710,7 @@
                     <button type="button" class="btn btn-info" *ngIf="!editMode" (click)="editOffer()">Edit</button>
                     <button *ngIf="editMode" type="button" class="btn btn-success" [disabled]="isSaving || basicInfoForm.form.invalid || detailInfoForm.form.invalid || offerInfoForm.form.invalid || offerReturnForm.form.invalid"
                         (click)="saveOffer()">Save</button>
-                    <button type="button" class="btn btn-danger" *ngIf="offer.id && editMode" (click)="cancelEdit()">Cancel</button>
+                    <button type="button" class="btn btn-danger" *ngIf="offer?.id && editMode" (click)="cancelEdit()">Cancel</button>
                 </div>
             </div>
         </tabset>
