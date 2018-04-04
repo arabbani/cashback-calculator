@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.OperatingSystem;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.OperatingSystemService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,15 +46,17 @@ public class OperatingSystemResource {
      */
     @PostMapping("/operating-systems")
     @Timed
-    public ResponseEntity<OperatingSystem> createOperatingSystem(@Valid @RequestBody OperatingSystem operatingSystem) throws URISyntaxException {
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<OperatingSystem> createOperatingSystem(@Valid @RequestBody OperatingSystem operatingSystem)
+            throws URISyntaxException {
         log.debug("REST request to save OperatingSystem : {}", operatingSystem);
         if (operatingSystem.getId() != null) {
-            throw new BadRequestAlertException("A new operatingSystem cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new operatingSystem cannot already have an ID", ENTITY_NAME,
+                    "idexists");
         }
         OperatingSystem result = operatingSystemService.save(operatingSystem);
         return ResponseEntity.created(new URI("/api/operating-systems/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +70,17 @@ public class OperatingSystemResource {
      */
     @PutMapping("/operating-systems")
     @Timed
-    public ResponseEntity<OperatingSystem> updateOperatingSystem(@Valid @RequestBody OperatingSystem operatingSystem) throws URISyntaxException {
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<OperatingSystem> updateOperatingSystem(@Valid @RequestBody OperatingSystem operatingSystem)
+            throws URISyntaxException {
         log.debug("REST request to update OperatingSystem : {}", operatingSystem);
         if (operatingSystem.getId() == null) {
             return createOperatingSystem(operatingSystem);
         }
         OperatingSystem result = operatingSystemService.save(operatingSystem);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, operatingSystem.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, operatingSystem.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,19 +93,20 @@ public class OperatingSystemResource {
     public List<OperatingSystem> getAllOperatingSystems() {
         log.debug("REST request to get all OperatingSystems");
         return operatingSystemService.findAll();
-        }
-    
-        /**
-     * GET  /operating-systems/with/type : get all the operatingSystems with type.
-     *
-     * @return the ResponseEntity with status 200 (OK) and the list of operatingSystems in body
-     */
+    }
+
+    /**
+    * GET  /operating-systems/with/type : get all the operatingSystems with type.
+    *
+    * @return the ResponseEntity with status 200 (OK) and the list of operatingSystems in body
+    */
     @GetMapping("/operating-systems/with/type")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public List<OperatingSystem> getAllOperatingSystemsWithType() {
         log.debug("REST request to get all OperatingSystems with type");
         return operatingSystemService.findAllWithType();
-        }
+    }
 
     /**
      * GET  /operating-systems/:id : get the "id" operatingSystem.
@@ -109,6 +116,7 @@ public class OperatingSystemResource {
      */
     @GetMapping("/operating-systems/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<OperatingSystem> getOperatingSystem(@PathVariable Long id) {
         log.debug("REST request to get OperatingSystem : {}", id);
         OperatingSystem operatingSystem = operatingSystemService.findOne(id);
@@ -123,6 +131,7 @@ public class OperatingSystemResource {
      */
     @DeleteMapping("/operating-systems/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteOperatingSystem(@PathVariable Long id) {
         log.debug("REST request to delete OperatingSystem : {}", id);
         operatingSystemService.delete(id);

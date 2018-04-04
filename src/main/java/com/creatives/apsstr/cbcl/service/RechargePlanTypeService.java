@@ -67,4 +67,15 @@ public class RechargePlanTypeService {
         log.debug("Request to delete RechargePlanType : {}", id);
         rechargePlanTypeRepository.delete(id);
     }
+
+    /**
+     * Get all the dataPlans.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<RechargePlanType> findByDataPlan() {
+        log.debug("Request to get all dataPlans");
+        return rechargePlanTypeRepository.findByDataPlanTrue();
+    }
 }

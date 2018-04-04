@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.AffiliateCredential;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.AffiliateCredentialService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +25,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@Secured(AuthoritiesConstants.ADMIN)
 public class AffiliateCredentialResource {
 
     private final Logger log = LoggerFactory.getLogger(AffiliateCredentialResource.class);
@@ -44,15 +47,16 @@ public class AffiliateCredentialResource {
      */
     @PostMapping("/affiliate-credentials")
     @Timed
-    public ResponseEntity<AffiliateCredential> createAffiliateCredential(@Valid @RequestBody AffiliateCredential affiliateCredential) throws URISyntaxException {
+    public ResponseEntity<AffiliateCredential> createAffiliateCredential(
+            @Valid @RequestBody AffiliateCredential affiliateCredential) throws URISyntaxException {
         log.debug("REST request to save AffiliateCredential : {}", affiliateCredential);
         if (affiliateCredential.getId() != null) {
-            throw new BadRequestAlertException("A new affiliateCredential cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new affiliateCredential cannot already have an ID", ENTITY_NAME,
+                    "idexists");
         }
         AffiliateCredential result = affiliateCredentialService.save(affiliateCredential);
         return ResponseEntity.created(new URI("/api/affiliate-credentials/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +70,16 @@ public class AffiliateCredentialResource {
      */
     @PutMapping("/affiliate-credentials")
     @Timed
-    public ResponseEntity<AffiliateCredential> updateAffiliateCredential(@Valid @RequestBody AffiliateCredential affiliateCredential) throws URISyntaxException {
+    public ResponseEntity<AffiliateCredential> updateAffiliateCredential(
+            @Valid @RequestBody AffiliateCredential affiliateCredential) throws URISyntaxException {
         log.debug("REST request to update AffiliateCredential : {}", affiliateCredential);
         if (affiliateCredential.getId() == null) {
             return createAffiliateCredential(affiliateCredential);
         }
         AffiliateCredential result = affiliateCredentialService.save(affiliateCredential);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, affiliateCredential.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, affiliateCredential.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,7 +92,7 @@ public class AffiliateCredentialResource {
     public List<AffiliateCredential> getAllAffiliateCredentials() {
         log.debug("REST request to get all AffiliateCredentials");
         return affiliateCredentialService.findAll();
-        }
+    }
 
     /**
      * GET  /affiliate-credentials/:id : get the "id" affiliateCredential.

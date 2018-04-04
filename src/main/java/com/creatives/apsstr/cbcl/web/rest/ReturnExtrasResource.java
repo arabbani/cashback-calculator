@@ -4,12 +4,14 @@ import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.ReturnExtras;
 
 import com.creatives.apsstr.cbcl.repository.ReturnExtrasRepository;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -23,6 +25,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@Secured(AuthoritiesConstants.ADMIN)
 public class ReturnExtrasResource {
 
     private final Logger log = LoggerFactory.getLogger(ReturnExtrasResource.class);
@@ -44,15 +47,15 @@ public class ReturnExtrasResource {
      */
     @PostMapping("/return-extras")
     @Timed
-    public ResponseEntity<ReturnExtras> createReturnExtras(@RequestBody ReturnExtras returnExtras) throws URISyntaxException {
+    public ResponseEntity<ReturnExtras> createReturnExtras(@RequestBody ReturnExtras returnExtras)
+            throws URISyntaxException {
         log.debug("REST request to save ReturnExtras : {}", returnExtras);
         if (returnExtras.getId() != null) {
             throw new BadRequestAlertException("A new returnExtras cannot already have an ID", ENTITY_NAME, "idexists");
         }
         ReturnExtras result = returnExtrasRepository.save(returnExtras);
         return ResponseEntity.created(new URI("/api/return-extras/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +69,15 @@ public class ReturnExtrasResource {
      */
     @PutMapping("/return-extras")
     @Timed
-    public ResponseEntity<ReturnExtras> updateReturnExtras(@RequestBody ReturnExtras returnExtras) throws URISyntaxException {
+    public ResponseEntity<ReturnExtras> updateReturnExtras(@RequestBody ReturnExtras returnExtras)
+            throws URISyntaxException {
         log.debug("REST request to update ReturnExtras : {}", returnExtras);
         if (returnExtras.getId() == null) {
             return createReturnExtras(returnExtras);
         }
         ReturnExtras result = returnExtrasRepository.save(returnExtras);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, returnExtras.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, returnExtras.getId().toString())).body(result);
     }
 
     /**
@@ -87,7 +90,7 @@ public class ReturnExtrasResource {
     public List<ReturnExtras> getAllReturnExtras() {
         log.debug("REST request to get all ReturnExtras");
         return returnExtrasRepository.findAll();
-        }
+    }
 
     /**
      * GET  /return-extras/:id : get the "id" returnExtras.

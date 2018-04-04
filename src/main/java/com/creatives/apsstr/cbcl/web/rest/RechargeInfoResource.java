@@ -4,12 +4,14 @@ import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.RechargeInfo;
 
 import com.creatives.apsstr.cbcl.repository.RechargeInfoRepository;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -23,6 +25,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@Secured(AuthoritiesConstants.ADMIN)
 public class RechargeInfoResource {
 
     private final Logger log = LoggerFactory.getLogger(RechargeInfoResource.class);
@@ -44,15 +47,15 @@ public class RechargeInfoResource {
      */
     @PostMapping("/recharge-infos")
     @Timed
-    public ResponseEntity<RechargeInfo> createRechargeInfo(@RequestBody RechargeInfo rechargeInfo) throws URISyntaxException {
+    public ResponseEntity<RechargeInfo> createRechargeInfo(@RequestBody RechargeInfo rechargeInfo)
+            throws URISyntaxException {
         log.debug("REST request to save RechargeInfo : {}", rechargeInfo);
         if (rechargeInfo.getId() != null) {
             throw new BadRequestAlertException("A new rechargeInfo cannot already have an ID", ENTITY_NAME, "idexists");
         }
         RechargeInfo result = rechargeInfoRepository.save(rechargeInfo);
         return ResponseEntity.created(new URI("/api/recharge-infos/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +69,15 @@ public class RechargeInfoResource {
      */
     @PutMapping("/recharge-infos")
     @Timed
-    public ResponseEntity<RechargeInfo> updateRechargeInfo(@RequestBody RechargeInfo rechargeInfo) throws URISyntaxException {
+    public ResponseEntity<RechargeInfo> updateRechargeInfo(@RequestBody RechargeInfo rechargeInfo)
+            throws URISyntaxException {
         log.debug("REST request to update RechargeInfo : {}", rechargeInfo);
         if (rechargeInfo.getId() == null) {
             return createRechargeInfo(rechargeInfo);
         }
         RechargeInfo result = rechargeInfoRepository.save(rechargeInfo);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, rechargeInfo.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, rechargeInfo.getId().toString())).body(result);
     }
 
     /**
@@ -87,7 +90,7 @@ public class RechargeInfoResource {
     public List<RechargeInfo> getAllRechargeInfos() {
         log.debug("REST request to get all RechargeInfos");
         return rechargeInfoRepository.findAllWithEagerRelationships();
-        }
+    }
 
     /**
      * GET  /recharge-infos/:id : get the "id" rechargeInfo.

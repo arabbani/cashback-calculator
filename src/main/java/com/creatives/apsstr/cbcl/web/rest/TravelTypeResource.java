@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.TravelType;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.TravelTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,15 +46,16 @@ public class TravelTypeResource {
      */
     @PostMapping("/travel-types")
     @Timed
-    public ResponseEntity<TravelType> createTravelType(@Valid @RequestBody TravelType travelType) throws URISyntaxException {
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<TravelType> createTravelType(@Valid @RequestBody TravelType travelType)
+            throws URISyntaxException {
         log.debug("REST request to save TravelType : {}", travelType);
         if (travelType.getId() != null) {
             throw new BadRequestAlertException("A new travelType cannot already have an ID", ENTITY_NAME, "idexists");
         }
         TravelType result = travelTypeService.save(travelType);
         return ResponseEntity.created(new URI("/api/travel-types/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +69,16 @@ public class TravelTypeResource {
      */
     @PutMapping("/travel-types")
     @Timed
-    public ResponseEntity<TravelType> updateTravelType(@Valid @RequestBody TravelType travelType) throws URISyntaxException {
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<TravelType> updateTravelType(@Valid @RequestBody TravelType travelType)
+            throws URISyntaxException {
         log.debug("REST request to update TravelType : {}", travelType);
         if (travelType.getId() == null) {
             return createTravelType(travelType);
         }
         TravelType result = travelTypeService.save(travelType);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, travelType.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, travelType.getId().toString())).body(result);
     }
 
     /**
@@ -87,7 +91,7 @@ public class TravelTypeResource {
     public List<TravelType> getAllTravelTypes() {
         log.debug("REST request to get all TravelTypes");
         return travelTypeService.findAll();
-        }
+    }
 
     /**
      * GET  /travel-types/:id : get the "id" travelType.
@@ -97,6 +101,7 @@ public class TravelTypeResource {
      */
     @GetMapping("/travel-types/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<TravelType> getTravelType(@PathVariable Long id) {
         log.debug("REST request to get TravelType : {}", id);
         TravelType travelType = travelTypeService.findOne(id);
@@ -111,6 +116,7 @@ public class TravelTypeResource {
      */
     @DeleteMapping("/travel-types/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteTravelType(@PathVariable Long id) {
         log.debug("REST request to delete TravelType : {}", id);
         travelTypeService.delete(id);

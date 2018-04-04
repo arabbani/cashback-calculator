@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Region;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.RegionService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,6 +46,7 @@ public class RegionResource {
      */
     @PostMapping("/regions")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Region> createRegion(@Valid @RequestBody Region region) throws URISyntaxException {
         log.debug("REST request to save Region : {}", region);
         if (region.getId() != null) {
@@ -51,8 +54,7 @@ public class RegionResource {
         }
         Region result = regionService.save(region);
         return ResponseEntity.created(new URI("/api/regions/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +68,15 @@ public class RegionResource {
      */
     @PutMapping("/regions")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Region> updateRegion(@Valid @RequestBody Region region) throws URISyntaxException {
         log.debug("REST request to update Region : {}", region);
         if (region.getId() == null) {
             return createRegion(region);
         }
         Region result = regionService.save(region);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, region.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, region.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,7 +89,7 @@ public class RegionResource {
     public List<Region> getAllRegions() {
         log.debug("REST request to get all Regions");
         return regionService.findAll();
-        }
+    }
 
     /**
      * GET  /regions/:id : get the "id" region.
@@ -97,6 +99,7 @@ public class RegionResource {
      */
     @GetMapping("/regions/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Region> getRegion(@PathVariable Long id) {
         log.debug("REST request to get Region : {}", id);
         Region region = regionService.findOne(id);
@@ -111,6 +114,7 @@ public class RegionResource {
      */
     @DeleteMapping("/regions/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteRegion(@PathVariable Long id) {
         log.debug("REST request to delete Region : {}", id);
         regionService.delete(id);

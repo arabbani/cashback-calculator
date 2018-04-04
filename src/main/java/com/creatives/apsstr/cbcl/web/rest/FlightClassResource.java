@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.FlightClass;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.FlightClassService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,15 +46,16 @@ public class FlightClassResource {
      */
     @PostMapping("/flight-classes")
     @Timed
-    public ResponseEntity<FlightClass> createFlightClass(@Valid @RequestBody FlightClass flightClass) throws URISyntaxException {
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<FlightClass> createFlightClass(@Valid @RequestBody FlightClass flightClass)
+            throws URISyntaxException {
         log.debug("REST request to save FlightClass : {}", flightClass);
         if (flightClass.getId() != null) {
             throw new BadRequestAlertException("A new flightClass cannot already have an ID", ENTITY_NAME, "idexists");
         }
         FlightClass result = flightClassService.save(flightClass);
         return ResponseEntity.created(new URI("/api/flight-classes/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +69,16 @@ public class FlightClassResource {
      */
     @PutMapping("/flight-classes")
     @Timed
-    public ResponseEntity<FlightClass> updateFlightClass(@Valid @RequestBody FlightClass flightClass) throws URISyntaxException {
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<FlightClass> updateFlightClass(@Valid @RequestBody FlightClass flightClass)
+            throws URISyntaxException {
         log.debug("REST request to update FlightClass : {}", flightClass);
         if (flightClass.getId() == null) {
             return createFlightClass(flightClass);
         }
         FlightClass result = flightClassService.save(flightClass);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, flightClass.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, flightClass.getId().toString())).body(result);
     }
 
     /**
@@ -87,7 +91,7 @@ public class FlightClassResource {
     public List<FlightClass> getAllFlightClasses() {
         log.debug("REST request to get all FlightClasses");
         return flightClassService.findAll();
-        }
+    }
 
     /**
      * GET  /flight-classes/:id : get the "id" flightClass.
@@ -97,6 +101,7 @@ public class FlightClassResource {
      */
     @GetMapping("/flight-classes/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<FlightClass> getFlightClass(@PathVariable Long id) {
         log.debug("REST request to get FlightClass : {}", id);
         FlightClass flightClass = flightClassService.findOne(id);
@@ -111,6 +116,7 @@ public class FlightClassResource {
      */
     @DeleteMapping("/flight-classes/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteFlightClass(@PathVariable Long id) {
         log.debug("REST request to delete FlightClass : {}", id);
         flightClassService.delete(id);

@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Circle;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.CircleService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,6 +46,7 @@ public class CircleResource {
      */
     @PostMapping("/circles")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Circle> createCircle(@Valid @RequestBody Circle circle) throws URISyntaxException {
         log.debug("REST request to save Circle : {}", circle);
         if (circle.getId() != null) {
@@ -51,8 +54,7 @@ public class CircleResource {
         }
         Circle result = circleService.save(circle);
         return ResponseEntity.created(new URI("/api/circles/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +68,15 @@ public class CircleResource {
      */
     @PutMapping("/circles")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Circle> updateCircle(@Valid @RequestBody Circle circle) throws URISyntaxException {
         log.debug("REST request to update Circle : {}", circle);
         if (circle.getId() == null) {
             return createCircle(circle);
         }
         Circle result = circleService.save(circle);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, circle.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, circle.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,7 +89,7 @@ public class CircleResource {
     public List<Circle> getAllCircles() {
         log.debug("REST request to get all Circles");
         return circleService.findAll();
-        }
+    }
 
     /**
      * GET  /circles/:id : get the "id" circle.
@@ -97,6 +99,7 @@ public class CircleResource {
      */
     @GetMapping("/circles/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Circle> getCircle(@PathVariable Long id) {
         log.debug("REST request to get Circle : {}", id);
         Circle circle = circleService.findOne(id);
@@ -111,6 +114,7 @@ public class CircleResource {
      */
     @DeleteMapping("/circles/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteCircle(@PathVariable Long id) {
         log.debug("REST request to delete Circle : {}", id);
         circleService.delete(id);

@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.OperatingSystemType;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.OperatingSystemTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +25,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@Secured(AuthoritiesConstants.ADMIN)
 public class OperatingSystemTypeResource {
 
     private final Logger log = LoggerFactory.getLogger(OperatingSystemTypeResource.class);
@@ -44,15 +47,16 @@ public class OperatingSystemTypeResource {
      */
     @PostMapping("/operating-system-types")
     @Timed
-    public ResponseEntity<OperatingSystemType> createOperatingSystemType(@Valid @RequestBody OperatingSystemType operatingSystemType) throws URISyntaxException {
+    public ResponseEntity<OperatingSystemType> createOperatingSystemType(
+            @Valid @RequestBody OperatingSystemType operatingSystemType) throws URISyntaxException {
         log.debug("REST request to save OperatingSystemType : {}", operatingSystemType);
         if (operatingSystemType.getId() != null) {
-            throw new BadRequestAlertException("A new operatingSystemType cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new operatingSystemType cannot already have an ID", ENTITY_NAME,
+                    "idexists");
         }
         OperatingSystemType result = operatingSystemTypeService.save(operatingSystemType);
         return ResponseEntity.created(new URI("/api/operating-system-types/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +70,16 @@ public class OperatingSystemTypeResource {
      */
     @PutMapping("/operating-system-types")
     @Timed
-    public ResponseEntity<OperatingSystemType> updateOperatingSystemType(@Valid @RequestBody OperatingSystemType operatingSystemType) throws URISyntaxException {
+    public ResponseEntity<OperatingSystemType> updateOperatingSystemType(
+            @Valid @RequestBody OperatingSystemType operatingSystemType) throws URISyntaxException {
         log.debug("REST request to update OperatingSystemType : {}", operatingSystemType);
         if (operatingSystemType.getId() == null) {
             return createOperatingSystemType(operatingSystemType);
         }
         OperatingSystemType result = operatingSystemTypeService.save(operatingSystemType);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, operatingSystemType.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, operatingSystemType.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,7 +92,7 @@ public class OperatingSystemTypeResource {
     public List<OperatingSystemType> getAllOperatingSystemTypes() {
         log.debug("REST request to get all OperatingSystemTypes");
         return operatingSystemTypeService.findAll();
-        }
+    }
 
     /**
      * GET  /operating-system-types/:id : get the "id" operatingSystemType.

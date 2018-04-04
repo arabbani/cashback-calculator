@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Category;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.CategoryService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,6 +46,7 @@ public class CategoryResource {
      */
     @PostMapping("/categories")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) throws URISyntaxException {
         log.debug("REST request to save Category : {}", category);
         if (category.getId() != null) {
@@ -51,8 +54,7 @@ public class CategoryResource {
         }
         Category result = categoryService.save(category);
         return ResponseEntity.created(new URI("/api/categories/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +68,15 @@ public class CategoryResource {
      */
     @PutMapping("/categories")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Category> updateCategory(@Valid @RequestBody Category category) throws URISyntaxException {
         log.debug("REST request to update Category : {}", category);
         if (category.getId() == null) {
             return createCategory(category);
         }
         Category result = categoryService.save(category);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, category.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, category.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,7 +89,7 @@ public class CategoryResource {
     public List<Category> getAllCategories() {
         log.debug("REST request to get all Categories");
         return categoryService.findAll();
-        }
+    }
 
     /**
      * GET  /categories/:id : get the "id" category.
@@ -97,6 +99,7 @@ public class CategoryResource {
      */
     @GetMapping("/categories/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Category> getCategory(@PathVariable Long id) {
         log.debug("REST request to get Category : {}", id);
         Category category = categoryService.findOne(id);
@@ -111,6 +114,7 @@ public class CategoryResource {
      */
     @DeleteMapping("/categories/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         log.debug("REST request to delete Category : {}", id);
         categoryService.delete(id);

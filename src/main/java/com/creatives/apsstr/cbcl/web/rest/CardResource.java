@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Card;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.CardService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -16,6 +17,7 @@ import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,6 +55,7 @@ public class CardResource {
      */
     @PostMapping("/cards")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Card> createCard(@Valid @RequestBody Card card) throws URISyntaxException {
         log.debug("REST request to save Card : {}", card);
         if (card.getId() != null) {
@@ -74,6 +77,7 @@ public class CardResource {
      */
     @PutMapping("/cards")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Card> updateCard(@Valid @RequestBody Card card) throws URISyntaxException {
         log.debug("REST request to update Card : {}", card);
         if (card.getId() == null) {
@@ -103,6 +107,7 @@ public class CardResource {
      */
     @GetMapping("/cards/with/type")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public List<Card> getAllCardsWithType() {
         log.debug("REST request to get all Cards with type");
         return cardService.findAllWithType();
@@ -115,6 +120,7 @@ public class CardResource {
     */
     @GetMapping("/cards/with/bank")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public List<Card> findAllWithBank() {
         log.debug("REST request to get all Cards with bank");
         return cardService.findAllWithBank();
@@ -127,6 +133,7 @@ public class CardResource {
     */
     @GetMapping("/cards/with/providers")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public List<Card> findAllWithProviders() {
         log.debug("REST request to get all Cards with providers");
         return cardService.findAllWithProviders();
@@ -139,6 +146,7 @@ public class CardResource {
     */
     @GetMapping("/cards/with/type-providers")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public List<Card> findAllWithTypeAndProviders() {
         log.debug("REST request to get all Cards with type and providers");
         return cardService.findAllWithTypeAndProviders();
@@ -151,6 +159,7 @@ public class CardResource {
     */
     @GetMapping("/cards/with/type-bank-providers")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public List<Card> findAllWithTypeAndBankAndProviders() {
         log.debug("REST request to get all Cards with type, bank and providers");
         return cardService.findAllWithTypeAndBankAndProviders();
@@ -164,6 +173,7 @@ public class CardResource {
      */
     @GetMapping("/cards/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Card> getCard(@PathVariable Long id) {
         log.debug("REST request to get Card : {}", id);
         Card card = cardService.findOne(id);
@@ -178,6 +188,7 @@ public class CardResource {
      */
     @DeleteMapping("/cards/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteCard(@PathVariable Long id) {
         log.debug("REST request to delete Card : {}", id);
         cardService.delete(id);

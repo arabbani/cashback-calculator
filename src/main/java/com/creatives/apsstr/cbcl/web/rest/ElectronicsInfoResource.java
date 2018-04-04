@@ -4,12 +4,14 @@ import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.ElectronicsInfo;
 
 import com.creatives.apsstr.cbcl.repository.ElectronicsInfoRepository;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -23,6 +25,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@Secured(AuthoritiesConstants.ADMIN)
 public class ElectronicsInfoResource {
 
     private final Logger log = LoggerFactory.getLogger(ElectronicsInfoResource.class);
@@ -44,15 +47,16 @@ public class ElectronicsInfoResource {
      */
     @PostMapping("/electronics-infos")
     @Timed
-    public ResponseEntity<ElectronicsInfo> createElectronicsInfo(@RequestBody ElectronicsInfo electronicsInfo) throws URISyntaxException {
+    public ResponseEntity<ElectronicsInfo> createElectronicsInfo(@RequestBody ElectronicsInfo electronicsInfo)
+            throws URISyntaxException {
         log.debug("REST request to save ElectronicsInfo : {}", electronicsInfo);
         if (electronicsInfo.getId() != null) {
-            throw new BadRequestAlertException("A new electronicsInfo cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new electronicsInfo cannot already have an ID", ENTITY_NAME,
+                    "idexists");
         }
         ElectronicsInfo result = electronicsInfoRepository.save(electronicsInfo);
         return ResponseEntity.created(new URI("/api/electronics-infos/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +70,16 @@ public class ElectronicsInfoResource {
      */
     @PutMapping("/electronics-infos")
     @Timed
-    public ResponseEntity<ElectronicsInfo> updateElectronicsInfo(@RequestBody ElectronicsInfo electronicsInfo) throws URISyntaxException {
+    public ResponseEntity<ElectronicsInfo> updateElectronicsInfo(@RequestBody ElectronicsInfo electronicsInfo)
+            throws URISyntaxException {
         log.debug("REST request to update ElectronicsInfo : {}", electronicsInfo);
         if (electronicsInfo.getId() == null) {
             return createElectronicsInfo(electronicsInfo);
         }
         ElectronicsInfo result = electronicsInfoRepository.save(electronicsInfo);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, electronicsInfo.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, electronicsInfo.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,7 +92,7 @@ public class ElectronicsInfoResource {
     public List<ElectronicsInfo> getAllElectronicsInfos() {
         log.debug("REST request to get all ElectronicsInfos");
         return electronicsInfoRepository.findAllWithEagerRelationships();
-        }
+    }
 
     /**
      * GET  /electronics-infos/:id : get the "id" electronicsInfo.

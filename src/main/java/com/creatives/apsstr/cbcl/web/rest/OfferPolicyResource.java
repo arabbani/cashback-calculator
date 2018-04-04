@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.OfferPolicy;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.OfferPolicyService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +25,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@Secured(AuthoritiesConstants.ADMIN)
 public class OfferPolicyResource {
 
     private final Logger log = LoggerFactory.getLogger(OfferPolicyResource.class);
@@ -44,15 +47,15 @@ public class OfferPolicyResource {
      */
     @PostMapping("/offer-policies")
     @Timed
-    public ResponseEntity<OfferPolicy> createOfferPolicy(@Valid @RequestBody OfferPolicy offerPolicy) throws URISyntaxException {
+    public ResponseEntity<OfferPolicy> createOfferPolicy(@Valid @RequestBody OfferPolicy offerPolicy)
+            throws URISyntaxException {
         log.debug("REST request to save OfferPolicy : {}", offerPolicy);
         if (offerPolicy.getId() != null) {
             throw new BadRequestAlertException("A new offerPolicy cannot already have an ID", ENTITY_NAME, "idexists");
         }
         OfferPolicy result = offerPolicyService.save(offerPolicy);
         return ResponseEntity.created(new URI("/api/offer-policies/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +69,15 @@ public class OfferPolicyResource {
      */
     @PutMapping("/offer-policies")
     @Timed
-    public ResponseEntity<OfferPolicy> updateOfferPolicy(@Valid @RequestBody OfferPolicy offerPolicy) throws URISyntaxException {
+    public ResponseEntity<OfferPolicy> updateOfferPolicy(@Valid @RequestBody OfferPolicy offerPolicy)
+            throws URISyntaxException {
         log.debug("REST request to update OfferPolicy : {}", offerPolicy);
         if (offerPolicy.getId() == null) {
             return createOfferPolicy(offerPolicy);
         }
         OfferPolicy result = offerPolicyService.save(offerPolicy);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, offerPolicy.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, offerPolicy.getId().toString())).body(result);
     }
 
     /**
@@ -87,7 +90,7 @@ public class OfferPolicyResource {
     public List<OfferPolicy> getAllOfferPolicies() {
         log.debug("REST request to get all OfferPolicies");
         return offerPolicyService.findAll();
-        }
+    }
 
     /**
      * GET  /offer-policies/:id : get the "id" offerPolicy.

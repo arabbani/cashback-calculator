@@ -4,12 +4,14 @@ import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.OfferReturn;
 
 import com.creatives.apsstr.cbcl.repository.OfferReturnRepository;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -23,6 +25,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@Secured(AuthoritiesConstants.ADMIN)
 public class OfferReturnResource {
 
     private final Logger log = LoggerFactory.getLogger(OfferReturnResource.class);
@@ -44,15 +47,15 @@ public class OfferReturnResource {
      */
     @PostMapping("/offer-returns")
     @Timed
-    public ResponseEntity<OfferReturn> createOfferReturn(@RequestBody OfferReturn offerReturn) throws URISyntaxException {
+    public ResponseEntity<OfferReturn> createOfferReturn(@RequestBody OfferReturn offerReturn)
+            throws URISyntaxException {
         log.debug("REST request to save OfferReturn : {}", offerReturn);
         if (offerReturn.getId() != null) {
             throw new BadRequestAlertException("A new offerReturn cannot already have an ID", ENTITY_NAME, "idexists");
         }
         OfferReturn result = offerReturnRepository.save(offerReturn);
         return ResponseEntity.created(new URI("/api/offer-returns/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +69,15 @@ public class OfferReturnResource {
      */
     @PutMapping("/offer-returns")
     @Timed
-    public ResponseEntity<OfferReturn> updateOfferReturn(@RequestBody OfferReturn offerReturn) throws URISyntaxException {
+    public ResponseEntity<OfferReturn> updateOfferReturn(@RequestBody OfferReturn offerReturn)
+            throws URISyntaxException {
         log.debug("REST request to update OfferReturn : {}", offerReturn);
         if (offerReturn.getId() == null) {
             return createOfferReturn(offerReturn);
         }
         OfferReturn result = offerReturnRepository.save(offerReturn);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, offerReturn.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, offerReturn.getId().toString())).body(result);
     }
 
     /**
@@ -87,7 +90,7 @@ public class OfferReturnResource {
     public List<OfferReturn> getAllOfferReturns() {
         log.debug("REST request to get all OfferReturns");
         return offerReturnRepository.findAll();
-        }
+    }
 
     /**
      * GET  /offer-returns/:id : get the "id" offerReturn.

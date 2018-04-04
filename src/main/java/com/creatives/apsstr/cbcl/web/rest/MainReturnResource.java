@@ -4,12 +4,14 @@ import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.MainReturn;
 
 import com.creatives.apsstr.cbcl.repository.MainReturnRepository;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,6 +26,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@Secured(AuthoritiesConstants.ADMIN)
 public class MainReturnResource {
 
     private final Logger log = LoggerFactory.getLogger(MainReturnResource.class);
@@ -45,15 +48,15 @@ public class MainReturnResource {
      */
     @PostMapping("/main-returns")
     @Timed
-    public ResponseEntity<MainReturn> createMainReturn(@Valid @RequestBody MainReturn mainReturn) throws URISyntaxException {
+    public ResponseEntity<MainReturn> createMainReturn(@Valid @RequestBody MainReturn mainReturn)
+            throws URISyntaxException {
         log.debug("REST request to save MainReturn : {}", mainReturn);
         if (mainReturn.getId() != null) {
             throw new BadRequestAlertException("A new mainReturn cannot already have an ID", ENTITY_NAME, "idexists");
         }
         MainReturn result = mainReturnRepository.save(mainReturn);
         return ResponseEntity.created(new URI("/api/main-returns/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -67,15 +70,15 @@ public class MainReturnResource {
      */
     @PutMapping("/main-returns")
     @Timed
-    public ResponseEntity<MainReturn> updateMainReturn(@Valid @RequestBody MainReturn mainReturn) throws URISyntaxException {
+    public ResponseEntity<MainReturn> updateMainReturn(@Valid @RequestBody MainReturn mainReturn)
+            throws URISyntaxException {
         log.debug("REST request to update MainReturn : {}", mainReturn);
         if (mainReturn.getId() == null) {
             return createMainReturn(mainReturn);
         }
         MainReturn result = mainReturnRepository.save(mainReturn);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, mainReturn.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, mainReturn.getId().toString())).body(result);
     }
 
     /**
@@ -88,7 +91,7 @@ public class MainReturnResource {
     public List<MainReturn> getAllMainReturns() {
         log.debug("REST request to get all MainReturns");
         return mainReturnRepository.findAll();
-        }
+    }
 
     /**
      * GET  /main-returns/:id : get the "id" mainReturn.

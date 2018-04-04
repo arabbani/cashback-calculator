@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.BankType;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.BankTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +25,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@Secured(AuthoritiesConstants.ADMIN)
 public class BankTypeResource {
 
     private final Logger log = LoggerFactory.getLogger(BankTypeResource.class);
@@ -51,8 +54,7 @@ public class BankTypeResource {
         }
         BankType result = bankTypeService.save(bankType);
         return ResponseEntity.created(new URI("/api/bank-types/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -72,9 +74,8 @@ public class BankTypeResource {
             return createBankType(bankType);
         }
         BankType result = bankTypeService.save(bankType);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, bankType.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, bankType.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,7 +88,7 @@ public class BankTypeResource {
     public List<BankType> getAllBankTypes() {
         log.debug("REST request to get all BankTypes");
         return bankTypeService.findAll();
-        }
+    }
 
     /**
      * GET  /bank-types/:id : get the "id" bankType.

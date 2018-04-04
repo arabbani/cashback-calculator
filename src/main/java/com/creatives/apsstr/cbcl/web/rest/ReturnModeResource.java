@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.ReturnMode;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.ReturnModeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +25,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@Secured(AuthoritiesConstants.ADMIN)
 public class ReturnModeResource {
 
     private final Logger log = LoggerFactory.getLogger(ReturnModeResource.class);
@@ -44,15 +47,15 @@ public class ReturnModeResource {
      */
     @PostMapping("/return-modes")
     @Timed
-    public ResponseEntity<ReturnMode> createReturnMode(@Valid @RequestBody ReturnMode returnMode) throws URISyntaxException {
+    public ResponseEntity<ReturnMode> createReturnMode(@Valid @RequestBody ReturnMode returnMode)
+            throws URISyntaxException {
         log.debug("REST request to save ReturnMode : {}", returnMode);
         if (returnMode.getId() != null) {
             throw new BadRequestAlertException("A new returnMode cannot already have an ID", ENTITY_NAME, "idexists");
         }
         ReturnMode result = returnModeService.save(returnMode);
         return ResponseEntity.created(new URI("/api/return-modes/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +69,15 @@ public class ReturnModeResource {
      */
     @PutMapping("/return-modes")
     @Timed
-    public ResponseEntity<ReturnMode> updateReturnMode(@Valid @RequestBody ReturnMode returnMode) throws URISyntaxException {
+    public ResponseEntity<ReturnMode> updateReturnMode(@Valid @RequestBody ReturnMode returnMode)
+            throws URISyntaxException {
         log.debug("REST request to update ReturnMode : {}", returnMode);
         if (returnMode.getId() == null) {
             return createReturnMode(returnMode);
         }
         ReturnMode result = returnModeService.save(returnMode);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, returnMode.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, returnMode.getId().toString())).body(result);
     }
 
     /**
@@ -87,7 +90,7 @@ public class ReturnModeResource {
     public List<ReturnMode> getAllReturnModes() {
         log.debug("REST request to get all ReturnModes");
         return returnModeService.findAll();
-        }
+    }
 
     /**
      * GET  /return-modes/:id : get the "id" returnMode.

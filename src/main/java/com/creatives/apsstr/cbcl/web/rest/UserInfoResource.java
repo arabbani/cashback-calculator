@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.UserInfo;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.UserInfoService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -22,6 +24,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@Secured(AuthoritiesConstants.ADMIN)
 public class UserInfoResource {
 
     private final Logger log = LoggerFactory.getLogger(UserInfoResource.class);
@@ -50,8 +53,7 @@ public class UserInfoResource {
         }
         UserInfo result = userInfoService.save(userInfo);
         return ResponseEntity.created(new URI("/api/user-infos/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -71,9 +73,8 @@ public class UserInfoResource {
             return createUserInfo(userInfo);
         }
         UserInfo result = userInfoService.save(userInfo);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userInfo.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userInfo.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -86,7 +87,7 @@ public class UserInfoResource {
     public List<UserInfo> getAllUserInfos() {
         log.debug("REST request to get all UserInfos");
         return userInfoService.findAll();
-        }
+    }
 
     /**
      * GET  /user-infos/:id : get the "id" userInfo.

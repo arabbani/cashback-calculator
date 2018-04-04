@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.RechargePlanType;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.RechargePlanTypeService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,15 +46,17 @@ public class RechargePlanTypeResource {
      */
     @PostMapping("/recharge-plan-types")
     @Timed
-    public ResponseEntity<RechargePlanType> createRechargePlanType(@Valid @RequestBody RechargePlanType rechargePlanType) throws URISyntaxException {
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<RechargePlanType> createRechargePlanType(
+            @Valid @RequestBody RechargePlanType rechargePlanType) throws URISyntaxException {
         log.debug("REST request to save RechargePlanType : {}", rechargePlanType);
         if (rechargePlanType.getId() != null) {
-            throw new BadRequestAlertException("A new rechargePlanType cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new rechargePlanType cannot already have an ID", ENTITY_NAME,
+                    "idexists");
         }
         RechargePlanType result = rechargePlanTypeService.save(rechargePlanType);
         return ResponseEntity.created(new URI("/api/recharge-plan-types/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +70,17 @@ public class RechargePlanTypeResource {
      */
     @PutMapping("/recharge-plan-types")
     @Timed
-    public ResponseEntity<RechargePlanType> updateRechargePlanType(@Valid @RequestBody RechargePlanType rechargePlanType) throws URISyntaxException {
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<RechargePlanType> updateRechargePlanType(
+            @Valid @RequestBody RechargePlanType rechargePlanType) throws URISyntaxException {
         log.debug("REST request to update RechargePlanType : {}", rechargePlanType);
         if (rechargePlanType.getId() == null) {
             return createRechargePlanType(rechargePlanType);
         }
         RechargePlanType result = rechargePlanTypeService.save(rechargePlanType);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, rechargePlanType.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, rechargePlanType.getId().toString()))
+                .body(result);
     }
 
     /**
@@ -87,7 +93,7 @@ public class RechargePlanTypeResource {
     public List<RechargePlanType> getAllRechargePlanTypes() {
         log.debug("REST request to get all RechargePlanTypes");
         return rechargePlanTypeService.findAll();
-        }
+    }
 
     /**
      * GET  /recharge-plan-types/:id : get the "id" rechargePlanType.
@@ -97,6 +103,7 @@ public class RechargePlanTypeResource {
      */
     @GetMapping("/recharge-plan-types/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<RechargePlanType> getRechargePlanType(@PathVariable Long id) {
         log.debug("REST request to get RechargePlanType : {}", id);
         RechargePlanType rechargePlanType = rechargePlanTypeService.findOne(id);
@@ -111,9 +118,22 @@ public class RechargePlanTypeResource {
      */
     @DeleteMapping("/recharge-plan-types/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteRechargePlanType(@PathVariable Long id) {
         log.debug("REST request to delete RechargePlanType : {}", id);
         rechargePlanTypeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+    * GET  /recharge-plan-types/data-plans : get all the dataPlans.
+    *
+    * @return the ResponseEntity with status 200 (OK) and the list of dataPlans in body
+    */
+    @GetMapping("/recharge-plan-types/data-plans")
+    @Timed
+    public List<RechargePlanType> getAllDataPlans() {
+        log.debug("REST request to get all dataPlans");
+        return rechargePlanTypeService.findByDataPlan();
     }
 }

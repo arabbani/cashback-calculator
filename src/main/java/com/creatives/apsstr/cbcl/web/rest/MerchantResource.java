@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Merchant;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.MerchantService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,6 +46,7 @@ public class MerchantResource {
      */
     @PostMapping("/merchants")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Merchant> createMerchant(@Valid @RequestBody Merchant merchant) throws URISyntaxException {
         log.debug("REST request to save Merchant : {}", merchant);
         if (merchant.getId() != null) {
@@ -65,6 +68,7 @@ public class MerchantResource {
      */
     @PutMapping("/merchants")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Merchant> updateMerchant(@Valid @RequestBody Merchant merchant) throws URISyntaxException {
         log.debug("REST request to update Merchant : {}", merchant);
         if (merchant.getId() == null) {
@@ -82,6 +86,7 @@ public class MerchantResource {
      */
     @GetMapping("/merchants")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public List<Merchant> getAllMerchants() {
         log.debug("REST request to get all Merchants");
         return merchantService.findAll();
@@ -94,6 +99,7 @@ public class MerchantResource {
     */
     @GetMapping("/merchants/with/subCategories")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public List<Merchant> getAllMerchantsWithSubCategories() {
         log.debug("REST request to get all Merchants with subCategories");
         return merchantService.findAllWithSubCategories();
@@ -107,6 +113,7 @@ public class MerchantResource {
      */
     @GetMapping("/merchants/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Merchant> getMerchant(@PathVariable Long id) {
         log.debug("REST request to get Merchant : {}", id);
         Merchant merchant = merchantService.findOne(id);
@@ -121,6 +128,7 @@ public class MerchantResource {
      */
     @DeleteMapping("/merchants/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteMerchant(@PathVariable Long id) {
         log.debug("REST request to delete Merchant : {}", id);
         merchantService.delete(id);

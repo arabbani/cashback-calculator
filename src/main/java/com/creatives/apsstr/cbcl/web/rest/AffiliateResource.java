@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.Affiliate;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.AffiliateService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +25,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
+@Secured(AuthoritiesConstants.ADMIN)
 public class AffiliateResource {
 
     private final Logger log = LoggerFactory.getLogger(AffiliateResource.class);
@@ -44,15 +47,15 @@ public class AffiliateResource {
      */
     @PostMapping("/affiliates")
     @Timed
-    public ResponseEntity<Affiliate> createAffiliate(@Valid @RequestBody Affiliate affiliate) throws URISyntaxException {
+    public ResponseEntity<Affiliate> createAffiliate(@Valid @RequestBody Affiliate affiliate)
+            throws URISyntaxException {
         log.debug("REST request to save Affiliate : {}", affiliate);
         if (affiliate.getId() != null) {
             throw new BadRequestAlertException("A new affiliate cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Affiliate result = affiliateService.save(affiliate);
         return ResponseEntity.created(new URI("/api/affiliates/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString())).body(result);
     }
 
     /**
@@ -66,15 +69,15 @@ public class AffiliateResource {
      */
     @PutMapping("/affiliates")
     @Timed
-    public ResponseEntity<Affiliate> updateAffiliate(@Valid @RequestBody Affiliate affiliate) throws URISyntaxException {
+    public ResponseEntity<Affiliate> updateAffiliate(@Valid @RequestBody Affiliate affiliate)
+            throws URISyntaxException {
         log.debug("REST request to update Affiliate : {}", affiliate);
         if (affiliate.getId() == null) {
             return createAffiliate(affiliate);
         }
         Affiliate result = affiliateService.save(affiliate);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, affiliate.getId().toString()))
-            .body(result);
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, affiliate.getId().toString())).body(result);
     }
 
     /**
@@ -87,7 +90,7 @@ public class AffiliateResource {
     public List<Affiliate> getAllAffiliates() {
         log.debug("REST request to get all Affiliates");
         return affiliateService.findAll();
-        }
+    }
 
     /**
      * GET  /affiliates/:id : get the "id" affiliate.

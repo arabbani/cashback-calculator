@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.creatives.apsstr.cbcl.domain.ServiceProvider;
+import com.creatives.apsstr.cbcl.security.AuthoritiesConstants;
 import com.creatives.apsstr.cbcl.service.ServiceProviderService;
 import com.creatives.apsstr.cbcl.web.rest.errors.BadRequestAlertException;
 import com.creatives.apsstr.cbcl.web.rest.util.HeaderUtil;
@@ -9,6 +10,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,6 +46,7 @@ public class ServiceProviderResource {
      */
     @PostMapping("/service-providers")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<ServiceProvider> createServiceProvider(@Valid @RequestBody ServiceProvider serviceProvider)
             throws URISyntaxException {
         log.debug("REST request to save ServiceProvider : {}", serviceProvider);
@@ -67,6 +70,7 @@ public class ServiceProviderResource {
      */
     @PutMapping("/service-providers")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<ServiceProvider> updateServiceProvider(@Valid @RequestBody ServiceProvider serviceProvider)
             throws URISyntaxException {
         log.debug("REST request to update ServiceProvider : {}", serviceProvider);
@@ -123,6 +127,7 @@ public class ServiceProviderResource {
      */
     @GetMapping("/service-providers/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<ServiceProvider> getServiceProvider(@PathVariable Long id) {
         log.debug("REST request to get ServiceProvider : {}", id);
         ServiceProvider serviceProvider = serviceProviderService.findOne(id);
@@ -137,6 +142,7 @@ public class ServiceProviderResource {
      */
     @DeleteMapping("/service-providers/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteServiceProvider(@PathVariable Long id) {
         log.debug("REST request to delete ServiceProvider : {}", id);
         serviceProviderService.delete(id);
