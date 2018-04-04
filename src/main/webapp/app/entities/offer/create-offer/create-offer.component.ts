@@ -9,6 +9,7 @@ import { TabsetComponent } from 'ngx-bootstrap';
 import { Observable } from 'rxjs/Observable';
 
 import { Offer, OfferService } from '..';
+import { OfferPayment, OfferReturn, ReturnExtras, ReturnInfo } from '../..';
 import { ApsstrDialogService, FilterEntitiesService } from '../../../apsstr-core-ui/apsstr-core/services';
 import { Categories, OfferTypes, ReturnTypes, SubCategories } from '../../../product';
 import { GRID_STATE } from '../../../shared';
@@ -23,6 +24,7 @@ import { Date as DateEntity, Date, DateService } from '../../date';
 import { Day, DayService } from '../../day';
 import { FlightClass, FlightClassService } from '../../flight-class';
 import { FlightInfo } from '../../flight-info';
+import { MainReturn } from '../../main-return';
 import { Merchant, MerchantService } from '../../merchant';
 import { OfferPolicy, OfferPolicyService } from '../../offer-policy';
 import { OfferType, OfferTypeService } from '../../offer-type';
@@ -37,8 +39,6 @@ import { State, StateService } from '../../state';
 import { SubCategory, SubCategoryService } from '../../sub-category';
 import { TravelInfo } from '../../travel-info';
 import { TravelType, TravelTypeService } from '../../travel-type';
-import { OfferReturn, ReturnExtras, ReturnInfo, OfferPayment } from '../..';
-import { MainReturn } from '../../main-return';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -336,18 +336,22 @@ export class CreateOfferComponent implements OnInit {
         case this.subCategoryEnum.PrepaidDatacard:
         case this.subCategoryEnum.PostpaidDatacard:
         case this.subCategoryEnum.Broadband:
-          this.loadRechargeEntities();
-          this.isRechargeExtra = true;
+          if (this.editMode) {
+            this.loadRechargeEntities();
+          }
           if (!this.offer.rechargeInfo) {
             this.offer.rechargeInfo = new RechargeInfo();
             if (this.offer.id !== undefined) {
               this.loadRechargeInfo();
             }
           }
+          this.isRechargeExtra = true;
           break;
         case this.subCategoryEnum.Flight:
-          this.loadTravelEntities();
-          this.loadFlightEntities();
+          if (this.editMode) {
+            this.loadTravelEntities();
+            this.loadFlightEntities();
+          }
           if (!this.offer.travelInfo) {
             this.offer.travelInfo = new TravelInfo();
           }
@@ -360,7 +364,9 @@ export class CreateOfferComponent implements OnInit {
           this.isFlight = true;
           break;
         case this.subCategoryEnum.Bus:
-          this.loadTravelEntities();
+          if (this.editMode) {
+            this.loadTravelEntities();
+          }
           if (!this.offer.travelInfo) {
             this.offer.travelInfo = new TravelInfo();
           }
@@ -571,48 +577,117 @@ export class CreateOfferComponent implements OnInit {
   }
 
   selectAllRechargeTypes(): void {
-    this.offer.rechargeInfo.rechargePlanTypes = _.cloneDeep(this.circles);
+    this.offer.rechargeInfo.rechargePlanTypes = _.cloneDeep(this.rechargePlanTypes);
   }
 
   unselectAllRechargeTypes(): void {
     this.offer.rechargeInfo.rechargePlanTypes = [];
   }
 
-  private refineOfferToSave(): void {
-    // const of = Object.assign({}, this.offer);
-    // console.log(of);
-    this.offer.startDate.setSeconds(0);
-    this.offer.endDate.setSeconds(59);
-    _.forEach(this.offer.offerReturns, (offerReturn) => {
+  selectAllTravelTypes(): void {
+    this.offer.travelInfo.types = _.cloneDeep(this.travelTypes);
+  }
+
+  unselectAllTravelTypes(): void {
+    this.offer.travelInfo.types = [];
+  }
+
+  selectAllFlightTypes(): void {
+    this.offer.travelInfo.flightInfo.types = _.cloneDeep(this.regions);
+  }
+
+  unselectAllFlightTypes(): void {
+    this.offer.travelInfo.flightInfo.types = [];
+  }
+
+  selectAllFlightOrigins(): void {
+    this.offer.travelInfo.flightInfo.origins = _.cloneDeep(this.regions);
+  }
+
+  unselectAllFlightOrigins(): void {
+    this.offer.travelInfo.flightInfo.origins = [];
+  }
+
+  selectAllFlightClasses(): void {
+    this.offer.travelInfo.flightInfo.travelClasses = _.cloneDeep(this.flightClasses);
+  }
+
+  unselectAllFlightClasses(): void {
+    this.offer.travelInfo.flightInfo.travelClasses = [];
+  }
+
+  private refineOfferToSave(): Offer {
+    const copy: Offer = _.cloneDeep(this.offer);
+    copy.startDate.setSeconds(0);
+    copy.endDate.setSeconds(59);
+    _.forEach(copy.offerReturns, (offerReturn) => {
       _.forEach(offerReturn.returnInfos, (returnInfo) => {
         delete returnInfo.payment.modes;
       });
     });
     if (!this.isRechargeExtra) {
-      this.offer.rechargeInfo = undefined;
+      copy.rechargeInfo = undefined;
     }
     if (!this.isFlight && !this.isBus) {
-      this.offer.travelInfo = undefined;
+      copy.travelInfo = undefined;
     } else {
       if (!this.isFlight) {
-        this.offer.travelInfo.flightInfo = undefined;
+        copy.travelInfo.flightInfo = undefined;
       }
       if (!this.isBus) {
-        this.offer.travelInfo.busInfo = undefined;
+        copy.travelInfo.busInfo = undefined;
+      } else if (this.isBus) {
+        if (copy.travelInfo && copy.travelInfo.busInfo) {
+          const busInfo = copy.travelInfo.busInfo;
+          if ((!busInfo.froms || busInfo.froms.length === 0) && (!busInfo.tos || busInfo.tos.length === 0)) {
+            copy.travelInfo.busInfo = undefined;
+            this.isBus = false;
+          }
+        }
+      }
+
+      if (!copy.travelInfo.busInfo && !copy.travelInfo.flightInfo) {
+        copy.travelInfo = undefined;
+        this.isBus = false;
+        this.isFlight = false;
       }
     }
-    console.log(this.offer);
+    return copy;
   }
+
+  // private refineOfferToSave(): void {
+  //   this.offer.startDate.setSeconds(0);
+  //   this.offer.endDate.setSeconds(59);
+  //   _.forEach(this.offer.offerReturns, (offerReturn) => {
+  //     _.forEach(offerReturn.returnInfos, (returnInfo) => {
+  //       delete returnInfo.payment.modes;
+  //     });
+  //   });
+  //   if (!this.isRechargeExtra) {
+  //     this.offer.rechargeInfo = undefined;
+  //   }
+  //   if (!this.isFlight && !this.isBus) {
+  //     this.offer.travelInfo = undefined;
+  //   } else {
+  //     if (!this.isFlight) {
+  //       this.offer.travelInfo.flightInfo = undefined;
+  //     }
+  //     if (!this.isBus) {
+  //       this.offer.travelInfo.busInfo = undefined;
+  //     }
+  //   }
+  // }
 
   saveOffer(): void {
     this.isSaving = true;
-    this.refineOfferToSave();
+    const copy = this.refineOfferToSave();
+    console.log('Offer ', copy);
     if (this.offer.id !== undefined) {
       this.subscribeToSaveResponse(
-        this.offerService.update(this.offer));
+        this.offerService.update(copy));
     } else {
       this.subscribeToSaveResponse(
-        this.offerService.create(this.offer));
+        this.offerService.create(copy));
     }
   }
 
@@ -814,8 +889,12 @@ export class CreateOfferComponent implements OnInit {
         if (offer.travelInfo) {
           this.offer.travelInfo.types = offer.travelInfo.types;
           this.offer.travelInfo.flightInfo = offer.travelInfo.flightInfo;
-          if (!this.offer.travelInfo.flightInfo) {
+          if (this.editMode && !this.offer.travelInfo.flightInfo) {
             this.offer.travelInfo.flightInfo = new FlightInfo();
+          }
+        } else {
+          if (!this.editMode) {
+            this.offer.travelInfo = undefined;
           }
         }
       },
@@ -830,8 +909,12 @@ export class CreateOfferComponent implements OnInit {
         if (offer.travelInfo) {
           this.offer.travelInfo.types = offer.travelInfo.types;
           this.offer.travelInfo.busInfo = offer.travelInfo.busInfo;
-          if (!this.offer.travelInfo.busInfo) {
+          if (this.editMode && !this.offer.travelInfo.busInfo) {
             this.offer.travelInfo.busInfo = new BusInfo();
+          }
+        } else {
+          if (!this.editMode) {
+            this.offer.travelInfo = undefined;
           }
         }
       },

@@ -442,7 +442,7 @@
                             </ng-select>
                         </div>
                     </fieldset>
-                    <fieldset class="fieldset-fix mb-3" *ngIf="isBus || isFlight">
+                    <fieldset class="fieldset-fix mb-3" *ngIf="(isBus || isFlight) && offer.travelInfo">
                         <legend class="legend-fix">
                             <strong>Travel Info</strong>
                         </legend>
@@ -453,7 +453,14 @@
                             </span>
                             <ng-select *ngIf="editMode" id="travel_info_types" name="travel_info_types" [(ngModel)]="offer.travelInfo.types" [items]="travelTypes"
                                 bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Travel Types" appendTo="body"
-                                required></ng-select>
+                                [required]="isFlight">
+                                <ng-template ng-header-tmp>
+                                    <div class="my-2 ml-5">
+                                        <button (click)="selectAllTravelTypes()" class="btn btn-sm btn-secondary">Select all</button>
+                                        <button (click)="unselectAllTravelTypes()" class="btn btn-sm btn-danger">Unselect all</button>
+                                    </div>
+                                </ng-template>
+                            </ng-select>
                         </div>
                         <ng-container *ngIf="isFlight">
                             <fieldset class="fieldset-fix mx-3">
@@ -467,7 +474,14 @@
                                     </span>
                                     <ng-select *ngIf="editMode" id="flight_info_types" name="flight_info_types" [(ngModel)]="offer.travelInfo.flightInfo.types"
                                         [items]="regions" bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Flight Types"
-                                        appendTo="body" required></ng-select>
+                                        appendTo="body" required>
+                                        <ng-template ng-header-tmp>
+                                            <div class="my-2 ml-5">
+                                                <button (click)="selectAllFlightTypes()" class="btn btn-sm btn-secondary">Select all</button>
+                                                <button (click)="unselectAllFlightTypes()" class="btn btn-sm btn-danger">Unselect all</button>
+                                            </div>
+                                        </ng-template>
+                                    </ng-select>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="flight_info_origins">Origins</label>
@@ -476,7 +490,14 @@
                                     </span>
                                     <ng-select *ngIf="editMode" id="flight_info_origins" name="flight_info_origins" [(ngModel)]="offer.travelInfo.flightInfo.origins"
                                         [items]="regions" bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Origins"
-                                        appendTo="body" required></ng-select>
+                                        appendTo="body" required>
+                                        <ng-template ng-header-tmp>
+                                            <div class="my-2 ml-5">
+                                                <button (click)="selectAllFlightOrigins()" class="btn btn-sm btn-secondary">Select all</button>
+                                                <button (click)="unselectAllFlightOrigins()" class="btn btn-sm btn-danger">Unselect all</button>
+                                            </div>
+                                        </ng-template>
+                                    </ng-select>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="mr-5" for="flight_info_class">Travel Classes</label>
@@ -485,7 +506,14 @@
                                     </span>
                                     <ng-select *ngIf="editMode" id="flight_info_class" name="flight_info_class" [(ngModel)]="offer.travelInfo.flightInfo.travelClasses"
                                         [items]="flightClasses" bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Travel Classes"
-                                        appendTo="body" required></ng-select>
+                                        appendTo="body" required>
+                                        <ng-template ng-header-tmp>
+                                            <div class="my-2 ml-5">
+                                                <button (click)="selectAllFlightClasses()" class="btn btn-sm btn-secondary">Select all</button>
+                                                <button (click)="unselectAllFlightClasses()" class="btn btn-sm btn-danger">Unselect all</button>
+                                            </div>
+                                        </ng-template>
+                                    </ng-select>
                                 </div>
                             </fieldset>
                         </ng-container>
@@ -680,7 +708,7 @@
                 </div>
                 <div class="float-right">
                     <button type="button" class="btn btn-info" *ngIf="!editMode" (click)="editOffer()">Edit</button>
-                    <button *ngIf="editMode" type="button" class="btn btn-success" [disabled]="isSaving || basicInfoForm.form.invalid || optionsForm.form.invalid || detailInfoForm.form.invalid || offerInfoForm.form.invalid|| offerReturnForm.form.invalid"
+                    <button *ngIf="editMode" type="button" class="btn btn-success" [disabled]="isSaving || basicInfoForm.form.invalid || detailInfoForm.form.invalid || offerInfoForm.form.invalid || offerReturnForm.form.invalid"
                         (click)="saveOffer()">Save</button>
                     <button type="button" class="btn btn-danger" *ngIf="offer.id && editMode" (click)="cancelEdit()">Cancel</button>
                 </div>
