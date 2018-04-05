@@ -878,6 +878,7 @@ export class CreateOfferComponent implements OnInit {
       (res: HttpResponse<Offer>) => {
         const offer = res.body;
         this.offer.rechargeInfo = offer.rechargeInfo;
+        console.log('RE ', this.offer);
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -895,6 +896,7 @@ export class CreateOfferComponent implements OnInit {
             if (this.editMode && !this.offer.travelInfo.flightInfo) {
               this.offer.travelInfo.flightInfo = new FlightInfo();
             }
+            console.log('TR ', this.offer);
           } else if (!this.editMode) {
             this.isFlight = false;
           }
@@ -918,6 +920,7 @@ export class CreateOfferComponent implements OnInit {
             if (this.editMode && !this.offer.travelInfo.busInfo) {
               this.offer.travelInfo.busInfo = new BusInfo();
             }
+            console.log('BU ', this.offer);
           } else if (!this.editMode) {
             this.isBus = false;
           }

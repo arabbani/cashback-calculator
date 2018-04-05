@@ -42,4 +42,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
                         @Param("activeDay") String activeDay, @Param("serviceProviderId") Long serviceProviderId,
                         @Param("circleId") Long circleId, @Param("rechargePlaneTypeId") Long rechargePlaneTypeId);
 
+        List<Offer> findDistinctByActiveTrueAndDummyFalseAndSubCategories_IdAndActiveDatesIsNullOrActiveDates_DateAndActiveDaysIsNullOrActiveDays_DayAndServiceProviders_Id(Long subCategoryId, Integer activeDate, String activeDay, Long serviceProviderId);
+
+        // Boolean active, Boolean dummy,
 }
