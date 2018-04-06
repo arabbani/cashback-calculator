@@ -370,12 +370,12 @@ export class CreateOfferComponent implements OnInit {
 
   private filterCardsForBankAndPaymentMode(modes, dataItem): void {
     const bankCards = this.filterEntitiesService.bySingleRelationIds(dataItem.payment.banks, this.cards, 'bank');
-    this.filteredCards = this.filterEntitiesService.bySingleRelationIds(modes, bankCards, 'type');
+    dataItem.payment['filteredCards'] = this.filterEntitiesService.bySingleRelationIds(modes, bankCards, 'type');
   }
 
   onPaymentModeChange(modes: CardType[], dataItem): void {
     this.filterCardsForBankAndPaymentMode(modes, dataItem);
-    dataItem.payment.cards = _.intersectionBy(dataItem.payment.cards, this.filteredCards, 'id');
+    dataItem.payment.cards = _.intersectionBy(dataItem.payment.cards, dataItem.payment['filteredCards'], 'id');
   }
 
   extractBanksAndPaymentModesFromCards(): void {
@@ -494,6 +494,8 @@ export class CreateOfferComponent implements OnInit {
     _.forEach(copy.offerReturns, (offerReturn) => {
       _.forEach(offerReturn.returnInfos, (returnInfo) => {
         delete returnInfo.payment.modes;
+        delete returnInfo.payment.banks;
+        delete returnInfo.payment.filteredCards;
       });
     });
     if (!this.isRechargeExtra) {
@@ -522,19 +524,20 @@ export class CreateOfferComponent implements OnInit {
         this.isFlight = false;
       }
     }
+    console.log(copy);
     return copy;
   }
 
   saveOffer(): void {
     this.isSaving = true;
     const copy = this.refineOfferToSave();
-    if (this.offer.id !== undefined) {
-      this.subscribeToSaveResponse(
-        this.offerService.update(copy));
-    } else {
-      this.subscribeToSaveResponse(
-        this.offerService.create(copy));
-    }
+    // if (this.offer.id !== undefined) {
+    //   this.subscribeToSaveResponse(
+    //     this.offerService.update(copy));
+    // } else {
+    //   this.subscribeToSaveResponse(
+    //     this.offerService.create(copy));
+    // }
   }
 
   selectAllCategories(): void {
@@ -965,7 +968,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadCards(): void {
-    this.cardService.findWithTypeAndBankAndProviders().subscribe(
+    this.cardService.findWithTypeAndBanks().subscribe(
       (res: HttpResponse<Card[]>) => {
         this.cards = res.body;
         this.filteredCards = [];

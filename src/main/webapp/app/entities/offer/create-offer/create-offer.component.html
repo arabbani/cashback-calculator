@@ -598,13 +598,14 @@
                                         <legend class="legend-fix">
                                             <strong>Payment Options</strong>
                                         </legend>
-                                        <div class="form-group mb-3" *ngIf="editMode">
+                                        <div class="form-group mb-3">
                                             <label for="banks">Banks</label>
                                             <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let bank of dataItem.payment.banks">
                                                 {{ bank.name }}
                                             </span>
-                                            <ng-select id="banks" name="banks" [(ngModel)]="dataItem.payment.banks" [items]="banks" bindLabel="name" [multiple]="true"
-                                                [closeOnSelect]="false" placeholder="Payment Modes" appendTo="body" (change)="onBankChange($event, dataItem)">
+                                            <ng-select *ngIf="editMode" id="banks" name="banks" [(ngModel)]="dataItem.payment.banks" [items]="banks" bindLabel="name"
+                                                [multiple]="true" [closeOnSelect]="false" placeholder="Payment Modes" appendTo="body"
+                                                (change)="onBankChange($event, dataItem)">
                                                 <ng-template ng-header-tmp>
                                                     <div class="my-2 ml-5">
                                                         <button (click)="selectAllBanks(dataItem)" class="btn btn-sm btn-secondary">Select all</button>
@@ -613,14 +614,14 @@
                                                 </ng-template>
                                             </ng-select>
                                         </div>
-                                        <div class="form-group mb-3" *ngIf="editMode">
+                                        <div class="form-group mb-3">
                                             <label for="paymentModes">Modes</label>
                                             <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let paymentMode of dataItem.payment.modes">
                                                 {{ paymentMode.name }}
                                             </span>
-                                            <ng-select id="paymentModes" name="paymentModes" [(ngModel)]="dataItem.payment.modes" [items]="cardTypes" bindLabel="name"
-                                                [multiple]="true" [closeOnSelect]="false" placeholder="Payment Modes" appendTo="body"
-                                                (change)="onPaymentModeChange($event, dataItem)">
+                                            <ng-select *ngIf="editMode" id="paymentModes" name="paymentModes" [(ngModel)]="dataItem.payment.modes" [items]="cardTypes"
+                                                bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Payment Modes"
+                                                appendTo="body" (change)="onPaymentModeChange($event, dataItem)">
                                                 <ng-template ng-header-tmp>
                                                     <div class="my-2 ml-5">
                                                         <button (click)="selectAllPaymentModes(dataItem)" class="btn btn-sm btn-secondary">Select all</button>
@@ -634,7 +635,7 @@
                                             <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let paymentCard of dataItem.payment.cards">
                                                 {{ paymentCard.name }}
                                             </span>
-                                            <ng-select *ngIf="editMode" id="paymentCards" name="paymentCards" [(ngModel)]="dataItem.payment.cards" [items]="filteredCards"
+                                            <ng-select *ngIf="editMode" id="paymentCards" name="paymentCards" [(ngModel)]="dataItem.payment.cards" [items]="dataItem.payment.filteredCards"
                                                 bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Cards"
                                                 appendTo="body"></ng-select>
                                         </div>

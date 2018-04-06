@@ -153,6 +153,19 @@ public class CardResource {
     }
 
     /**
+    * GET  /cards/with/type-banks : get all the cards with type and banks.
+    *
+    * @return the ResponseEntity with status 200 (OK) and the list of cards in body
+    */
+    @GetMapping("/cards/with/type-banks")
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public List<Card> findWithTypeAndBanks() {
+        log.debug("REST request to get all Cards with type and banks");
+        return cardService.findWithTypeAndBanks();
+    }
+
+    /**
     * GET  /cards/with/type-bank-providers : get all the cards with type, bank and providers.
     *
     * @return the ResponseEntity with status 200 (OK) and the list of cards in body
