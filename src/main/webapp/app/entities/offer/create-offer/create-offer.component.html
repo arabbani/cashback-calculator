@@ -604,7 +604,7 @@
                                                 {{ bank.name }}
                                             </span>
                                             <ng-select *ngIf="editMode" id="banks" name="banks" [(ngModel)]="dataItem.payment.banks" [items]="banks" bindLabel="name"
-                                                [multiple]="true" [closeOnSelect]="false" placeholder="Payment Modes" appendTo="body"
+                                                [multiple]="true" [closeOnSelect]="false" placeholder="Banks" appendTo="body"
                                                 (change)="onBankChange($event, dataItem)">
                                                 <ng-template ng-header-tmp>
                                                     <div class="my-2 ml-5">

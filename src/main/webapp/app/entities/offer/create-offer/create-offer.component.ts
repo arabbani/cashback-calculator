@@ -248,7 +248,7 @@ export class CreateOfferComponent implements OnInit {
         case this.subCategoryEnum.PostpaidMobile:
         case this.subCategoryEnum.PrepaidDatacard:
         case this.subCategoryEnum.PostpaidDatacard:
-        case this.subCategoryEnum.Broadband:
+        // case this.subCategoryEnum.Broadband:
           if (this.editMode) {
             this.loadRechargeEntities();
           }
@@ -524,20 +524,20 @@ export class CreateOfferComponent implements OnInit {
         this.isFlight = false;
       }
     }
-    console.log(copy);
+    // console.log(copy);
     return copy;
   }
 
   saveOffer(): void {
     this.isSaving = true;
     const copy = this.refineOfferToSave();
-    // if (this.offer.id !== undefined) {
-    //   this.subscribeToSaveResponse(
-    //     this.offerService.update(copy));
-    // } else {
-    //   this.subscribeToSaveResponse(
-    //     this.offerService.create(copy));
-    // }
+    if (this.offer.id !== undefined) {
+      this.subscribeToSaveResponse(
+        this.offerService.update(copy));
+    } else {
+      this.subscribeToSaveResponse(
+        this.offerService.create(copy));
+    }
   }
 
   selectAllCategories(): void {
