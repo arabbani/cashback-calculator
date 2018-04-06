@@ -41,6 +41,7 @@
     "jsog-typescript": "^1.0.0-1",
     "lodash": "^4.17.5",
     "moment": "^2.20.1",
+    "ng-autosize": "^1.1.0",
     "ng-block-ui": "^0.9.5",
     "ng-jhipster": "0.4.0",
     "ngx-bootstrap": "^2.0.2",

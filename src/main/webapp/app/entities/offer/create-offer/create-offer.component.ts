@@ -5,11 +5,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { State as GridState } from '@progress/kendo-data-query';
 import * as _ from 'lodash';
+import { JhiEventManager } from 'ng-jhipster';
 import { TabsetComponent } from 'ngx-bootstrap';
 import { Observable } from 'rxjs/Observable';
 
 import { Offer, OfferService } from '..';
-import { OfferPayment, OfferReturn, ReturnExtras, ReturnInfo } from '../..';
+import { Bank, BankService, OfferPayment, OfferReturn, ReturnExtras, ReturnInfo } from '../..';
 import { ApsstrDialogService, FilterEntitiesService } from '../../../apsstr-core-ui/apsstr-core/services';
 import { Categories, OfferTypes, ReturnTypes, SubCategories } from '../../../product';
 import { GRID_STATE } from '../../../shared';
@@ -75,6 +76,7 @@ export class CreateOfferComponent implements OnInit {
   offers: Offer[];
   cardTypes: CardType[];
   flightClasses: FlightClass[];
+  banks: Bank[];
 
   defaultDate;
   defaultDay;
@@ -107,6 +109,8 @@ export class CreateOfferComponent implements OnInit {
   minEndDate: Date;
   editMode: boolean;
   editedOffer: Offer;
+  fetchedBusInfo: boolean;
+  subscribed: boolean;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
     private dayService: DayService, private stateService: StateService, private cityService: CityService,
@@ -115,7 +119,8 @@ export class CreateOfferComponent implements OnInit {
     private circleService: CircleService, private travelTypeService: TravelTypeService, private regionService: RegionService, private formBuilder: FormBuilder,
     private apsstrDialogService: ApsstrDialogService, private rechargePlanTypeService: RechargePlanTypeService, private returnTypeService: ReturnTypeService,
     private returnModeService: ReturnModeService, private cardService: CardService, private cardTypeService: CardTypeService, private router: Router,
-    private route: ActivatedRoute, private location: Location, private filterEntitiesService: FilterEntitiesService, private flightClassService: FlightClassService) {
+    private route: ActivatedRoute, private location: Location, private filterEntitiesService: FilterEntitiesService, private flightClassService: FlightClassService,
+    private bankService: BankService, private jhiEventManager: JhiEventManager) {
     this.createOfferReturnFormGroup = this.createOfferReturnFormGroup.bind(this);
     this.createReturnInfoFormGroup = this.createReturnInfoFormGroup.bind(this);
   }
@@ -136,95 +141,13 @@ export class CreateOfferComponent implements OnInit {
     this.isFlight = false;
     this.isBus = false;
     this.isRechargeExtra = false;
+    this.fetchedBusInfo = false;
+    this.subscribed = false;
   }
 
   private initializeToEdit(): void {
     this.editMode = true;
-    this.loadEssentialEntities();
-  }
-
-  private loadEssentialEntities() {
     this.loadOfferTypes();
-    this.loadOfferPolicies();
-  }
-
-  private loadTabTwoEntities() {
-    if (!this.dates) {
-      this.loadDates();
-    }
-    if (!this.days) {
-      this.loadDays();
-    }
-    if (!this.states) {
-      this.loadStates();
-    }
-    if (!this.cities) {
-      this.loadCities();
-    }
-    if (!this.operatingSystems) {
-      this.loadOperatingSystems();
-    }
-    if (!this.affiliates) {
-      this.loadAffiliates();
-    }
-    if (!this.merchants) {
-      this.loadMerchants();
-    }
-  }
-
-  private loadTabThreeEntities() {
-    if (!this.categories) {
-      this.loadCategories();
-    }
-    if (!this.subCategories) {
-      this.loadSubCategories();
-    }
-    if (!this.serviceProviders) {
-      this.loadServiceProviders();
-    }
-  }
-
-  private loadTabFourEntities() {
-    if (!this.returnTypes) {
-      this.loadReturnTypes();
-    }
-    if (!this.returnModes) {
-      this.loadReturnModes();
-    }
-    if (!this.cards) {
-      this.loadCards();
-    }
-    if (!this.offers) {
-      this.loadOffersForReference();
-    }
-    if (!this.cardTypes) {
-      this.loadCardTypes();
-    }
-
-  }
-
-  private loadRechargeEntities() {
-    if (!this.circles) {
-      this.loadCircles();
-    }
-    if (!this.rechargePlanTypes) {
-      this.loadRechargePlanTypes();
-    }
-  }
-
-  private loadTravelEntities() {
-    if (!this.travelTypes) {
-      this.loadTravelTypes();
-    }
-  }
-
-  private loadFlightEntities(): void {
-    if (!this.regions) {
-      this.loadRegions();
-    }
-    if (!this.flightClasses) {
-      this.loadFlightClasses();
-    }
   }
 
   private extractRouteParams(): void {
@@ -233,10 +156,9 @@ export class CreateOfferComponent implements OnInit {
       this.editMode = false;
       this.offer = this.route.snapshot.data.offer;
       this.onOfferTypeChange(this.offer.type);
-      this.extractCategories();
       this.extractStates();
-      const mode = this.route.snapshot.paramMap.get('edit');
-      if (mode) {
+      const editMode = this.route.snapshot.paramMap.get('edit');
+      if (editMode) {
         this.editOffer();
       }
     } else {
@@ -244,10 +166,6 @@ export class CreateOfferComponent implements OnInit {
       this.initializeToEdit();
       this.createOffer();
     }
-  }
-
-  private enableTab(tabNumber: number): void {
-    this.createOfferTabs.tabs[tabNumber].disabled = false;
   }
 
   private createOffer(): void {
@@ -258,22 +176,6 @@ export class CreateOfferComponent implements OnInit {
         tab.disabled = true;
       }
     });
-  }
-
-  private extractCategories(): void {
-    const categorySet = new Set();
-    _.forEach(this.offer.subCategories, (subCategory) => {
-      categorySet.add(subCategory.category);
-    });
-    this.offerCategories = _.toArray(categorySet);
-  }
-
-  private extractStates(): void {
-    const stateSet = new Set();
-    _.forEach(this.offer.cities, (city) => {
-      stateSet.add(city.state);
-    });
-    this.offerStates = _.toArray(stateSet);
   }
 
   editOffer(): void {
@@ -288,6 +190,21 @@ export class CreateOfferComponent implements OnInit {
     this.editedOffer = undefined;
   }
 
+  private enableTab(tabNumber: number): void {
+    this.createOfferTabs.tabs[tabNumber].disabled = false;
+  }
+
+  goToTab(tabNumber: number): void {
+    this.createOfferTabs.tabs[tabNumber].active = true;
+  }
+
+  goToNextTab(tabNumber: number): void {
+    if (this.createOfferTabs.tabs[tabNumber].disabled) {
+      this.enableTab(tabNumber);
+    }
+    this.goToTab(tabNumber);
+  }
+
   goBack(): void {
     this.location.back();
   }
@@ -298,12 +215,18 @@ export class CreateOfferComponent implements OnInit {
         if (this.editMode) {
           this.loadTabTwoEntities();
         }
+        if (!this.offerCategories && this.offer.id !== undefined) {
+          this.extractCategories();
+        }
+        if (!this.subscribed) {
+          this.subscribeToTabTwoEntity();
+        }
+        this.setUpSubCategoriesToEdit(this.offer.subCategories);
         break;
       case 3:
         if (this.editMode) {
           this.loadTabThreeEntities();
         }
-        this.setUpSubCategoriesToEdit(this.offer.subCategories);
         break;
       case 4:
         if (this.editMode) {
@@ -313,17 +236,6 @@ export class CreateOfferComponent implements OnInit {
       default:
         break;
     }
-  }
-
-  goToNextTab(tabNumber: number): void {
-    if (this.createOfferTabs.tabs[tabNumber].disabled) {
-      this.enableTab(tabNumber);
-    }
-    this.goToTab(tabNumber);
-  }
-
-  goToTab(tabNumber: number): void {
-    this.createOfferTabs.tabs[tabNumber].active = true;
   }
 
   private setUpSubCategoriesToEdit(subCategories: SubCategory[]): void {
@@ -340,44 +252,58 @@ export class CreateOfferComponent implements OnInit {
           if (this.editMode) {
             this.loadRechargeEntities();
           }
-          if (!this.offer.rechargeInfo) {
+          if (this.offer.id !== undefined && !this.offer.rechargeInfo) {
+            this.loadRechargeInfo();
+          } else if (!this.offer.rechargeInfo) {
             this.offer.rechargeInfo = new RechargeInfo();
-            if (this.offer.id !== undefined) {
-              this.loadRechargeInfo();
-            }
+            this.isRechargeExtra = true;
+          } else {
+            this.isRechargeExtra = true;
           }
-          this.isRechargeExtra = true;
           break;
         case this.subCategoryEnum.Flight:
           if (this.editMode) {
             this.loadTravelEntities();
             this.loadFlightEntities();
           }
-          if (!this.offer.travelInfo) {
-            this.offer.travelInfo = new TravelInfo();
-          }
-          if (!this.offer.travelInfo.flightInfo) {
-            this.offer.travelInfo.flightInfo = new FlightInfo();
-            if (this.offer.id !== undefined) {
+          if (this.offer.id !== undefined) {
+            if (!this.offer.travelInfo || !this.offer.travelInfo.flightInfo) {
               this.loadFlightInfo();
+            } else {
+              this.isFlight = true;
             }
+          } else if (!this.offer.travelInfo) {
+            this.offer.travelInfo = new TravelInfo();
+            this.offer.travelInfo.flightInfo = new FlightInfo();
+            this.isFlight = true;
+          } else if (!this.offer.travelInfo.flightInfo) {
+            this.offer.travelInfo.flightInfo = new FlightInfo();
+            this.isFlight = true;
           }
-          this.isFlight = true;
           break;
         case this.subCategoryEnum.Bus:
           if (this.editMode) {
             this.loadTravelEntities();
+            this.loadBusEntities();
           }
-          if (!this.offer.travelInfo) {
-            this.offer.travelInfo = new TravelInfo();
-          }
-          if (!this.offer.travelInfo.busInfo) {
-            this.offer.travelInfo.busInfo = new BusInfo();
-            if (this.offer.id !== undefined) {
-              this.loadBusInfo();
+          if (this.offer.id !== undefined) {
+            if (!this.fetchedBusInfo) {
+              if (!this.offer.travelInfo || !this.offer.travelInfo.busInfo) {
+                this.loadBusInfo();
+              } else {
+                this.isBus = true;
+              }
             }
+          } else if (!this.offer.travelInfo) {
+            this.offer.travelInfo = new TravelInfo();
+            this.offer.travelInfo.busInfo = new BusInfo();
+            this.isBus = true;
+          } else {
+            if (!this.offer.travelInfo.busInfo) {
+              this.offer.travelInfo.busInfo = new BusInfo();
+            }
+            this.isBus = true;
           }
-          this.isBus = true;
           break;
         default:
           break;
@@ -405,42 +331,86 @@ export class CreateOfferComponent implements OnInit {
     }
   }
 
-  private filterCitiesForStates(states: State[]): void {
-    this.filteredCities = this.filterEntitiesService.bySingleRelationId(states, this.cities, 'state');
-  }
-
-  onStateChange(states: State[]): void {
-    this.filterCitiesForStates(states);
-    this.offer.cities = this.filterEntitiesService.bySingleRelationId(states, this.offer.cities, 'state');
-  }
-
-  private filterSubCategoriesForCategories(categories: Category[]): void {
-    this.filteredSubCategories = this.filterEntitiesService.bySingleRelationId(categories, this.subCategories, 'category');
-  }
-
   onCategoryChange(categories: Category[]): void {
-    this.filterSubCategoriesForCategories(categories);
-    this.offer.subCategories = this.filterEntitiesService.bySingleRelationId(categories, this.offer.subCategories, 'category');
+    this.filteredSubCategories = this.filterEntitiesService.bySingleRelationIds(categories, this.subCategories, 'category');
+    this.offer.subCategories = this.filterEntitiesService.bySingleRelationIds(categories, this.offer.subCategories, 'category');
     this.onSubCategoryChange(this.offer.subCategories);
-  }
-
-  private filterServiceProvidersForSubCategories(subCategories: SubCategory[]): void {
-    this.filteredServiceProviders = this.filterEntitiesService.byManyRelationId(subCategories, this.serviceProviders, 'subCategories');
   }
 
   onSubCategoryChange(subCategories: SubCategory[]): void {
     this.setUpSubCategoriesToEdit(this.offer.subCategories);
-    this.filterServiceProvidersForSubCategories(subCategories);
-    this.offer.serviceProviders = this.filterEntitiesService.byManyRelationId(subCategories, this.offer.serviceProviders, 'subCategories');
+    this.filteredServiceProviders = this.filterEntitiesService.byManyRelationIds(subCategories, this.serviceProviders, 'subCategories');
+    this.offer.serviceProviders = this.filterEntitiesService.byManyRelationIds(subCategories, this.offer.serviceProviders, 'subCategories');
   }
 
-  private filterCardsForPaymentModes(modes: CardType[]): void {
-    this.filteredCards = this.filterEntitiesService.bySingleRelationId(modes, this.cards, 'type');
+  private extractCategories(): void {
+    const categorySet = new Set();
+    _.forEach(this.offer.subCategories, (subCategory) => {
+      categorySet.add(subCategory.category);
+    });
+    this.offerCategories = _.toArray(categorySet);
+  }
+
+  private subscribeToTabTwoEntity(): void {
+    this.jhiEventManager.subscribe('tabTwoEntity', (response) => {
+      if (this.subCategories && this.serviceProviders) {
+        if (this.offer.id !== undefined) {
+          this.onCategoryChange(this.offerCategories);
+        }
+      }
+    });
+    this.subscribed = true;
+  }
+
+  onBankChange(banks, dataItem): void {
+    if (dataItem.payment.modes) {
+      this.onPaymentModeChange(dataItem.payment.modes, dataItem);
+    }
   }
 
   onPaymentModeChange(modes: CardType[], dataItem): void {
-    this.filterCardsForPaymentModes(modes);
-    dataItem.payment.cards = this.filterEntitiesService.bySingleRelationId(modes, dataItem.payment.cards, 'type');
+    const bankCards = this.filterEntitiesService.bySingleRelationIds(dataItem.payment.banks, this.cards, 'bank');
+    this.filteredCards = this.filterEntitiesService.bySingleRelationIds(modes, bankCards, 'type');
+    dataItem.payment.cards = _.intersectionBy(dataItem.payment.cards, this.filteredCards, 'id');
+  }
+
+  extractBanksFromCards(returnInfos: ReturnInfo[]): void {
+    let bankSet;
+    _.forEach(returnInfos, (returnInfo) => {
+      bankSet = new Set();
+      _.forEach(returnInfo.payment.cards, (card) => {
+        bankSet.add(card.bank);
+      });
+      returnInfo.payment.banks = _.toArray(bankSet);
+    });
+  }
+
+  extractPaymentModesFromCards(returnInfos: ReturnInfo[]): void {
+    let paymentModeSet;
+    _.forEach(returnInfos, (returnInfo) => {
+      paymentModeSet = new Set();
+      _.forEach(returnInfo.payment.cards, (card) => {
+        paymentModeSet.add(card.type);
+      });
+      returnInfo.payment.modes = _.toArray(paymentModeSet);
+      console.log(returnInfo.payment.modes);
+      console.log(returnInfo.payment.banks);
+      // this.onPaymentModeChange(returnInfo.payment.modes, returnInfo);
+    });
+    console.log('TTTTTT');
+  }
+
+  private extractStates(): void {
+    const stateSet = new Set();
+    _.forEach(this.offer.cities, (city) => {
+      stateSet.add(city.state);
+    });
+    this.offerStates = _.toArray(stateSet);
+  }
+
+  onStateChange(states: State[]): void {
+    this.filteredCities = this.filterEntitiesService.bySingleRelationIds(states, this.cities, 'state');
+    this.offer.cities = this.filterEntitiesService.bySingleRelationIds(states, this.offer.cities, 'state');
   }
 
   public createOfferReturnFormGroup(args: any): FormGroup {
@@ -493,15 +463,6 @@ export class CreateOfferComponent implements OnInit {
     }
   }
 
-  public saveReturnInfo(returnInfo): void {
-    if (!returnInfo.mainReturn) {
-      returnInfo.mainReturn = new MainReturn();
-    }
-    if (!returnInfo.payment) {
-      returnInfo.payment = new OfferPayment();
-    }
-  }
-
   public deleteOfferReturn(dataItem: any): void {
     this.apsstrDialogService.confirm().subscribe((result) => {
       if (result['text'] === 'No') {
@@ -511,44 +472,85 @@ export class CreateOfferComponent implements OnInit {
     });
   }
 
+  public saveReturnInfo(returnInfo): void {
+    if (!returnInfo.mainReturn) {
+      returnInfo.mainReturn = new MainReturn();
+    }
+    if (!returnInfo.payment) {
+      returnInfo.payment = new OfferPayment();
+    }
+  }
+
   public deleteReturnInfo(event: any): void {
     this.apsstrDialogService.confirm().subscribe((result) => {
       if (result['text'] === 'No') {
-        console.log(event);
-        // event.sender.data['data'].push(event.dataItem);
-        // event.sender.data.data = _.sortBy(event.data, (item) => item.id);
+        // console.log(event);
+        // event.sender.data.data.push(event.dataItem);
+        // event.sender.data.data = _.sortBy(event.sender.data.data, (item) => item.id);
       }
     });
   }
 
-  removePaymentCard(dataItem, card: Card): void {
-    dataItem.payment.cards = _.pull(dataItem.payment.cards, card);
+  private refineOfferToSave(): Offer {
+    const copy: Offer = _.cloneDeep(this.offer);
+    copy.startDate.setSeconds(0);
+    copy.endDate.setSeconds(59);
+    _.forEach(copy.offerReturns, (offerReturn) => {
+      _.forEach(offerReturn.returnInfos, (returnInfo) => {
+        delete returnInfo.payment.modes;
+      });
+    });
+    if (!this.isRechargeExtra) {
+      copy.rechargeInfo = undefined;
+    }
+    if (!this.isFlight && !this.isBus) {
+      copy.travelInfo = undefined;
+    } else {
+      if (!this.isFlight) {
+        copy.travelInfo.flightInfo = undefined;
+      }
+      if (!this.isBus) {
+        copy.travelInfo.busInfo = undefined;
+      } else if (this.isBus) {
+        if (copy.travelInfo && copy.travelInfo.busInfo) {
+          const busInfo = copy.travelInfo.busInfo;
+          if ((!busInfo.froms || busInfo.froms.length === 0) && (!busInfo.tos || busInfo.tos.length === 0)) {
+            copy.travelInfo.busInfo = undefined;
+            this.isBus = false;
+          }
+        }
+      }
+      if (!copy.travelInfo.busInfo && !copy.travelInfo.flightInfo) {
+        copy.travelInfo = undefined;
+        this.isBus = false;
+        this.isFlight = false;
+      }
+    }
+    return copy;
   }
 
-  selectAllStates(): void {
-    this.offerStates = _.cloneDeep(this.states);
-    this.onStateChange(this.offerStates);
+  saveOffer(): void {
+    this.isSaving = true;
+    console.log(this.offer);
+    const copy = this.refineOfferToSave();
+    console.log('Offer ', copy);
+    if (this.offer.id !== undefined) {
+      this.subscribeToSaveResponse(
+        this.offerService.update(copy));
+    } else {
+      this.subscribeToSaveResponse(
+        this.offerService.create(copy));
+    }
   }
 
-  unselectAllStates(): void {
-    this.offerStates = [];
-    this.onStateChange(this.offerStates);
+  selectAllCategories(): void {
+    this.offerCategories = _.cloneDeep(this.categories);
+    this.onCategoryChange(this.offerCategories);
   }
 
-  selectAllCities(): void {
-    this.offer.cities = _.cloneDeep(this.filteredCities);
-  }
-
-  unselectAllCities(): void {
-    this.offer.cities = [];
-  }
-
-  selectAllOS(): void {
-    this.offer.operatingSystems = _.cloneDeep(this.operatingSystems);
-  }
-
-  unselectAllOS(): void {
-    this.offer.operatingSystems = [];
+  unselectAllCategories(): void {
+    this.offer.subCategories = [];
+    this.onSubCategoryChange(this.offer.subCategories);
   }
 
   selectAllSubCategories(): void {
@@ -617,79 +619,50 @@ export class CreateOfferComponent implements OnInit {
     this.offer.travelInfo.flightInfo.travelClasses = [];
   }
 
-  private refineOfferToSave(): Offer {
-    const copy: Offer = _.cloneDeep(this.offer);
-    copy.startDate.setSeconds(0);
-    copy.endDate.setSeconds(59);
-    _.forEach(copy.offerReturns, (offerReturn) => {
-      _.forEach(offerReturn.returnInfos, (returnInfo) => {
-        delete returnInfo.payment.modes;
-      });
-    });
-    if (!this.isRechargeExtra) {
-      copy.rechargeInfo = undefined;
-    }
-    if (!this.isFlight && !this.isBus) {
-      copy.travelInfo = undefined;
-    } else {
-      if (!this.isFlight) {
-        copy.travelInfo.flightInfo = undefined;
-      }
-      if (!this.isBus) {
-        copy.travelInfo.busInfo = undefined;
-      } else if (this.isBus) {
-        if (copy.travelInfo && copy.travelInfo.busInfo) {
-          const busInfo = copy.travelInfo.busInfo;
-          if ((!busInfo.froms || busInfo.froms.length === 0) && (!busInfo.tos || busInfo.tos.length === 0)) {
-            copy.travelInfo.busInfo = undefined;
-            this.isBus = false;
-          }
-        }
-      }
-
-      if (!copy.travelInfo.busInfo && !copy.travelInfo.flightInfo) {
-        copy.travelInfo = undefined;
-        this.isBus = false;
-        this.isFlight = false;
-      }
-    }
-    return copy;
+  selectAllBanks(dataItem): void {
+    dataItem.payment.banks = _.cloneDeep(this.banks);
+    this.onBankChange(dataItem.payment.banks, dataItem);
   }
 
-  // private refineOfferToSave(): void {
-  //   this.offer.startDate.setSeconds(0);
-  //   this.offer.endDate.setSeconds(59);
-  //   _.forEach(this.offer.offerReturns, (offerReturn) => {
-  //     _.forEach(offerReturn.returnInfos, (returnInfo) => {
-  //       delete returnInfo.payment.modes;
-  //     });
-  //   });
-  //   if (!this.isRechargeExtra) {
-  //     this.offer.rechargeInfo = undefined;
-  //   }
-  //   if (!this.isFlight && !this.isBus) {
-  //     this.offer.travelInfo = undefined;
-  //   } else {
-  //     if (!this.isFlight) {
-  //       this.offer.travelInfo.flightInfo = undefined;
-  //     }
-  //     if (!this.isBus) {
-  //       this.offer.travelInfo.busInfo = undefined;
-  //     }
-  //   }
-  // }
+  unselectAllBanks(dataItem): void {
+    dataItem.payment.banks = [];
+    this.onBankChange(dataItem.payment.banks, dataItem);
+  }
 
-  saveOffer(): void {
-    this.isSaving = true;
-    const copy = this.refineOfferToSave();
-    console.log('Offer ', copy);
-    if (this.offer.id !== undefined) {
-      this.subscribeToSaveResponse(
-        this.offerService.update(copy));
-    } else {
-      this.subscribeToSaveResponse(
-        this.offerService.create(copy));
-    }
+  selectAllPaymentModes(dataItem): void {
+    dataItem.payment.modes = _.cloneDeep(this.cardTypes);
+    this.onPaymentModeChange(dataItem.payment.modes, dataItem);
+  }
+
+  unselectAllPaymentModes(dataItem): void {
+    dataItem.payment.modes = [];
+    this.onPaymentModeChange(dataItem.payment.modes, dataItem);
+  }
+
+  selectAllStates(): void {
+    this.offerStates = _.cloneDeep(this.states);
+    this.onStateChange(this.offerStates);
+  }
+
+  unselectAllStates(): void {
+    this.offerStates = [];
+    this.onStateChange(this.offerStates);
+  }
+
+  selectAllCities(): void {
+    this.offer.cities = _.cloneDeep(this.filteredCities);
+  }
+
+  unselectAllCities(): void {
+    this.offer.cities = [];
+  }
+
+  selectAllOS(): void {
+    this.offer.operatingSystems = _.cloneDeep(this.operatingSystems);
+  }
+
+  unselectAllOS(): void {
+    this.offer.operatingSystems = [];
   }
 
   private subscribeToSaveResponse(result: Observable<HttpResponse<Offer>>) {
@@ -711,6 +684,156 @@ export class CreateOfferComponent implements OnInit {
     console.log('ERROR');
   }
 
+  private loadTabTwoEntities() {
+    if (!this.affiliates) {
+      this.loadAffiliates();
+    }
+    if (!this.merchants) {
+      this.loadMerchants();
+    }
+    if (!this.categories) {
+      this.loadCategories();
+    }
+    if (!this.subCategories) {
+      this.loadSubCategories();
+    }
+    if (!this.serviceProviders) {
+      this.loadServiceProviders();
+    }
+  }
+
+  private loadTabThreeEntities() {
+    if (!this.returnTypes) {
+      this.loadReturnTypes();
+    }
+    if (!this.returnModes) {
+      this.loadReturnModes();
+    }
+    if (!this.cards) {
+      this.loadCards();
+    }
+    if (!this.offers) {
+      this.loadOffersForReference();
+    }
+    if (!this.cardTypes) {
+      this.loadCardTypes();
+    }
+    if (!this.banks) {
+      this.loadBanks();
+    }
+  }
+
+  private loadTabFourEntities() {
+    if (!this.dates) {
+      this.loadDates();
+    }
+    if (!this.days) {
+      this.loadDays();
+    }
+    if (!this.states) {
+      this.loadStates();
+    }
+    if (!this.cities) {
+      this.loadCities();
+    }
+    if (!this.operatingSystems) {
+      this.loadOperatingSystems();
+    }
+    if (!this.offerPolicies) {
+      this.loadOfferPolicies();
+    }
+  }
+
+  private loadRechargeEntities() {
+    if (!this.circles) {
+      this.loadCircles();
+    }
+    if (!this.rechargePlanTypes) {
+      this.loadRechargePlanTypes();
+    }
+  }
+
+  private loadTravelEntities() {
+    if (!this.travelTypes) {
+      this.loadTravelTypes();
+    }
+  }
+
+  private loadFlightEntities(): void {
+    if (!this.regions) {
+      this.loadRegions();
+    }
+    if (!this.flightClasses) {
+      this.loadFlightClasses();
+    }
+  }
+
+  private loadBusEntities(): void {
+    if (!this.cities) {
+      this.loadCities();
+    }
+  }
+
+  private loadRechargeInfo(): void {
+    this.offerService.findRechargeInfoById(this.offer.id).subscribe(
+      (res: HttpResponse<Offer>) => {
+        this.offer.rechargeInfo = res.body.rechargeInfo;
+        this.isRechargeExtra = true;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadFlightInfo(): void {
+    this.offerService.findFlightInfoById(this.offer.id).subscribe(
+      (res: HttpResponse<Offer>) => {
+        const travelInfo = res.body.travelInfo;
+        if (!this.offer.travelInfo) {
+          this.offer.travelInfo = travelInfo;
+        } else {
+          this.offer.travelInfo.flightInfo = travelInfo.flightInfo;
+        }
+        this.isFlight = true;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadBusInfo(): void {
+    this.offerService.findBusInfoById(this.offer.id).subscribe(
+      (res: HttpResponse<Offer>) => {
+        const travelInfo = res.body.travelInfo;
+        if (travelInfo) {
+          if (!this.offer.travelInfo) {
+            this.offer.travelInfo = travelInfo;
+            if (this.offer.travelInfo.busInfo) {
+              this.isBus = true;
+            } else if (this.editMode) {
+              this.offer.travelInfo.busInfo = new BusInfo();
+              this.isBus = true;
+            }
+          } else if (travelInfo.busInfo) {
+            this.offer.travelInfo.busInfo = travelInfo.busInfo;
+            this.isBus = true;
+          } else if (this.editMode) {
+            this.offer.travelInfo.busInfo = new BusInfo();
+            this.isBus = true;
+          }
+        } else if (this.editMode) {
+          if (!this.offer.travelInfo) {
+            this.offer.travelInfo = new TravelInfo();
+            this.offer.travelInfo.busInfo = new BusInfo();
+          } else if (!this.offer.travelInfo.busInfo) {
+            this.offer.travelInfo.busInfo = new BusInfo();
+          }
+          this.isBus = true;
+        }
+        this.fetchedBusInfo = true;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
   private loadOfferTypes(): void {
     this.offerTypeService.findAll().subscribe(
       (res: HttpResponse<OfferType[]>) => {
@@ -720,10 +843,170 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  private loadOfferPolicies(): void {
-    this.offerPolicyService.findAll().subscribe(
-      (res: HttpResponse<OfferPolicy[]>) => {
-        this.offerPolicies = res.body;
+  private loadAffiliates(): void {
+    this.affiliateService.findAll().subscribe(
+      (res: HttpResponse<Affiliate[]>) => {
+        this.affiliates = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadMerchants(): void {
+    this.merchantService.findWithSubCategories().subscribe(
+      (res: HttpResponse<Merchant[]>) => {
+        this.merchants = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadCategories(): void {
+    this.categoryService.findAll().subscribe(
+      (res: HttpResponse<Category[]>) => {
+        this.categories = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadSubCategories(): void {
+    this.subCategoryService.findWithCategory().subscribe(
+      (res: HttpResponse<SubCategory[]>) => {
+        this.subCategories = res.body;
+        this.filteredSubCategories = [];
+        this.jhiEventManager.broadcast({
+          name: 'tabTwoEntity',
+          content: ''
+        });
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadServiceProviders(): void {
+    this.serviceProviderService.findWithSubCategories().subscribe(
+      (res: HttpResponse<ServiceProvider[]>) => {
+        this.serviceProviders = res.body;
+        this.filteredServiceProviders = [];
+        this.jhiEventManager.broadcast({
+          name: 'tabTwoEntity',
+          content: ''
+        });
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadCircles(): void {
+    this.circleService.findAll().subscribe(
+      (res: HttpResponse<Circle[]>) => {
+        this.circles = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadRechargePlanTypes(): void {
+    this.rechargePlanTypeService.findAll().subscribe(
+      (res: HttpResponse<RechargePlanType[]>) => {
+        this.rechargePlanTypes = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadTravelTypes(): void {
+    this.travelTypeService.findAll().subscribe(
+      (res: HttpResponse<TravelType[]>) => {
+        this.travelTypes = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadRegions(): void {
+    this.regionService.findAll().subscribe(
+      (res: HttpResponse<Region[]>) => {
+        this.regions = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadFlightClasses(): void {
+    this.flightClassService.findAll().subscribe(
+      (res: HttpResponse<FlightClass[]>) => {
+        this.flightClasses = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadReturnTypes(): void {
+    this.returnTypeService.findAll().subscribe(
+      (res: HttpResponse<ReturnType[]>) => {
+        this.returnTypes = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadReturnModes(): void {
+    this.returnModeService.findAll().subscribe(
+      (res: HttpResponse<ReturnMode[]>) => {
+        this.returnModes = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadBanks(): void {
+    this.bankService.findAll().subscribe(
+      (res: HttpResponse<Bank[]>) => {
+        this.banks = res.body;
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadCards(): void {
+    this.cardService.findWithTypeAndBankAndProviders().subscribe(
+      (res: HttpResponse<Card[]>) => {
+        this.cards = res.body;
+        this.filteredCards = [];
+        if (this.offer.id !== undefined) {
+          const returnInfos = this.offer.offerReturns['returnInfos'];
+          this.extractBanksFromCards(returnInfos);
+          this.extractPaymentModesFromCards(returnInfos);
+        }
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadOffersForReference(): void {
+    if (this.offer.id) {
+      this.offerService.findAllForReferenceExclusive(this.offer.id).subscribe(
+        (res: HttpResponse<Offer[]>) => {
+          this.offers = res.body;
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
+    } else {
+      this.offerService.findAllForReference().subscribe(
+        (res: HttpResponse<Offer[]>) => {
+          this.offers = res.body;
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
+    }
+  }
+
+  private loadCardTypes(): void {
+    this.cardTypeService.findAll().subscribe(
+      (res: HttpResponse<CardType[]>) => {
+        this.cardTypes = res.body;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -778,210 +1061,10 @@ export class CreateOfferComponent implements OnInit {
     );
   }
 
-  private loadAffiliates(): void {
-    this.affiliateService.findAll().subscribe(
-      (res: HttpResponse<Affiliate[]>) => {
-        this.affiliates = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadMerchants(): void {
-    this.merchantService.findWithSubCategories().subscribe(
-      (res: HttpResponse<Merchant[]>) => {
-        this.merchants = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadCategories(): void {
-    this.categoryService.findAll().subscribe(
-      (res: HttpResponse<Category[]>) => {
-        this.categories = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadSubCategories(): void {
-    this.subCategoryService.findWithCategory().subscribe(
-      (res: HttpResponse<SubCategory[]>) => {
-        this.subCategories = res.body;
-        this.filteredSubCategories = [];
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadServiceProviders(): void {
-    this.serviceProviderService.findWithSubCategories().subscribe(
-      (res: HttpResponse<ServiceProvider[]>) => {
-        this.serviceProviders = res.body;
-        this.filteredServiceProviders = [];
-        if (this.editMode && this.offer.id !== undefined) {
-          this.onCategoryChange(this.offerCategories);
-        }
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadCircles(): void {
-    this.circleService.findAll().subscribe(
-      (res: HttpResponse<Circle[]>) => {
-        this.circles = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadRechargePlanTypes(): void {
-    this.rechargePlanTypeService.findAll().subscribe(
-      (res: HttpResponse<RechargePlanType[]>) => {
-        this.rechargePlanTypes = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadTravelTypes(): void {
-    this.travelTypeService.findAll().subscribe(
-      (res: HttpResponse<TravelType[]>) => {
-        this.travelTypes = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadRegions(): void {
-    this.regionService.findAll().subscribe(
-      (res: HttpResponse<Region[]>) => {
-        this.regions = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadFlightClasses(): void {
-    this.flightClassService.findAll().subscribe(
-      (res: HttpResponse<FlightClass[]>) => {
-        this.flightClasses = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadRechargeInfo(): void {
-    this.offerService.findRechargeInfoById(this.offer.id).subscribe(
-      (res: HttpResponse<Offer>) => {
-        const offer = res.body;
-        this.offer.rechargeInfo = offer.rechargeInfo;
-        console.log('RE ', this.offer);
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadFlightInfo(): void {
-    this.offerService.findFlightInfoById(this.offer.id).subscribe(
-      (res: HttpResponse<Offer>) => {
-        const offer = res.body;
-        if (offer.travelInfo) {
-          if (offer.travelInfo.flightInfo) {
-            this.offer.travelInfo.id = offer.travelInfo.id;
-            this.offer.travelInfo.types = offer.travelInfo.types;
-            this.offer.travelInfo.flightInfo = offer.travelInfo.flightInfo;
-            if (this.editMode && !this.offer.travelInfo.flightInfo) {
-              this.offer.travelInfo.flightInfo = new FlightInfo();
-            }
-            console.log('TR ', this.offer);
-          } else if (!this.editMode) {
-            this.isFlight = false;
-          }
-        } else if (!this.editMode) {
-          this.isFlight = false;
-        }
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadBusInfo(): void {
-    this.offerService.findBusInfoById(this.offer.id).subscribe(
-      (res: HttpResponse<Offer>) => {
-        const offer = res.body;
-        if (offer.travelInfo) {
-          if (offer.travelInfo.busInfo) {
-            this.offer.travelInfo.id = offer.travelInfo.id;
-            this.offer.travelInfo.types = offer.travelInfo.types;
-            this.offer.travelInfo.busInfo = offer.travelInfo.busInfo;
-            if (this.editMode && !this.offer.travelInfo.busInfo) {
-              this.offer.travelInfo.busInfo = new BusInfo();
-            }
-            console.log('BU ', this.offer);
-          } else if (!this.editMode) {
-            this.isBus = false;
-          }
-        } else if (!this.editMode) {
-          this.isBus = false;
-        }
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadReturnTypes(): void {
-    this.returnTypeService.findAll().subscribe(
-      (res: HttpResponse<ReturnType[]>) => {
-        this.returnTypes = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadReturnModes(): void {
-    this.returnModeService.findAll().subscribe(
-      (res: HttpResponse<ReturnMode[]>) => {
-        this.returnModes = res.body;
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadCards(): void {
-    this.cardService.findWithTypeAndProviders().subscribe(
-      (res: HttpResponse<Card[]>) => {
-        this.cards = res.body;
-        this.filteredCards = [];
-      },
-      (res: HttpErrorResponse) => this.onError(res.message)
-    );
-  }
-
-  private loadOffersForReference(): void {
-    if (this.offer.id) {
-      this.offerService.findAllForReferenceExclusive(this.offer.id).subscribe(
-        (res: HttpResponse<Offer[]>) => {
-          this.offers = res.body;
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
-    } else {
-      this.offerService.findAllForReference().subscribe(
-        (res: HttpResponse<Offer[]>) => {
-          this.offers = res.body;
-        },
-        (res: HttpErrorResponse) => this.onError(res.message)
-      );
-    }
-  }
-
-  private loadCardTypes(): void {
-    this.cardTypeService.findAll().subscribe(
-      (res: HttpResponse<CardType[]>) => {
-        this.cardTypes = res.body;
+  private loadOfferPolicies(): void {
+    this.offerPolicyService.findAll().subscribe(
+      (res: HttpResponse<OfferPolicy[]>) => {
+        this.offerPolicies = res.body;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );

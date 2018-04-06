@@ -6,7 +6,11 @@ export class FilterEntitiesService {
 
   constructor() { }
 
-  bySingleRelationId<T, U>(referenceEntities: T[], filterEntities: U[], relationName: string): U[] {
+  bySingleRelationId<T, U>(referenceEntity: T, filterEntities: U[], relationName: string): U[] {
+    return _.filter(filterEntities, (filterEntity) => filterEntity[relationName].id === referenceEntity['id']);
+  }
+
+  bySingleRelationIds<T, U>(referenceEntities: T[], filterEntities: U[], relationName: string): U[] {
     const filtered = [];
     _.forEach(referenceEntities, (referenceEntity) => {
       filtered.push(..._.filter(filterEntities, (filterEntity) => filterEntity[relationName].id === referenceEntity.id));
@@ -14,7 +18,7 @@ export class FilterEntitiesService {
     return filtered;
   }
 
-  byManyRelationId<T, U>(referenceEntities: T[], filterEntities: U[], relationName: string): U[] {
+  byManyRelationIds<T, U>(referenceEntities: T[], filterEntities: U[], relationName: string): U[] {
     let filtered = [];
     _.forEach(referenceEntities, (referenceEntity) => {
       const arr = _.filter(filterEntities, (filterEntity) => {

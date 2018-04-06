@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { DropDownListModule } from '@progress/kendo-angular-dropdowns';
+import { Autosize } from 'ng-autosize';
 import { AlertModule } from 'ngx-bootstrap';
 
 import {
@@ -18,7 +19,8 @@ const COMPONENTS = [
 ];
 
 const DIRECTIVES = [
-  NumberInputDirective
+  NumberInputDirective,
+  Autosize
 ];
 
 @NgModule({

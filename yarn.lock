@@ -5598,6 +5598,10 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
+ng-autosize@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ng-autosize/-/ng-autosize-1.1.0.tgz#3c2a95c0eb931ca9a5df1408735f051316b2cce1"
+
 ng-block-ui@^0.9.5:
   version "0.9.5"
   resolved "https://registry.yarnpkg.com/ng-block-ui/-/ng-block-ui-0.9.5.tgz#64674401a4a260fc7933787b1fa4fb126f7100be"

@@ -19,7 +19,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 
         @EntityGraph(attributePaths = { "operatingSystems", "cities", "cities.state", "subCategories",
                         "subCategories.category", "serviceProviders", "serviceProviders.subCategories", "activeDates",
-                        "activeDays", "affiliate", "policy", "offerReturns" })
+                        "activeDays", "affiliate", "policy", "offerReturns", "offerReturns.returnInfos.payment.cards.bank", "offerReturns.returnInfos.payment.cards.type" })
         Offer findOneForAdminViewById(Long id);
 
         @EntityGraph(attributePaths = { "rechargeInfo", "rechargeInfo.circles", "rechargeInfo.rechargePlanTypes" })
