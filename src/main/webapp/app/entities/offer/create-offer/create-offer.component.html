@@ -355,7 +355,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label class="mr-5" for="recharge_info_recharge_types">Recharge Types</label>
-                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let rechargePlanType of offer.rechargeInfo.rechargePlanTypes">
+                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let rechargePlanType of offer?.rechargeInfo?.rechargePlanTypes">
                                 {{ rechargePlanType.name }}
                             </span>
                             <ng-select *ngIf="editMode" id="recharge_info_recharge_types" name="recharge_info_recharge_types" [(ngModel)]="offer.rechargeInfo.rechargePlanTypes"
@@ -598,15 +598,13 @@
                                         <legend class="legend-fix">
                                             <strong>Payment Options</strong>
                                         </legend>
-                                        <div class="form-group mb-3">
+                                        <div class="form-group mb-3" *ngIf="editMode">
                                             <label for="banks">Banks</label>
-                                            <ng-container *ngIf="!editMode">
-                                                <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let bank of dataItem.payment.banks">
-                                                    {{ bank.name }}
-                                                </span>
-                                            </ng-container>
-                                            <ng-select *ngIf="editMode" id="banks" name="banks" [(ngModel)]="dataItem.payment.banks" [items]="banks" bindLabel="name"
-                                                [multiple]="true" [closeOnSelect]="false" placeholder="Payment Modes" appendTo="body" (change)="onBankChange($event, dataItem)">
+                                            <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let bank of dataItem.payment.banks">
+                                                {{ bank.name }}
+                                            </span>
+                                            <ng-select id="banks" name="banks" [(ngModel)]="dataItem.payment.banks" [items]="banks" bindLabel="name" [multiple]="true"
+                                                [closeOnSelect]="false" placeholder="Payment Modes" appendTo="body" (change)="onBankChange($event, dataItem)">
                                                 <ng-template ng-header-tmp>
                                                     <div class="my-2 ml-5">
                                                         <button (click)="selectAllBanks(dataItem)" class="btn btn-sm btn-secondary">Select all</button>
@@ -615,15 +613,14 @@
                                                 </ng-template>
                                             </ng-select>
                                         </div>
-
-                                        <div class="form-group mb-3">
+                                        <div class="form-group mb-3" *ngIf="editMode">
                                             <label for="paymentModes">Modes</label>
                                             <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let paymentMode of dataItem.payment.modes">
                                                 {{ paymentMode.name }}
                                             </span>
-                                            <ng-select *ngIf="editMode" id="paymentModes" name="paymentModes" [(ngModel)]="dataItem.payment.modes" [items]="cardTypes"
-                                                bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Payment Modes"
-                                                appendTo="body" (change)="onPaymentModeChange($event, dataItem)">
+                                            <ng-select id="paymentModes" name="paymentModes" [(ngModel)]="dataItem.payment.modes" [items]="cardTypes" bindLabel="name"
+                                                [multiple]="true" [closeOnSelect]="false" placeholder="Payment Modes" appendTo="body"
+                                                (change)="onPaymentModeChange($event, dataItem)">
                                                 <ng-template ng-header-tmp>
                                                     <div class="my-2 ml-5">
                                                         <button (click)="selectAllPaymentModes(dataItem)" class="btn btn-sm btn-secondary">Select all</button>
@@ -738,10 +735,10 @@
                     <button type="button" class="btn btn-danger" (click)="goBack()">Go Back</button>
                 </div>
                 <div class="float-right">
-                    <button type="button" class="btn btn-info" *ngIf="!editMode" (click)="editOffer()">Edit</button>
+                    <!-- <button type="button" class="btn btn-info" *ngIf="!editMode" (click)="editOffer()">Edit</button> -->
                     <button *ngIf="editMode" type="button" class="btn btn-success" [disabled]="isSaving || basicInfoForm.form.invalid || detailInfoForm.form.invalid || offerReturnForm.form.invalid"
                         (click)="saveOffer()">Save</button>
-                    <button type="button" class="btn btn-danger" *ngIf="offer?.id && editMode" (click)="cancelEdit()">Cancel</button>
+                    <!-- <button type="button" class="btn btn-danger" *ngIf="offer?.id && editMode" (click)="cancelEdit()">Cancel</button> -->
                 </div>
             </div>
         </tabset>

@@ -179,16 +179,16 @@ export class CreateOfferComponent implements OnInit {
   }
 
   editOffer(): void {
-    this.editedOffer = Object.assign({}, this.offer);
-    this.goToTab(0);
+    this.editedOffer = _.cloneDeep(this.offer);
+    // this.goToTab(0);
     this.initializeToEdit();
   }
 
-  cancelEdit(): void {
-    this.editMode = false;
-    this.offer = Object.assign({}, this.editedOffer);
-    this.editedOffer = undefined;
-  }
+  // cancelEdit(): void {
+  //   this.editMode = false;
+  //   this.offer = _.cloneDeep(this.editedOffer);
+  //   this.editedOffer = undefined;
+  // }
 
   private enableTab(tabNumber: number): void {
     this.createOfferTabs.tabs[tabNumber].disabled = false;
@@ -368,36 +368,32 @@ export class CreateOfferComponent implements OnInit {
     }
   }
 
-  onPaymentModeChange(modes: CardType[], dataItem): void {
+  private filterCardsForBankAndPaymentMode(modes, dataItem): void {
     const bankCards = this.filterEntitiesService.bySingleRelationIds(dataItem.payment.banks, this.cards, 'bank');
     this.filteredCards = this.filterEntitiesService.bySingleRelationIds(modes, bankCards, 'type');
+  }
+
+  onPaymentModeChange(modes: CardType[], dataItem): void {
+    this.filterCardsForBankAndPaymentMode(modes, dataItem);
     dataItem.payment.cards = _.intersectionBy(dataItem.payment.cards, this.filteredCards, 'id');
   }
 
-  extractBanksFromCards(returnInfos: ReturnInfo[]): void {
+  extractBanksAndPaymentModesFromCards(): void {
     let bankSet;
-    _.forEach(returnInfos, (returnInfo) => {
-      bankSet = new Set();
-      _.forEach(returnInfo.payment.cards, (card) => {
-        bankSet.add(card.bank);
-      });
-      returnInfo.payment.banks = _.toArray(bankSet);
-    });
-  }
-
-  extractPaymentModesFromCards(returnInfos: ReturnInfo[]): void {
     let paymentModeSet;
-    _.forEach(returnInfos, (returnInfo) => {
-      paymentModeSet = new Set();
-      _.forEach(returnInfo.payment.cards, (card) => {
-        paymentModeSet.add(card.type);
+    _.forEach(this.offer.offerReturns, (offerReturn) => {
+      _.forEach(offerReturn['returnInfos'], (returnInfo) => {
+        bankSet = new Set();
+        paymentModeSet = new Set();
+        _.forEach(returnInfo.payment.cards, (card) => {
+          bankSet.add(card.bank);
+          paymentModeSet.add(card.type);
+        });
+        returnInfo.payment['banks'] = _.toArray(bankSet);
+        returnInfo.payment['modes'] = _.toArray(paymentModeSet);
+        this.filterCardsForBankAndPaymentMode(returnInfo.payment.modes, returnInfo);
       });
-      returnInfo.payment.modes = _.toArray(paymentModeSet);
-      console.log(returnInfo.payment.modes);
-      console.log(returnInfo.payment.banks);
-      // this.onPaymentModeChange(returnInfo.payment.modes, returnInfo);
     });
-    console.log('TTTTTT');
   }
 
   private extractStates(): void {
@@ -531,9 +527,7 @@ export class CreateOfferComponent implements OnInit {
 
   saveOffer(): void {
     this.isSaving = true;
-    console.log(this.offer);
     const copy = this.refineOfferToSave();
-    console.log('Offer ', copy);
     if (this.offer.id !== undefined) {
       this.subscribeToSaveResponse(
         this.offerService.update(copy));
@@ -976,9 +970,7 @@ export class CreateOfferComponent implements OnInit {
         this.cards = res.body;
         this.filteredCards = [];
         if (this.offer.id !== undefined) {
-          const returnInfos = this.offer.offerReturns['returnInfos'];
-          this.extractBanksFromCards(returnInfos);
-          this.extractPaymentModesFromCards(returnInfos);
+          this.extractBanksAndPaymentModesFromCards();
         }
       },
       (res: HttpErrorResponse) => this.onError(res.message)
