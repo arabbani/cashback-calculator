@@ -33,6 +33,7 @@ export class FlightComponent implements OnInit {
   calculating = false;
   subCategoryCode: string;
   regionsEnum;
+  flightDestination: number;
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
     private cashbackService: CashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
@@ -56,7 +57,8 @@ export class FlightComponent implements OnInit {
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.cashbackService.calculateCashbackForFlight(this.flightInput).subscribe(
+    this.flightInput.flightTypeId = this.getFlightType();
+    this.cashbackService.flight(this.flightInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);
@@ -65,25 +67,23 @@ export class FlightComponent implements OnInit {
     );
   }
 
-  private getSubCategoryIdFromServiceProvider(): number {
-    let sId: number = undefined;
-    _.forEach(this.serviceProviders, (serviceProvider) => {
-      let cc = undefined;
-      cc = _.forEach(serviceProvider.subCategories, (subCategory) => {
-        if (subCategory.code === this.subCategoryCode) {
-          sId = subCategory.id;
-          return true;
-        }
-      });
-      if (cc) {
-        return;
-      }
-    });
-    return sId;
-  }
-
   private broadcastCashbackInfo(cashbackInfos: CashbackInfo[]): void {
     this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.flightInput, this.subCategoryCode));
+  }
+
+  getFlightType(): number {
+    let destination = undefined;
+    if (this.flightInput.flightOriginId === this.flightDestination) {
+      destination = this.regionsEnum.Domestic;
+    } else {
+      destination = this.regionsEnum.International;
+    }
+    const flightType = _.find(this.regions, (region) => region.name === destination);
+    return flightType.id;
+  }
+
+  private getSubCategoryIdFromServiceProvider(): number {
+    return this.serviceProviders[0]['subCategories'][0].id;
   }
 
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {

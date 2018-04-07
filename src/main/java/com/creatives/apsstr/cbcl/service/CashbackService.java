@@ -67,13 +67,13 @@ public class CashbackService {
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	// public List<CashbackInfo> calculateCashbackFlight(FlightInput flightInput) {
-	// 	List<Offer> offers = offerRepository.cashbackFlight(true, false, flightInput.getSubCategoryId(),
-	// 			flightInput.getDateTime(), flightInput.getActiveDate(), flightInput.getActiveDay(),
-	// 			flightInput.getFlightClassId(), flightInput.getFlightTypeId(), flightInput.getFlightOriginId(),
-	// 			flightInput.getTravelTypeId());
-	// 	return this.cashbackCalculatorAlgo.calculate(offers, flightInput.getExpense());
-	// }
+	public List<CashbackInfo> flight(FlightInput flightInput) {
+		List<Offer> offers = offerRepository.cashbackFlight(true, false, flightInput.getDateTime(),
+				flightInput.getActiveDate(), flightInput.getActiveDay(), flightInput.getSubCategoryId(),
+				flightInput.getTravelTypeId(), flightInput.getFlightTypeId(), flightInput.getFlightClassId(),
+				flightInput.getFlightOriginId());
+		return this.cashbackCalculatorAlgo.calculate(offers, flightInput.getExpense());
+	}
 
 	/**
 	 * Calculate cashback for bus

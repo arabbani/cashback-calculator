@@ -65,7 +65,7 @@ export class CashbackService {
     return this.calculate(`${this.restUrl}/water`, waterInput);
   }
 
-  calculateCashbackForFlight(flightInput: FlightInput): Observable<EntityResponseType> {
+  flight(flightInput: FlightInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/flight`, flightInput);
   }
 
