@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
+import { BroadcastCashbackInfoService, CashbackService } from '../../../..';
 import { CashbackInfo, FlightInput, Regions, StoredCashback, SubCategories } from '../../../../..';
 import { ApsstrMetaService } from '../../../../../../apsstr-core-ui';
 import {
@@ -35,7 +35,7 @@ export class FlightComponent implements OnInit {
   regionsEnum;
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
-    private calculateCashbackService: CalculateCashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
+    private cashbackService: CashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
     private serviceProviderService: ServiceProviderService, private travelTypeService: TravelTypeService, private flightClassService: FlightClassService,
     private regionService: RegionService, private route: ActivatedRoute, private apsstrMetaService: ApsstrMetaService) { }
 
@@ -56,7 +56,7 @@ export class FlightComponent implements OnInit {
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.calculateCashbackService.calculateCashbackForFlight(this.flightInput).subscribe(
+    this.cashbackService.calculateCashbackForFlight(this.flightInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);

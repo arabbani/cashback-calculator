@@ -4,7 +4,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import {
   BroadcastCashbackInfoService,
   BroadcastSubCategoryCodeService,
-  CalculateCashbackService,
+  CashbackService,
   StoredCashbackService,
 } from './services';
 
@@ -13,7 +13,7 @@ import {
     CommonModule
   ],
   providers: [
-    BroadcastCashbackInfoService, BroadcastSubCategoryCodeService, CalculateCashbackService, StoredCashbackService
+    BroadcastCashbackInfoService, BroadcastSubCategoryCodeService, CashbackService, StoredCashbackService
   ]
 })
 export class ProductCoreModule {

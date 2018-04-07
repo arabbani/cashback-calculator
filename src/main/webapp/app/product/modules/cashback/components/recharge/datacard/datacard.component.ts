@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
+import { BroadcastCashbackInfoService, CashbackService } from '../../../..';
 import { CashbackInfo, DatacardInput, StoredCashback, SubCategories } from '../../../../..';
 import { ApsstrMetaService } from '../../../../../../apsstr-core-ui';
 import {
@@ -31,11 +31,12 @@ export class DatacardComponent implements OnInit {
   rechargePlanTypes: RechargePlanType[];
   calculating = false;
   subCategoryCode: string;
+  previousSubCategoryCode: string;
   prepaidProviders: ServiceProvider[] = undefined;
   postpaidProviders: ServiceProvider[] = undefined;
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
-    private calculateCashbackService: CalculateCashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
+    private cashbackService: CashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
     private serviceProviderService: ServiceProviderService, private circleService: CircleService, private rechargePlanTypeService: RechargePlanTypeService,
     private route: ActivatedRoute, private apsstrMetaService: ApsstrMetaService) { }
 
@@ -51,14 +52,18 @@ export class DatacardComponent implements OnInit {
   }
 
   onSelectSubCategory(subCategoryCode: string): void {
-    this.datacardInput.serviceProviderId = undefined;
-    this.getServiceProvidersBySubCategoryCode(subCategoryCode);
+    if (!this.previousSubCategoryCode || subCategoryCode !== this.previousSubCategoryCode) {
+      this.previousSubCategoryCode = subCategoryCode;
+      this.datacardInput.serviceProviderId = undefined;
+      this.datacardInput.subCategoryId = undefined;
+      this.getServiceProvidersBySubCategoryCode(subCategoryCode);
+    }
   }
 
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.calculateCashbackService.calculateCashbackForDatacard(this.datacardInput).subscribe(
+    this.cashbackService.datacard(this.datacardInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);
@@ -67,33 +72,21 @@ export class DatacardComponent implements OnInit {
     );
   }
 
-  private getSubCategoryIdFromServiceProvider(): number {
-    let sId: number = undefined;
-    _.forEach(this.serviceProviders, (serviceProvider) => {
-      let cc = undefined;
-      cc = _.forEach(serviceProvider.subCategories, (subCategory) => {
-        if (subCategory.code === this.subCategoryCode) {
-          sId = subCategory.id;
-          return true;
-        }
-      });
-      if (cc) {
-        return;
-      }
-    });
-    return sId;
-  }
-
   private broadcastCashbackInfo(cashbackInfos: CashbackInfo[]): void {
     this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.datacardInput, this.subCategoryCode));
   }
 
+  private getSubCategoryIdFromServiceProvider(): number {
+    return this.serviceProviders[0]['subCategories'][0].id;
+  }
+
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {
+    this.serviceProviders = [];
     let providers: ServiceProvider[];
     let crawlFromServer = false;
     switch (subCategoryCode) {
       case SubCategories.PrepaidDatacard:
-        if (!this.prepaidProviders && this.prepaidProviders === undefined) {
+        if (!this.prepaidProviders) {
           crawlFromServer = true;
         } else {
           crawlFromServer = false;
@@ -101,7 +94,7 @@ export class DatacardComponent implements OnInit {
         }
         break;
       case SubCategories.PostpaidDatacard:
-        if (!this.postpaidProviders && this.postpaidProviders === undefined) {
+        if (!this.postpaidProviders) {
           crawlFromServer = true;
         } else {
           crawlFromServer = false;

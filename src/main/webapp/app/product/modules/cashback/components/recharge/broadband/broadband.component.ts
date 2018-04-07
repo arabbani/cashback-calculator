@@ -1,11 +1,10 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
+import { BroadcastCashbackInfoService, CashbackService } from '../../../..';
 import { BroadbandInput, CashbackInfo, StoredCashback, SubCategories } from '../../../../..';
 import { ApsstrMetaService } from '../../../../../../apsstr-core-ui';
 import { ServiceProvider, ServiceProviderService } from '../../../../../../entities';
@@ -23,7 +22,7 @@ export class BroadbandComponent implements OnInit {
   subCategoryCode: string;
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
-    private calculateCashbackService: CalculateCashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
+    private cashbackService: CashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
     private serviceProviderService: ServiceProviderService, private apsstrMetaService: ApsstrMetaService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -39,7 +38,7 @@ export class BroadbandComponent implements OnInit {
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.calculateCashbackService.calculateCashbackForBroadband(this.broadbandInput).subscribe(
+    this.cashbackService.broadband(this.broadbandInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);
@@ -48,25 +47,12 @@ export class BroadbandComponent implements OnInit {
     );
   }
 
-  private getSubCategoryIdFromServiceProvider(): number {
-    let sId: number = undefined;
-    _.forEach(this.serviceProviders, (serviceProvider) => {
-      let cc = undefined;
-      cc = _.forEach(serviceProvider.subCategories, (subCategory) => {
-        if (subCategory.code === this.subCategoryCode) {
-          sId = subCategory.id;
-          return true;
-        }
-      });
-      if (cc) {
-        return;
-      }
-    });
-    return sId;
-  }
-
   private broadcastCashbackInfo(cashbackInfos: CashbackInfo[]): void {
     this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.broadbandInput, this.subCategoryCode));
+  }
+
+  private getSubCategoryIdFromServiceProvider(): number {
+    return this.serviceProviders[0]['subCategories'][0].id;
   }
 
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {

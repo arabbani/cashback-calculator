@@ -17,7 +17,7 @@ import com.creatives.apsstr.cbcl.helper.model.LandlineInput;
 import com.creatives.apsstr.cbcl.helper.model.MetroInput;
 import com.creatives.apsstr.cbcl.helper.model.MobileInput;
 import com.creatives.apsstr.cbcl.helper.model.WaterInput;
-import com.creatives.apsstr.cbcl.service.CalculateCashbackService;
+import com.creatives.apsstr.cbcl.service.CashbackService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,14 +33,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/cashback")
-public class CalculateCashbackResource {
+public class CashbackResource {
 
-	private final Logger log = LoggerFactory.getLogger(CalculateCashbackResource.class);
+	private final Logger log = LoggerFactory.getLogger(CashbackResource.class);
 
-	private final CalculateCashbackService calculateCashbackService;
+	private final CashbackService cashbackService;
 
-	public CalculateCashbackResource(CalculateCashbackService calculateCashbackService) {
-		this.calculateCashbackService = calculateCashbackService;
+	public CashbackResource(CashbackService cashbackService) {
+		this.cashbackService = cashbackService;
 	}
 
 	/**
@@ -51,12 +51,11 @@ public class CalculateCashbackResource {
 	 */
 	@PostMapping("/mobile")
 	@Timed
-	public List<CashbackInfo> cashbackForMobile(@RequestBody MobileInput mobileInput) {
+	public List<CashbackInfo> mobile(@RequestBody MobileInput mobileInput) {
 		log.debug("REST request to calculate cashback for mobile : {} ", mobileInput);
-		return calculateCashbackService.cashbackRechargeWithRechargeCondition(mobileInput.getSubCategoryId(),
-				mobileInput.getServiceProviderId(), mobileInput.getDateTime(), mobileInput.getActiveDate(),
-				mobileInput.getActiveDay(), mobileInput.getCircleId(), mobileInput.getRechargePlaneTypeId(),
-				mobileInput.getExpense());
+		return cashbackService.rechargeWithRechargeCondition(mobileInput.getDateTime(), mobileInput.getActiveDate(),
+				mobileInput.getActiveDay(), mobileInput.getExpense(), mobileInput.getSubCategoryId(),
+				mobileInput.getServiceProviderId(), mobileInput.getCircleId(), mobileInput.getRechargePlaneTypeId());
 	}
 
 	/**
@@ -65,14 +64,13 @@ public class CalculateCashbackResource {
 	 * @return the ResponseEntity with status 200 (OK) and the list of
 	 *         cashbackResults in body
 	 */
-	// @PostMapping("/dth")
-	// @Timed
-	// public List<CashbackInfo> calculateCashbackForDth(@RequestBody DthInput dthInput) {
-	// 	log.debug("REST request to calculate cashback for dth : {} ", dthInput);
-	// 	return calculateCashbackService.calculateCashbackRecharge(dthInput.getSubCategoryId(),
-	// 			dthInput.getServiceProviderId(), dthInput.getDateTime(), dthInput.getActiveDate(),
-	// 			dthInput.getActiveDay(), dthInput.getExpense());
-	// }
+	@PostMapping("/dth")
+	@Timed
+	public List<CashbackInfo> dth(@RequestBody DthInput dthInput) {
+		log.debug("REST request to calculate cashback for dth : {} ", dthInput);
+		return cashbackService.recharge(dthInput.getDateTime(), dthInput.getActiveDate(), dthInput.getActiveDay(),
+				dthInput.getExpense(), dthInput.getSubCategoryId(), dthInput.getServiceProviderId());
+	}
 
 	/**
 	 * POST /datacard : calculate cashback for datacard
@@ -84,7 +82,7 @@ public class CalculateCashbackResource {
 	// @Timed
 	// public List<CashbackInfo> calculateCashbackForDatacard(@RequestBody DatacardInput datacardInput) {
 	// 	log.debug("REST request to calculate cashback for datacard : {} ", datacardInput);
-	// 	return calculateCashbackService.calculateCashbackRechargeWithRechargeCondition(
+	// 	return cashbackService.calculateCashbackRechargeWithRechargeCondition(
 	// 			datacardInput.getSubCategoryId(), datacardInput.getServiceProviderId(), datacardInput.getDateTime(),
 	// 			datacardInput.getActiveDate(), datacardInput.getActiveDay(), datacardInput.getCircleId(),
 	// 			datacardInput.getRechargePlaneTypeId(), datacardInput.getExpense());
@@ -96,14 +94,14 @@ public class CalculateCashbackResource {
 	 * @return the ResponseEntity with status 200 (OK) and the list of
 	 *         cashbackResults in body
 	 */
-	// @PostMapping("/landline")
-	// @Timed
-	// public List<CashbackInfo> calculateCashbackForLandline(@RequestBody LandlineInput landlineInput) {
-	// 	log.debug("REST request to calculate cashback for landline : {} ", landlineInput);
-	// 	return calculateCashbackService.calculateCashbackRecharge(landlineInput.getSubCategoryId(),
-	// 			landlineInput.getServiceProviderId(), landlineInput.getDateTime(), landlineInput.getActiveDate(),
-	// 			landlineInput.getActiveDay(), landlineInput.getExpense());
-	// }
+	@PostMapping("/landline")
+	@Timed
+	public List<CashbackInfo> landline(@RequestBody LandlineInput landlineInput) {
+		log.debug("REST request to calculate cashback for landline : {} ", landlineInput);
+		return cashbackService.recharge(landlineInput.getDateTime(), landlineInput.getActiveDate(),
+				landlineInput.getActiveDay(), landlineInput.getExpense(), landlineInput.getSubCategoryId(),
+				landlineInput.getServiceProviderId());
+	}
 
 	/**
 	 * POST /broadband : calculate cashback for broadband
@@ -111,14 +109,14 @@ public class CalculateCashbackResource {
 	 * @return the ResponseEntity with status 200 (OK) and the list of
 	 *         cashbackResults in body
 	 */
-	// @PostMapping("/broadband")
-	// @Timed
-	// public List<CashbackInfo> calculateCashbackForBroadband(@RequestBody BroadbandInput broadbandInput) {
-	// 	log.debug("REST request to calculate cashback for broadband : {} ", broadbandInput);
-	// 	return calculateCashbackService.calculateCashbackRecharge(broadbandInput.getSubCategoryId(),
-	// 			broadbandInput.getServiceProviderId(), broadbandInput.getDateTime(), broadbandInput.getActiveDate(),
-	// 			broadbandInput.getActiveDay(), broadbandInput.getExpense());
-	// }
+	@PostMapping("/broadband")
+	@Timed
+	public List<CashbackInfo> broadband(@RequestBody BroadbandInput broadbandInput) {
+		log.debug("REST request to calculate cashback for broadband : {} ", broadbandInput);
+		return cashbackService.recharge(broadbandInput.getDateTime(), broadbandInput.getActiveDate(),
+				broadbandInput.getActiveDay(), broadbandInput.getExpense(), broadbandInput.getSubCategoryId(),
+				broadbandInput.getServiceProviderId());
+	}
 
 	/**
 	 * POST /electricity : calculate cashback for electricity
@@ -126,14 +124,14 @@ public class CalculateCashbackResource {
 	 * @return the ResponseEntity with status 200 (OK) and the list of
 	 *         cashbackResults in body
 	 */
-	// @PostMapping("/electricity")
-	// @Timed
-	// public List<CashbackInfo> calculateCashbackForElectricity(@RequestBody ElectricityInput electricityInput) {
-	// 	log.debug("REST request to calculate cashback for electricity : {} ", electricityInput);
-	// 	return calculateCashbackService.calculateCashbackRecharge(electricityInput.getSubCategoryId(),
-	// 			electricityInput.getServiceProviderId(), electricityInput.getDateTime(),
-	// 			electricityInput.getActiveDate(), electricityInput.getActiveDay(), electricityInput.getExpense());
-	// }
+	@PostMapping("/electricity")
+	@Timed
+	public List<CashbackInfo> electricity(@RequestBody ElectricityInput electricityInput) {
+		log.debug("REST request to calculate cashback for electricity : {} ", electricityInput);
+		return cashbackService.recharge(electricityInput.getDateTime(), electricityInput.getActiveDate(),
+				electricityInput.getActiveDay(), electricityInput.getExpense(), electricityInput.getSubCategoryId(),
+				electricityInput.getServiceProviderId());
+	}
 
 	/**
 	 * POST /gas : calculate cashback for gas
@@ -141,14 +139,13 @@ public class CalculateCashbackResource {
 	 * @return the ResponseEntity with status 200 (OK) and the list of
 	 *         cashbackResults in body
 	 */
-	// @PostMapping("/gas")
-	// @Timed
-	// public List<CashbackInfo> calculateCashbackForGas(@RequestBody GasInput gasInput) {
-	// 	log.debug("REST request to calculate cashback for gas : {} ", gasInput);
-	// 	return calculateCashbackService.calculateCashbackRecharge(gasInput.getSubCategoryId(),
-	// 			gasInput.getServiceProviderId(), gasInput.getDateTime(), gasInput.getActiveDate(),
-	// 			gasInput.getActiveDay(), gasInput.getExpense());
-	// }
+	@PostMapping("/gas")
+	@Timed
+	public List<CashbackInfo> gas(@RequestBody GasInput gasInput) {
+		log.debug("REST request to calculate cashback for gas : {} ", gasInput);
+		return cashbackService.recharge(gasInput.getDateTime(), gasInput.getActiveDate(), gasInput.getActiveDay(),
+				gasInput.getExpense(), gasInput.getSubCategoryId(), gasInput.getServiceProviderId());
+	}
 
 	/**
 	 * POST /metro : calculate cashback for metro
@@ -156,14 +153,13 @@ public class CalculateCashbackResource {
 	 * @return the ResponseEntity with status 200 (OK) and the list of
 	 *         cashbackResults in body
 	 */
-	// @PostMapping("/metro")
-	// @Timed
-	// public List<CashbackInfo> calculateCashbackForMetro(@RequestBody MetroInput metroInput) {
-	// 	log.debug("REST request to calculate cashback for metro : {} ", metroInput);
-	// 	return calculateCashbackService.calculateCashbackRecharge(metroInput.getSubCategoryId(),
-	// 			metroInput.getServiceProviderId(), metroInput.getDateTime(), metroInput.getActiveDate(),
-	// 			metroInput.getActiveDay(), metroInput.getExpense());
-	// }
+	@PostMapping("/metro")
+	@Timed
+	public List<CashbackInfo> metro(@RequestBody MetroInput metroInput) {
+		log.debug("REST request to calculate cashback for metro : {} ", metroInput);
+		return cashbackService.recharge(metroInput.getDateTime(), metroInput.getActiveDate(), metroInput.getActiveDay(),
+				metroInput.getExpense(), metroInput.getSubCategoryId(), metroInput.getServiceProviderId());
+	}
 
 	/**
 	 * POST /water : calculate cashback for water
@@ -171,14 +167,13 @@ public class CalculateCashbackResource {
 	 * @return the ResponseEntity with status 200 (OK) and the list of
 	 *         cashbackResults in body
 	 */
-	// @PostMapping("/water")
-	// @Timed
-	// public List<CashbackInfo> calculateCashbackForWater(@RequestBody WaterInput waterInput) {
-	// 	log.debug("REST request to calculate cashback for water : {} ", waterInput);
-	// 	return calculateCashbackService.calculateCashbackRecharge(waterInput.getSubCategoryId(),
-	// 			waterInput.getServiceProviderId(), waterInput.getDateTime(), waterInput.getActiveDate(),
-	// 			waterInput.getActiveDay(), waterInput.getExpense());
-	// }
+	@PostMapping("/water")
+	@Timed
+	public List<CashbackInfo> water(@RequestBody WaterInput waterInput) {
+		log.debug("REST request to calculate cashback for water : {} ", waterInput);
+		return cashbackService.recharge(waterInput.getDateTime(), waterInput.getActiveDate(), waterInput.getActiveDay(),
+				waterInput.getExpense(), waterInput.getSubCategoryId(), waterInput.getServiceProviderId());
+	}
 
 	/**
 	 * POST /flight : calculate cashback for flight
@@ -190,7 +185,7 @@ public class CalculateCashbackResource {
 	// @Timed
 	// public List<CashbackInfo> calculateCashbackForWater(@RequestBody FlightInput flightInput) {
 	// 	log.debug("REST request to calculate cashback for flight : {} ", flightInput);
-	// 	return calculateCashbackService.calculateCashbackFlight(flightInput);
+	// 	return cashbackService.calculateCashbackFlight(flightInput);
 	// }
 
 	/**
@@ -203,7 +198,7 @@ public class CalculateCashbackResource {
 	// @Timed
 	// public List<CashbackInfo> calculateCashbackForBus(@RequestBody BusInput busInput) {
 	// 	log.debug("REST request to calculate cashback for bus : {} ", busInput);
-	// 	return calculateCashbackService.calculateCashbackBus(busInput);
+	// 	return cashbackService.calculateCashbackBus(busInput);
 	// }
 
 	/**
@@ -216,7 +211,7 @@ public class CalculateCashbackResource {
 	// @Timed
 	// public List<CashbackInfo> calculateCashbackForCab(@RequestBody CabInput cabInput) {
 	// 	log.debug("REST request to calculate cashback for cab : {} ", cabInput);
-	// 	return calculateCashbackService.calculateCashbackCab(cabInput);
+	// 	return cashbackService.calculateCashbackCab(cabInput);
 	// }
 
 }

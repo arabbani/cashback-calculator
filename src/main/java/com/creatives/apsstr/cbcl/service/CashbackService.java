@@ -23,14 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true)
-public class CalculateCashbackService {
+public class CashbackService {
 
-	private final Logger log = LoggerFactory.getLogger(CalculateCashbackService.class);
+	private final Logger log = LoggerFactory.getLogger(CashbackService.class);
 
 	private final OfferRepository offerRepository;
 	private final CashbackCalculatorAlgoVersionTwo cashbackCalculatorAlgo;
 
-	public CalculateCashbackService(OfferRepository offerRepository,
+	public CashbackService(OfferRepository offerRepository,
 			CashbackCalculatorAlgoVersionTwo cashbackCalculatorAlgoVersionTwo) {
 		this.offerRepository = offerRepository;
 		this.cashbackCalculatorAlgo = cashbackCalculatorAlgoVersionTwo;
@@ -41,9 +41,9 @@ public class CalculateCashbackService {
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	public List<CashbackInfo> cashbackRechargeWithRechargeCondition(Long subCategoryId, Long serviceProviderId,
-			String dateTime, Integer activeDate, String activeDay, Long circleId, Long rechargePlaneTypeId,
-			Expense expense) {
+	@Transactional(readOnly = true)
+	public List<CashbackInfo> rechargeWithRechargeCondition(String dateTime, Integer activeDate, String activeDay,
+			Expense expense, Long subCategoryId, Long serviceProviderId, Long circleId, Long rechargePlaneTypeId) {
 		List<Offer> offers = offerRepository.cashbackRechargeWithRechargeCondition(true, false, dateTime, activeDate,
 				activeDay, subCategoryId, serviceProviderId, circleId, rechargePlaneTypeId);
 		return this.cashbackCalculatorAlgo.calculate(offers, expense);
@@ -54,12 +54,13 @@ public class CalculateCashbackService {
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	// public List<CashbackInfo> calculateCashbackRecharge(Long subCategoryId, Long serviceProviderId, String dateTime,
-	// 		Integer activeDate, String activeDay, Expense expense) {
-	// 	List<Offer> offers = offerRepository.cashbackRechargeCommon(true, false, subCategoryId, dateTime, activeDate,
-	// 			activeDay, serviceProviderId);
-	// 	return this.cashbackCalculatorAlgo.calculate(offers, expense);
-	// }
+	@Transactional(readOnly = true)
+	public List<CashbackInfo> recharge(String dateTime, Integer activeDate, String activeDay, Expense expense,
+			Long subCategoryId, Long serviceProviderId) {
+		List<Offer> offers = offerRepository.cashbackRecharge(true, false, dateTime, activeDate, activeDay,
+				subCategoryId, serviceProviderId);
+		return this.cashbackCalculatorAlgo.calculate(offers, expense);
+	}
 
 	/**
 	 * Calculate cashback for flight

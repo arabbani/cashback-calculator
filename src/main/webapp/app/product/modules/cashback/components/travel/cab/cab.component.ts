@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
+import { BroadcastCashbackInfoService, CashbackService } from '../../../..';
 import { CabInput, CashbackInfo, StoredCashback, SubCategories } from '../../../../..';
 import { ApsstrMetaService } from '../../../../../../apsstr-core-ui';
 import { City, CityService, ServiceProvider, ServiceProviderService } from '../../../../../../entities';
@@ -24,7 +24,7 @@ export class CabComponent implements OnInit {
   subCategoryCode: string;
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
-    private calculateCashbackService: CalculateCashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
+    private cashbackService: CashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
     private serviceProviderService: ServiceProviderService, private cityService: CityService, private route: ActivatedRoute, private apsstrMetaService: ApsstrMetaService) { }
 
   ngOnInit() {
@@ -41,7 +41,7 @@ export class CabComponent implements OnInit {
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.calculateCashbackService.calculateCashbackForCab(this.cabInput).subscribe(
+    this.cashbackService.calculateCashbackForCab(this.cabInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);

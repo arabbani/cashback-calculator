@@ -2,6 +2,7 @@ package com.creatives.apsstr.cbcl.repository;
 
 import com.creatives.apsstr.cbcl.domain.Offer;
 import com.creatives.apsstr.cbcl.helper.projections.OfferForReference;
+import com.creatives.apsstr.cbcl.helper.projections.OfferWithInfo;
 import com.creatives.apsstr.cbcl.helper.constants.OfferRepositoryConstants;
 
 import org.springframework.stereotype.Repository;
@@ -49,13 +50,19 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
                         @Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
                         @Param("circleId") Long circleId, @Param("rechargePlaneTypeId") Long rechargePlaneTypeId);
 
-        @EntityGraph(attributePaths = { "merchant", "operatingSystems", "offerReturns" })
-        List<Offer> findDistinctByActiveTrueAndDummyFalseAndSubCategories_IdAndActiveDatesIsNullOrActiveDates_DateAndActiveDaysIsNullOrActiveDays_DayAndServiceProviders_IdAndRechargeInfo_CirclesIsNullOrRechargeInfo_Circles_IdAndRechargeInfo_RechargePlanTypesIsNullOrRechargeInfo_RechargePlanTypes_Id(
-                        Long subCategoryId, Integer activeDate, String activeDay, Long serviceProviderId, Long circleId,
-                        Long reechargePlanTypeId);
+        @Query(OfferRepositoryConstants.CASHBACK_RECHARGE)
+        List<Offer> cashbackRecharge(@Param("active") boolean active, @Param("dummy") boolean dummy,
+                        @Param("dateTime") String dateTime, @Param("activeDate") Integer activeDate,
+                        @Param("activeDay") String activeDay, @Param("subCategoryId") Long subCategoryId,
+                        @Param("serviceProviderId") Long serviceProviderId);
 
-        @EntityGraph(attributePaths = { "merchant", "operatingSystems", "offerReturns" })
-        List<Offer> findDistinctByActiveTrueAndDummyFalseAndSubCategories_IdAndServiceProviders_Id(Long subCategoryId,
-                        Long serviceProviderId);
+        // @EntityGraph(attributePaths = { "merchant", "operatingSystems", "offerReturns" })
+        // List<Offer> findDistinctByActiveTrueAndDummyFalseAndSubCategories_IdAndActiveDatesIsNullOrActiveDates_DateAndActiveDaysIsNullOrActiveDays_DayAndServiceProviders_IdAndRechargeInfo_CirclesIsNullOrRechargeInfo_Circles_IdAndRechargeInfo_RechargePlanTypesIsNullOrRechargeInfo_RechargePlanTypes_Id(
+        //                 Long subCategoryId, Integer activeDate, String activeDay, Long serviceProviderId, Long circleId,
+        //                 Long reechargePlanTypeId);
+
+        // @EntityGraph(attributePaths = { "merchant", "operatingSystems", "offerReturns" })
+        // List<Offer> findDistinctByActiveTrueAndDummyFalseAndSubCategories_IdAndServiceProviders_Id(Long subCategoryId,
+        //                 Long serviceProviderId);
 
 }

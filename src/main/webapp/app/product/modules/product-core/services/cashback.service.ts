@@ -23,45 +23,45 @@ import { SERVER_API_URL } from '../../../../app.constants';
 type EntityResponseType = HttpResponse<CashbackInfo[]>;
 
 @Injectable()
-export class CalculateCashbackService {
+export class CashbackService {
 
   private restUrl = SERVER_API_URL + 'api/cashback';
 
   constructor(private http: HttpClient) { }
 
-  calculateCashbackForMobile(mobileInput: MobileInput): Observable<EntityResponseType> {
+  mobile(mobileInput: MobileInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/mobile`, mobileInput);
   }
 
-  calculateCashbackForDth(dthInput: DthInput): Observable<EntityResponseType> {
+  dth(dthInput: DthInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/dth`, dthInput);
   }
 
-  calculateCashbackForDatacard(datacardInput: DatacardInput): Observable<EntityResponseType> {
+  datacard(datacardInput: DatacardInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/datacard`, datacardInput);
   }
 
-  calculateCashbackForLandline(landlineInput: LandlineInput): Observable<EntityResponseType> {
+  landline(landlineInput: LandlineInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/landline`, landlineInput);
   }
 
-  calculateCashbackForBroadband(broadbandInput: BroadbandInput): Observable<EntityResponseType> {
+  broadband(broadbandInput: BroadbandInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/broadband`, broadbandInput);
   }
 
-  calculateCashbackForElectricity(electricityInput: ElectricityInput): Observable<EntityResponseType> {
+  electricity(electricityInput: ElectricityInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/electricity`, electricityInput);
   }
 
-  calculateCashbackForGas(gasInput: GasInput): Observable<EntityResponseType> {
+  gas(gasInput: GasInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/gas`, gasInput);
   }
 
-  calculateCashbackForMetro(metroInput: MetroInput): Observable<EntityResponseType> {
+  metro(metroInput: MetroInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/metro`, metroInput);
   }
 
-  calculateCashbackForWater(waterInput: WaterInput): Observable<EntityResponseType> {
+  water(waterInput: WaterInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/water`, waterInput);
   }
 

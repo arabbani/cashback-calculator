@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { BroadcastCashbackInfoService, CalculateCashbackService } from '../../../..';
+import { BroadcastCashbackInfoService, CashbackService } from '../../../..';
 import { CashbackInfo, MobileInput, StoredCashback, SubCategories } from '../../../../..';
 import { ApsstrMetaService } from '../../../../../../apsstr-core-ui';
 import {
@@ -35,7 +35,7 @@ export class MobileComponent implements OnInit {
   postpaidProviders: ServiceProvider[] = undefined;
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
-    private calculateCashbackService: CalculateCashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
+    private cashbackService: CashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
     private serviceProviderService: ServiceProviderService, private circleService: CircleService, private rechargePlanTypeService: RechargePlanTypeService,
     private route: ActivatedRoute, private apsstrMetaService: ApsstrMetaService) { }
 
@@ -62,7 +62,7 @@ export class MobileComponent implements OnInit {
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.calculateCashbackService.calculateCashbackForMobile(this.mobileInput).subscribe(
+    this.cashbackService.mobile(this.mobileInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);
