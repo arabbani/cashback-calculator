@@ -48,7 +48,7 @@ public class CalculateCashbackService {
 		// 		.findDistinctByActiveTrueAndDummyFalseAndSubCategories_IdAndActiveDatesIsNullOrActiveDates_DateAndActiveDaysIsNullOrActiveDays_DayAndServiceProviders_IdAndRechargeInfo_CirclesIsNullOrRechargeInfo_Circles_IdAndRechargeInfo_RechargePlanTypesIsNullOrRechargeInfo_RechargePlanTypes_Id(
 		// 				subCategoryId, activeDate, activeDay, serviceProviderId, circleId, rechargePlaneTypeId);
 		List<Offer> offers = offerRepository.cashbackRechargeWithRechargeCondition(true, false, subCategoryId, dateTime,
-				activeDate, activeDay, circleId, rechargePlaneTypeId);
+				activeDate, activeDay, serviceProviderId, circleId, rechargePlaneTypeId);
 		return this.cashbackCalculatorAlgo.calculate(offers, expense);
 	}
 

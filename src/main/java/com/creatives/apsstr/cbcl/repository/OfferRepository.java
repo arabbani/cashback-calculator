@@ -46,8 +46,8 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
         List<Offer> cashbackRechargeWithRechargeCondition(@Param("active") boolean active,
                         @Param("dummy") boolean dummy, @Param("subCategoryId") Long subCategoryId,
                         @Param("dateTime") String dateTime, @Param("activeDate") Integer activeDate,
-                        @Param("activeDay") String activeDay, @Param("circleId") Long circleId,
-                        @Param("rechargePlaneTypeId") Long rechargePlaneTypeId);
+                        @Param("activeDay") String activeDay, @Param("serviceProviderId") Long serviceProviderId,
+                        @Param("circleId") Long circleId, @Param("rechargePlaneTypeId") Long rechargePlaneTypeId);
 
         @EntityGraph(attributePaths = { "merchant", "operatingSystems", "rechargeInfo", "offerReturns" })
         List<Offer> findDistinctByActiveTrueAndDummyFalseAndSubCategories_IdAndActiveDatesIsNullOrActiveDates_DateAndActiveDaysIsNullOrActiveDays_DayAndServiceProviders_IdAndRechargeInfo_CirclesIsNullOrRechargeInfo_Circles_IdAndRechargeInfo_RechargePlanTypesIsNullOrRechargeInfo_RechargePlanTypes_Id(

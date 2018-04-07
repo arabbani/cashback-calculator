@@ -30,6 +30,7 @@ export class MobileComponent implements OnInit {
   rechargePlanTypes: RechargePlanType[];
   calculating = false;
   subCategoryCode: string;
+  previousSubCategoryCode: string;
   prepaidProviders: ServiceProvider[] = undefined;
   postpaidProviders: ServiceProvider[] = undefined;
 
@@ -42,16 +43,20 @@ export class MobileComponent implements OnInit {
     this.initializeSubCategory();
     this.getCircles();
     this.getRechargePlanTypes();
-  }
-
-  onSelectSubCategory(subCategoryCode: string): void {
-    this.mobileInput.serviceProviderId = undefined;
-    this.getServiceProvidersBySubCategoryCode(subCategoryCode);
     this.setMeta();
   }
 
   private setMeta(): void {
     this.apsstrMetaService.setMeta(this.route.snapshot.data['title'], this.route.snapshot.data.meta['description']);
+  }
+
+  onSelectSubCategory(subCategoryCode: string): void {
+    if (!this.previousSubCategoryCode || subCategoryCode !== this.previousSubCategoryCode) {
+      this.previousSubCategoryCode = subCategoryCode;
+      this.mobileInput.serviceProviderId = undefined;
+      this.mobileInput.subCategoryId = undefined;
+      this.getServiceProvidersBySubCategoryCode(subCategoryCode);
+    }
   }
 
   calculate(): void {
@@ -64,6 +69,10 @@ export class MobileComponent implements OnInit {
       },
       (res: HttpErrorResponse) => this.onCashbackError(res.message)
     );
+  }
+
+  private broadcastCashbackInfo(cashbackInfos: CashbackInfo[]): void {
+    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.mobileInput, this.subCategoryCode));
   }
 
   private getSubCategoryIdFromServiceProvider(): number {
@@ -83,16 +92,13 @@ export class MobileComponent implements OnInit {
     return sId;
   }
 
-  private broadcastCashbackInfo(cashbackInfos: CashbackInfo[]): void {
-    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.mobileInput, this.subCategoryCode));
-  }
-
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {
+    this.serviceProviders = [];
     let providers: ServiceProvider[];
     let crawlFromServer = false;
     switch (subCategoryCode) {
       case SubCategories.PrepaidMobile:
-        if (!this.prepaidProviders && this.prepaidProviders === undefined) {
+        if (!this.prepaidProviders) {
           crawlFromServer = true;
         } else {
           crawlFromServer = false;
@@ -100,15 +106,13 @@ export class MobileComponent implements OnInit {
         }
         break;
       case SubCategories.PostpaidMobile:
-        if (!this.postpaidProviders && this.postpaidProviders === undefined) {
+        if (!this.postpaidProviders) {
           crawlFromServer = true;
         } else {
           crawlFromServer = false;
           providers = _.cloneDeep(this.postpaidProviders);
         }
         break;
-      default:
-        crawlFromServer = true;
     }
     if (crawlFromServer) {
       this.serviceProviderService.findBySubCategoryCode(subCategoryCode).subscribe(
@@ -133,6 +137,11 @@ export class MobileComponent implements OnInit {
     }
   }
 
+  private initializeSubCategoryCode(): void {
+    this.subCategoryCode = this.subCategories[0].value;
+    this.onSelectSubCategory(this.subCategoryCode);
+  }
+
   private initializeSubCategory(): void {
     this.subCategories = [{
       'name': 'Prepaid',
@@ -144,11 +153,6 @@ export class MobileComponent implements OnInit {
     }
     ];
     this.initializeSubCategoryCode();
-  }
-
-  private initializeSubCategoryCode(): void {
-    this.subCategoryCode = this.subCategories[0].value;
-    this.onSelectSubCategory(this.subCategoryCode);
   }
 
   private getCircles(): void {

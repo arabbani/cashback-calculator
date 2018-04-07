@@ -139,8 +139,8 @@ public class OfferRepositoryConstants {
 			+ WHERE_SUBCATEGORY + SharedRepositoryConstants.AND + WHERE_DATE_BOUND + SharedRepositoryConstants.AND
 			+ WHERE_ACTIVE_DATE + SharedRepositoryConstants.AND + WHERE_ACTIVE_DAY;
 
-	public static final String CONDITION_RECHARGE_COMMON = CASHBACK_CONDITION_COMMON;
-	// +SharedRepositoryConstants.AND+WHERE_SERVICE_PROVIDER;
+	public static final String CONDITION_RECHARGE_COMMON = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
+			+ WHERE_SERVICE_PROVIDER;
 
 	public static final String CONDITION_RECHARGE_CHILDS = WHERE_RECHARGE_INFO_CIRCLE + SharedRepositoryConstants.AND
 			+ WHERE_RECHARGE_INFO_RECHARGE_TYPE;
