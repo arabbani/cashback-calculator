@@ -32,17 +32,17 @@ public class FlightInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "flight_info_type", joinColumns = @JoinColumn(name = "flight_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "types_id", referencedColumnName = "id"))
     private Set<Region> types = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "flight_info_origin", joinColumns = @JoinColumn(name = "flight_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "origins_id", referencedColumnName = "id"))
     private Set<Region> origins = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "flight_info_travel_class", joinColumns = @JoinColumn(name = "flight_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "travel_classes_id", referencedColumnName = "id"))
     private Set<FlightClass> travelClasses = new HashSet<>();

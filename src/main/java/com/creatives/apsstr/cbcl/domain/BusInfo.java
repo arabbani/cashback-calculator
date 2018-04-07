@@ -32,12 +32,12 @@ public class BusInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "bus_info_from", joinColumns = @JoinColumn(name = "bus_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "froms_id", referencedColumnName = "id"))
     private Set<City> froms = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "bus_info_to", joinColumns = @JoinColumn(name = "bus_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "tos_id", referencedColumnName = "id"))
     private Set<City> tos = new HashSet<>();

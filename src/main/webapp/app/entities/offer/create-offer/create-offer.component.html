@@ -737,7 +737,7 @@
                 </div>
                 <div class="float-right">
                     <!-- <button type="button" class="btn btn-info" *ngIf="!editMode" (click)="editOffer()">Edit</button> -->
-                    <button *ngIf="editMode" type="button" class="btn btn-success" [disabled]="isSaving || basicInfoForm.form.invalid || detailInfoForm.form.invalid || offerReturnForm.form.invalid"
+                    <button *ngIf="editMode" type="button" class="btn btn-success" [disabled]="isSaving || basicInfoForm.form.invalid || detailInfoForm.form.invalid || offerReturnForm.form.invalid || !tabTwoEnabled || !tabThreeEnabled || !tabFourEnabled"
                         (click)="saveOffer()">Save</button>
                     <!-- <button type="button" class="btn btn-danger" *ngIf="offer?.id && editMode" (click)="cancelEdit()">Cancel</button> -->
                 </div>

@@ -110,7 +110,11 @@ export class CreateOfferComponent implements OnInit {
   editMode: boolean;
   editedOffer: Offer;
   fetchedBusInfo: boolean;
+  fetchedRechargeInfo: boolean;
   subscribed: boolean;
+  tabTwoEnabled: boolean;
+  tabThreeEnabled: boolean;
+  tabFourEnabled: boolean;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
     private dayService: DayService, private stateService: StateService, private cityService: CityService,
@@ -142,7 +146,11 @@ export class CreateOfferComponent implements OnInit {
     this.isBus = false;
     this.isRechargeExtra = false;
     this.fetchedBusInfo = false;
+    this.fetchedRechargeInfo = false;
     this.subscribed = false;
+    this.tabTwoEnabled = false;
+    this.tabThreeEnabled = false;
+    this.tabFourEnabled = false;
   }
 
   private initializeToEdit(): void {
@@ -222,16 +230,19 @@ export class CreateOfferComponent implements OnInit {
           this.subscribeToTabTwoEntity();
         }
         this.setUpSubCategoriesToEdit(this.offer.subCategories);
+        this.tabTwoEnabled = true;
         break;
       case 3:
         if (this.editMode) {
           this.loadTabThreeEntities();
         }
+        this.tabThreeEnabled = true;
         break;
       case 4:
         if (this.editMode) {
           this.loadTabFourEntities();
         }
+        this.tabFourEnabled = true;
         break;
       default:
         break;
@@ -248,17 +259,20 @@ export class CreateOfferComponent implements OnInit {
         case this.subCategoryEnum.PostpaidMobile:
         case this.subCategoryEnum.PrepaidDatacard:
         case this.subCategoryEnum.PostpaidDatacard:
-        // case this.subCategoryEnum.Broadband:
-          if (this.editMode) {
-            this.loadRechargeEntities();
-          }
-          if (this.offer.id !== undefined && !this.offer.rechargeInfo) {
-            this.loadRechargeInfo();
-          } else if (!this.offer.rechargeInfo) {
-            this.offer.rechargeInfo = new RechargeInfo();
-            this.isRechargeExtra = true;
-          } else {
-            this.isRechargeExtra = true;
+          // case this.subCategoryEnum.Broadband:
+          if (!this.fetchedRechargeInfo) {
+            if (this.editMode) {
+              this.loadRechargeEntities();
+            }
+            if (this.offer.id !== undefined && !this.offer.rechargeInfo) {
+              this.loadRechargeInfo();
+            } else if (!this.offer.rechargeInfo) {
+              this.offer.rechargeInfo = new RechargeInfo();
+              this.isRechargeExtra = true;
+            } else {
+              this.isRechargeExtra = true;
+            }
+            this.fetchedRechargeInfo = true;
           }
           break;
         case this.subCategoryEnum.Flight:
@@ -334,7 +348,9 @@ export class CreateOfferComponent implements OnInit {
   onCategoryChange(categories: Category[]): void {
     this.filteredSubCategories = this.filterEntitiesService.bySingleRelationIds(categories, this.subCategories, 'category');
     this.offer.subCategories = this.filterEntitiesService.bySingleRelationIds(categories, this.offer.subCategories, 'category');
-    this.onSubCategoryChange(this.offer.subCategories);
+    if (this.offer.subCategories && this.offer.subCategories.length > 0) {
+      this.onSubCategoryChange(this.offer.subCategories);
+    }
   }
 
   onSubCategoryChange(subCategories: SubCategory[]): void {
@@ -546,8 +562,8 @@ export class CreateOfferComponent implements OnInit {
   }
 
   unselectAllCategories(): void {
-    this.offer.subCategories = [];
-    this.onSubCategoryChange(this.offer.subCategories);
+    this.offerCategories = [];
+    this.onCategoryChange(this.offerCategories);
   }
 
   selectAllSubCategories(): void {
@@ -805,17 +821,22 @@ export class CreateOfferComponent implements OnInit {
             this.offer.travelInfo = travelInfo;
             if (this.offer.travelInfo.busInfo) {
               this.isBus = true;
+              console.log('4 ', this.isBus);
             } else if (this.editMode) {
               this.offer.travelInfo.busInfo = new BusInfo();
               this.isBus = true;
+              console.log('3 ', this.isBus);
             }
           } else if (travelInfo.busInfo) {
             this.offer.travelInfo.busInfo = travelInfo.busInfo;
             this.isBus = true;
+            console.log('2 ', this.isBus);
           } else if (this.editMode) {
             this.offer.travelInfo.busInfo = new BusInfo();
             this.isBus = true;
+            console.log('1 ', this.isBus);
           }
+          console.log('5 ', this.isBus);
         } else if (this.editMode) {
           if (!this.offer.travelInfo) {
             this.offer.travelInfo = new TravelInfo();
@@ -824,6 +845,7 @@ export class CreateOfferComponent implements OnInit {
             this.offer.travelInfo.busInfo = new BusInfo();
           }
           this.isBus = true;
+          console.log(this.isBus);
         }
         this.fetchedBusInfo = true;
       },

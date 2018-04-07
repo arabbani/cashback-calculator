@@ -19,16 +19,20 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 
         @EntityGraph(attributePaths = { "operatingSystems", "cities", "cities.state", "subCategories",
                         "subCategories.category", "serviceProviders", "serviceProviders.subCategories", "activeDates",
-                        "activeDays", "affiliate", "policy", "offerReturns", "offerReturns.returnInfos.payment.cards.bank", "offerReturns.returnInfos.payment.cards.type" })
+                        "activeDays", "affiliate", "policy", "offerReturns",
+                        "offerReturns.returnInfos.payment.cards.bank", "offerReturns.returnInfos.payment.cards.type" })
         Offer findOneForAdminViewById(Long id);
 
         @EntityGraph(attributePaths = { "rechargeInfo", "rechargeInfo.circles", "rechargeInfo.rechargePlanTypes" })
         Offer findOneWithRechargeInfoById(Long id);
 
-        @EntityGraph(attributePaths = { "travelInfo", "travelInfo.types", "travelInfo.flightInfo", })
+        @EntityGraph(attributePaths = { "travelInfo", "travelInfo.types", "travelInfo.flightInfo",
+                        "travelInfo.flightInfo.types", "travelInfo.flightInfo.origins",
+                        "travelInfo.flightInfo.travelClasses" })
         Offer findOneWithFlightInfoById(Long id);
 
-        @EntityGraph(attributePaths = { "travelInfo", "travelInfo.types", "travelInfo.busInfo", })
+        @EntityGraph(attributePaths = { "travelInfo", "travelInfo.types", "travelInfo.busInfo",
+                        "travelInfo.busInfo.froms", "travelInfo.busInfo.tos" })
         Offer findOneWithBusInfoById(Long id);
 
         List<OfferForReference> findForReferenceByIdNotAndActiveTrueAndDummyFalse(Long id);
@@ -42,7 +46,9 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
                         @Param("activeDay") String activeDay, @Param("serviceProviderId") Long serviceProviderId,
                         @Param("circleId") Long circleId, @Param("rechargePlaneTypeId") Long rechargePlaneTypeId);
 
-        List<Offer> findDistinctByActiveTrueAndDummyFalseAndSubCategories_IdAndActiveDatesIsNullOrActiveDates_DateAndActiveDaysIsNullOrActiveDays_DayAndServiceProviders_Id(Long subCategoryId, Integer activeDate, String activeDay, Long serviceProviderId);
+        @EntityGraph(attributePaths = { "merchant", "operatingSystems", "rechargeInfo", "offerReturns" })
+        List<Offer> findDistinctByActiveTrueAndDummyFalseAndSubCategories_IdAndActiveDatesIsNullOrActiveDates_DateAndActiveDaysIsNullOrActiveDays_DayAndServiceProviders_IdAndRechargeInfo_CirclesIsNullOrRechargeInfo_Circles_IdAndRechargeInfo_RechargePlanTypesIsNullOrRechargeInfo_RechargePlanTypes_Id(
+                        Long subCategoryId, Integer activeDate, String activeDay, Long serviceProviderId, Long circleId,
+                        Long reechargePlanTypeId);
 
-        // Boolean active, Boolean dummy,
 }

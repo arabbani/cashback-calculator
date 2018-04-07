@@ -128,44 +128,32 @@ public class Offer implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_operating_system",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="operating_systems_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_operating_system", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "operating_systems_id", referencedColumnName = "id"))
     private Set<OperatingSystem> operatingSystems = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_city",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="cities_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_city", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "cities_id", referencedColumnName = "id"))
     private Set<City> cities = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_sub_category",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="sub_categories_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_sub_category", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "sub_categories_id", referencedColumnName = "id"))
     private Set<SubCategory> subCategories = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_service_provider",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="service_providers_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_service_provider", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "service_providers_id", referencedColumnName = "id"))
     private Set<ServiceProvider> serviceProviders = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_active_date",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="active_dates_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_active_date", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "active_dates_id", referencedColumnName = "id"))
     private Set<Date> activeDates = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "offer_active_day",
-               joinColumns = @JoinColumn(name="offers_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="active_days_id", referencedColumnName="id"))
+    @JoinTable(name = "offer_active_day", joinColumns = @JoinColumn(name = "offers_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "active_days_id", referencedColumnName = "id"))
     private Set<Day> activeDays = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -729,28 +717,15 @@ public class Offer implements Serializable {
 
     @Override
     public String toString() {
-        return "Offer{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", adminDescription='" + getAdminDescription() + "'" +
-            ", code='" + getCode() + "'" +
-            ", startDate='" + getStartDate() + "'" +
-            ", endDate='" + getEndDate() + "'" +
-            ", maximumUsesPerUser=" + getMaximumUsesPerUser() +
-            ", maximumUsesPerDay=" + getMaximumUsesPerDay() +
-            ", maximumUsesPerWeek=" + getMaximumUsesPerWeek() +
-            ", maximumUsesPerMonth=" + getMaximumUsesPerMonth() +
-            ", maximumUsesPerNumber=" + getMaximumUsesPerNumber() +
-            ", newUserOnly='" + isNewUserOnly() + "'" +
-            ", appOnly='" + isAppOnly() + "'" +
-            ", websiteOnly='" + isWebsiteOnly() + "'" +
-            ", numberOfUses=" + getNumberOfUses() +
-            ", active='" + isActive() + "'" +
-            ", verified='" + isVerified() + "'" +
-            ", dummy='" + isDummy() + "'" +
-            ", apsstrExclusive='" + isApsstrExclusive() + "'" +
-            ", url='" + getUrl() + "'" +
-            "}";
+        return "Offer{" + "id=" + getId() + ", name='" + getName() + "'" + ", description='" + getDescription() + "'"
+                + ", adminDescription='" + getAdminDescription() + "'" + ", code='" + getCode() + "'" + ", startDate='"
+                + getStartDate() + "'" + ", endDate='" + getEndDate() + "'" + ", maximumUsesPerUser="
+                + getMaximumUsesPerUser() + ", maximumUsesPerDay=" + getMaximumUsesPerDay() + ", maximumUsesPerWeek="
+                + getMaximumUsesPerWeek() + ", maximumUsesPerMonth=" + getMaximumUsesPerMonth()
+                + ", maximumUsesPerNumber=" + getMaximumUsesPerNumber() + ", newUserOnly='" + isNewUserOnly() + "'"
+                + ", appOnly='" + isAppOnly() + "'" + ", websiteOnly='" + isWebsiteOnly() + "'" + ", numberOfUses="
+                + getNumberOfUses() + ", active='" + isActive() + "'" + ", verified='" + isVerified() + "'"
+                + ", dummy='" + isDummy() + "'" + ", apsstrExclusive='" + isApsstrExclusive() + "'" + ", url='"
+                + getUrl() + "'" + "}";
     }
 }
