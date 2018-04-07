@@ -109,12 +109,12 @@ export class CreateOfferComponent implements OnInit {
   minEndDate: Date;
   editMode: boolean;
   editedOffer: Offer;
+  fetchedTravelEntities: boolean;
   fetchedBusInfo: boolean;
+  fetchedFlightInfo: boolean;
   fetchedRechargeInfo: boolean;
   subscribed: boolean;
   tabTwoEnabled: boolean;
-  tabThreeEnabled: boolean;
-  tabFourEnabled: boolean;
 
   constructor(private offerService: OfferService, private offerTypeService: OfferTypeService, private offerPolicyService: OfferPolicyService, private dateService: DateService,
     private dayService: DayService, private stateService: StateService, private cityService: CityService,
@@ -145,12 +145,12 @@ export class CreateOfferComponent implements OnInit {
     this.isFlight = false;
     this.isBus = false;
     this.isRechargeExtra = false;
+    this.fetchedTravelEntities = false;
     this.fetchedBusInfo = false;
+    this.fetchedFlightInfo = false;
     this.fetchedRechargeInfo = false;
     this.subscribed = false;
     this.tabTwoEnabled = false;
-    this.tabThreeEnabled = false;
-    this.tabFourEnabled = false;
   }
 
   private initializeToEdit(): void {
@@ -236,13 +236,11 @@ export class CreateOfferComponent implements OnInit {
         if (this.editMode) {
           this.loadTabThreeEntities();
         }
-        this.tabThreeEnabled = true;
         break;
       case 4:
         if (this.editMode) {
           this.loadTabFourEntities();
         }
-        this.tabFourEnabled = true;
         break;
       default:
         break;
@@ -250,17 +248,14 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private setUpSubCategoriesToEdit(subCategories: SubCategory[]): void {
-    this.isFlight = false;
-    this.isBus = false;
-    this.isRechargeExtra = false;
     _.forEach(subCategories, (subCategory) => {
       switch (subCategory.code) {
         case this.subCategoryEnum.PrepaidMobile:
         case this.subCategoryEnum.PostpaidMobile:
         case this.subCategoryEnum.PrepaidDatacard:
         case this.subCategoryEnum.PostpaidDatacard:
-          // case this.subCategoryEnum.Broadband:
           if (!this.fetchedRechargeInfo) {
+            this.fetchedRechargeInfo = true;
             if (this.editMode) {
               this.loadRechargeEntities();
             }
@@ -272,54 +267,72 @@ export class CreateOfferComponent implements OnInit {
             } else {
               this.isRechargeExtra = true;
             }
-            this.fetchedRechargeInfo = true;
           }
           break;
         case this.subCategoryEnum.Flight:
-          if (this.editMode) {
-            this.loadTravelEntities();
-            this.loadFlightEntities();
-          }
-          if (this.offer.id !== undefined) {
-            if (!this.offer.travelInfo || !this.offer.travelInfo.flightInfo) {
-              this.loadFlightInfo();
-            } else {
+          if (!this.fetchedFlightInfo) {
+            this.fetchedFlightInfo = true;
+            if (this.editMode) {
+              if (!this.fetchedTravelEntities) {
+                this.loadTravelEntities();
+                this.fetchedTravelEntities = true;
+              }
+              this.loadFlightEntities();
+            }
+            if (this.offer.id !== undefined) {
+              if (!this.offer.travelInfo || !this.offer.travelInfo.flightInfo) {
+                this.loadFlightInfo();
+              } else {
+                this.isFlight = true;
+              }
+            } else if (!this.offer.travelInfo) {
+              this.offer.travelInfo = new TravelInfo();
+              this.offer.travelInfo.flightInfo = new FlightInfo();
+              this.isFlight = true;
+            } else if (!this.offer.travelInfo.flightInfo) {
+              this.offer.travelInfo.flightInfo = new FlightInfo();
               this.isFlight = true;
             }
-          } else if (!this.offer.travelInfo) {
-            this.offer.travelInfo = new TravelInfo();
-            this.offer.travelInfo.flightInfo = new FlightInfo();
-            this.isFlight = true;
-          } else if (!this.offer.travelInfo.flightInfo) {
-            this.offer.travelInfo.flightInfo = new FlightInfo();
-            this.isFlight = true;
           }
           break;
         case this.subCategoryEnum.Bus:
-          if (this.editMode) {
-            this.loadTravelEntities();
-            this.loadBusEntities();
-          }
-          if (this.offer.id !== undefined) {
-            if (!this.fetchedBusInfo) {
+          if (!this.fetchedBusInfo) {
+            this.fetchedBusInfo = true;
+            if (this.editMode) {
+              if (!this.fetchedTravelEntities) {
+                this.loadTravelEntities();
+                this.fetchedTravelEntities = true;
+              }
+              this.loadBusEntities();
+            }
+            if (this.offer.id !== undefined) {
               if (!this.offer.travelInfo || !this.offer.travelInfo.busInfo) {
                 this.loadBusInfo();
               } else {
                 this.isBus = true;
               }
-            }
-          } else if (!this.offer.travelInfo) {
-            this.offer.travelInfo = new TravelInfo();
-            this.offer.travelInfo.busInfo = new BusInfo();
-            this.isBus = true;
-          } else {
-            if (!this.offer.travelInfo.busInfo) {
+            } else if (!this.offer.travelInfo) {
+              this.offer.travelInfo = new TravelInfo();
               this.offer.travelInfo.busInfo = new BusInfo();
+              this.isBus = true;
+            } else {
+              if (!this.offer.travelInfo.busInfo) {
+                this.offer.travelInfo.busInfo = new BusInfo();
+              }
+              this.isBus = true;
             }
-            this.isBus = true;
           }
           break;
         default:
+          if (!this.fetchedFlightInfo) {
+            this.isFlight = false;
+          }
+          if (!this.fetchedBusInfo) {
+            this.isBus = false;
+          }
+          if (!this.fetchedRechargeInfo) {
+            this.isRechargeExtra = false;
+          }
           break;
       }
     });
@@ -821,22 +834,17 @@ export class CreateOfferComponent implements OnInit {
             this.offer.travelInfo = travelInfo;
             if (this.offer.travelInfo.busInfo) {
               this.isBus = true;
-              console.log('4 ', this.isBus);
             } else if (this.editMode) {
               this.offer.travelInfo.busInfo = new BusInfo();
               this.isBus = true;
-              console.log('3 ', this.isBus);
             }
           } else if (travelInfo.busInfo) {
             this.offer.travelInfo.busInfo = travelInfo.busInfo;
             this.isBus = true;
-            console.log('2 ', this.isBus);
           } else if (this.editMode) {
             this.offer.travelInfo.busInfo = new BusInfo();
             this.isBus = true;
-            console.log('1 ', this.isBus);
           }
-          console.log('5 ', this.isBus);
         } else if (this.editMode) {
           if (!this.offer.travelInfo) {
             this.offer.travelInfo = new TravelInfo();
@@ -845,9 +853,7 @@ export class CreateOfferComponent implements OnInit {
             this.offer.travelInfo.busInfo = new BusInfo();
           }
           this.isBus = true;
-          console.log(this.isBus);
         }
-        this.fetchedBusInfo = true;
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
