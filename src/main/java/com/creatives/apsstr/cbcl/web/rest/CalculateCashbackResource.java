@@ -3,6 +3,7 @@ package com.creatives.apsstr.cbcl.web.rest;
 import java.util.List;
 
 import com.codahale.metrics.annotation.Timed;
+import com.creatives.apsstr.cbcl.domain.Offer;
 import com.creatives.apsstr.cbcl.helper.model.BroadbandInput;
 import com.creatives.apsstr.cbcl.helper.model.BusInput;
 import com.creatives.apsstr.cbcl.helper.model.CabInput;
@@ -50,9 +51,9 @@ public class CalculateCashbackResource {
 	 */
 	@PostMapping("/mobile")
 	@Timed
-	public List<CashbackInfo> calculateCashbackForMobile(@RequestBody MobileInput mobileInput) {
+	public List<CashbackInfo> cashbackForMobile(@RequestBody MobileInput mobileInput) {
 		log.debug("REST request to calculate cashback for mobile : {} ", mobileInput);
-		return calculateCashbackService.calculateCashbackRechargeWithRechargeCondition(mobileInput.getSubCategoryId(),
+		return calculateCashbackService.cashbackRechargeWithRechargeCondition(mobileInput.getSubCategoryId(),
 				mobileInput.getServiceProviderId(), mobileInput.getDateTime(), mobileInput.getActiveDate(),
 				mobileInput.getActiveDay(), mobileInput.getCircleId(), mobileInput.getRechargePlaneTypeId(),
 				mobileInput.getExpense());

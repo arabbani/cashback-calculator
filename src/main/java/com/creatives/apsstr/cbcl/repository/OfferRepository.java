@@ -44,14 +44,18 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 
         @Query(OfferRepositoryConstants.CASHBACK_RECHARGE_WITH_CHILDS)
         List<Offer> cashbackRechargeWithRechargeCondition(@Param("active") boolean active,
-                        @Param("dummy") boolean dummy, @Param("subCategoryId") Long subCategoryId,
-                        @Param("dateTime") String dateTime, @Param("activeDate") Integer activeDate,
-                        @Param("activeDay") String activeDay, @Param("serviceProviderId") Long serviceProviderId,
+                        @Param("dummy") boolean dummy, @Param("dateTime") String dateTime,
+                        @Param("activeDate") Integer activeDate, @Param("activeDay") String activeDay,
+                        @Param("subCategoryId") Long subCategoryId, @Param("serviceProviderId") Long serviceProviderId,
                         @Param("circleId") Long circleId, @Param("rechargePlaneTypeId") Long rechargePlaneTypeId);
 
-        @EntityGraph(attributePaths = { "merchant", "operatingSystems", "rechargeInfo", "offerReturns" })
+        @EntityGraph(attributePaths = { "merchant", "operatingSystems", "offerReturns" })
         List<Offer> findDistinctByActiveTrueAndDummyFalseAndSubCategories_IdAndActiveDatesIsNullOrActiveDates_DateAndActiveDaysIsNullOrActiveDays_DayAndServiceProviders_IdAndRechargeInfo_CirclesIsNullOrRechargeInfo_Circles_IdAndRechargeInfo_RechargePlanTypesIsNullOrRechargeInfo_RechargePlanTypes_Id(
                         Long subCategoryId, Integer activeDate, String activeDay, Long serviceProviderId, Long circleId,
                         Long reechargePlanTypeId);
+
+        @EntityGraph(attributePaths = { "merchant", "operatingSystems", "offerReturns" })
+        List<Offer> findDistinctByActiveTrueAndDummyFalseAndSubCategories_IdAndServiceProviders_Id(Long subCategoryId,
+                        Long serviceProviderId);
 
 }

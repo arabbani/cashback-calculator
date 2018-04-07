@@ -76,12 +76,16 @@ export class OfferService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        const body: Offer = this.deserializeObject(res.body);
+        const body: Offer = this.convertItemFromServer(this.deserializeObject(res.body));
         return res.clone({ body });
     }
 
     private convertArrayResponse(res: HttpResponse<Offer[]>): HttpResponse<Offer[]> {
-        const body: Offer[] = this.deserializeArray(res.body);
+        const jsonResponse: Offer[] = this.deserializeArray(res.body);
+        const body: Offer[] = [];
+        for (let i = 0; i < jsonResponse.length; i++) {
+            body.push(this.convertItemFromServer(jsonResponse[i]));
+        }
         return res.clone({ body });
     }
 
@@ -101,14 +105,9 @@ export class OfferService {
      * Convert a Offer to a JSON which can be sent to the server.
      */
     private convert(offer: Offer): Offer {
-        const copy: Offer = _.cloneDeep(offer);
-        if (copy.travelInfo && copy.travelInfo.busInfo) {
-            const busInfo = copy.travelInfo.busInfo;
-            if ((!busInfo.froms || busInfo.froms.length === 0) && (!busInfo.tos || busInfo.tos.length === 0)) {
-                copy.travelInfo.busInfo = undefined;
-            }
-        }
-        console.log('S ', copy);
+        const copy: Offer = Object.assign({}, offer);
+        copy.startDate = this.dateUtils.toDate(offer.startDate);
+        copy.endDate = this.dateUtils.toDate(offer.endDate);
         return copy;
     }
 

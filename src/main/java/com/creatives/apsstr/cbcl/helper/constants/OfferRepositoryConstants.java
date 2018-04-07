@@ -96,9 +96,9 @@ public class OfferRepositoryConstants {
 	public static final String WHERE_DATE_BOUND = " TIMESTAMP(:dateTime)" + SharedRepositoryConstants.BETWEEN
 			+ " TIMESTAMP(offer.startDate)" + SharedRepositoryConstants.AND + " TIMESTAMP(offer.endDate)";
 
-	public static final String WHERE_ACTIVE_DATE = " activeDates IS NULL OR activeDates.date =:activeDate";
+	public static final String WHERE_ACTIVE_DATE = " (activeDates IS NULL OR activeDates.date =:activeDate)";
 
-	public static final String WHERE_ACTIVE_DAY = " activeDays IS NULL OR activeDays.day =:activeDay";
+	public static final String WHERE_ACTIVE_DAY = " (activeDays IS NULL OR activeDays.day =:activeDay)";
 
 	public static final String WHERE_SUBCATEGORY = " subCategories.id =:subCategoryId";
 
@@ -106,7 +106,7 @@ public class OfferRepositoryConstants {
 
 	public static final String WHERE_SERVICE_PROVIDERS = " serviceProviders.id IN (:serviceProvidersId)";
 
-	public static final String WHERE_CITY = " cities IS NULL OR cities.id =:cityId";
+	public static final String WHERE_CITY = " (cities IS NULL OR cities.id =:cityId)";
 
 	/*
 	 * ####################### ADMIN #######################
@@ -117,7 +117,7 @@ public class OfferRepositoryConstants {
 
 	/* ####################### CHILD CONDITIONS ####################### */
 
-	public static final String WHERE_RECHARGE_INFO_CIRCLE = " rechargeInfoCircles IS NULL OR rechargeInfoCircles.id =:circleId";
+	public static final String WHERE_RECHARGE_INFO_CIRCLE = " (rechargeInfoCircles IS NULL OR rechargeInfoCircles.id =:circleId)";
 
 	public static final String WHERE_RECHARGE_INFO_RECHARGE_TYPE = " rechargeInfoRechargeTypes.id =:rechargePlaneTypeId";
 
@@ -136,8 +136,8 @@ public class OfferRepositoryConstants {
 	/* ####################### CASHBACK CONDITIONS ####################### */
 
 	public static final String CASHBACK_CONDITION_COMMON = WHERE_ACTIVE + SharedRepositoryConstants.AND
-			+ WHERE_SUBCATEGORY + SharedRepositoryConstants.AND + WHERE_DATE_BOUND + SharedRepositoryConstants.AND
-			+ WHERE_ACTIVE_DATE + SharedRepositoryConstants.AND + WHERE_ACTIVE_DAY;
+			+ WHERE_DATE_BOUND + SharedRepositoryConstants.AND + WHERE_ACTIVE_DATE + SharedRepositoryConstants.AND
+			+ WHERE_ACTIVE_DAY + SharedRepositoryConstants.AND + WHERE_SUBCATEGORY;
 
 	public static final String CONDITION_RECHARGE_COMMON = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
 			+ WHERE_SERVICE_PROVIDER;

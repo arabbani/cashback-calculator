@@ -76,20 +76,7 @@ export class MobileComponent implements OnInit {
   }
 
   private getSubCategoryIdFromServiceProvider(): number {
-    let sId: number = undefined;
-    _.forEach(this.serviceProviders, (serviceProvider) => {
-      let cc = undefined;
-      cc = _.forEach(serviceProvider.subCategories, (subCategory) => {
-        if (subCategory.code === this.subCategoryCode) {
-          sId = subCategory.id;
-          return true;
-        }
-      });
-      if (cc) {
-        return;
-      }
-    });
-    return sId;
+    return this.serviceProviders[0]['subCategories'][0].id;
   }
 
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {
