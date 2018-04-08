@@ -207,11 +207,11 @@ public class CashbackResource {
 	 * @return the ResponseEntity with status 200 (OK) and the list of
 	 *         cashbackResults in body
 	 */
-	// @PostMapping("/cab")
-	// @Timed
-	// public List<CashbackInfo> calculateCashbackForCab(@RequestBody CabInput cabInput) {
-	// 	log.debug("REST request to calculate cashback for cab : {} ", cabInput);
-	// 	return cashbackService.calculateCashbackCab(cabInput);
-	// }
+	@PostMapping("/cab")
+	@Timed
+	public List<CashbackInfo> cab(@RequestBody CabInput cabInput) {
+		log.debug("REST request to calculate cashback for cab : {} ", cabInput);
+		return cashbackService.cab(cabInput);
+	}
 
 }

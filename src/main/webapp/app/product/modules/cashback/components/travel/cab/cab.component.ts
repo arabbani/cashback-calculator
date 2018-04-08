@@ -1,7 +1,6 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
@@ -41,7 +40,7 @@ export class CabComponent implements OnInit {
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.cashbackService.calculateCashbackForCab(this.cabInput).subscribe(
+    this.cashbackService.cab(this.cabInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);
@@ -50,25 +49,12 @@ export class CabComponent implements OnInit {
     );
   }
 
-  private getSubCategoryIdFromServiceProvider(): number {
-    let sId: number = undefined;
-    _.forEach(this.serviceProviders, (serviceProvider) => {
-      let cc = undefined;
-      cc = _.forEach(serviceProvider.subCategories, (subCategory) => {
-        if (subCategory.code === this.subCategoryCode) {
-          sId = subCategory.id;
-          return true;
-        }
-      });
-      if (cc) {
-        return;
-      }
-    });
-    return sId;
-  }
-
   private broadcastCashbackInfo(cashbackInfos: CashbackInfo[]): void {
     this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.cabInput, this.subCategoryCode));
+  }
+
+  private getSubCategoryIdFromServiceProvider(): number {
+    return this.serviceProviders[0]['subCategories'][0].id;
   }
 
   private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {

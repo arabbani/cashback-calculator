@@ -93,11 +93,12 @@ public class CashbackService {
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	// public List<CashbackInfo> calculateCashbackCab(CabInput cabInput) {
-	// 	List<Offer> offers = offerRepository.cashbackCab(true, false, cabInput.getSubCategoryId(),
-	// 			cabInput.getDateTime(), cabInput.getActiveDate(), cabInput.getActiveDay(),
-	// 			cabInput.getServiceProvidersId(), cabInput.getCityId());
-	// 	return this.cashbackCalculatorAlgo.calculate(offers, cabInput.getExpense());
-	// }
+	@Transactional(readOnly = true)
+	public List<CashbackInfo> cab(CabInput cabInput) {
+		List<Offer> offers = offerRepository.cashbackCab(true, false, cabInput.getDateTime(), cabInput.getActiveDate(),
+				cabInput.getActiveDay(), cabInput.getSubCategoryId(), cabInput.getServiceProvidersId(),
+				cabInput.getCityId());
+		return this.cashbackCalculatorAlgo.calculate(offers, cabInput.getExpense());
+	}
 
 }
