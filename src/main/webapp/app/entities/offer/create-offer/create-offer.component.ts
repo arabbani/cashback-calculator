@@ -95,6 +95,7 @@ export class CreateOfferComponent implements OnInit {
   isCoupon: boolean;
   isFlight: boolean;
   isBus: boolean;
+  isHotel: boolean;
   isRechargeExtra: boolean;
   offerCategories: Category[];
   offerStates: State[];
@@ -113,6 +114,7 @@ export class CreateOfferComponent implements OnInit {
   fetchedBusInfo: boolean;
   fetchedFlightInfo: boolean;
   fetchedRechargeInfo: boolean;
+  fetchedHotelInfo: boolean;
   subscribed: boolean;
   tabTwoEnabled: boolean;
 
@@ -144,11 +146,13 @@ export class CreateOfferComponent implements OnInit {
     this.isSaving = false;
     this.isFlight = false;
     this.isBus = false;
+    this.isBus = false;
     this.isRechargeExtra = false;
     this.fetchedTravelEntities = false;
     this.fetchedBusInfo = false;
     this.fetchedFlightInfo = false;
     this.fetchedRechargeInfo = false;
+    this.fetchedHotelInfo = false;
     this.subscribed = false;
     this.tabTwoEnabled = false;
   }
@@ -322,6 +326,35 @@ export class CreateOfferComponent implements OnInit {
               this.isBus = true;
             }
           }
+          break;
+        case this.subCategoryEnum.Hotel:
+          // if (!this.fetchedHotelInfo) {
+          //   this.fetchedHotelInfo = true;
+          //   if (this.editMode) {
+          //     if (!this.fetchedTravelEntities) {
+          //       this.loadTravelEntities();
+          //       this.fetchedTravelEntities = true;
+          //     }
+          //     this.loadHotelEntities();
+          //   }
+          //   if (this.offer.id !== undefined) {
+          //     if (!this.offer.travelInfo || !this.offer.travelInfo.hotelInfo) {
+          //       this.loadHotelInfo();
+          //     } else {
+          //       this.isHotel = true;
+          //     }
+          //   } else if (!this.offer.travelInfo) {
+          //     this.offer.travelInfo = new TravelInfo();
+          //     this.offer.travelInfo.hotelInfo = new HotelInfo();
+          //     this.isHotel = true;
+          //   } else {
+          //     if (!this.offer.travelInfo.hotelInfo) {
+          //       this.offer.travelInfo.hotelInfo = new HotelInfo();
+          //     }
+          //     this.isHotel = true;
+          //   }
+
+          // }
           break;
         default:
           if (!this.fetchedFlightInfo) {
@@ -795,6 +828,11 @@ export class CreateOfferComponent implements OnInit {
   }
 
   private loadBusEntities(): void {
+    if (!this.cities) {
+      this.loadCities();
+    }
+  }
+  private loadHotelEntities(): void {
     if (!this.cities) {
       this.loadCities();
     }

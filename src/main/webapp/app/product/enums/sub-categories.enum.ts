@@ -13,5 +13,6 @@ export enum SubCategories {
     Cab = 'CAB',
     Bus = 'BUS',
     Flight = 'FLIGHT',
-    CarRental = 'CAR_RENTAL'
+    CarRental = 'CAR_RENTAL',
+    Hotel = 'HOTEL'
 }

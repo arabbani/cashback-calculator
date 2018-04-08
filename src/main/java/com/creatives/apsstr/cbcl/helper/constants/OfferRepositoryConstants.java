@@ -102,9 +102,9 @@ public class OfferRepositoryConstants {
 
 	public static final String WHERE_SUBCATEGORY = " subCategories.id =:subCategoryId";
 
-	public static final String WHERE_SERVICE_PROVIDER = " serviceProviders.id =:serviceProviderId";
+	public static final String WHERE_SERVICE_PROVIDER = " (serviceProviders IS NULL OR serviceProviders.id =:serviceProviderId)";
 
-	public static final String WHERE_SERVICE_PROVIDERS = " serviceProviders.id IN (:serviceProvidersId)";
+	public static final String WHERE_SERVICE_PROVIDERS = " (serviceProviders IS NULL OR serviceProviders.id IN (:serviceProvidersId))";
 
 	public static final String WHERE_CITY = " (cities IS NULL OR cities.id =:cityId)";
 

@@ -323,8 +323,7 @@
                             {{ serviceProvider.name }}
                         </span>
                         <ng-select *ngIf="editMode" id="serviceProviders" name="serviceProviders" [(ngModel)]="offer.serviceProviders" [items]="filteredServiceProviders"
-                            bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Service Providers" appendTo="body"
-                            required>
+                            bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Service Providers" appendTo="body">
                             <ng-template ng-header-tmp>
                                 <div class="my-2 ml-5">
                                     <button (click)="selectAllServiceProviders()" class="btn btn-sm btn-secondary">Select all</button>
