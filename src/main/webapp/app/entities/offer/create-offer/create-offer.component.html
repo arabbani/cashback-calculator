@@ -574,7 +574,7 @@
                                                             <kendo-switch id="exact" name="exact" [(ngModel)]="dataItem.mainReturn.exact" onLabel="Y" offLabel="N"></kendo-switch>
                                                         </span>
                                                     </div>
-                                                    <div class="form-group col-sm-6 col-lg-4 mb-3">
+                                                    <div class="form-group col-sm-6 col-lg-4 mb-3" *ngIf="dataItem.type.name !== returnTypesEnum.RIDE">
                                                         <label for="mode">Mode</label>
                                                         <span class="badge badge-secondary mr-2 p-2 mb-3" *ngIf="dataItem.mainReturn.mode && !editMode">
                                                             {{ dataItem.mainReturn.mode.name }}

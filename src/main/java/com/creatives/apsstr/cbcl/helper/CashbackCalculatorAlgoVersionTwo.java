@@ -70,6 +70,32 @@ public class CashbackCalculatorAlgoVersionTwo {
 	}
 
 	/**
+	 * process returnInfo To generate benefit for RIDE
+	 *
+	 * @return benefit corresponding to the returnInfo
+	 */
+	private Benefit calculateCashbackForRide(ReturnInfo returnInfo, Expense expense) {
+		Benefit benefit = new Benefit();
+		benefit.setReturnInfoId(returnInfo.getId());
+		MainReturn mainReturn = returnInfo.getMainReturn();
+		Integer amount = mainReturn.getAmount();
+		Integer minimumReturn = returnInfo.getExtras().getMinimumReturn();
+		Integer maximumReturn = returnInfo.getExtras().getMaximumReturn();
+		Integer minimumReturnAmount = 0;
+		Integer maximumReturnAmount = 0;
+		maximumReturnAmount = amount * expense.getExpense();
+		maximumReturnAmount = applyPriceBound(minimumReturn, maximumReturn, maximumReturnAmount);
+		if (mainReturn.isExact()) {
+			minimumReturnAmount = maximumReturnAmount;
+		} else {
+			minimumReturnAmount = minimumReturn != null ? minimumReturn : (3 * maximumReturnAmount) / 4;
+		}
+		benefit.setMinimumReturn(minimumReturnAmount);
+		benefit.setMaximumReturn(maximumReturnAmount);
+		return benefit;
+	}
+
+	/**
 	 * process returnInfo To generate benefit
 	 *
 	 * @return benefit corresponding to the returnInfo
@@ -93,7 +119,7 @@ public class CashbackCalculatorAlgoVersionTwo {
 		if (mainReturn.isExact()) {
 			minimumReturnAmount = maximumReturnAmount;
 		} else {
-			minimumReturnAmount = minimumReturn != null ? minimumReturn : 0;
+			minimumReturnAmount = minimumReturn != null ? minimumReturn : (3 * maximumReturnAmount) / 4;
 		}
 		benefit.setMinimumReturn(minimumReturnAmount);
 		benefit.setMaximumReturn(maximumReturnAmount);
@@ -110,7 +136,8 @@ public class CashbackCalculatorAlgoVersionTwo {
 		offerBenefit.setOfferId(offer.getId());
 		// Iterate over the offerReturns of the offer
 		offer.getOfferReturns().forEach(offerReturn -> {
-			if (checkPriceBound(offerReturn.getExtras().getMinimumExpense(), offerReturn.getExtras().getMaximumExpense(), expense)) {
+			if (checkPriceBound(offerReturn.getExtras().getMinimumExpense(),
+					offerReturn.getExtras().getMaximumExpense(), expense)) {
 				boolean exist = false;
 				// For each offerReturns, creates a corresponding CompoundBenefit
 				CompoundBenefit compoundBenefit = new CompoundBenefit();
@@ -123,7 +150,8 @@ public class CashbackCalculatorAlgoVersionTwo {
 				// Iterates over the list of returnInfos for this offerReturn
 				while (returnInfosIterator.hasNext()) {
 					ReturnInfo returnInfo = returnInfosIterator.next();
-					if (checkPriceBound(returnInfo.getExtras().getMinimumExpense(), returnInfo.getExtras().getMaximumExpense(), expense)) {
+					if (checkPriceBound(returnInfo.getExtras().getMinimumExpense(),
+							returnInfo.getExtras().getMaximumExpense(), expense)) {
 						exist = true;
 						String returnType = returnInfo.getType().getName();
 						if (returnType.equalsIgnoreCase(ReturnTypeConstants.CASHBACK)
@@ -145,7 +173,10 @@ public class CashbackCalculatorAlgoVersionTwo {
 								benefits.put(returnInfo.getId(), cashbackInfo.getOfferBenefit());
 							}
 						} else if (returnType.equalsIgnoreCase(ReturnTypeConstants.RIDE)) {
-
+							Benefit benefit = calculateCashbackForRide(returnInfo, expense);
+							minimumReturnAmount += benefit.getMinimumReturn();
+							maximumReturnAmount += benefit.getMaximumReturn();
+							compoundBenefit.addBenefit(benefit);
 						}
 					}
 				}
