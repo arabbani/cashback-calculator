@@ -12,5 +12,6 @@ export enum SubCategories {
     Water = 'Water',
     Cab = 'CAB',
     Bus = 'BUS',
-    Flight = 'FLIGHT'
+    Flight = 'FLIGHT',
+    CarRental = 'CAR_RENTAL'
 }

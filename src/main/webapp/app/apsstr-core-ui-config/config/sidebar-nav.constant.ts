@@ -74,6 +74,11 @@ export const SIDEBAR_NAV_ITEMS = [
         name: 'Cab',
         url: 'cab-coupons',
         icon: 'icon-puzzle'
+      },
+      {
+        name: 'Car Rental',
+        url: 'car-rental-coupons',
+        icon: 'icon-puzzle'
       }
     ]
   }

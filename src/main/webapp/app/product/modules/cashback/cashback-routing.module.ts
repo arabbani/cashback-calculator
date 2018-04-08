@@ -7,6 +7,7 @@ import {
   BroadbandComponent,
   BusComponent,
   CabComponent,
+  CarRentalComponent,
   CashbackComponent,
   DatacardComponent,
   DthComponent,
@@ -34,7 +35,8 @@ const routes: Routes = [
         data: {
           title: `Mobile Recharge Coupons, Offers for ${date}`,
           meta: {
-            description: `Best Mobile recharge coupons, offers, promo codes for ${date} in India with only one click and save more.`
+            // tslint:disable-next-line:max-line-length
+            description: `Get discounts on Mobile recharge with latest coupons, offers, promo codes for ${date} in India. Save more with the best Mobile Recharge offers in only one click.`
           }
         }
       },
@@ -44,7 +46,8 @@ const routes: Routes = [
         data: {
           title: `DTH Recharge Offers & Coupons, ${date}`,
           meta: {
-            description: `Best DTH recharge offers, coupons, promo codes ${date} in India with only one click and save more.`
+            // tslint:disable-next-line:max-line-length
+            description: `Save more with latest DTH recharge offers, coupons ${date} in India with only one click. Get discount with best DTH Recharge coupons, promo codes that 100% works.`
           }
         }
       },
@@ -54,7 +57,8 @@ const routes: Routes = [
         data: {
           title: `Datacard Recharge Coupons, Offers | ${date}`,
           meta: {
-            description: `Best Datacard recharge coupons, offers & promo codes for ${date} in India with only one click and save more.`
+            // tslint:disable-next-line:max-line-length
+            description: `Find latest Datacard recharge coupons, offers & promo codes for ${date} that 100% works in India with only one click. Use the best Datacard Recharge copuon, offer to get maximum discount and save more.`
           }
         }
       },
@@ -64,7 +68,8 @@ const routes: Routes = [
         data: {
           title: `Broadband Recharge Coupons & Offers, ${date}`,
           meta: {
-            description: `Best Broadband recharge coupons, offers & promo codes ${date} in India with only one click and save more.`
+            // tslint:disable-next-line:max-line-length
+            description: `Get discount on Broadband recharge with latest coupons & offers ${date}. Use the best Broadband Recharge coupon, promo code that 100% works in India with only one click and save more.`
           }
         }
       },
@@ -74,7 +79,8 @@ const routes: Routes = [
         data: {
           title: `Landline Recharge Offers & Coupons ${date}`,
           meta: {
-            description: `Best Landline recharge coupons, promo codes, offers for ${date} in India with only one click and save more.`
+            // tslint:disable-next-line:max-line-length
+            description: `Latest Landline recharge coupons, promo codes, offers for ${date} to use in India with only one click and get great discounts. Use Landline Recharge coupons, offers that 100% works.`
           }
         }
       },
@@ -84,7 +90,8 @@ const routes: Routes = [
         data: {
           title: `Electricity Bill Payment Offers, Coupons | ${date}`,
           meta: {
-            description: `Best Electricity Bill Payment coupons, offers, promo codes ${date} in India with only one click and save more.`
+            // tslint:disable-next-line:max-line-length
+            description: `Best Electricity Bill Payment coupons & offers ${date} in India with only one click. Save more with the latest Electricity Bill Payment coupon, promo codes & offer.`
           }
         }
       },
@@ -94,7 +101,7 @@ const routes: Routes = [
         data: {
           title: `Gas Bill Payment Offers & Coupons for ${date}`,
           meta: {
-            description: `Best Gas Bill Payment promo codes, coupons, offers for ${date} in India with only one click and save more.`
+            description: `Best Gas Bill Payment promo codes, coupons, offers for ${date} that 100% works in India with only one click and save more.`
           }
         }
       },
@@ -104,7 +111,8 @@ const routes: Routes = [
         data: {
           title: `Metro Recharge Offers, Coupons ${date}`,
           meta: {
-            description: `Best Metro Recharge coupons, offers & promo codes for ${date} in India with only one click and save more.`
+            // tslint:disable-next-line:max-line-length
+            description: `Latest Metro Recharge coupons & promo codes for ${date} in India with only one click and save more. Use the best Metro Recharge offer and get maximum discount.`
           }
         }
       },
@@ -124,7 +132,8 @@ const routes: Routes = [
         data: {
           title: `Flight Coupons & Offers ${date}`,
           meta: {
-            description: `Best Flight offers, coupons & promo codes for ${date} in India with only one click and save more.`
+            // tslint:disable-next-line:max-line-length
+            description: `Find best Flight offers, coupons & promo codes for ${date} in India with only one click. Get maximum discount with coupons & offers that works 100% and save more.`
           }
         }
       },
@@ -134,7 +143,7 @@ const routes: Routes = [
         data: {
           title: `Bus Offers & Coupons | ${date}`,
           meta: {
-            description: `Best Bus offers, coupons & promo codes ${date} in India with only one click and save more.`
+            description: `Find best Bus offers & coupons ${date} in India that 100% works with only one click. Save more with latest Flight offers, promo codes.`
           }
         }
       },
@@ -144,7 +153,18 @@ const routes: Routes = [
         data: {
           title: `Cab Offers, Coupons for ${date}`,
           meta: {
-            description: `Best Cab coupons, offers, promo codes in India for ${date} with only one click and save more.`
+            description: `Use Latest Cab coupons, offers, promo codes in India for ${date} & get great discount. Save more with the best coupon with only one click.`
+          }
+        }
+      },
+      {
+        path: 'car-rental-coupons',
+        component: CarRentalComponent,
+        data: {
+          title: `Car Rental Coupons, Offers for ${date}`,
+          meta: {
+            // tslint:disable-next-line:max-line-length
+            description: `Save big with best Car Rental coupons & offers that 100% works in India ${date}. Find the best Car Rental offer, coupon,  promo code with only one click and get great discount.`
           }
         }
       }

@@ -5,18 +5,18 @@ import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { BroadcastCashbackInfoService, CashbackService } from '../../../..';
-import { BusInput, CashbackInfo, StoredCashback, SubCategories } from '../../../../..';
+import { CarRentalInput, CashbackInfo, StoredCashback, SubCategories } from '../../../../..';
 import { ApsstrMetaService } from '../../../../../../apsstr-core-ui';
-import { City, CityService, ServiceProvider, SubCategory, SubCategoryService } from '../../../../../../entities';
+import { City, CityService, ServiceProvider, ServiceProviderService } from '../../../../../../entities';
 
 @Component({
-  selector: 'apsstr-bus',
-  templateUrl: './bus.component.html',
+  selector: 'apsstr-car-rental',
+  templateUrl: './car-rental.component.html',
   styles: []
 })
-export class BusComponent implements OnInit {
+export class CarRentalComponent implements OnInit {
 
-  busInput = new BusInput();
+  carRentalInput = new CarRentalInput();
   serviceProviders: ServiceProvider[];
   cities: City[];
   calculating = false;
@@ -24,12 +24,11 @@ export class BusComponent implements OnInit {
 
   constructor(private blockUIService: BlockUIService, private jhiEventManager: JhiEventManager,
     private cashbackService: CashbackService, private broadcastCashbackInfoService: BroadcastCashbackInfoService,
-    private cityService: CityService, private route: ActivatedRoute, private apsstrMetaService: ApsstrMetaService,
-    private subCategoryService: SubCategoryService) { }
+    private serviceProviderService: ServiceProviderService, private cityService: CityService, private route: ActivatedRoute, private apsstrMetaService: ApsstrMetaService) { }
 
   ngOnInit() {
     this.initializeSubCategory();
-    this.getSubCategoryByCode(this.subCategoryCode);
+    this.getServiceProvidersBySubCategoryCode(this.subCategoryCode);
     this.getCities();
     this.setMeta();
   }
@@ -41,7 +40,7 @@ export class BusComponent implements OnInit {
   calculate(): void {
     this.calculating = true;
     this.blockUIService.start('calculateCashback');
-    this.cashbackService.bus(this.busInput).subscribe(
+    this.cashbackService.carRental(this.carRentalInput).subscribe(
       (res: HttpResponse<CashbackInfo[]>) => {
         this.calculating = false;
         this.broadcastCashbackInfo(res.body);
@@ -51,14 +50,18 @@ export class BusComponent implements OnInit {
   }
 
   private broadcastCashbackInfo(cashbackInfos: CashbackInfo[]): void {
-    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.busInput, this.subCategoryCode));
+    this.broadcastCashbackInfoService.broadcastNewCashbackInfo(new StoredCashback(cashbackInfos, this.carRentalInput, this.subCategoryCode));
   }
 
-  private getSubCategoryByCode(subCategoryCode: string): void {
-    this.subCategoryService.findByCode(subCategoryCode).subscribe(
-      (res: HttpResponse<SubCategory>) => {
-        const subCategory = res.body;
-        this.busInput.subCategoryId = subCategory.id;
+  private getSubCategoryIdFromServiceProvider(): number {
+    return this.serviceProviders[0]['subCategories'][0].id;
+  }
+
+  private getServiceProvidersBySubCategoryCode(subCategoryCode: string): void {
+    this.serviceProviderService.findBySubCategoryCode(subCategoryCode).subscribe(
+      (res: HttpResponse<ServiceProvider[]>) => {
+        this.serviceProviders = res.body;
+        this.carRentalInput.subCategoryId = this.getSubCategoryIdFromServiceProvider();
       },
       (res: HttpErrorResponse) => this.onError(res.message)
     );
@@ -74,7 +77,7 @@ export class BusComponent implements OnInit {
   }
 
   private initializeSubCategory(): void {
-    this.subCategoryCode = SubCategories.Bus;
+    this.subCategoryCode = SubCategories.CarRental;
   }
 
   private onError(error): void {

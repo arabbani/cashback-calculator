@@ -12,6 +12,7 @@ import {
   BroadbandComponent,
   BusComponent,
   CabComponent,
+  CarRentalComponent,
   CashbackComponent,
   DatacardComponent,
   DthComponent,
@@ -38,7 +39,8 @@ import {
   declarations: [
     CashbackComponent, MobileComponent, DthComponent, DatacardComponent,
     LandlineComponent, ElectricityComponent, GasComponent, BroadbandComponent,
-    WaterComponent, MetroComponent, FlightComponent, BusComponent, CabComponent
+    WaterComponent, MetroComponent, FlightComponent, BusComponent, CabComponent,
+    CarRentalComponent
   ]
 })
 export class CashbackModule { }

@@ -17,6 +17,7 @@ import {
   MetroInput,
   MobileInput,
   WaterInput,
+  CarRentalInput,
 } from '../../..';
 import { SERVER_API_URL } from '../../../../app.constants';
 
@@ -75,6 +76,10 @@ export class CashbackService {
 
   cab(cabInput: CabInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/cab`, cabInput);
+  }
+
+  carRental(carRentalInput: CarRentalInput): Observable<EntityResponseType> {
+    return this.calculate(`${this.restUrl}/car-rental`, carRentalInput);
   }
 
   private calculate(restUrl: string, input: any): Observable<EntityResponseType> {

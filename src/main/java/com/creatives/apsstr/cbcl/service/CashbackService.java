@@ -6,6 +6,7 @@ import com.creatives.apsstr.cbcl.domain.Offer;
 import com.creatives.apsstr.cbcl.helper.CashbackCalculatorAlgoVersionTwo;
 import com.creatives.apsstr.cbcl.helper.model.BusInput;
 import com.creatives.apsstr.cbcl.helper.model.CabInput;
+import com.creatives.apsstr.cbcl.helper.model.CarRentalInput;
 import com.creatives.apsstr.cbcl.helper.model.CashbackInfo;
 import com.creatives.apsstr.cbcl.helper.model.Expense;
 import com.creatives.apsstr.cbcl.helper.model.FlightInput;
@@ -99,6 +100,19 @@ public class CashbackService {
 				cabInput.getActiveDay(), cabInput.getSubCategoryId(), cabInput.getServiceProvidersId(),
 				cabInput.getCityId());
 		return this.cashbackCalculatorAlgo.calculate(offers, cabInput.getExpense());
+	}
+
+	/**
+	 * Calculate cashback for car rental
+	 *
+	 * @return the list of cashbackInfos
+	 */
+	@Transactional(readOnly = true)
+	public List<CashbackInfo> car(CarRentalInput carRentalInput) {
+		List<Offer> offers = offerRepository.cashbackCab(true, false, carRentalInput.getDateTime(),
+				carRentalInput.getActiveDate(), carRentalInput.getActiveDay(), carRentalInput.getSubCategoryId(),
+				carRentalInput.getServiceProvidersId(), carRentalInput.getCityId());
+		return this.cashbackCalculatorAlgo.calculate(offers, carRentalInput.getExpense());
 	}
 
 }

@@ -7,6 +7,7 @@ import com.creatives.apsstr.cbcl.domain.Offer;
 import com.creatives.apsstr.cbcl.helper.model.BroadbandInput;
 import com.creatives.apsstr.cbcl.helper.model.BusInput;
 import com.creatives.apsstr.cbcl.helper.model.CabInput;
+import com.creatives.apsstr.cbcl.helper.model.CarRentalInput;
 import com.creatives.apsstr.cbcl.helper.model.CashbackInfo;
 import com.creatives.apsstr.cbcl.helper.model.DatacardInput;
 import com.creatives.apsstr.cbcl.helper.model.DthInput;
@@ -212,6 +213,19 @@ public class CashbackResource {
 	public List<CashbackInfo> cab(@RequestBody CabInput cabInput) {
 		log.debug("REST request to calculate cashback for cab : {} ", cabInput);
 		return cashbackService.cab(cabInput);
+	}
+
+	/**
+	 * POST /car-rental : calculate cashback for car rental
+	 *
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         cashbackResults in body
+	 */
+	@PostMapping("/car-rental")
+	@Timed
+	public List<CashbackInfo> cab(@RequestBody CarRentalInput carRentalInput) {
+		log.debug("REST request to calculate cashback for car rental : {} ", carRentalInput);
+		return cashbackService.car(carRentalInput);
 	}
 
 }

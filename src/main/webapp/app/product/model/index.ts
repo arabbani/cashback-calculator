@@ -18,3 +18,4 @@ export * from './metro-input';
 export * from './flight-input';
 export * from './bus-input';
 export * from './cab-input';
+export * from './car-rental-input';
