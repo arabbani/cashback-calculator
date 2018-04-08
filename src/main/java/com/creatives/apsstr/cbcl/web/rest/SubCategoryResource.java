@@ -25,7 +25,6 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-@Secured(AuthoritiesConstants.ADMIN)
 public class SubCategoryResource {
 
     private final Logger log = LoggerFactory.getLogger(SubCategoryResource.class);
@@ -47,6 +46,7 @@ public class SubCategoryResource {
      */
     @PostMapping("/sub-categories")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<SubCategory> create(@Valid @RequestBody SubCategory subCategory) throws URISyntaxException {
         log.debug("REST request to save SubCategory : {}", subCategory);
         if (subCategory.getId() != null) {
@@ -68,6 +68,7 @@ public class SubCategoryResource {
      */
     @PutMapping("/sub-categories")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<SubCategory> update(@Valid @RequestBody SubCategory subCategory) throws URISyntaxException {
         log.debug("REST request to update SubCategory : {}", subCategory);
         if (subCategory.getId() == null) {
@@ -85,6 +86,7 @@ public class SubCategoryResource {
      */
     @GetMapping("/sub-categories")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public List<SubCategory> findAll() {
         log.debug("REST request to get all SubCategories");
         return subCategoryService.findAll();
@@ -97,6 +99,7 @@ public class SubCategoryResource {
     */
     @GetMapping("/sub-categories/with/category")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public List<SubCategory> findWithCategory() {
         log.debug("REST request to get all SubCategories with category");
         return subCategoryService.findWithCategory();
@@ -110,9 +113,24 @@ public class SubCategoryResource {
      */
     @GetMapping("/sub-categories/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<SubCategory> findOne(@PathVariable Long id) {
         log.debug("REST request to get SubCategory : {}", id);
         SubCategory subCategory = subCategoryService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(subCategory));
+    }
+
+    /**
+     * GET  /sub-categories/code/:code : get subCategory by code.
+     *
+     * @param id the id of the subCategory to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the subCategory, or with status 404 (Not Found)
+     */
+    @GetMapping("/sub-categories/code/{code}")
+    @Timed
+    public ResponseEntity<SubCategory> findOneByCode(@PathVariable String code) {
+        log.debug("REST request to get SubCategory by code: {}", code);
+        SubCategory subCategory = subCategoryService.findOneByCode(code);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(subCategory));
     }
 
@@ -124,6 +142,7 @@ public class SubCategoryResource {
      */
     @DeleteMapping("/sub-categories/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         log.debug("REST request to delete SubCategory : {}", id);
         subCategoryService.delete(id);

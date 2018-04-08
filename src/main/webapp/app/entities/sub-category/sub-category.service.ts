@@ -33,6 +33,11 @@ export class SubCategoryService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
+    findByCode(code: string): Observable<EntityResponseType> {
+        return this.http.get<SubCategory>(`${this.resourceUrl}/code/${code}`, { observe: 'response' })
+            .map((res: EntityResponseType) => this.convertResponse(res));
+    }
+
     findAll(req?: any): Observable<HttpResponse<SubCategory[]>> {
         const options = createRequestOption(req);
         return this.http.get<SubCategory[]>(this.resourceUrl, { params: options, observe: 'response' })

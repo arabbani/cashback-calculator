@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
 
-
 /**
  * Spring Data JPA repository for the SubCategory entity.
  */
@@ -17,6 +16,8 @@ public interface SubCategoryRepository extends JpaRepository<SubCategory, Long> 
 
     @EntityGraph(attributePaths = { "category" })
     @Query("select distinct subCategory from SubCategory subCategory")
-	List<SubCategory> findWithCategory();
+    List<SubCategory> findWithCategory();
+
+    SubCategory findOneByCode(String code);
 
 }

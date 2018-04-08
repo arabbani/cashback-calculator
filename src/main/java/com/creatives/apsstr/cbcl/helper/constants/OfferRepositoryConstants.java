@@ -129,9 +129,9 @@ public class OfferRepositoryConstants {
 
 	public static final String WHERE_FLIGHT_INFO_ORIGINS = " flightInfoOrigins.id =:flightOriginId";
 
-	public static final String WHERE_BUS_INFO_FROM = " busInfoFroms.id =:from";
+	public static final String WHERE_BUS_INFO_FROM = " (busInfoFroms IS NULL OR busInfoFroms.id =:from)";
 
-	public static final String WHERE_BUS_INFO_TO = " busInfoTos.id =:to";
+	public static final String WHERE_BUS_INFO_TO = " (busInfoTos IS NULL OR busInfoTos.id =:to)";
 
 	/* ####################### CASHBACK CONDITIONS ####################### */
 

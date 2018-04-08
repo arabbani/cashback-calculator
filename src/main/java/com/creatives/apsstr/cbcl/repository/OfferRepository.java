@@ -63,6 +63,12 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
                         @Param("travelTypeId") Long travelTypeId, @Param("flightTypeId") Long flightTypeId,
                         @Param("flightClassId") Long flightClassId, @Param("flightOriginId") Long flightOriginId);
 
+        @Query(OfferRepositoryConstants.CASHBACK_BUS)
+        List<Offer> cashbackBus(@Param("active") boolean active, @Param("dummy") boolean dummy,
+                        @Param("dateTime") String dateTime, @Param("activeDate") Integer activeDate,
+                        @Param("activeDay") String activeDay, @Param("subCategoryId") Long subCategoryId,
+                        @Param("from") Long from, @Param("to") Long to);
+
         // @EntityGraph(attributePaths = { "merchant", "operatingSystems", "offerReturns" })
         // List<Offer> findDistinctByActiveTrueAndDummyFalseAndSubCategories_IdAndActiveDatesIsNullOrActiveDates_DateAndActiveDaysIsNullOrActiveDays_DayAndServiceProviders_IdAndRechargeInfo_CirclesIsNullOrRechargeInfo_Circles_IdAndRechargeInfo_RechargePlanTypesIsNullOrRechargeInfo_RechargePlanTypes_Id(
         //                 Long subCategoryId, Integer activeDate, String activeDay, Long serviceProviderId, Long circleId,

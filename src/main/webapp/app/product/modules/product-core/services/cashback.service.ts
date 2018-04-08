@@ -69,7 +69,7 @@ export class CashbackService {
     return this.calculate(`${this.restUrl}/flight`, flightInput);
   }
 
-  calculateCashbackForBus(busInput: BusInput): Observable<EntityResponseType> {
+  bus(busInput: BusInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/bus`, busInput);
   }
 

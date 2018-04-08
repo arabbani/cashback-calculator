@@ -67,6 +67,7 @@ public class CashbackService {
 	 *
 	 * @return the list of cashbackInfos
 	 */
+	@Transactional(readOnly = true)
 	public List<CashbackInfo> flight(FlightInput flightInput) {
 		List<Offer> offers = offerRepository.cashbackFlight(true, false, flightInput.getDateTime(),
 				flightInput.getActiveDate(), flightInput.getActiveDay(), flightInput.getSubCategoryId(),
@@ -80,12 +81,12 @@ public class CashbackService {
 	 *
 	 * @return the list of cashbackInfos
 	 */
-	// public List<CashbackInfo> calculateCashbackBus(BusInput busInput) {
-	// 	List<Offer> offers = offerRepository.cashbackBus(true, false, busInput.getSubCategoryId(),
-	// 			busInput.getDateTime(), busInput.getActiveDate(), busInput.getActiveDay(), busInput.getFrom(),
-	// 			busInput.getTo());
-	// 	return this.cashbackCalculatorAlgo.calculate(offers, busInput.getExpense());
-	// }
+	@Transactional(readOnly = true)
+	public List<CashbackInfo> bus(BusInput busInput) {
+		List<Offer> offers = offerRepository.cashbackBus(true, false, busInput.getDateTime(), busInput.getActiveDate(),
+				busInput.getActiveDay(), busInput.getSubCategoryId(), busInput.getFrom(), busInput.getTo());
+		return this.cashbackCalculatorAlgo.calculate(offers, busInput.getExpense());
+	}
 
 	/**
 	 * Calculate cashback for cab

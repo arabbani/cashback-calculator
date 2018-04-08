@@ -70,6 +70,18 @@ public class SubCategoryService {
     }
 
     /**
+     * Get one subCategory by code.
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    @Transactional(readOnly = true)
+    public SubCategory findOneByCode(String code) {
+        log.debug("Request to get SubCategory by code: {}", code);
+        return subCategoryRepository.findOneByCode(code);
+    }
+
+    /**
      * Delete the subCategory by id.
      *
      * @param id the id of the entity
