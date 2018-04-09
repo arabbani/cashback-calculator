@@ -44,6 +44,7 @@
     <include file="config/liquibase/changelog/20180329045936_added_entity_UserInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045937_added_entity_Brand.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045938_added_entity_ElectronicsInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180409033020_added_entity_HotelInfo.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20180329045900_added_entity_constraints_Merchant.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045901_added_entity_constraints_AffiliateCredential.xml" relativeToChangelogFile="false"/>
@@ -65,5 +66,7 @@
     <include file="config/liquibase/changelog/20180329045936_added_entity_constraints_UserInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045937_added_entity_constraints_Brand.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180329045938_added_entity_constraints_ElectronicsInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180409033020_added_entity_HotelInfo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180409160740_changelog.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

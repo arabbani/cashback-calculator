@@ -35,8 +35,6 @@ import { CbclSubCategoryModule } from './sub-category/sub-category.module';
 import { CbclTravelTypeModule } from './travel-type/travel-type.module';
 import { CbclUserInfoModule } from './user-info/user-info.module';
 
-/* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
-
 @NgModule({
     imports: [
         CbclMerchantModule,

@@ -1,8 +1,5 @@
 package com.creatives.apsstr.cbcl.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -35,11 +32,13 @@ public class TravelInfo implements Serializable {
     @JoinColumn(unique = true)
     private BusInfo busInfo;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(unique = true)
+    private HotelInfo hotelInfo;
+
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "travel_info_type",
-               joinColumns = @JoinColumn(name="travel_infos_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="types_id", referencedColumnName="id"))
+    @JoinTable(name = "travel_info_type", joinColumns = @JoinColumn(name = "travel_infos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "types_id", referencedColumnName = "id"))
     private Set<TravelType> types = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -75,6 +74,19 @@ public class TravelInfo implements Serializable {
 
     public void setBusInfo(BusInfo busInfo) {
         this.busInfo = busInfo;
+    }
+
+    public HotelInfo getHotelInfo() {
+        return hotelInfo;
+    }
+
+    public TravelInfo busInfo(HotelInfo hotelInfo) {
+        this.hotelInfo = hotelInfo;
+        return this;
+    }
+
+    public void setHotelInfo(HotelInfo hotelInfo) {
+        this.hotelInfo = hotelInfo;
     }
 
     public Set<TravelType> getTypes() {
@@ -123,8 +135,6 @@ public class TravelInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "TravelInfo{" +
-            "id=" + getId() +
-            "}";
+        return "TravelInfo{" + "id=" + getId() + "}";
     }
 }

@@ -86,11 +86,11 @@ public class CacheConfiguration {
             cm.createCache(com.creatives.apsstr.cbcl.domain.Region.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.RechargeInfo.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.RechargeInfo.class.getName() + ".circles", jcacheConfiguration);
-            cm.createCache(com.creatives.apsstr.cbcl.domain.RechargeInfo.class.getName() + ".rechargeTypes", jcacheConfiguration);
+            // cm.createCache(com.creatives.apsstr.cbcl.domain.RechargeInfo.class.getName() + ".rechargePlanTypes", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.TravelInfo.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.TravelInfo.class.getName() + ".types", jcacheConfiguration);
-            cm.createCache(com.creatives.apsstr.cbcl.domain.TravelInfo.class.getName() + ".regions", jcacheConfiguration);
-            cm.createCache(com.creatives.apsstr.cbcl.domain.TravelInfo.class.getName() + ".origins", jcacheConfiguration);
+            // cm.createCache(com.creatives.apsstr.cbcl.domain.TravelInfo.class.getName() + ".regions", jcacheConfiguration);
+            // cm.createCache(com.creatives.apsstr.cbcl.domain.TravelInfo.class.getName() + ".origins", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.BankType.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.Bank.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.Bank.class.getName() + ".cards", jcacheConfiguration);
@@ -128,6 +128,8 @@ public class CacheConfiguration {
             cm.createCache(com.creatives.apsstr.cbcl.domain.BusInfo.class.getName() + ".tos", jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.CardProvider.class.getName(), jcacheConfiguration);
             cm.createCache(com.creatives.apsstr.cbcl.domain.Card.class.getName() + ".cardProviders", jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.HotelInfo.class.getName(), jcacheConfiguration);
+            cm.createCache(com.creatives.apsstr.cbcl.domain.HotelInfo.class.getName() + ".types", jcacheConfiguration);            
             // jhipster-needle-ehcache-add-entry
         };
     }

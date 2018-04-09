@@ -1,0 +1,33 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="Arif Rabbani (generated)" id="1523290097189-1">
+        <createTable tableName="hotel_info_type">
+            <column name="hotel_infos_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="types_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1523290097189-2">
+        <addColumn tableName="travel_info">
+            <column name="hotel_info_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1523290097189-3">
+        <addPrimaryKey columnNames="hotel_infos_id, types_id" tableName="hotel_info_type"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1523290097189-4">
+        <addUniqueConstraint columnNames="hotel_info_id" constraintName="UC_TRAVEL_INFOHOTEL_INFO_ID_COL" tableName="travel_info"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1523290097189-5">
+        <addForeignKeyConstraint baseColumnNames="hotel_infos_id" baseTableName="hotel_info_type" constraintName="FK3nwkqvbi9t4kl0t4amb78mp0y" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hotel_info"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1523290097189-6">
+        <addForeignKeyConstraint baseColumnNames="types_id" baseTableName="hotel_info_type" constraintName="FKfvdtase3iweec9irui6gbnwxv" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="region"/>
+    </changeSet>
+    <changeSet author="Arif Rabbani (generated)" id="1523290097189-7">
+        <addForeignKeyConstraint baseColumnNames="hotel_info_id" baseTableName="travel_info" constraintName="FKsjq5u94tjk0x7bsjrklpx0s2o" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hotel_info"/>
+    </changeSet>
+</databaseChangeLog>

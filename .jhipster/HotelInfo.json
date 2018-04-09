@@ -1,0 +1,11 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [],
+    "changelogDate": "20180409033020",
+    "entityTableName": "hotel_info",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}
