@@ -1,22 +1,26 @@
+<div class="mb-3 px-2">
+    Grab the best
+    <strong>Water Bill Payment Coupon</strong>
+</div>
 <apsstr-card>
-  <apsstr-card-header>
-      <i class="fa fa-lg fa-mobile" aria-hidden="true"></i>
-      <span>Water</span>
-  </apsstr-card-header>
-  <apsstr-card-body>
-      <form role="form" #waterInputForm="ngForm" novalidate>
-          <div class="form-group mb-4">
-              <ng-select name="serviceProvider" [items]="serviceProviders" bindLabel="name" bindValue="id" [(ngModel)]="waterInput.serviceProviderId"
-                  placeholder="Operator" required></ng-select>
-          </div>
-          <div class="form-group">
-              <input class="form-control" type="text" name="expense" id="expense" [(ngModel)]="waterInput.expense.expense" placeholder="Amount"
-                  apsstrNumberInput required>
-          </div>
-      </form>
-  </apsstr-card-body>
-  <apsstr-card-footer extraClass="text-center">
-      <button type="button" class="btn btn-primary" [disabled]="calculating || waterInputForm.form.invalid" (click)="calculate()">
-          <i class="fa fa-search"></i>&nbsp;My Offer</button>
-  </apsstr-card-footer>
+    <apsstr-card-header>
+        <i class="fa fa-lg fa-mobile" aria-hidden="true"></i>
+        <span>Water</span>
+    </apsstr-card-header>
+    <apsstr-card-body>
+        <form role="form" #waterInputForm="ngForm" novalidate>
+            <div class="form-group mb-4">
+                <ng-select name="serviceProvider" [items]="serviceProviders" bindLabel="name" bindValue="id" [(ngModel)]="waterInput.serviceProviderId"
+                    placeholder="Operator" required></ng-select>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="expense" id="expense" [(ngModel)]="waterInput.expense.expense" placeholder="Amount"
+                    apsstrNumberInput required>
+            </div>
+        </form>
+    </apsstr-card-body>
+    <apsstr-card-footer extraClass="text-center">
+        <button type="button" class="btn btn-primary" [disabled]="calculating || waterInputForm.form.invalid" (click)="calculate()">
+            <i class="fa fa-search"></i>&nbsp;My Offer</button>
+    </apsstr-card-footer>
 </apsstr-card>
