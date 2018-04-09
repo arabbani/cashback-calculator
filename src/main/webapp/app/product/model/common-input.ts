@@ -7,6 +7,7 @@ export class CommonInput {
     public expense: Expense;
     public activeDate: number;
     public activeDay: string;
+    public merchantIds: Array<number>;
 
     constructor() {
         this.expense = new Expense();

@@ -71,6 +71,11 @@ export class OfferService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
+    findHotelInfoById(id: number): Observable<EntityResponseType> {
+        return this.http.get<Offer>(`${this.resourceUrl}/with/hotelInfo/${id}`, { observe: 'response' })
+            .map((res: EntityResponseType) => this.convertResponse(res));
+    }
+
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }

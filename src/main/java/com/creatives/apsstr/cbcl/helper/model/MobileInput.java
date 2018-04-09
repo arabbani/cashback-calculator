@@ -31,7 +31,8 @@ public class MobileInput extends CommonRechargeInput {
 		return "MobileInput [circleId=" + circleId + ", rechargePlaneTypeId=" + rechargePlaneTypeId
 				+ ", getServiceProviderId()=" + getServiceProviderId() + ", getSubCategoryId()=" + getSubCategoryId()
 				+ ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense() + ", getActiveDate()="
-				+ getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";
+				+ getActiveDate() + ", getActiveDay()=" + getActiveDay() + ", getMerchantIds()=" + getMerchantIds()
+				+ "]";
 	}
 
 }

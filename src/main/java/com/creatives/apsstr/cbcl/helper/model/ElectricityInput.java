@@ -11,7 +11,8 @@ public class ElectricityInput extends CommonRechargeInput {
 	public String toString() {
 		return "ElectricityInput [getServiceProviderId()=" + getServiceProviderId() + ", getSubCategoryId()="
 				+ getSubCategoryId() + ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense()
-				+ ", getActiveDate()=" + getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";
+				+ ", getActiveDate()=" + getActiveDate() + ", getActiveDay()=" + getActiveDay() + ", getMerchantIds()="
+				+ getMerchantIds() + "]";
 	}
 
 }

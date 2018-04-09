@@ -11,7 +11,8 @@ public class LandlineInput extends CommonRechargeInput {
 	public String toString() {
 		return "LandlineInput [getServiceProviderId()=" + getServiceProviderId() + ", getSubCategoryId()="
 				+ getSubCategoryId() + ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense()
-				+ ", getActiveDate()=" + getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";
+				+ ", getActiveDate()=" + getActiveDate() + ", getActiveDay()=" + getActiveDay() + ", getMerchantIds()="
+				+ getMerchantIds() + "]";
 	}
 
 }

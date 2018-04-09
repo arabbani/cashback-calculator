@@ -39,6 +39,10 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
                         "travelInfo.busInfo.froms", "travelInfo.busInfo.tos" })
         Offer findOneWithBusInfoById(Long id);
 
+        @EntityGraph(attributePaths = { "travelInfo", "travelInfo.types", "travelInfo.hotelInfo",
+                        "travelInfo.hotelInfo.types" })
+        Offer findOneWithHotelInfoById(Long id);
+
         List<OfferForReference> findForReferenceByIdNotAndActiveTrueAndDummyFalse(Long id);
 
         List<OfferForReference> findForReferenceByActiveTrueAndDummyFalse();

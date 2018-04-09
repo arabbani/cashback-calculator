@@ -11,7 +11,8 @@ public class BroadbandInput extends CommonRechargeInput {
 	public String toString() {
 		return "BroadbandInput [getServiceProviderId()=" + getServiceProviderId() + ", getSubCategoryId()="
 				+ getSubCategoryId() + ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense()
-				+ ", getActiveDate()=" + getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";
+				+ ", getActiveDate()=" + getActiveDate() + ", getActiveDay()=" + getActiveDay() + ", getMerchantIds()="
+				+ getMerchantIds() + "]";
 	}
-	
+
 }

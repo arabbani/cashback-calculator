@@ -40,6 +40,7 @@ import { State, StateService } from '../../state';
 import { SubCategory, SubCategoryService } from '../../sub-category';
 import { TravelInfo } from '../../travel-info';
 import { TravelType, TravelTypeService } from '../../travel-type';
+import { HotelInfo } from '../../hotel-info';
 
 @Component({
   selector: 'apsstr-create-offer',
@@ -328,33 +329,32 @@ export class CreateOfferComponent implements OnInit {
           }
           break;
         case this.subCategoryEnum.Hotel:
-          // if (!this.fetchedHotelInfo) {
-          //   this.fetchedHotelInfo = true;
-          //   if (this.editMode) {
-          //     if (!this.fetchedTravelEntities) {
-          //       this.loadTravelEntities();
-          //       this.fetchedTravelEntities = true;
-          //     }
-          //     this.loadHotelEntities();
-          //   }
-          //   if (this.offer.id !== undefined) {
-          //     if (!this.offer.travelInfo || !this.offer.travelInfo.hotelInfo) {
-          //       this.loadHotelInfo();
-          //     } else {
-          //       this.isHotel = true;
-          //     }
-          //   } else if (!this.offer.travelInfo) {
-          //     this.offer.travelInfo = new TravelInfo();
-          //     this.offer.travelInfo.hotelInfo = new HotelInfo();
-          //     this.isHotel = true;
-          //   } else {
-          //     if (!this.offer.travelInfo.hotelInfo) {
-          //       this.offer.travelInfo.hotelInfo = new HotelInfo();
-          //     }
-          //     this.isHotel = true;
-          //   }
-
-          // }
+          if (!this.fetchedHotelInfo) {
+            this.fetchedHotelInfo = true;
+            if (this.editMode) {
+              if (!this.fetchedTravelEntities) {
+                this.loadTravelEntities();
+                this.fetchedTravelEntities = true;
+              }
+              this.loadHotelEntities();
+            }
+            if (this.offer.id !== undefined) {
+              if (!this.offer.travelInfo || !this.offer.travelInfo.hotelInfo) {
+                this.loadHotelInfo();
+              } else {
+                this.isHotel = true;
+              }
+            } else if (!this.offer.travelInfo) {
+              this.offer.travelInfo = new TravelInfo();
+              this.offer.travelInfo.hotelInfo = new HotelInfo();
+              this.isHotel = true;
+            } else {
+              if (!this.offer.travelInfo.hotelInfo) {
+                this.offer.travelInfo.hotelInfo = new HotelInfo();
+              }
+              this.isHotel = true;
+            }
+          }
           break;
         default:
           if (!this.fetchedFlightInfo) {
@@ -662,6 +662,14 @@ export class CreateOfferComponent implements OnInit {
     this.offer.travelInfo.flightInfo.types = [];
   }
 
+  selectAllHotelTypes(): void {
+    this.offer.travelInfo.hotelInfo.types = _.cloneDeep(this.regions);
+  }
+
+  unselectAllHotelTypes(): void {
+    this.offer.travelInfo.hotelInfo.types = [];
+  }
+
   selectAllFlightOrigins(): void {
     this.offer.travelInfo.flightInfo.origins = _.cloneDeep(this.regions);
   }
@@ -832,6 +840,7 @@ export class CreateOfferComponent implements OnInit {
       this.loadCities();
     }
   }
+
   private loadHotelEntities(): void {
     if (!this.cities) {
       this.loadCities();
@@ -891,6 +900,40 @@ export class CreateOfferComponent implements OnInit {
             this.offer.travelInfo.busInfo = new BusInfo();
           }
           this.isBus = true;
+        }
+      },
+      (res: HttpErrorResponse) => this.onError(res.message)
+    );
+  }
+
+  private loadHotelInfo(): void {
+    this.offerService.findHotelInfoById(this.offer.id).subscribe(
+      (res: HttpResponse<Offer>) => {
+        const travelInfo = res.body.travelInfo;
+        if (travelInfo) {
+          if (!this.offer.travelInfo) {
+            this.offer.travelInfo = travelInfo;
+            if (this.offer.travelInfo.hotelInfo) {
+              this.isHotel = true;
+            } else if (this.editMode) {
+              this.offer.travelInfo.hotelInfo = new HotelInfo();
+              this.isHotel = true;
+            }
+          } else if (travelInfo.hotelInfo) {
+            this.offer.travelInfo.hotelInfo = travelInfo.hotelInfo;
+            this.isHotel = true;
+          } else if (this.editMode) {
+            this.offer.travelInfo.hotelInfo = new HotelInfo();
+            this.isHotel = true;
+          }
+        } else if (this.editMode) {
+          if (!this.offer.travelInfo) {
+            this.offer.travelInfo = new TravelInfo();
+            this.offer.travelInfo.hotelInfo = new HotelInfo();
+          } else if (!this.offer.travelInfo.hotelInfo) {
+            this.offer.travelInfo.hotelInfo = new HotelInfo();
+          }
+          this.isHotel = true;
         }
       },
       (res: HttpErrorResponse) => this.onError(res.message)

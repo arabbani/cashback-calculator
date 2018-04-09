@@ -137,7 +137,7 @@ public class OfferResource {
     @GetMapping("/offers/with/rechargeInfo/{id}")
     @Timed
     public ResponseEntity<Offer> findWithRechargeInfo(@PathVariable Long id) {
-        log.debug("REST request to get Offer  with rechargeInfo: {}", id);
+        log.debug("REST request to get Offer with rechargeInfo: {}", id);
         Offer offer = offerService.findWithRechargeInfo(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
     }
@@ -151,7 +151,7 @@ public class OfferResource {
     @GetMapping("/offers/with/flightInfo/{id}")
     @Timed
     public ResponseEntity<Offer> findWithFlightInfo(@PathVariable Long id) {
-        log.debug("REST request to get Offer  with flightInfo: {}", id);
+        log.debug("REST request to get Offer with flightInfo: {}", id);
         Offer offer = offerService.findWithFlightInfo(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
     }
@@ -165,8 +165,22 @@ public class OfferResource {
     @GetMapping("/offers/with/busInfo/{id}")
     @Timed
     public ResponseEntity<Offer> findWithBusInfo(@PathVariable Long id) {
-        log.debug("REST request to get Offer  with busInfo: {}", id);
+        log.debug("REST request to get Offer with busInfo: {}", id);
         Offer offer = offerService.findWithBusInfo(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
+    }
+
+    /**
+     * GET  /offers/with/hotelInfo/:id : get the "id" offer with hotelInfo.
+     *
+     * @param id the id of the offer to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the offer, or with status 404 (Not Found)
+     */
+    @GetMapping("/offers/with/hotelInfo/{id}")
+    @Timed
+    public ResponseEntity<Offer> findWithHotelInfo(@PathVariable Long id) {
+        log.debug("REST request to get Offer with hotelInfo: {}", id);
+        Offer offer = offerService.findWithHotelInfo(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(offer));
     }
 

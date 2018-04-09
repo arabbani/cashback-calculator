@@ -49,7 +49,8 @@ public class FlightInput extends CommonTravelInput {
 		return "FlightInput [travelTypeId=" + travelTypeId + ", flightClassId=" + flightClassId + ", flightOriginId="
 				+ flightOriginId + ", flightTypeId=" + flightTypeId + ", getSubCategoryId()=" + getSubCategoryId()
 				+ ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense() + ", getActiveDate()="
-				+ getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";
+				+ getActiveDate() + ", getActiveDay()=" + getActiveDay() + ", getMerchantIds()=" + getMerchantIds()
+				+ "]";
 	}
 
 }

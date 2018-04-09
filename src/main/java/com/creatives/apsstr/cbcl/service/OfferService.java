@@ -89,7 +89,7 @@ public class OfferService {
      */
     @Transactional(readOnly = true)
     public Offer findWithRechargeInfo(Long id) {
-        log.debug("Request to get Offer  with rechargeInfo: {}", id);
+        log.debug("Request to get Offer with rechargeInfo: {}", id);
         return offerRepository.findOneWithRechargeInfoById(id);
     }
 
@@ -101,7 +101,7 @@ public class OfferService {
      */
     @Transactional(readOnly = true)
     public Offer findWithFlightInfo(Long id) {
-        log.debug("Request to get Offer  with flightInfo: {}", id);
+        log.debug("Request to get Offer with flightInfo: {}", id);
         return offerRepository.findOneWithFlightInfoById(id);
     }
 
@@ -113,8 +113,20 @@ public class OfferService {
      */
     @Transactional(readOnly = true)
     public Offer findWithBusInfo(Long id) {
-        log.debug("Request to get Offer  with busInfo: {}", id);
+        log.debug("Request to get Offer with busInfo: {}", id);
         return offerRepository.findOneWithBusInfoById(id);
+    }
+
+    /**
+     * Get one offer by id with hotelInfo.
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    @Transactional(readOnly = true)
+    public Offer findWithHotelInfo(Long id) {
+        log.debug("Request to get Offer with hotelInfo: {}", id);
+        return offerRepository.findOneWithHotelInfoById(id);
     }
 
     /**

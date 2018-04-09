@@ -32,7 +32,8 @@ public class CarRentalInput extends CommonTravelInput {
     public String toString() {
         return "CabInput [cityId=" + cityId + ", serviceProvidersId=" + Arrays.toString(serviceProvidersId)
                 + ", getSubCategoryId()=" + getSubCategoryId() + ", getDateTime()=" + getDateTime() + ", getExpense()="
-                + getExpense() + ", getActiveDate()=" + getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";
+                + getExpense() + ", getActiveDate()=" + getActiveDate() + ", getActiveDay()=" + getActiveDay()
+                + ", getMerchantIds()=" + getMerchantIds() + "]";
     }
 
 }

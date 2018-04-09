@@ -369,7 +369,7 @@
                             </ng-select>
                         </div>
                     </fieldset>
-                    <fieldset class="fieldset-fix mb-3" *ngIf="(isBus || isFlight) && offer.travelInfo">
+                    <fieldset class="fieldset-fix mb-3" *ngIf="(isBus || isFlight || isHotel) && offer.travelInfo">
                         <legend class="legend-fix">
                             <strong>Travel Info</strong>
                         </legend>
@@ -465,6 +465,29 @@
                                     </span>
                                     <ng-select *ngIf="editMode" id="toCity" name="toCity" [(ngModel)]="offer.travelInfo.busInfo.tos" [items]="cities" bindLabel="name"
                                         [multiple]="true" [closeOnSelect]="false" placeholder="To" appendTo="body">
+                                    </ng-select>
+                                </div>
+                            </fieldset>
+                        </ng-container>
+                        <ng-container *ngIf="isHotel">
+                            <fieldset class="fieldset-fix mx-3">
+                                <legend class="legend-fix">
+                                    <strong>Hotel Info</strong>
+                                </legend>
+                                <div class="form-group mb-3">
+                                    <label class="mr-5" for="hotel_info_types">Types</label>
+                                    <span class="badge badge-secondary mr-2 p-2 mb-3" *ngFor="let hotelType of offer.travelInfo.hotelInfo.types">
+                                        {{ hotelType.name }}
+                                    </span>
+                                    <ng-select *ngIf="editMode" id="hotel_info_types" name="hotel_info_types" [(ngModel)]="offer.travelInfo.hotelInfo.types"
+                                        [items]="regions" bindLabel="name" [multiple]="true" [closeOnSelect]="false" placeholder="Hotel Types"
+                                        appendTo="body" required>
+                                        <ng-template ng-header-tmp>
+                                            <div class="my-2 ml-5">
+                                                <button (click)="selectAllHotelTypes()" class="btn btn-sm btn-secondary">Select all</button>
+                                                <button (click)="unselectAllHotelTypes()" class="btn btn-sm btn-danger">Unselect all</button>
+                                            </div>
+                                        </ng-template>
                                     </ng-select>
                                 </div>
                             </fieldset>

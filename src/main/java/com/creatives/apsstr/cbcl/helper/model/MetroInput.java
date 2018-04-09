@@ -11,7 +11,8 @@ public class MetroInput extends CommonRechargeInput {
 	public String toString() {
 		return "MetroInput [getServiceProviderId()=" + getServiceProviderId() + ", getSubCategoryId()="
 				+ getSubCategoryId() + ", getDateTime()=" + getDateTime() + ", getExpense()=" + getExpense()
-				+ ", getActiveDate()=" + getActiveDate() + ", getActiveDay()=" + getActiveDay() + "]";
+				+ ", getActiveDate()=" + getActiveDate() + ", getActiveDay()=" + getActiveDay() + ", getMerchantIds()="
+				+ getMerchantIds() + "]";
 	}
 
 }

@@ -7,11 +7,12 @@ package com.creatives.apsstr.cbcl.helper.model;
  */
 public class CommonInput {
 
-	private Long subCategoryId;
 	private String dateTime;
-	private Expense expense;
 	private Integer activeDate;
 	private String activeDay;
+	private Expense expense;
+	private Long subCategoryId;
+	private Long merchantIds[];
 
 	public Long getSubCategoryId() {
 		return subCategoryId;
@@ -51,6 +52,14 @@ public class CommonInput {
 
 	public void setActiveDay(String activeDay) {
 		this.activeDay = activeDay;
+	}
+
+	public Long[] getMerchantIds() {
+		return merchantIds;
+	}
+
+	public void setMerchantIds(Long[] merchantIds) {
+		this.merchantIds = merchantIds;
 	}
 
 }
