@@ -38,11 +38,11 @@ export class CashbackInfoTabComponent implements OnChanges {
 
   private sortCashbackInfos(cashbackInfos: List<CashbackInfo>): List<CashbackInfo> {
     const result = cashbackInfos.sort((cashbackInfoA, cashbackInfoB) => {
-      const maximumReturnA = cashbackInfoA.offerBenefit.compoundBenefits[0].maximumReturn;
-      const maximumReturnB = cashbackInfoB.offerBenefit.compoundBenefits[0].maximumReturn;
-      if (maximumReturnA < maximumReturnB) {
+      const maximumA = cashbackInfoA.offerBenefit.compoundBenefits[0].maximum;
+      const maximumB = cashbackInfoB.offerBenefit.compoundBenefits[0].maximum;
+      if (maximumA < maximumB) {
         return 1;
-      } else if (maximumReturnA > maximumReturnB) {
+      } else if (maximumA > maximumB) {
         return -1;
       }
       return 0;

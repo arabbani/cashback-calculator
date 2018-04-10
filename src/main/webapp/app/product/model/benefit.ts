@@ -1,7 +1,8 @@
 export class Benefit {
     constructor(
         public readonly returnInfoId: number,
-        public readonly minimumReturn: number,
-        public readonly maximumReturn: number,
-    ) {}
+        public readonly type: string,
+        public readonly minimum: number,
+        public readonly maximum: number,
+    ) { }
 }

@@ -9,9 +9,9 @@ public class Benefit {
 
 	private Long returnInfoId;
 
-	private Integer minimumReturn;
+	private Integer minimum;
 
-	private Integer maximumReturn;
+	private Integer maximum;
 
 	public Long getReturnInfoId() {
 		return returnInfoId;
@@ -21,19 +21,19 @@ public class Benefit {
 		this.returnInfoId = returnInfoId;
 	}
 
-	public Integer getMinimumReturn() {
-		return minimumReturn;
+	public Integer getMinimum() {
+		return minimum;
 	}
 
-	public void setMinimumReturn(Integer minimumReturn) {
-		this.minimumReturn = minimumReturn;
+	public void setMinimum(Integer minimum) {
+		this.minimum = minimum;
 	}
 
-	public Integer getMaximumReturn() {
-		return maximumReturn;
+	public Integer getMaximum() {
+		return maximum;
 	}
 
-	public void setMaximumReturn(Integer maximumReturn) {
-		this.maximumReturn = maximumReturn;
+	public void setMaximum(Integer maximum) {
+		this.maximum = maximum;
 	}
 }

@@ -12,9 +12,9 @@ public class CompoundBenefit {
 
 	private Long offerReturnId;
 
-	private Integer minimumReturn;
+	private Integer minimum;
 
-	private Integer maximumReturn;
+	private Integer maximum;
 
 	private Set<Benefit> benefits = new HashSet<>();
 
@@ -26,20 +26,20 @@ public class CompoundBenefit {
 		this.offerReturnId = offerReturnId;
 	}
 
-	public Integer getMinimumReturn() {
-		return minimumReturn;
+	public Integer getMinimum() {
+		return minimum;
 	}
 
-	public void setMinimumReturn(Integer minimumReturn) {
-		this.minimumReturn = minimumReturn;
+	public void setMinimum(Integer minimum) {
+		this.minimum = minimum;
 	}
 
-	public Integer getMaximumReturn() {
-		return maximumReturn;
+	public Integer getMaximum() {
+		return maximum;
 	}
 
-	public void setMaximumReturn(Integer maximumReturn) {
-		this.maximumReturn = maximumReturn;
+	public void setMaximum(Integer maximum) {
+		this.maximum = maximum;
 	}
 
 	public Set<Benefit> getBenefits() {
@@ -57,8 +57,8 @@ public class CompoundBenefit {
 	public CompoundBenefit copy() {
 		CompoundBenefit compoundBenefit = new CompoundBenefit();
 		compoundBenefit.setOfferReturnId(this.offerReturnId);
-		compoundBenefit.setMinimumReturn(this.minimumReturn);
-		compoundBenefit.setMaximumReturn(this.maximumReturn);
+		compoundBenefit.setMinimum(this.minimum);
+		compoundBenefit.setMaximum(this.maximum);
 		this.benefits.forEach(benefit -> {
 			compoundBenefit.addBenefit(benefit);
 		});

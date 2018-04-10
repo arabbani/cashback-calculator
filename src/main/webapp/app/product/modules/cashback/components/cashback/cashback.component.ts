@@ -26,7 +26,7 @@ export class CashbackComponent implements OnInit, OnDestroy {
     private navigationEndEvent: ISubscription;
 
     constructor(private router: Router, private jhiEventManager: JhiEventManager, private blockUIService: BlockUIService, private storedCashbackService: StoredCashbackService,
-    private offerFilterService: OfferFilterService) {}
+        private offerFilterService: OfferFilterService) { }
 
     ngOnInit() {
         this.showDefault = true;
@@ -70,14 +70,14 @@ export class CashbackComponent implements OnInit, OnDestroy {
     private registerStoredCashbackInfosEvent(): void {
         this.storedCashbackInfosEvent = this.jhiEventManager.subscribe('storedCashbackInfos', (response) => {
             this.blockUIService.stop('calculateCashback');
-            this.onBroadcastCashbackInfos(<StoredCashback> response.content);
+            this.onBroadcastCashbackInfos(<StoredCashback>response.content);
         });
     }
 
     private registerNewCashbackInfosEvent(): void {
         this.newCashbackInfosEvent = this.jhiEventManager.subscribe('newCashbackInfos', (response) => {
             this.blockUIService.stop('calculateCashback');
-            this.onBroadcastCashbackInfos(<StoredCashback> response.content);
+            this.onBroadcastCashbackInfos(<StoredCashback>response.content);
         });
     }
 
@@ -97,11 +97,11 @@ export class CashbackComponent implements OnInit, OnDestroy {
 
     private sortCompoundBenefits(compoundBenefits: CompoundBenefit[]): CompoundBenefit[] {
         return compoundBenefits.sort((compoundBenefitA, compoundBenefitB) => {
-            const maximumReturnA = compoundBenefitA.maximumReturn;
-            const maximumReturnB = compoundBenefitB.maximumReturn;
-            if (maximumReturnA < maximumReturnB) {
+            const maximumA = compoundBenefitA.maximum;
+            const maximumB = compoundBenefitB.maximum;
+            if (maximumA < maximumB) {
                 return 1;
-            } else if (maximumReturnA > maximumReturnB) {
+            } else if (maximumA > maximumB) {
                 return -1;
             }
             return 0;
