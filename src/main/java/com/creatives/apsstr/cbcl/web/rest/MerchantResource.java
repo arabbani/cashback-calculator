@@ -106,6 +106,19 @@ public class MerchantResource {
     }
 
     /**
+    * GET  /merchants/by/subCategoryId/{id} : get all the merchants by subCategory Id.
+    *
+    * @return the ResponseEntity with status 200 (OK) and the list of merchants in body
+    */
+    @GetMapping("/merchants/by/subCategoryId/{id}")
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public List<Merchant> findBySubCategoryId(@PathVariable Long id) {
+        log.debug("REST request to get all Merchants by subCategory Id");
+        return merchantService.findBySubCategoryId(id);
+    }
+
+    /**
      * GET  /merchants/:id : get the "id" merchant.
      *
      * @param id the id of the merchant to retrieve

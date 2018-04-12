@@ -45,6 +45,11 @@ export class MerchantService {
             .map((res: HttpResponse<Merchant[]>) => this.convertArrayResponse(res));
     }
 
+    finBySubCategoryId(id: number): Observable<HttpResponse<Merchant[]>> {
+        return this.http.get<Merchant[]>(`${this.resourceUrl}/by/subCategoryId/${id}`, { observe: 'response' })
+            .map((res: HttpResponse<Merchant[]>) => this.convertArrayResponse(res));
+    }
+
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }

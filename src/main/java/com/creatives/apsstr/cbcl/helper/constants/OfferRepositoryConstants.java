@@ -18,6 +18,8 @@ public class OfferRepositoryConstants {
 
 	public static final String SERVICE_PROVIDERS = " left join fetch offer.serviceProviders serviceProviders";
 
+	public static final String MERCHANT = " left join fetch offer.merchant merchant";
+
 	public static final String ACTIVE_DATES = " left join fetch offer.activeDates activeDates";
 
 	public static final String ACTIVE_DAYS = " left join fetch offer.activeDays activeDays";
@@ -42,6 +44,8 @@ public class OfferRepositoryConstants {
 
 	public static final String TRAVEL_INFO_BUS = " left join fetch travelInfo.busInfo busInfo";
 
+	public static final String TRAVEL_INFO_HOTEL = " left join fetch travelInfo.hotelInfo hotelInfo";
+
 	public static final String FLIGHT_INFO_TYPES = " left join fetch flightInfo.types flightInfoTypes";
 
 	public static final String FLIGHT_INFO_ORIGINS = " left join fetch flightInfo.origins flightInfoOrigins";
@@ -51,6 +55,8 @@ public class OfferRepositoryConstants {
 	public static final String BUS_INFO_FROMS = " left join fetch busInfo.froms busInfoFroms";
 
 	public static final String BUS_INFO_TOS = " left join fetch busInfo.tos busInfoTos";
+
+	public static final String HOTEL_INFO_TYPES = " left join fetch hotelInfo.types hotelInfoTypes";
 
 	/*
 	 * ####################### CHILD RELATIONNS BY CATEGORY #######################
@@ -66,25 +72,33 @@ public class OfferRepositoryConstants {
 
 	public static final String BUS_INFO_CHILDS = TRAVEL_INFO_BUS + BUS_INFO_FROMS + BUS_INFO_TOS;
 
-	public static final String TRAVEL_INFO_NESTED_CHILDS = TRAVEL_INFO_CHILDS + FLIGHT_INFO_CHILDS + BUS_INFO_CHILDS;
+	public static final String HOTEL_INFO_CHILDS = TRAVEL_INFO_HOTEL + HOTEL_INFO_TYPES;
+
+	public static final String TRAVEL_INFO_NESTED_CHILDS = TRAVEL_INFO_CHILDS + FLIGHT_INFO_CHILDS + BUS_INFO_CHILDS
+			+ HOTEL_INFO_CHILDS;
 
 	/* ####################### SELECT ####################### */
 
-	public static final String DEFAULT = SELF + OPERATING_SYSTEMS + CITIES + SUB_CATEGORIES + SERVICE_PROVIDERS
-			+ ACTIVE_DATES + ACTIVE_DAYS;
+	public static final String DEFAULT = SELF + OPERATING_SYSTEMS + CITIES + SUB_CATEGORIES + MERCHANT
+			+ SERVICE_PROVIDERS + ACTIVE_DATES + ACTIVE_DAYS;
+
+	public static final String CASHBACK_DEFAULT = SELF + OPERATING_SYSTEMS + CITIES + SUB_CATEGORIES + MERCHANT
+			+ SERVICE_PROVIDERS + ACTIVE_DATES + ACTIVE_DAYS;
 
 	public static final String CHILD_RELATIONS = REECHERGE_INFO_CHILDS + TRAVEL_INFO_NESTED_CHILDS
 			+ SERVICE_PROVIDER_SUB_CATEGORIES;
 
 	/* ####################### CASHBACK SELECT ####################### */
 
-	public static final String SELECT_RECHARGE = DEFAULT + REECHERGE_INFO_CHILDS;
+	public static final String SELECT_RECHARGE = CASHBACK_DEFAULT + REECHERGE_INFO_CHILDS;
 
-	public static final String SELECT_TRAVEL = DEFAULT + TRAVEL_INFO_CHILDS;
+	public static final String SELECT_TRAVEL = CASHBACK_DEFAULT + TRAVEL_INFO_CHILDS;
 
 	public static final String SELECT_FLIGHT = SELECT_TRAVEL + FLIGHT_INFO_CHILDS;
 
 	public static final String SELECT_BUS = SELECT_TRAVEL + BUS_INFO_CHILDS;
+
+	public static final String SELECT_HOTEL = SELECT_TRAVEL + HOTEL_INFO_CHILDS;
 
 	/* ####################### CONDITIONS ####################### */
 
@@ -105,6 +119,8 @@ public class OfferRepositoryConstants {
 	public static final String WHERE_SERVICE_PROVIDER = " (serviceProviders IS NULL OR serviceProviders.id =:serviceProviderId)";
 
 	public static final String WHERE_SERVICE_PROVIDERS = " (serviceProviders IS NULL OR serviceProviders.id IN (:serviceProvidersId))";
+
+	public static final String WHERE_MERCHANTS = " (merchant.id IN (:merchantIds))";
 
 	public static final String WHERE_CITY = " (cities IS NULL OR cities.id =:cityId)";
 
@@ -133,6 +149,8 @@ public class OfferRepositoryConstants {
 
 	public static final String WHERE_BUS_INFO_TO = " (busInfoTos IS NULL OR busInfoTos.id =:to)";
 
+	public static final String WHERE_HOTEL_INFO_TYPE = " (hotelInfoTypes.id =:hotelTypeId)";
+
 	/* ####################### CASHBACK CONDITIONS ####################### */
 
 	public static final String CASHBACK_CONDITION_COMMON = WHERE_ACTIVE + SharedRepositoryConstants.AND
@@ -156,11 +174,14 @@ public class OfferRepositoryConstants {
 	public static final String CONDITION_CAB = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
 			+ WHERE_SERVICE_PROVIDERS + SharedRepositoryConstants.AND + WHERE_CITY;
 
+	public static final String CONDITION_HOTEL = CASHBACK_CONDITION_COMMON + SharedRepositoryConstants.AND
+			+ WHERE_MERCHANTS;
+
 	/*
 	 * ####################### CASHBACK SELECT WITH CONDITIONS #######################
 	 */
 
-	public static final String CASHBACK_RECHARGE = DEFAULT + OFFER_RETURNS + SharedRepositoryConstants.WHERE
+	public static final String CASHBACK_RECHARGE = CASHBACK_DEFAULT + OFFER_RETURNS + SharedRepositoryConstants.WHERE
 			+ CONDITION_RECHARGE_COMMON;
 
 	public static final String CASHBACK_RECHARGE_WITH_CHILDS = SELECT_RECHARGE + OFFER_RETURNS
@@ -174,6 +195,8 @@ public class OfferRepositoryConstants {
 
 	public static final String CASHBACK_BUS = SELECT_BUS + SharedRepositoryConstants.WHERE + CONDITION_BUS;
 
-	public static final String CASHBACK_CAB = DEFAULT + SharedRepositoryConstants.WHERE + CONDITION_CAB;
+	public static final String CASHBACK_CAB = CASHBACK_DEFAULT + SharedRepositoryConstants.WHERE + CONDITION_CAB;
+
+	public static final String CASHBACK_HOTEL = SELECT_HOTEL + SharedRepositoryConstants.WHERE + CONDITION_HOTEL;
 
 }

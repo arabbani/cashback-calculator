@@ -58,6 +58,18 @@ public class MerchantService {
     }
 
     /**
+     * Get merchants by subCategory id.
+     *
+     * @param id the id of the entity
+     * @return the entity
+     */
+    @Transactional(readOnly = true)
+    public List<Merchant> findBySubCategoryId(Long id) {
+        log.debug("Request to get Merchants by subCategory id : {}", id);
+        return merchantRepository.findBySubCategories_Id(id);
+    }
+
+    /**
      * Get one merchant by id.
      *
      * @param id the id of the entity

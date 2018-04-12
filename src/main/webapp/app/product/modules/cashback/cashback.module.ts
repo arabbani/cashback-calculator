@@ -19,6 +19,7 @@ import {
   ElectricityComponent,
   FlightComponent,
   GasComponent,
+  HotelComponent,
   LandlineComponent,
   MetroComponent,
   MobileComponent,
@@ -40,7 +41,8 @@ import {
     CashbackComponent, MobileComponent, DthComponent, DatacardComponent,
     LandlineComponent, ElectricityComponent, GasComponent, BroadbandComponent,
     WaterComponent, MetroComponent, FlightComponent, BusComponent, CabComponent,
-    CarRentalComponent
+    CarRentalComponent,
+    HotelComponent
   ]
 })
 export class CashbackModule { }

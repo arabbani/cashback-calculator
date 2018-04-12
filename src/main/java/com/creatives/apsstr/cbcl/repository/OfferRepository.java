@@ -22,8 +22,8 @@ import javax.persistence.FetchType;
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
         @EntityGraph(attributePaths = { "operatingSystems", "cities", "cities.state", "subCategories",
-                        "subCategories.category", "serviceProviders", "serviceProviders.subCategories", "activeDates",
-                        "activeDays", "affiliate", "policy", "offerReturns",
+                        "subCategories.category", "serviceProviders", "merchant", "serviceProviders.subCategories",
+                        "activeDates", "activeDays", "affiliate", "policy", "offerReturns",
                         "offerReturns.returnInfos.payment.cards.bank", "offerReturns.returnInfos.payment.cards.type" })
         Offer findOneForAdminViewById(Long id);
 
@@ -78,6 +78,12 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
                         @Param("dateTime") String dateTime, @Param("activeDate") Integer activeDate,
                         @Param("activeDay") String activeDay, @Param("subCategoryId") Long subCategoryId,
                         @Param("serviceProvidersId") Long[] serviceProvidersId, @Param("cityId") Long cityId);
+
+        @Query(OfferRepositoryConstants.CASHBACK_HOTEL)
+        List<Offer> cashbackHotel(@Param("active") boolean active, @Param("dummy") boolean dummy,
+                        @Param("dateTime") String dateTime, @Param("activeDate") Integer activeDate,
+                        @Param("activeDay") String activeDay, @Param("subCategoryId") Long subCategoryId,
+                        @Param("merchantIds") Long[] merchantIds);
 
         // @EntityGraph(attributePaths = { "merchant", "operatingSystems", "offerReturns" })
         // List<Offer> findDistinctByActiveTrueAndDummyFalseAndSubCategories_IdAndActiveDatesIsNullOrActiveDates_DateAndActiveDaysIsNullOrActiveDays_DayAndServiceProviders_IdAndRechargeInfo_CirclesIsNullOrRechargeInfo_Circles_IdAndRechargeInfo_RechargePlanTypesIsNullOrRechargeInfo_RechargePlanTypes_Id(

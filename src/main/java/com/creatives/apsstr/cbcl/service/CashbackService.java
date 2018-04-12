@@ -10,6 +10,7 @@ import com.creatives.apsstr.cbcl.helper.model.CarRentalInput;
 import com.creatives.apsstr.cbcl.helper.model.CashbackInfo;
 import com.creatives.apsstr.cbcl.helper.model.Expense;
 import com.creatives.apsstr.cbcl.helper.model.FlightInput;
+import com.creatives.apsstr.cbcl.helper.model.HotelInput;
 import com.creatives.apsstr.cbcl.repository.OfferRepository;
 
 import org.slf4j.Logger;
@@ -113,6 +114,19 @@ public class CashbackService {
 				carRentalInput.getActiveDate(), carRentalInput.getActiveDay(), carRentalInput.getSubCategoryId(),
 				carRentalInput.getServiceProvidersId(), carRentalInput.getCityId());
 		return this.cashbackCalculatorAlgo.calculate(offers, carRentalInput.getExpense());
+	}
+
+	/**
+	 * Calculate cashback for hotel
+	 *
+	 * @return the list of cashbackInfos
+	 */
+	@Transactional(readOnly = true)
+	public List<CashbackInfo> hotel(HotelInput hotelInput) {
+		List<Offer> offers = offerRepository.cashbackHotel(true, false, hotelInput.getDateTime(),
+				hotelInput.getActiveDate(), hotelInput.getActiveDay(), hotelInput.getSubCategoryId(),
+				hotelInput.getMerchantIds());
+		return this.cashbackCalculatorAlgo.calculate(offers, hotelInput.getExpense());
 	}
 
 }

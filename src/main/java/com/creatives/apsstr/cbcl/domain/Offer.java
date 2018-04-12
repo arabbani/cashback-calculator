@@ -159,7 +159,7 @@ public class Offer implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Affiliate affiliate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Merchant merchant;
 
     @ManyToOne

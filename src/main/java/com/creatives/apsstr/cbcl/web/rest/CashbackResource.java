@@ -14,6 +14,7 @@ import com.creatives.apsstr.cbcl.helper.model.DthInput;
 import com.creatives.apsstr.cbcl.helper.model.ElectricityInput;
 import com.creatives.apsstr.cbcl.helper.model.FlightInput;
 import com.creatives.apsstr.cbcl.helper.model.GasInput;
+import com.creatives.apsstr.cbcl.helper.model.HotelInput;
 import com.creatives.apsstr.cbcl.helper.model.LandlineInput;
 import com.creatives.apsstr.cbcl.helper.model.MetroInput;
 import com.creatives.apsstr.cbcl.helper.model.MobileInput;
@@ -79,15 +80,15 @@ public class CashbackResource {
 	 * @return the ResponseEntity with status 200 (OK) and the list of
 	 *         cashbackResults in body
 	 */
-	// @PostMapping("/datacard")
-	// @Timed
-	// public List<CashbackInfo> calculateCashbackForDatacard(@RequestBody DatacardInput datacardInput) {
-	// 	log.debug("REST request to calculate cashback for datacard : {} ", datacardInput);
-	// 	return cashbackService.calculateCashbackRechargeWithRechargeCondition(
-	// 			datacardInput.getSubCategoryId(), datacardInput.getServiceProviderId(), datacardInput.getDateTime(),
-	// 			datacardInput.getActiveDate(), datacardInput.getActiveDay(), datacardInput.getCircleId(),
-	// 			datacardInput.getRechargePlaneTypeId(), datacardInput.getExpense());
-	// }
+	@PostMapping("/datacard")
+	@Timed
+	public List<CashbackInfo> datacard(@RequestBody DatacardInput datacardInput) {
+		log.debug("REST request to calculate cashback for datacard : {} ", datacardInput);
+		return cashbackService.rechargeWithRechargeCondition(datacardInput.getDateTime(), datacardInput.getActiveDate(),
+				datacardInput.getActiveDay(), datacardInput.getExpense(), datacardInput.getSubCategoryId(),
+				datacardInput.getServiceProviderId(), datacardInput.getCircleId(),
+				datacardInput.getRechargePlaneTypeId());
+	}
 
 	/**
 	 * POST /landline : calculate cashback for landline
@@ -226,6 +227,19 @@ public class CashbackResource {
 	public List<CashbackInfo> cab(@RequestBody CarRentalInput carRentalInput) {
 		log.debug("REST request to calculate cashback for car rental : {} ", carRentalInput);
 		return cashbackService.car(carRentalInput);
+	}
+
+	/**
+	 * POST /hotel : calculate cashback for hotel
+	 *
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         cashbackResults in body
+	 */
+	@PostMapping("/hotel")
+	@Timed
+	public List<CashbackInfo> hotel(@RequestBody HotelInput hotelInput) {
+		log.debug("REST request to calculate cashback for hotel : {} ", hotelInput);
+		return cashbackService.hotel(hotelInput);
 	}
 
 }

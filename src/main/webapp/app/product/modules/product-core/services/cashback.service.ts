@@ -20,6 +20,7 @@ import {
   CarRentalInput,
 } from '../../..';
 import { SERVER_API_URL } from '../../../../app.constants';
+import { HotelInput } from '../../../model/hotel-input';
 
 type EntityResponseType = HttpResponse<CashbackInfo[]>;
 
@@ -80,6 +81,10 @@ export class CashbackService {
 
   carRental(carRentalInput: CarRentalInput): Observable<EntityResponseType> {
     return this.calculate(`${this.restUrl}/car-rental`, carRentalInput);
+  }
+
+  hotel(hotelInput: HotelInput): Observable<EntityResponseType> {
+    return this.calculate(`${this.restUrl}/hotel`, hotelInput);
   }
 
   private calculate(restUrl: string, input: any): Observable<EntityResponseType> {

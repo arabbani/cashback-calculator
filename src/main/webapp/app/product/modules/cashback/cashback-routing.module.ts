@@ -14,6 +14,7 @@ import {
   ElectricityComponent,
   FlightComponent,
   GasComponent,
+  HotelComponent,
   LandlineComponent,
   MetroComponent,
   MobileComponent,
@@ -165,6 +166,17 @@ const routes: Routes = [
           meta: {
             // tslint:disable-next-line:max-line-length
             description: `Save big with best Car Rental coupons & offers that 100% works in India ${date}. Find the best Car Rental offer, coupon,  promo code with only one click and get great discount.`
+          }
+        }
+      },
+      {
+        path: 'hotel-coupons',
+        component: HotelComponent,
+        data: {
+          title: `Hotel Offers, Coupons for ${date}`,
+          meta: {
+            // tslint:disable-next-line:max-line-length
+            description: `Save big with best Hotel offers & coupons  that 100% works ${date}. Find latest Hotel offer, coupon & promo code with only one click and save more.`
           }
         }
       }
