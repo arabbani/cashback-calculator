@@ -37,7 +37,7 @@ export class CashbackInfoCardComponent implements OnChanges {
   }
 
   constructImageUrl(imageName: string): string {
-    return this.logoUrl + _.snakeCase(imageName) + '.png';
+    return `${this.logoUrl}/merchant/${_.snakeCase(imageName)}.png`;
   }
 
   isCoupon(): boolean {

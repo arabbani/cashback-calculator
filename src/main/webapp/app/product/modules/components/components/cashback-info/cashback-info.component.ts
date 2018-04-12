@@ -38,7 +38,7 @@ export class CashbackInfoComponent implements OnInit, OnChanges, OnDestroy {
       setTimeout(() => {
         this.filteredCashbackInfos = response.content;
         this.blockUIService.stop('calculateCashback');
-      }, 100);
+      }, 500);
     });
   }
 

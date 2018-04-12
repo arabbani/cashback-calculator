@@ -20,3 +20,4 @@ export * from './bus-input';
 export * from './cab-input';
 export * from './car-rental-input';
 export * from './hotel-input';
+export * from './offer-filter-input';

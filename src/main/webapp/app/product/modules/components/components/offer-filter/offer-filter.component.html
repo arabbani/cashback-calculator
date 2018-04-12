@@ -1,3 +1,32 @@
-<p>
-  offer-filter works!
-</p>
+<apsstr-card>
+  <apsstr-card-header>
+    <i class="fa fa-lg fa-filter" aria-hidden="true"></i>
+    <span>FILTERS</span>
+    <div class="card-actions">
+
+      <a (click)="toggleCollapse()">
+        <i [ngClass]="{ 'fa': true, 'fa-lg': true, 'fa-angle-down': isCollapsed, 'fa-angle-up': !isCollapsed }" aria-hidden="true"></i>
+      </a>
+    </div>
+  </apsstr-card-header>
+  <apsstr-card-body [collapse]="isCollapsed">
+    <div class="row mb-3">
+      <div class="col-6 col-sm-6 col-md-4 float-right">
+        <form class="form-inline">
+          <div class="form-group w-100">
+            <ng-select name="merchants" [items]="merchants" bindLabel="name" bindValue="id" [(ngModel)]="filterInput.merchants" [multiple]="true"
+              [closeOnSelect]="false" placeholder="Merchants" appendTo="body"></ng-select>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 text-center">
+        <button type="button" class="btn btn-link mr-3" (click)="filter()">
+          <i class="fa fa-filter"></i>&nbsp;Apply Filter</button>
+        <button type="button" class="btn btn-link" (click)="resetFilter()">
+          <i class="fa fa-repeat"></i>&nbsp;Reset Filter</button>
+      </div>
+    </div>
+  </apsstr-card-body>
+</apsstr-card>

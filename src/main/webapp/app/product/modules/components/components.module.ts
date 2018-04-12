@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TabsModule } from 'ngx-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { BlockUIModule } from 'ng-block-ui';
+import { CollapseModule, TabsModule } from 'ngx-bootstrap';
 import { ClipboardModule } from 'ngx-clipboard';
 
 import { ApsstrSharedModule } from '../../../apsstr-core-ui';
@@ -11,6 +13,7 @@ import {
   CashbackInfoTabComponent,
   CashbackInfoTabsComponent,
   OfferCardsComponent,
+  OfferFilterComponent,
   OfferNotFoundComponent,
   ServerErrorComponent,
   SiteStoryComponent,
@@ -19,7 +22,7 @@ import {
 const DECLARABLES = [
   OfferNotFoundComponent, ServerErrorComponent, SiteStoryComponent,
   CashbackInfoComponent, CashbackInfoCardComponent, CashbackInfoTabComponent,
-  CashbackInfoTabsComponent, OfferCardsComponent
+  CashbackInfoTabsComponent, OfferCardsComponent, OfferFilterComponent
 ];
 
 @NgModule({
@@ -28,7 +31,10 @@ const DECLARABLES = [
     ApsstrSharedModule,
     FormsModule,
     TabsModule.forRoot(),
-    ClipboardModule
+    ClipboardModule,
+    NgSelectModule,
+    CollapseModule.forRoot(),
+    BlockUIModule
   ],
   declarations: DECLARABLES,
   exports: DECLARABLES

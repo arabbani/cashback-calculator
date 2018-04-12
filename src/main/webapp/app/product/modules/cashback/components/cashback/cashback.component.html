@@ -3,7 +3,6 @@
         <router-outlet></router-outlet>
     </div>
     <div class="col-12 col-sm-7 col-md-8" *blockUI="'calculateCashback'">
-        <!-- <apsstr-stored-cashback></apsstr-stored-cashback> -->
         <div *ngIf="cashbackInfos; then showCashbackInfos else noCashbackInfos"></div>
         <ng-template #showCashbackInfos>
             <apsstr-cashback-info *ngIf="isExistCashbackInfos(); else offerNotFound" [cashbackInfos]="cashbackInfos"></apsstr-cashback-info>
