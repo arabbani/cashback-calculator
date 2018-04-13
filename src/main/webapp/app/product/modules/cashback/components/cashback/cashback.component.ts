@@ -20,6 +20,7 @@ export class CashbackComponent implements OnInit, OnDestroy {
     cashbackInfos: List<CashbackInfo>;
     showDefault: boolean;
     showError: boolean;
+    subCategoryCode: string;
     private calculateCashbackErrorEvent: ISubscription;
     private storedCashbackInfosEvent: ISubscription;
     private newCashbackInfosEvent: ISubscription;
@@ -84,6 +85,7 @@ export class CashbackComponent implements OnInit, OnDestroy {
     private onBroadcastCashbackInfos(newCashbackInfo: StoredCashback): void {
         this.showDefault = false;
         this.showError = false;
+        this.subCategoryCode = newCashbackInfo.subCategoryCode;
         this.processCashbackInfos(_.cloneDeep(newCashbackInfo.cashbackInfos));
     }
 

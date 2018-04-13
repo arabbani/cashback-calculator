@@ -17,6 +17,7 @@ import { CashbackInfo, OfferFilterInput } from '../../../../model';
 export class OfferFilterComponent implements OnChanges {
 
   @Input() private cashbackInfos: List<CashbackInfo>;
+  @Input() subCategoryCode: string;
   private filteredCashback: List<CashbackInfo>;
   merchants: Merchant[];
   filterInput: OfferFilterInput;

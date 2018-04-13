@@ -16,6 +16,7 @@ import { CashbackInfo } from '../../../..';
 export class CashbackInfoComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() cashbackInfos: List<CashbackInfo>;
+  @Input() subCategoryCode: string;
   filteredCashbackInfos: List<CashbackInfo>;
   private onFilterCashbackInfosEvent: ISubscription;
 
