@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import { BlockUIService } from 'ng-block-ui';
 import { JhiEventManager } from 'ng-jhipster';
 
+import { SubCategories } from '../../../..';
 import { SelectableService } from '../../../../../apsstr-core-ui';
 import { Merchant } from '../../../../../entities';
 import { OfferFilterService } from '../../../../../entities/offer/offer-filter.service';
@@ -22,12 +23,17 @@ export class OfferFilterComponent implements OnChanges {
   merchants: Merchant[];
   filterInput: OfferFilterInput;
   isCollapsed = true;
+  subCategoriesEnum: any;
+  merchantFilter: boolean;
+  serviceProviderFilter: boolean;
 
   constructor(private offerFilterService: OfferFilterService, private selectableService: SelectableService, private blockUIService: BlockUIService,
     private jhiEventManager: JhiEventManager) { }
 
   ngOnChanges() {
+    this.subCategoriesEnum = SubCategories;
     this.initializeFilterInput();
+    this.decideFilters();
     this.extractFilterEntities();
   }
 
@@ -35,14 +41,34 @@ export class OfferFilterComponent implements OnChanges {
     this.filterInput = new OfferFilterInput();
   }
 
+  private decideFilters(): void {
+    this.merchantFilter = false;
+    this.serviceProviderFilter = false;
+    switch (this.subCategoryCode) {
+      case this.subCategoriesEnum.Cab:
+      case this.subCategoriesEnum.CarRental:
+        this.merchantFilter = false;
+        this.serviceProviderFilter = false;
+        break;
+      default:
+        this.merchantFilter = true;
+        break;
+    }
+
+  }
+
   private extractFilterEntities(): void {
     const cashbackInfos = this.cashbackInfos.toJS();
     const merchantSet = new Set();
     _.forEach(cashbackInfos, (cashbackInfo) => {
       const offer = cashbackInfo.offer;
-      merchantSet.add(offer.merchant);
+      if (this.merchantFilter) {
+        merchantSet.add(offer.merchant);
+      }
     });
-    this.merchants = _.toArray(merchantSet);
+    if (this.merchantFilter) {
+      this.merchants = _.toArray(merchantSet);
+    }
   }
 
   filter(): void {
