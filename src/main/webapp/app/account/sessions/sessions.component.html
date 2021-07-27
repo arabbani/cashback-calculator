@@ -1,12 +1,12 @@
 <div>
-    <h2 *ngIf="account">Active sessions for [<b>{{account.login}}</b>]</h2>
+    <h2 *ngIf="account">Active sessions</h2>
 
-    <div class="alert alert-success" *ngIf="success">
+    <apsstr-alert-new type="success" *ngIf="success">
         <strong>Session invalidated!</strong>
-    </div>
-    <div class="alert alert-danger" *ngIf="error">
+    </apsstr-alert-new>
+    <apsstr-alert-new type="danger" *ngIf="error">
         <strong>An error has occured!</strong> The session could not be invalidated.
-    </div>
+    </apsstr-alert-new>
 
     <div class="table-responsive">
         <table class="table table-striped">
@@ -24,10 +24,8 @@
                     <td>{{session.userAgent}}</td>
                     <td>{{session.tokenDate | date:'longDate'}}</td>
                     <td>
-                        <button type="submit"
-                                class="btn btn-primary"
-                                (click)="invalidate(session.series)">
-                                 Invalidate
+                        <button type="submit" class="btn btn-primary" (click)="invalidate(session.series)">
+                            Invalidate
                         </button>
                     </td>
                 </tr>

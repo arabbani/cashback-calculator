@@ -14,11 +14,9 @@ import { Account, LoginModalService, Principal } from '../shared';
 })
 export class HomeComponent implements OnInit {
     account: Account;
-    modalRef: NgbModalRef;
 
     constructor(
         private principal: Principal,
-        private loginModalService: LoginModalService,
         private eventManager: JhiEventManager
     ) {
     }
@@ -42,7 +40,4 @@ export class HomeComponent implements OnInit {
         return this.principal.isAuthenticated();
     }
 
-    login() {
-        this.modalRef = this.loginModalService.open();
-    }
 }

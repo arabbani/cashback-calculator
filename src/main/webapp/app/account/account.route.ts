@@ -1,15 +1,10 @@
 import { Routes } from '@angular/router';
-
 import {
-    activateRoute,
-    passwordRoute,
-    passwordResetFinishRoute,
-    passwordResetInitRoute,
-    registerRoute,
-    sessionsRoute,
-    socialRegisterRoute,
-    settingsRoute
+    activateRoute, passwordResetFinishRoute, passwordResetInitRoute, passwordRoute, registerRoute,
+    sessionsRoute, settingsRoute, socialRegisterRoute
 } from './';
+import { profileRoute } from './profile';
+import { MetaGuard } from '@ngx-meta/core';
 
 const ACCOUNT_ROUTES = [
     activateRoute,
@@ -19,10 +14,12 @@ const ACCOUNT_ROUTES = [
     registerRoute,
     sessionsRoute,
     socialRegisterRoute,
-    settingsRoute
+    settingsRoute,
+    profileRoute
 ];
 
 export const accountState: Routes = [{
     path: '',
+    canActivateChild: [MetaGuard],
     children: ACCOUNT_ROUTES
 }];

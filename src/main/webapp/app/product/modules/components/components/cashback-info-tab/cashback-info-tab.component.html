@@ -1,0 +1,11 @@
+<ng-template tabHeading>{{ heading }} &nbsp;
+  <span *ngIf="cashbackInfosToShow" class="badge badge-pill badge-success float-right">{{ cashbackInfosToShow.size }}</span>
+</ng-template>
+<ng-container *ngIf="cashbackInfosToShow; else offerNotFound">
+  <apsstr-offer-cards [offers]="cashbackInfosToShow"></apsstr-offer-cards>
+  <button *ngIf="cashbackInfos.size > viewSize" type="button" class="btn btn-link" (click)="showMore()">
+    Show More</button>
+</ng-container>
+<ng-template #offerNotFound>
+  <apsstr-offer-not-found></apsstr-offer-not-found>
+</ng-template>

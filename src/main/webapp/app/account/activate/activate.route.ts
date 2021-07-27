@@ -7,8 +7,9 @@ export const activateRoute: Route = {
     path: 'activate',
     component: ActivateComponent,
     data: {
-        authorities: [],
-        pageTitle: 'Activation'
+        meta: {
+            title: 'Activation'
+        }
     },
     canActivate: [UserRouteAccessService]
 };

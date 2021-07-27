@@ -1,0 +1,49 @@
+<div>
+    <h2>
+        <span>Offer</span>
+    </h2>
+</div>
+<div kendoDialogContainer></div>
+<kendo-grid [kendoGridBinding]="offers" [pageable]="true" [pageSize]="gridState.take" [skip]="gridState.skip" [filterable]="true"
+    [sortable]="true" [resizable]="true" [navigable]="true" (edit)="editOffer($event.dataItem)" (remove)="removeOffer($event)">
+    <ng-template kendoGridToolbarTemplate>
+        <button class="btn btn-primary float-right" (click)="createOffer()">Add new</button>
+    </ng-template>
+    <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="name" title="Name" [filterable]="false" [sortable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" width="140" field="active" title="Active" filter="boolean">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <span [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': dataItem.active, 'badge-danger': !dataItem.active }">{{ dataItem.active ? 'YES' : 'NO' }}</span>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column class="text-center" width="140" field="verified" title="Verified" filter="boolean">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <span [ngClass]="{ 'badge': true, 'badge-pill': true, 'px-2': true, 'py-1': true, 'badge-success': dataItem.verified, 'badge-danger': !dataItem.verified }">{{ dataItem.verified ? 'YES' : 'NO' }}</span>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-command-column title="Action">
+        <ng-template kendoGridCellTemplate let-isNew="isNew" let-dataItem>
+            <div class="text-center">
+                <button type="button" class="btn btn-info" (click)="viewOffer(dataItem.id)">View</button>
+                <button kendoGridEditCommand class="k-primary">Edit</button>
+                <button kendoGridRemoveCommand>Delete</button>
+            </div>
+        </ng-template>
+    </kendo-grid-command-column>
+    <ng-template kendoGridDetailTemplate let-dataItem>
+        <div>
+            <div class="row">
+                <div class="col-md-3">Start Date</div>
+                <div class="col-md-9">{{ dataItem.startDate | amDateFormat: 'YYYY-MM-DD HH:mm' }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">End Date</div>
+                <div class="col-md-9">{{ dataItem.endDate | amDateFormat: 'YYYY-MM-DD HH:mm' }}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Number Of Uses</div>
+                <div class="col-md-9">{{ dataItem.numberOfUses }}</div>
+            </div>
+        </div>
+    </ng-template>
+</kendo-grid>

@@ -1,0 +1,259 @@
+
+DEFAULT_URL_LENGTH = 2000
+
+entity Merchant {
+	name String required maxlength(50),
+    url String maxlength(DEFAULT_URL_LENGTH),
+    active Boolean required
+}
+
+entity AffiliateCredential {
+	trackingId String maxlength(100),
+    token String maxlength(100),
+    apiKey String maxlength(100),
+    active Boolean required
+}
+
+entity Affiliate {
+	name String required maxlength(50),
+    url String maxlength(DEFAULT_URL_LENGTH),
+    active Boolean required
+}
+
+entity OperatingSystemType {
+	name String required maxlength(20)
+}
+
+entity OperatingSystem {
+	name String required maxlength(50)
+}
+
+entity State {
+	name String required maxlength(100)
+}
+
+entity City {
+	name String required maxlength(100)
+}
+
+entity OfferPolicy {
+	name String maxlength(50),
+ 	description String required maxlength(2000)
+}
+
+entity OfferType {
+	name String required maxlength(25)
+}
+
+entity Category {
+	name String required maxlength(50)
+}
+
+entity SubCategory {
+	name String required maxlength(50),
+    code String required maxlength(50)
+}
+
+entity ServiceProvider {
+	name String required maxlength(100)
+}
+
+entity Date {
+	date Integer required
+}
+
+entity Day {
+	day String required maxlength(15)
+}
+
+entity ReturnType {
+	name String required maxlength(25)
+}
+
+entity ReturnMode {
+	name String required maxlength(15)
+}
+
+entity ReturnExtras {
+	minimumExpense Integer,
+    maximumExpense Integer,
+    minimumReturn Integer,
+    maximumReturn Integer,
+    minimumTicketRequired Integer
+}
+
+entity MainReturn {
+	amount Integer,
+    exact Boolean required,
+    defaultAmount Integer
+}
+
+entity ReturnInfo {
+	
+}
+
+entity OfferReturn {
+}
+
+entity Circle {
+	name String required maxlength(50),
+    code String required maxlength(50)
+}
+
+entity FlightClass {
+	name String required maxlength(30)
+}
+
+entity TravelType {
+	name String required maxlength(25)
+}
+
+entity Region {
+	name String required maxlength(25)
+}
+
+entity RechargeInfo {
+
+}
+
+entity FlightInfo {
+
+}
+
+entity BusInfo {
+
+}
+
+entity TravelInfo {
+
+}
+
+entity BankType {
+	name String required maxlength(20)
+}
+
+entity Bank {
+	name String required maxlength(70)
+}
+
+entity CardType {
+	name String required maxlength(30)
+}
+
+entity CardProvider {
+	name String required maxlength(30)
+}
+
+entity Card {
+	name String required maxlength(255)
+}
+
+entity OfferPayment {
+
+}
+
+entity RechargePlanType {
+	name String required maxlength(150),
+    dataPlan Boolean required
+}
+
+entity Offer {
+	name String required maxlength(500),
+    description String maxlength(2000),
+    adminDescription String maxlength(2000),
+    code String maxlength(255),
+    startDate ZonedDateTime required,
+    endDate ZonedDateTime required, 
+    maximumUsesPerUser Integer,
+    maximumUsesPerDay Integer,
+    maximumUsesPerWeek Integer,
+    maximumUsesPerMonth Integer,
+    maximumUsesPerNumber Integer,
+    newUserOnly Boolean required,
+    appOnly Boolean required,
+    websiteOnly Boolean required,
+    numberOfUses Long,
+   	active Boolean required,
+    verified Boolean required,
+    dummy Boolean required,
+    apsstrExclusive Boolean required,
+    url String maxlength(DEFAULT_URL_LENGTH)
+}
+
+entity UserInfo {
+
+}
+
+entity Brand {
+	name String required maxlength(255) 
+}
+
+entity ElectronicsInfo {
+
+}
+
+relationship OneToOne {
+	OfferReturn{extras} to ReturnExtras,
+   	ReturnInfo{mainReturn} to MainReturn,
+   	ReturnInfo{extras} to ReturnExtras,
+   	ReturnInfo{payment} to OfferPayment,
+   	Offer{travelInfo} to TravelInfo,
+  	Offer{rechargeInfo} to RechargeInfo,
+    Offer{electronicsInfo} to ElectronicsInfo,
+   	TravelInfo{flightInfo} to FlightInfo,
+   	TravelInfo{busInfo} to BusInfo
+}
+
+relationship OneToMany {
+	Affiliate{credential} to AffiliateCredential{affiliate(name)},
+	OfferReturn{returnInfo} to ReturnInfo{offerReturn},
+	Offer{offerReturn} to OfferReturn{offer},	
+   	Affiliate{offer} to Offer{affiliate(name)},
+    Merchant{offer} to Offer{merchant(name)},
+    State{city} to City{state(name)},
+  	Category{subCategory} to SubCategory{category(name)},
+   	OfferType{offer} to Offer{type(name)},
+   	Bank{card} to Card{bank(name)},
+   	City{user} to UserInfo
+}
+
+relationship ManyToOne {
+   	ReturnInfo{type(name)} to ReturnType,
+    MainReturn{mode(name)} to ReturnMode,
+    MainReturn{cashbackChannel(name)} to Card,
+    Offer{policy(name)} to OfferPolicy,
+   	OperatingSystem{type(name)} to OperatingSystemType,
+    ReturnInfo{returnOffer(name)} to Offer,
+    Card{type(name)} to CardType,
+   	Bank{type(name)} to BankType
+}
+
+relationship ManyToMany {
+	Offer{operatingSystem(name)} to OperatingSystem,
+   	Offer{city(name)} to City{offer},
+    Offer{subCategory(code)} to SubCategory{offer},
+    Offer{serviceProvider(name)} to ServiceProvider{offer},
+    Offer{activeDate(date)} to Date,
+    Offer{activeDay(day)} to Day,
+    ServiceProvider{subCategory(code)} to SubCategory{serviceProvider},
+	Merchant{subCategory(code)} to SubCategory{merchant},
+    TravelInfo{type(name)} to TravelType,
+    FlightInfo{type(name)} to Region,
+    FlightInfo{origin(name)} to Region,
+    FlightInfo{travelClass(name)} to FlightClass,
+   	BusInfo{from(name)} to City,
+   	BusInfo{to(name)} to City,
+   	RechargeInfo{circle(name)} to Circle,
+    OfferPayment{card(name)} to Card,
+    UserInfo{merchant(name)} to Merchant,
+    UserInfo{card(name)} to Card,
+    UserInfo{operatingSystem(name)} to OperatingSystem,
+	Brand{subCategory(name)} to SubCategory,
+    ElectronicsInfo{brand(name)} to Brand,
+    Card{cardProvider(name)} to CardProvider,
+    RechargeInfo{rechargePlanType(name)} to RechargePlanType
+}
+
+service all with serviceClass except ReturnExtras, MainReturn, OfferReturn,
+ReturnInfo, RechargeInfo, FlightInfo, TravelInfo, BusInfo, OfferPayment,
+ElectronicsInfo

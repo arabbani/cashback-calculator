@@ -6,6 +6,8 @@ export const metricsRoute: Route = {
     path: 'apsstr-metrics',
     component: ApsstrMetricsMonitoringComponent,
     data: {
-        pageTitle: 'Application Metrics'
+        meta: {
+            title: 'Application Metrics'
+        }
     }
 };

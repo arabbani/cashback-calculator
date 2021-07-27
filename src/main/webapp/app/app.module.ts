@@ -1,50 +1,56 @@
 import './vendor.ts';
 
-import { NgModule, Injector } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Ng2Webstorage } from 'ngx-webstorage';
+import { Injector, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MetaLoader, MetaModule } from '@ngx-meta/core';
+import { JsogService } from 'jsog-typescript/dist';
 import { JhiEventManager } from 'ng-jhipster';
+import { Ng2Webstorage } from 'ngx-webstorage';
 
+import { CbclAccountModule } from './account/account.module';
+import { CbclAdminModule } from './admin/admin.module';
+import { CbclAppRoutingModule } from './app-routing.module';
+import { ApsstrCoreModule, CoreUiLayoutModule } from './apsstr-core-ui';
+import { APP_CONFIG, metaFactory } from './apsstr-core-ui-config';
+import { PaginationConfig } from './blocks/config/uib-pagination.config';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
 import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
-import { CbclSharedModule, UserRouteAccessService } from './shared';
-import { CbclAppRoutingModule} from './app-routing.module';
-import { CbclHomeModule } from './home/home.module';
-import { CbclAdminModule } from './admin/admin.module';
-import { CbclAccountModule } from './account/account.module';
 import { CbclEntityModule } from './entities/entity.module';
-import { PaginationConfig } from './blocks/config/uib-pagination.config';
+import { CbclHomeModule } from './home/home.module';
+import { ApsstrMainComponent, ErrorComponent, PageRibbonComponent, ProfileService } from './layouts';
+import { CashbackModule, ProductCoreModule } from './product';
+import { CbclSharedModule, UserRouteAccessService } from './shared';
 import { StateStorageService } from './shared/auth/state-storage.service';
-// jhipster-needle-angular-add-module-import JHipster will add new module here
-import {
-    ApsstrMainComponent,
-    NavbarComponent,
-    FooterComponent,
-    ProfileService,
-    PageRibbonComponent,
-    ErrorComponent
-} from './layouts';
 
+// jhipster-needle-angular-add-module-import JHipster will add new module here
 @NgModule({
     imports: [
         BrowserModule,
         CbclAppRoutingModule,
-        Ng2Webstorage.forRoot({ prefix: 'apsstr', separator: '-'}),
-        CbclSharedModule,
+        Ng2Webstorage.forRoot({ prefix: APP_CONFIG.appStorageName, separator: '-' }),
+        CbclSharedModule.forRoot(),
         CbclHomeModule,
         CbclAdminModule,
         CbclAccountModule,
         CbclEntityModule,
+        CoreUiLayoutModule,
+        ApsstrCoreModule,
+        BrowserAnimationsModule,
+        ProductCoreModule,
+        CashbackModule,
+        MetaModule.forRoot({
+            provide: MetaLoader,
+            useFactory: (metaFactory)
+        }),
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
         ApsstrMainComponent,
-        NavbarComponent,
         ErrorComponent,
-        PageRibbonComponent,
-        FooterComponent
+        PageRibbonComponent
     ],
     providers: [
         ProfileService,
@@ -74,8 +80,9 @@ import {
             deps: [
                 Injector
             ]
-        }
+        },
+        JsogService
     ],
-    bootstrap: [ ApsstrMainComponent ]
+    bootstrap: [ApsstrMainComponent]
 })
-export class CbclAppModule {}
+export class CbclAppModule { }

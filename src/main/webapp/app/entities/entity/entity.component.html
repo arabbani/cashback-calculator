@@ -1,0 +1,8 @@
+<ul style="list-style-type: none">
+    <li class="nav-item px-3" *ngFor="let entity of entities">
+        <a class="nav-link" [routerLink]="entity.route">
+            <i class="fa fa-fw fa-asterisk"></i>
+            <span>{{ entity.name }}</span>
+        </a>
+    </li>
+</ul>

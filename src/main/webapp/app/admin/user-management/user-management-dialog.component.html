@@ -20,21 +20,21 @@
                    [(ngModel)]="user.login" required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
 
             <div *ngIf="loginInput.dirty && loginInput.invalid">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    *ngIf="loginInput.errors.required">
                     This field is required.
-                </small>
+                </span>
 
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    *ngIf="loginInput.errors.maxlength"
                   >
                     This field cannot be longer than 50 characters.
-                </small>
+                </span>
 
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    *ngIf="loginInput.errors.pattern">
                     This field can only contain letters, digits and e-mail addresses.
-                </small>
+                </span>
             </div>
         </div>
         <div class="form-group">
@@ -43,11 +43,11 @@
                    [(ngModel)]="user.firstName" maxlength="50">
 
             <div *ngIf="firstNameInput.dirty && firstNameInput.invalid">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    *ngIf="firstNameInput.errors.maxlength"
                   >
                     This field cannot be longer than 50 characters.
-                </small>
+                </span>
             </div>
         </div>
         <div class="form-group">
@@ -56,11 +56,11 @@
                    [(ngModel)]="user.lastName" maxlength="50">
 
             <div *ngIf="lastNameInput.dirty && lastNameInput.invalid">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    *ngIf="lastNameInput.errors.maxlength"
                   >
                     This field cannot be longer than 50 characters.
-                </small>
+                </span>
             </div>
         </div>
         <div class="form-group">
@@ -69,27 +69,27 @@
                    [(ngModel)]="user.email" minlength="5" required maxlength="100" email>
 
             <div *ngIf="emailInput.dirty && emailInput.invalid">
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    *ngIf="emailInput.errors.required">
                     This field is required.
-                </small>
+                </span>
 
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    *ngIf="emailInput.errors.maxlength"
                   >
                     This field cannot be longer than 100 characters.
-                </small>
+                </span>
 
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    *ngIf="emailInput.errors.minlength"
                   >
                     This field is required to be at least 5 characters.
-                </small>
+                </span>
 
-                <small class="form-text text-danger"
+                <span class="form-text text-danger"
                    *ngIf="emailInput.errors.email">
                     Your email is invalid.
-                 </small>
+                 </span>
             </div>
         </div>
         <div class="form-check">

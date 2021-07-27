@@ -1,0 +1,25 @@
+<div>
+    <h2>
+        <span>Travel Type</span>
+    </h2>
+</div>
+<div kendoDialogContainer></div>
+<kendo-grid [kendoGridReactiveEditing]="createTravelTypeFormGroup" [kendoGridBinding]="travelTypes" [pageable]="true" [pageSize]="gridState.take"
+    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (save)="saveItem($event)"
+    (remove)="deleteItem($event.dataItem)">
+    <ng-template kendoGridToolbarTemplate>
+        <button class="float-right" kendoGridAddCommand>Add new</button>
+    </ng-template>
+    <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
+    <kendo-grid-command-column title="Action" width="220">
+        <ng-template kendoGridCellTemplate let-isNew="isNew">
+            <div class="text-center">
+                <button kendoGridEditCommand class="k-primary">Edit</button>
+                <button kendoGridRemoveCommand>Delete</button>
+                <button kendoGridSaveCommand [disabled]="travelTypeFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+                <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+            </div>
+        </ng-template>
+    </kendo-grid-command-column>
+</kendo-grid>

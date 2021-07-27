@@ -1,13 +1,9 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { registerLocaleData } from '@angular/common';
 import locale from '@angular/common/locales/en';
+import { ModuleWithProviders } from '@angular/compiler/src/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
-import {
-    CbclSharedLibsModule,
-    ApsstrAlertComponent,
-    ApsstrAlertErrorComponent
-} from './';
+import { ApsstrAlertComponent, ApsstrAlertErrorComponent, CbclSharedLibsModule } from './';
 
 @NgModule({
     imports: [
@@ -17,13 +13,6 @@ import {
         ApsstrAlertComponent,
         ApsstrAlertErrorComponent
     ],
-    providers: [
-        Title,
-        {
-            provide: LOCALE_ID,
-            useValue: 'en'
-        },
-    ],
     exports: [
         CbclSharedLibsModule,
         ApsstrAlertComponent,
@@ -31,7 +20,20 @@ import {
     ]
 })
 export class CbclSharedCommonModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: CbclSharedCommonModule,
+            providers: [
+                {
+                    provide: LOCALE_ID,
+                    useValue: 'en'
+                },
+            ],
+        };
+    }
+
     constructor() {
         registerLocaleData(locale);
     }
+
 }

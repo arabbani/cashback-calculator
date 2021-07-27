@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-12 col-sm-5 col-md-4">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="col-12 col-sm-7 col-md-8" *blockUI="'calculateCashback'">
+        <div *ngIf="cashbackInfos; then showCashbackInfos else noCashbackInfos"></div>
+        <ng-template #showCashbackInfos>
+            <apsstr-cashback-info *ngIf="isExistCashbackInfos(); else offerNotFound" [cashbackInfos]="cashbackInfos" [subCategoryCode]="subCategoryCode"></apsstr-cashback-info>
+            <ng-template #offerNotFound>
+                <apsstr-offer-not-found></apsstr-offer-not-found>
+            </ng-template>
+        </ng-template>
+        <ng-template #noCashbackInfos>
+            <ng-container *ngIf="showDefault">
+                <apsstr-site-story></apsstr-site-story>
+            </ng-container>
+            <ng-container *ngIf="showError">
+                <apsstr-server-error></apsstr-server-error>
+            </ng-container>
+        </ng-template>
+    </div>
+</div>

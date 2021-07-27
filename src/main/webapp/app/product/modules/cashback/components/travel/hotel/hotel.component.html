@@ -1,0 +1,49 @@
+<div class="mb-3 px-2">
+  Get the best
+  <strong>Hotel Coupon</strong> and
+  <strong class="discount-highlight">save more</strong> on your next hotel booking.
+</div>
+<apsstr-card>
+  <apsstr-card-header>
+    <i class="fa fa-lg fa-mobile" aria-hidden="true"></i>
+    <span>HOTEL</span>
+  </apsstr-card-header>
+  <apsstr-card-body>
+    <form role="form" #hotelInputForm="ngForm" novalidate>
+      <div class="form-group row mb-4">
+        <label class="col-12 col-form-label" for="from">Place :
+          <i class="fa fa-info-circle ml-3" aria-hidden="true" tooltip="Select India if you want to book hotel in india. Otherwise select International"
+            placement="auto"></i>
+        </label>
+        <div class="col-12 col-form-label text-center">
+          <div class="form-check form-check-inline mr-3" id="from" *ngFor="let region of regions">
+            <input class="form-check-input" type="radio" name="from" id="{{ 'from_' + region.name }}" [(ngModel)]="hotelInput.hotelTypeId"
+              value="{{ region.id }}" required>
+            <label class="form-check-label" for="{{ 'from_' + region.name }}">
+              <ng-container [ngSwitch]="region.name">
+                <ng-container *ngSwitchCase="regionsEnum.Domestic">
+                  India
+                </ng-container>
+                <ng-container *ngSwitchCase="regionsEnum.International">
+                  Outside India
+                </ng-container>
+              </ng-container>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group mb-4">
+        <ng-select name="merchants" [items]="merchants" bindLabel="name" bindValue="id" [(ngModel)]="hotelInput.merchantIds" [multiple]="true"
+          [closeOnSelect]="false" placeholder="Store" required appendTo="body"></ng-select>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="expense" id="expense" [(ngModel)]="hotelInput.expense.expense" placeholder="Amount"
+          apsstrNumberInput required>
+      </div>
+    </form>
+  </apsstr-card-body>
+  <apsstr-card-footer extraClass="text-center">
+    <button type="button" class="btn btn-primary" [disabled]="calculating || hotelInputForm.form.invalid" (click)="calculate()">
+      <i class="fa fa-search"></i>&nbsp;My Offer</button>
+  </apsstr-card-footer>
+</apsstr-card>

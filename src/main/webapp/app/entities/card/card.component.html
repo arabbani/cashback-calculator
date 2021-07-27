@@ -1,0 +1,50 @@
+<div>
+    <h2>
+        <span>Card</span>
+    </h2>
+</div>
+<div kendoDialogContainer></div>
+<kendo-grid [kendoGridReactiveEditing]="createCardFormGroup" [kendoGridBinding]="cards" [pageable]="true" [pageSize]="gridState.take"
+    [skip]="gridState.skip" [sortable]="true" [filterable]="true" [resizable]="true" [navigable]="true" (save)="saveItem($event)"
+    (remove)="deleteItem($event.dataItem)">
+    <ng-template kendoGridToolbarTemplate>
+        <button class="float-right" kendoGridAddCommand>Add new</button>
+    </ng-template>
+    <kendo-grid-column class="text-center" field="id" width="80" title="ID" [filterable]="false" [sortable]="false" [editable]="false"></kendo-grid-column>
+    <kendo-grid-column class="text-center" field="name" title="Name"></kendo-grid-column>
+    <kendo-grid-column class="text-center" width="190" field="type" title="Type" [filterable]="false" [sortable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.type?.name }}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+            <ng-select [formControl]="formGroup.get('type')" [items]="cardTypes" bindLabel="name" placeholder="Type" required appendTo="body"></ng-select>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column class="text-center" width="190" field="cardProviders" title="Providers" [filterable]="false" [sortable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{ constructCardProviderNames(dataItem.cardProviders) }}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+            <ng-select [formControl]="formGroup.get('cardProviders')" [items]="cardProviders" bindLabel="name" [multiple]="true" [closeOnSelect]="false"
+                placeholder="Providers" appendTo="body"></ng-select>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column class="text-center" width="190" field="bank" title="Bank" [filterable]="false" [sortable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            {{ dataItem.bank?.name }}
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-column="column" let-formGroup="formGroup">
+            <ng-select [formControl]="formGroup.get('bank')" [items]="banks" bindLabel="name" placeholder="Bank" required appendTo="body"></ng-select>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-command-column title="Action" width="200">
+        <ng-template kendoGridCellTemplate let-isNew="isNew">
+            <div class="text-center">
+                <button kendoGridEditCommand class="k-primary">Edit</button>
+                <button kendoGridRemoveCommand>Delete</button>
+                <button kendoGridSaveCommand [disabled]="cardFormGroup?.invalid">{{ isNew ? 'Add' : 'Update' }}</button>
+                <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+            </div>
+        </ng-template>
+    </kendo-grid-command-column>
+</kendo-grid>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Principal, AccountService } from '../../shared';
+import { AccountService, Principal } from '../../shared';
 
 @Component({
     selector: 'apsstr-settings',
@@ -11,6 +11,8 @@ export class SettingsComponent implements OnInit {
     success: string;
     settingsAccount: any;
     languages: any[];
+    editMode: boolean;
+    editedSettingsAccount: any;
 
     constructor(
         private account: AccountService,
@@ -22,6 +24,18 @@ export class SettingsComponent implements OnInit {
         this.principal.identity().then((account) => {
             this.settingsAccount = this.copyAccount(account);
         });
+        this.editMode = false;
+    }
+
+    edit(): void {
+        this.editMode = true;
+        this.editedSettingsAccount = Object.assign({}, this.settingsAccount);
+    }
+
+    cancelEditing(): void {
+        this.editMode = false;
+        this.settingsAccount = Object.assign({}, this.editedSettingsAccount);
+        this.editedSettingsAccount = undefined;
     }
 
     save() {

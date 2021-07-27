@@ -1,0 +1,83 @@
+<div class="mb-3 px-2">
+  Give your flight details and we will help you find the best
+  <strong>Flight Coupon</strong> so you can get
+  <strong class="discount-highlight">maximum discount</strong> on your next flight booking.
+</div>
+<apsstr-card>
+  <apsstr-card-header>
+    <i class="fa fa-lg fa-mobile" aria-hidden="true"></i>
+    <span>FLIGHT</span>
+  </apsstr-card-header>
+  <apsstr-card-body>
+    <form role="form" #flightInputForm="ngForm" novalidate>
+      <div class="form-group row mb-4">
+        <div class="col-md-12 col-form-label text-center">
+          <div class="form-check form-check-inline mr-3" id="travelType" *ngFor="let travelType of travelTypes">
+            <input class="form-check-input" type="radio" name="travelType" id="{{ 'travelType_' + travelType.name }}" [(ngModel)]="flightInput.travelTypeId"
+              value="{{ travelType.id }}" required>
+            <label class="form-check-label" for="{{ 'travelType_' + travelType.name }}">
+              {{ travelType.name | uppercase }}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row mb-4">
+        <label class="col-12 col-form-label" for="from">From :
+          <i class="fa fa-info-circle ml-3" aria-hidden="true" tooltip="Select India if your departure city is inside India. Otherwise select International"
+            placement="auto"></i>
+        </label>
+        <div class="col-12 col-form-label text-center">
+          <div class="form-check form-check-inline mr-3" id="from" *ngFor="let region of regions">
+            <input class="form-check-input" type="radio" name="from" id="{{ 'from_' + region.name }}" [(ngModel)]="flightInput.flightOriginId"
+              value="{{ region.id }}" required>
+            <label class="form-check-label" for="{{ 'from_' + region.name }}">
+              <ng-container [ngSwitch]="region.name">
+                <ng-container *ngSwitchCase="regionsEnum.Domestic">
+                  India
+                </ng-container>
+                <ng-container *ngSwitchCase="regionsEnum.International">
+                  Outside India
+                </ng-container>
+              </ng-container>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row mb-4">
+        <label class="col-12 col-form-label" for="to">To :
+          <i class="fa fa-info-circle ml-3" aria-hidden="true" tooltip="Select India if your destination city is inside India. Otherwise select International"
+            placement="auto"></i>
+        </label>
+        <div class="col-12 col-form-label text-center">
+          <div class="form-check form-check-inline mr-3" id="to" *ngFor="let region of regions">
+            <input class="form-check-input" type="radio" name="to" id="{{ 'to_' + region.name }}" [(ngModel)]="flightDestination" value="{{ region.id }}"
+              required>
+            <label class="form-check-label" for="{{ 'to_' + region.name }}">
+              <ng-container [ngSwitch]="region.name">
+                <ng-container *ngSwitchCase="regionsEnum.Domestic">
+                  India
+                </ng-container>
+                <ng-container *ngSwitchCase="regionsEnum.International">
+                  Outside India
+                </ng-container>
+              </ng-container>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group mb-4">
+        <ng-select name="flightClass" [items]="flightClasses" bindLabel="name" bindValue="id" [(ngModel)]="flightInput.flightClassId"
+          placeholder="Class" required>
+        </ng-select>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="expense" id="expense" [(ngModel)]="flightInput.expense.expense" placeholder="Estimated Fare"
+          apsstrNumberInput required>
+      </div>
+    </form>
+  </apsstr-card-body>
+  <apsstr-card-footer extraClass="text-center">
+    <button type="button" class="btn btn-primary" [disabled]="calculating || flightInputForm.form.invalid" (click)="calculate()">
+      <i class="fa fa-search"></i>&nbsp;My Offer</button>
+  </apsstr-card-footer>
+</apsstr-card>

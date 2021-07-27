@@ -6,6 +6,8 @@ export const docsRoute: Route = {
     path: 'docs',
     component: ApsstrDocsComponent,
     data: {
-        pageTitle: 'API'
+        meta: {
+            title: 'API'
+        }
     }
 };

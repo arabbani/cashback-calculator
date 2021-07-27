@@ -12,6 +12,7 @@ import {
 } from './';
 
 import { UserRouteAccessService } from '../shared';
+import { MetaGuard } from '@ngx-meta/core';
 
 const ADMIN_ROUTES = [
     auditsRoute,
@@ -23,13 +24,15 @@ const ADMIN_ROUTES = [
     metricsRoute
 ];
 
-export const adminState: Routes = [{
-    path: '',
-    data: {
-        authorities: ['ROLE_ADMIN']
+export const adminState: Routes = [
+    {
+        path: '',
+        data: {
+            authorities: ['ROLE_ADMIN']
+        },
+        canActivate: [UserRouteAccessService],
+        canActivateChild: [MetaGuard],
+        children: ADMIN_ROUTES
     },
-    canActivate: [UserRouteAccessService],
-    children: ADMIN_ROUTES
-},
     ...userDialogRoute
 ];

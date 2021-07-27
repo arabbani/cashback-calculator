@@ -1,0 +1,32 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "extras",
+            "otherEntityName": "returnExtras",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "offerReturn"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "returnInfo",
+            "otherEntityName": "returnInfo",
+            "otherEntityRelationshipName": "offerReturn"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "offer",
+            "otherEntityName": "offer",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [],
+    "changelogDate": "20180329045919",
+    "entityTableName": "offer_return",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false
+}

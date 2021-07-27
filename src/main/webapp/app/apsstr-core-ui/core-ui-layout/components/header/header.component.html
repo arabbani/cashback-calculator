@@ -1,0 +1,58 @@
+<header class="app-header navbar">
+    <button class="navbar-toggler d-lg-none" type="button" apsstrMobileSidebarToggler>
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" routerLink="/"></a>
+    <button class="navbar-toggler d-md-down-none" type="button" apsstrSidebarToggler>
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <ul class="nav navbar-nav ml-auto mr-3" [ngSwitch]="isAuthenticated()">
+        <li class="nav-item" *ngSwitchCase="false">
+            <button type="button" class="btn btn-primary" (click)="login()">
+                <i class="icon-login mr-2"></i>Sign in
+            </button>
+        </li>
+        <ng-container *ngSwitchCase="true">
+            <ng-container *apsstrHasAnyAuthority="'ROLE_ADMIN'">
+                <li class="nav-item dropdown px-3" dropdown placement="bottom right">
+                    <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
+                        <i class="fa fa-fw fa-server"></i>
+                        <span>Administration</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+                        <a class="dropdown-item" routerLink="entities" routerLinkActive="active">
+                            <i class="fa fa-fw fa-th-list"></i> Entities</a>
+                        <a class="dropdown-item" routerLink="user-management" routerLinkActive="active">
+                            <i class="fa fa-fw fa-user"></i> User Management</a>
+                        <a class="dropdown-item" routerLink="apsstr-metrics" routerLinkActive="active">
+                            <i class="fa fa-fw fa-tachometer"></i> Metrics</a>
+                        <a class="dropdown-item" routerLink="apsstr-health" routerLinkActive="active">
+                            <i class="fa fa-fw fa-heart"></i> Health</a>
+                        <a class="dropdown-item" routerLink="apsstr-configuration" routerLinkActive="active">
+                            <i class="fa fa-fw fa-list"></i> Configuration</a>
+                        <a class="dropdown-item" routerLink="audits" routerLinkActive="active">
+                            <i class="fa fa-fw fa-bell"></i> Audits</a>
+                        <a class="dropdown-item" routerLink="logs" routerLinkActive="active">
+                            <i class="fa fa-fw fa-tasks"></i> Logs</a>
+                        <a *ngIf="swaggerEnabled" class="dropdown-item" routerLink="docs" routerLinkActive="active">
+                            <i class="fa fa-fw fa-book"></i> API</a>
+                    </div>
+                </li>
+            </ng-container>
+
+            <li class="nav-item dropdown px-3" dropdown placement="bottom right">
+                <a class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
+                    <i class="icon-user"></i>
+                    <span>Account</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+                    <a class="dropdown-item" routerLink="profile" routerLinkActive="active">
+                        <i class="fa fa-fw fa-user-circle"></i> Profile</a>
+                    <a class="dropdown-item" (click)="logout()">
+                        <i class="icon-logout"></i> Logout</a>
+                </div>
+            </li>
+        </ng-container>
+    </ul>
+</header>

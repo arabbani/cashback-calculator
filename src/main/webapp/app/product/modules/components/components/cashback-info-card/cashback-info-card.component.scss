@@ -1,0 +1,50 @@
+.cashback-info-card .image {
+    height: 40px;
+    width: 80px;
+    font-size: 24px;
+    text-align: center;
+    border-radius: 3px;
+    color: #00b4c8;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    transition: all .3s ease;
+}
+
+.cashback-info-card img {
+    width: 100%;
+}
+
+.c-btn,
+.gp-inner>a,
+.s-code>span,
+.swc-btn {
+    text-transform: uppercase;
+}
+
+.c-btn,
+.c-btn:after,
+.cCopy {
+    position: absolute;
+}
+
+.c-btn,
+.c-btn:hover,
+.cCopy,
+.s-store {
+    color: #fff;
+}
+
+.c-btn,
+.s-code {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.coupon-code {
+    background-color: #233241;
+    display: inline-block;
+    vertical-align: middle;
+    color: #fff;
+}

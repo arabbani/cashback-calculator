@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity BusInfo.
+    -->
+    <changeSet id="20180329045926-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="bus_infos_id"
+                                 baseTableName="bus_info_from"
+                                 constraintName="fk_bus_info_from_bus_infos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bus_info"/>
+        <addForeignKeyConstraint baseColumnNames="froms_id"
+                                 baseTableName="bus_info_from"
+                                 constraintName="fk_bus_info_from_froms_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="city"/>
+        
+        <addForeignKeyConstraint baseColumnNames="bus_infos_id"
+                                 baseTableName="bus_info_to"
+                                 constraintName="fk_bus_info_to_bus_infos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bus_info"/>
+        <addForeignKeyConstraint baseColumnNames="tos_id"
+                                 baseTableName="bus_info_to"
+                                 constraintName="fk_bus_info_to_tos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="city"/>
+        
+    </changeSet>
+</databaseChangeLog>

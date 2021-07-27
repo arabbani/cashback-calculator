@@ -1,31 +1,24 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TabsModule } from 'ngx-bootstrap';
 
+import { ApsstrSharedModule } from '../apsstr-core-ui';
 import { CbclSharedModule } from '../shared';
-
 import {
-    Register,
-    ActivateService,
-    PasswordService,
-    PasswordResetInitService,
-    PasswordResetFinishService,
-    SessionsService,
-    SessionsComponent,
-    PasswordStrengthBarComponent,
-    RegisterComponent,
-    ActivateComponent,
-    PasswordComponent,
-    PasswordResetInitComponent,
-    PasswordResetFinishComponent,
-    SettingsComponent,
-    SocialRegisterComponent,
-    accountState
+    accountState, ActivateComponent, ActivateService, PasswordComponent,
+    PasswordResetFinishComponent, PasswordResetFinishService, PasswordResetInitComponent,
+    PasswordResetInitService, PasswordService, PasswordStrengthBarComponent, Register,
+    RegisterComponent, SessionsComponent, SessionsService, SettingsComponent, SocialRegisterComponent
 } from './';
+import { ProfileComponent } from './profile/profile.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 @NgModule({
     imports: [
         CbclSharedModule,
-        RouterModule.forChild(accountState)
+        RouterModule.forChild(accountState),
+        ApsstrSharedModule,
+        TabsModule.forRoot()
     ],
     declarations: [
         SocialRegisterComponent,
@@ -36,7 +29,9 @@ import {
         PasswordResetInitComponent,
         PasswordResetFinishComponent,
         SessionsComponent,
-        SettingsComponent
+        SettingsComponent,
+        ProfileComponent,
+        UserSettingsComponent
     ],
     providers: [
         SessionsService,
