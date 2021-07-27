@@ -54,7 +54,7 @@ spring:
     mail:
         host: smtp.gmail.com
         port: 587
-        username: arabbani.mj@gmail.com
+        username: 
         password: 
     messages:
         cache-seconds: 1
